@@ -1,0 +1,13 @@
+;;; README --- explain this repository.
+
+;; Copyright (C) 2010 tm8st
+
+;; Author: tm8st <tm8st@hotmail.co.jp>
+
+これはtm8stのEmacsの設定用ファイルのバージョン管理用リポジトリです。
+パスが直接書かれていたりするのでtm8st以外が使用されるのは難しいかと思いますが、
+設定の一例としてご覧いただければ幸いです。
+
+もし使用される場合は、private.elをパスの通った場所に作成し、
+init-private.el内で宣言されている変数に適当な値を設定してください。
+また標準でない拡張ファイルのインストールを行ってください。
