@@ -58,16 +58,17 @@
 ;;; popup template
 ;;;-------------------------------
 (defvar my-mail-sentence-template-list nil)
-(defvar my-build-sentence-assoc-template-list nil)
-(defvar my-directory-sentence-assoc-template-list (list ))
+(defvar my-build-command-assoc-template-list nil)
+(defvar my-directory-name-assoc-template-list (list ))
 
 (when (my-is-mac)
-  (add-to-list 'my-directory-sentence-assoc-template-list
+  (add-to-list 'my-directory-name-assoc-template-list
 	       (list
 		`("Download" "~/Downloads/")
 		`("Picture" "~/Pictures/")
 		`("Document" "~/Documents/")
 		)))
+
 (when (my-is-windows))
 
 (provide 'init-private)

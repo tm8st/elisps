@@ -27,8 +27,6 @@
 			      (prin1-to-string
 			       (popup-menu* my-mail-sentence-template-list))))))
 
-(global-set-key (kbd "M-h") 'my-insert-mail-sentence-template)
-
 ;;;-------------------------------
 ;;; 連想リスト用
 ;;;-------------------------------
@@ -58,12 +56,10 @@
   (insert
    (concat (shell-command-to-string "global -p") "/")))
 
-(defun my-ws-build-sentence-template () 
+(defun my-build-sentence-template () 
   (interactive)
   (insert
-   (popup-menu-assoc my-build-sentence-assoc-template-list)))
-
-(global-set-key (kbd "C-l C-b") 'my-ws-build-sentence-template)
+   (popup-menu-assoc my-build-command-assoc-template-list)))
 
 ;;;-------------------------------
 ;;; ディレクリジャンプ
@@ -72,10 +68,12 @@
   (interactive)
   (dired
    (concat
-    (popup-menu-assoc my-directory-sentence-assoc-template-list)
+    (popup-menu-assoc my-directory-name-assoc-template-list)
     )
    ))
 
+(global-set-key (kbd "C-l C-m") 'my-insert-mail-sentence-template)
+(global-set-key (kbd "C-l C-b") 'my-build-command-template)
 (global-set-key (kbd "C-l C-v") 'my-directory-shirtcut)
 
 (provide 'init-popups)
