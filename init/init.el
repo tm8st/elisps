@@ -93,6 +93,8 @@
      "init-lua.el"
      "init-go.el"
      "init-scheme.el"
+     "init-scala.el"
+     
      "init-keybindings.el"
      "init-complete.el"
      "init-yasnippet.el"

@@ -56,7 +56,7 @@
   (insert
    (concat (shell-command-to-string "global -p") "/")))
 
-(defun my-build-sentence-template () 
+(defun my-build-command-template () 
   (interactive)
   (insert
    (popup-menu-assoc my-build-command-assoc-template-list)))
