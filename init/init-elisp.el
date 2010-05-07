@@ -37,4 +37,24 @@
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
 
+;;;-------------------------------
+;;; auto-install misc
+;;;-------------------------------
+(defun my-auto-install-from-requires ()
+  "Batch install many packages form elisp requires."
+  (interactive)
+  (setq auto-install-save-confirm nil)
+   (dolist (req (split-string (shell-command-to-string "grep 'require ' *.el") "\n"))
+     (unless (string-match "$;" req)
+       (progn 
+	 (let ((begin (string-match "'" req)))
+	   (if (eq begin nil) nil
+	     (let ((end (string-match "\\()\\| \\|\n\\|\t\\)" req begin)))
+	       (if (eq end nil) nil
+		 (progn
+		   (sleep-for 3)
+		   (auto-install-from-url
+		    (concat "http://www.emacswiki.org/emacs/download/"
+			    (substring req (+ 1 begin) end) ".el")))))))))))
+
 (provide 'init-elisp)

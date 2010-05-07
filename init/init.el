@@ -10,7 +10,7 @@
 ;;; Code:
 
 ;; コンパイル用環境の設定 パスを変える場合はここと下のファイルの中の変数の値を変える必要がある
-(load "~/elisps/init/init-compile-env")
+(load "~/elisps/init/init-compile-env.el")
 
 ;;;-------------------------------
 ;;; path add
@@ -81,27 +81,24 @@
      "init-misc.el"
      "init-linum.el"
      "init-my-misc.el"
-
      "init-howm.el"
-
      "init-dired.el"
      "init-shell.el"
      "init-elisp.el"
-     
      "init-c-mode.el"
      "init-ruby.el"
      "init-lua.el"
      "init-go.el"
      "init-scheme.el"
      "init-scala.el"
-     
-     "init-keybindings.el"
      "init-complete.el"
      "init-yasnippet.el"
      "init-gtags.el"
      "init-anything.el"
      "init-org.el"
      "init-popups.el"
+     "init-keybindings.el"
+     
      ;; "init-migemo.el"
      ;; "init-test.el"
      ))

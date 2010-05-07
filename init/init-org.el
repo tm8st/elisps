@@ -13,7 +13,10 @@
 (require 'org-install)
 (setq org-startup-truncated nil)
 (setq org-return-follows-link t)
-(setq org-log-done '(state))
+;; DONEの時刻を記録
+(setq org-log-done 'time)
+;; (setq org-log-done '(state))
+
 (customize-set-variable 'org-agenda-include-diary t)
 
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
@@ -71,5 +74,49 @@
 (define-key global-map (kbd "C-l C-o C-s") 'org-store-link)
 (define-key global-map (kbd "C-l C-o C-o") 'my-open-gtd)
 (define-key org-mode-map (kbd "C-l C-o C-t") 'org-todo)
+
+;;;-------------------------------
+;;; rss reader
+;;;-------------------------------
+(defun org-feed-parse-rdf-feed (buffer)
+  "Parse BUFFER for RDF feed entries.
+Returns a list of entries, with each entry a property list,
+containing the properties `:guid' and `:item-full-text'."
+  (let (entries beg end item guid entry)
+    (with-current-buffer buffer
+      (widen)
+      (goto-char (point-min))
+      (while (re-search-forward "<item[> ]" nil t)
+	(setq beg (point)
+	      end (and (re-search-forward "</item>" nil t)
+		       (match-beginning 0)))
+	(setq item (buffer-substring beg end)
+	      guid (if (string-match "<link¥¥>.*?>¥¥(.*?¥¥)</link>" item)
+		       (org-match-string-no-properties 1 item)))
+	(setq entry (list :guid guid :item-full-text item))
+	(push entry entries)
+	(widen)
+	(goto-char end))
+      (nreverse entries))))
+
+; (setq org-feed-retrieve-method 'wget)
+(setq org-feed-retrieve-method 'curl)
+
+(setq org-feed-default-template "¥n* %h¥n  - %U¥n  - %a  - %description")
+
+(setq org-feed-alist nil)
+(add-to-list 'org-feed-alist
+  '("hatena" "http://feeds.feedburner.com/hatena/b/hotentry"
+    "~/org/rdf.org" "はてな"
+    :parse-feed org-feed-parse-rdf-feed))
+(add-to-list 'org-feed-alist
+  '("tamura70" "http://d.hatena.ne.jp/tamura70/rdf"
+    "~/org/rdf.org" "屯遁"
+    :parse-feed org-feed-parse-rdf-feed))
+
+(add-to-list 'org-feed-alist
+  '("game" "http://rdfblog.ameba.jp/get6-2/rdf20.xml"
+    "~/org/rdf.org" "game"
+    :parse-feed org-feed-parse-rdf-feed))
 
 (provide 'init-org)
