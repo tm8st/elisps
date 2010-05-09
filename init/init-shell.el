@@ -66,8 +66,9 @@
 (global-set-key (kbd "C-l C-s C-f") 'multi-shell-next)
 (global-set-key (kbd "C-l C-s C-b") 'multi-shell-prev)
 
-;; shell-pop
-;; C-tでshellをポップアップ
+;;;-------------------------------
+;;; shell-pop 
+;;;-------------------------------
 (require 'shell-pop)
 ;; (shell-pop-set-internal-mode "ansi-term")
 ;; (shell-pop-set-internal-mode-shell "/bin/zsh")

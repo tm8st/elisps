@@ -134,12 +134,14 @@
 ;;; ediff
 ;;;-------------------------------
 (require 'ediff)
-(set-face-foreground 'ediff-odd-diff-C "black") 	;;衝突箇所
-(set-face-background 'ediff-odd-diff-C "gray25") 	;;衝突箇所
-(set-face-foreground 'ediff-current-diff-C "black") ;;選択中衝突箇所
-(set-face-background 'ediff-current-diff-C "gray30") ;;選択中衝突箇所
-(set-face-foreground 'ediff-fine-diff-C "black") ;;選択中衝突箇所見出し
-(set-face-background 'ediff-fine-diff-C "slate gray") ;;選択中衝突箇所見出し
+(when use-gui-setting
+  (set-face-foreground 'ediff-odd-diff-C "black") 	;;衝突箇所
+  (set-face-background 'ediff-odd-diff-C "gray25") 	;;衝突箇所
+  (set-face-foreground 'ediff-current-diff-C "black") ;;選択中衝突箇所
+  (set-face-background 'ediff-current-diff-C "gray30") ;;選択中衝突箇所
+  (set-face-foreground 'ediff-fine-diff-C "black") ;;選択中衝突箇所見出し
+  (set-face-background 'ediff-fine-diff-C "slate gray") ;;選択中衝突箇所見出し
+  )
 
 ;;;----------------------------------------
 ;;; buffer list

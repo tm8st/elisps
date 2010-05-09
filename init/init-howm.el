@@ -33,13 +33,6 @@
 ;; (global-set-key "¥C-m" 'newline-and-indent) ; リターンで改行とインデント
 ;; (global-set-key "¥C-j" 'newline)            ; 改行
 
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(howm-reminder-today-face ((t (:background "Gray40" :foreground "Pink")))))
-
 ;; リンクをタブでたどる
 (eval-after-load "howm-mode"
   '(progn
@@ -193,15 +186,15 @@
 (global-set-key (kbd "C-l C-,") 'howm-menu)
 
 ;; 色設定
-;; (set-face-foreground 'howm-view-hilit-face "pink") ;; 検索時のヒット文字列
-;; (set-face-background 'howm-view-name-face "grey54")
-;; (set-face-foreground 'howm-reminder-today-face "gray60")
+(when use-gui-setting  
+  (set-face-foreground 'howm-view-hilit-face "pink") ;; 検索時のヒット文字列
+  (set-face-background 'howm-view-name-face "grey54")
+  (set-face-foreground 'howm-reminder-today-face "gray60")
 
-;; (custom-set-faces
-;;   ;; custom-set-faces was added by Custom.
-;;   ;; If you edit it by hand, you could mess it up, so be careful.
-;;   ;; Your init file should contain only one such instance.
-;;   ;; If there is more than one, they won't work right.
-;;  '(howm-reminder-today-face ((t (:background "LightGoldenrod1" :foreground "gray60")))))
-
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(howm-reminder-today-face ((t (:background "Gray40" :foreground "Pink"))))))
 (provide 'init-howm)

@@ -13,8 +13,6 @@
 (require 'linum)
 ;; (require 'linum+)
 (global-linum-mode t)
-(set-face-background 'linum "black")
-(set-face-foreground 'linum "bisque1")
 
 (defvar my-linum-min-windth 2)
 
@@ -24,10 +22,6 @@
 	  (foreground light)) (:foreground "Green" :background "gray15")))
   "Face for displaying line numbers in the display margin."
   :group 'linum)
-
-;; (set-face-foreground 'linum "gray60")
-(set-face-foreground 'my-linum-current-line "gray60")
-(set-face-background 'my-linum-current-line "gray20")
 
 (defvar linum-current-buffer nil "update current buffer.")
 

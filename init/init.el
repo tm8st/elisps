@@ -75,9 +75,13 @@
   ;;----------------------------------------
   ;; init etc
   ;;----------------------------------------
-  (defvar load-elisp-list
+  (defvar init-load-elisp-list
     (list
+     "init-compile-env.el"
+     "init-private.el"
+     "private.el"
      "init-basic.el"
+     "init-theme.el"
      "init-misc.el"
      "init-linum.el"
      "init-my-misc.el"
@@ -105,7 +109,7 @@
   
   (defun load-elisp (file) "" (load file t nil))
 
-  (mapc 'load-elisp load-elisp-list)
+  (mapc 'load-elisp init-load-elisp-list)
   )
 
 (provide 'init)

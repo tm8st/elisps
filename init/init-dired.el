@@ -20,22 +20,24 @@
 (ad-activate 'dired-sort-other)
 
 ;; 今日変更したファイル表示
-(defface my-face-dired-tody-change '((t (:foregound "Orarnge"))) nil :group 'my)
+(when use-gui-setting
+  (defface my-face-dired-tody-change '((t (:foregound "Orarnge"))) nil :group 'my)
 
-(defvar my-face-dired-tody-change 'my-face-dired-tody-change)
-(defun my-dired-today-search (arg)
-  "Fontlock search function for dired."
-  (search-forward-regexp
-   (concat (format-time-string "%b %e" (current-time)) " [0-9]....") arg t))
+  (defvar my-face-dired-tody-change 'my-face-dired-tody-change)
+  (defun my-dired-today-search (arg)
+    "Fontlock search function for dired."
+    (search-forward-regexp
+     (concat (format-time-string "%b %e" (current-time)) " [0-9]....") arg t))
 
-(add-hook 'dired-mode-hook
-		  '(lambda ()
-		     (font-lock-add-keywords
-		      major-mode
-		      (list
-		       '(my-dired-today-search . my-face-dired-tody-change)
-		       ))		     
-		     ))
+  (add-hook 'dired-mode-hook
+	    '(lambda ()
+	       (font-lock-add-keywords
+		major-mode
+		(list
+		 '(my-dired-today-search . my-face-dired-tody-change)
+		 ))		     
+	       ))
+  )
 
 (defun my-dired-find-file-os ()
   "dired で選択中のファイルをOSの関連付けで開く"

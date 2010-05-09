@@ -11,11 +11,12 @@
 
 (require 'popup)
 
-(set-face-foreground 'popup-face "white")
-(set-face-foreground 'popup-menu-selection-face "pink")
-(set-face-background 'popup-face "gray30")
-(set-face-background 'popup-menu-selection-face "gray30")
-
+(when use-gui-setting
+  (set-face-foreground 'popup-face "white")
+  (set-face-foreground 'popup-menu-selection-face "pink")
+  (set-face-background 'popup-face "gray30")
+  (set-face-background 'popup-menu-selection-face "gray30")
+  )
 ;;;-------------------------------
 ;;; mail template
 ;;;-------------------------------

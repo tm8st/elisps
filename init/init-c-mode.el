@@ -131,9 +131,6 @@
 (require `highlight-parentheses)
 
 (defun my-c-mode-hook ()
-  ;; (linum-mode t)
-  ;; (company-mode t)
-  ;; (linum-mode t)
   (hl-line-mode t)
   (highlight-parentheses-mode t)
   (setq tab-width 4)

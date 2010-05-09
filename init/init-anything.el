@@ -61,9 +61,11 @@
 ;;;-------------------------------
 ;;; faces
 ;;;-------------------------------
-(set-face-foreground 'anything-file-name "Pink")
-(set-face-foreground 'anything-dir-heading "SkyBlue")
-(set-face-foreground 'anything-dir-priv "SkyBlue")
+(when use-gui-setting
+  (set-face-foreground 'anything-file-name "Pink")
+  (set-face-foreground 'anything-dir-heading "SkyBlue")
+  (set-face-foreground 'anything-dir-priv "SkyBlue")
+  )
 
 ;;;-------------------------------
 ;;; anything color moccur 
@@ -100,14 +102,6 @@
 (setq anything-gtags-enable-initial-pattern t)
 (setq anything-gtags-classify nil) ;; fileでグループ分けを行う。
 (setq gtags-path-style 'absolute)
-
-;; (set-face-foreground 'anything-gtags-string-face "SkyBlue")
-
-;; ;; 候補として渡された文字列の修正用
-;; ;; gtagsだと [symbol lineno text] の形式。
-;; (defun aggs-candidate-display (s e)
-;;   ;; 22 = length of symbol(16) + lineno(6)
-;;   (buffer-substring-no-properties (+ s 22) e))
 
 ;;;-------------------------------
 ;;; anything-favolite-directories

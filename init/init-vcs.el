@@ -1,22 +1,21 @@
-;;;
-;;; version-control settings
-;;;--------------------------------------------------------------------------------
+;;; init-vc.el --- version control setting
+
+;; Copyright (C) 2010 tm8st
+
+;; Author: tm8st <tm8st@hotmail.co.jp>
+;; Keywords: init, vc
+;; creation time: Sat May  8 22:32:11 2010
+;;; Commentary:
+
+;;; Code:
 
 ;;;-------------------------------
 ;;; vc
 ;;;-------------------------------
-(setq vc-default-back-end 'Git)
-
-;; (setq vc-back-end nil)
 ;; (setq vc-default-back-end 'Git)
-;; (setq vc-default-back-end 'BAZAAR)
-;; (setq exec-path (append (list (expand-file-name "~/git-1.6.2.4")) exec-path))
-;; (setq load-path (append (list (expand-file-name "~/elisps/vcs/git")) load-path))
-;; (require 'egg)
-;; (require 'vc-bzr)
 
 ;; C-x v v     vc-next-action -- perform the next logical control operation on file
-;; (C-x C-q    by default, C-x C-q is no longer bound, so it's better to use the above binding)
+;; C-x C-q    by default, C-x C-q is no longer bound, so it's better to use the above binding)
 ;; C-x v i     vc-register -- add a new file to version control
 
 ;; C-x v ~     vc-version-other-window -- look at other revisions
