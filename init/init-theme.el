@@ -63,18 +63,18 @@ To check out the list, evaluate
 	   (tooltip ((t (:background "lemon chiffon" :foreground "violet red"))))
 
 	   ;; font-lock
-	   (font-lock-builtin-face ((t (:foreground "lavender"))))
+	   (font-lock-builtin-face ((t (:foreground "SkyBlue"))))
 	   (font-lock-comment-delimiter-face ((t (:foreground "green"))))
 	   (font-lock-comment-face ((t (:foreground "green"))))
 	   (font-lock-constant-face ((t (:foreground "Pink"))))
 	   (font-lock-string-face ((t (:foreground "sandy brown"))))
 	   (font-lock-doc-face ((t (:foreground "coral"))))
 	   (font-lock-function-name-face ((t (:foreground "pink"))))
-	   (font-lock-variable-name-face ((t (:foreground "hot pink"))))
+	   (font-lock-variable-name-face ((t (:foreground "PaleTurquoise"))))
 	   (font-lock-keyword-face ((t (:foreground "LightBlue"))))
 	   (font-lock-negation-char-face ((t (:foreground "red"))))
 	   (font-lock-preprocessor-face ((t (:foreground "pink"))))
-	   (font-lock-type-face ((t (:foreground "light slate blue"))))
+	   (font-lock-type-face ((t (:foreground "pink"))))
 	   (font-lock-warning-face ((t (:bold t :foreground "red"))))
 	   
 	   ;; isearch
@@ -113,6 +113,7 @@ To check out the list, evaluate
 
   (when use-font-setting
     (set-face-attribute 'default nil
+			:family "VL Pゴシック"
 			;; :family "VL Pゴシック"
                         :height my-font-size-base)
 
@@ -132,14 +133,14 @@ To check out the list, evaluate
   ;; default frame setting
   (defvar my-frame-setting-list
     (list
-     '(background-color . "gray4") ;; 背景色
-     '(foreground-color . "gray75") ;; 文字色
-     '(cursor-color . "Green") ;; カーソル色
-     '(cursor-type . box) ;; カーソル形状
-     '(cursor-height . 4) ;; カーソルの高さ
-     '(mouse-color . "white") ;; マウスカーソル色
-     '(border-color . "white") ;; 縁の色
-     '(vertical-scroll-bars . 'right) ;; スクロールバー
+     ;; '(background-color . "gray4") ;; 背景色
+     ;; '(foreground-color . "gray75") ;; 文字色
+     ;; '(cursor-color . "Green") ;; カーソル色
+     ;; '(cursor-type . box) ;; カーソル形状
+     ;; '(cursor-height . 4) ;; カーソルの高さ
+     ;; '(mouse-color . "white") ;; マウスカーソル色
+     ;; '(border-color . "white") ;; 縁の色
+     ;; '(vertical-scroll-bars . 'nil) ;; スクロールバー
      '(width . 160) ;; 横幅(桁数)
      '(height . 82)	;; 高さ(行数)
      '(left . 0) ;; 左上隅 x 座標
@@ -230,10 +231,9 @@ To check out the list, evaluate
   (set-scroll-bar-mode nil) ;; スクロールバーを表示させない
   ;; (set-scroll-bar-mode 'right) ;; スクロールバーを右側に表示する
   (blink-cursor-mode 0) ;;カーソルの点滅を止める
-  (tool-bar-mode nil)
-  (menu-bar-mode nil)
-  (tooltip-mode -1) 
   (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (tooltip-mode -1)
   
   ;;-------------------------------------
   ;; タブや全角スペースを表示
@@ -277,8 +277,16 @@ To check out the list, evaluate
     ;; (setq curchg-idle-cursor-type 'hbar)
     )
 
-
   (my-theme-set)
+
+  
+  (defun my-text-properties-at-point ()
+    ""
+    (interactive)
+    (let ((prop (text-properties-at (point))))
+      (message prop)))
+  (global-set-key (kbd "C-l C-@ C-p") 'my-text-properties-at-point)
+
   )
 
 (provide 'init-theme)

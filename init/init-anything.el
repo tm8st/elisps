@@ -25,8 +25,8 @@
 ;; (require 'anything-dabbrev-expand)
 ;; (require 'anything-migemo)
 ;; (require 'anything-startup)
-(require 'anything-kyr)
-(require 'anything-kyr-config)
+;; (require 'anything-kyr)
+;; (require 'anything-kyr-config)
 ;; (require 'anything-adaptive)
 ;; (require 'anything-etags)
 ;; (require 'anything-c-shell-history)
@@ -245,7 +245,7 @@
 ;; c++ 登録
 (ap:add-project
  :name 'c++
- :look-for '("GTAGS" ".*\.sln") ; or
+ :look-for '("GTAGS" ".*\\.sln") ; or
  :include-regexp '("\\.h$" "\\.sln$" "\\.cpp$" "\\.c$" "\\.h$" "\\.inl$" "\\.fx$" "\\.ini$" "\\.txt$" "\\.uc$" "\\.usf$") ;or
  )
 
@@ -256,12 +256,12 @@
  :include-regexp '("\\.el$") ;or
  )
 
-;; ruby 登録
-(ap:add-project
- :name 'ruby
- :look-for '("GTAGS" ".rake") ; or
- :include-regexp '("\\.rb$") ;or
- )
+;; ;; ruby 登録
+;; (ap:add-project
+;;  :name 'ruby
+;;  :look-for '("GTAGS" ".rake") ; or
+;;  :include-regexp '("\\.rb$") ;or
+;;  )
 
 ;;;-------------------------------
 ;;; split-setting 
@@ -351,5 +351,7 @@
     (requires-pattern . 3)
     (delayed))
   "Source for retrieving files matching the current input pattern with locate.")
+
+(global-set-key (kbd "C-q C-a C-s") 'anything-call-source)
 
 (provide 'init-anything)

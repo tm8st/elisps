@@ -81,8 +81,7 @@
      "init-private.el"
      "private.el"
      "init-basic.el"
-     "init-theme.el"
-     "init-misc.el"
+      "init-misc.el"
      "init-linum.el"
      "init-my-misc.el"
      "init-howm.el"
@@ -102,6 +101,7 @@
      "init-org.el"
      "init-popups.el"
      "init-keybindings.el"
+     "init-theme.el"
      
      ;; "init-migemo.el"
      ;; "init-test.el"
