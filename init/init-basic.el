@@ -17,12 +17,12 @@
 ;; (set-default-coding-systems 'euc-jp)
 ;; (set-buffer-file-coding-system 'euc-jp)
 ;; (set-terminal-coding-system 'euc-jp)
-;; (prefer-coding-system 'euc-jp)
 ;; (setq file-name-coding-system 'euc-jp)
 ;; (set-keyboard-coding-system 'euc-jp)
 ;; (set-clipboard-coding-system 'euc-jp)
 
-(prefer-coding-system 'utf-8)
+(prefer-coding-system 'euc-jp)
+;; (prefer-coding-system 'utf-8)
 
 ;; (set-default-coding-systems 'utf-8)
 ;; (set-buffer-file-coding-system 'utf-8)

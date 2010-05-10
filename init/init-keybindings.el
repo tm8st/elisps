@@ -118,6 +118,8 @@
 ;;ソースとヘッダファイルの移動用
 (global-set-key (kbd "C-l C-f C-s") 'ff-find-other-file)
 
+(global-set-key (kbd "C-l C-f C-o") 'my-save-all-buffers)
+
 ;;;-------------------------------
 ;;; emacsから一発で検索
 ;;;-------------------------------

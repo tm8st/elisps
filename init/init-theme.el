@@ -211,7 +211,7 @@ To check out the list, evaluate
   (require 'highlight-parentheses)
   (highlight-parentheses-mode)
   (custom-set-variables
-   '(hl-paren-colors '("orange" "blue" "yellow" "red"))
+   ;; '(hl-paren-colors '("orange" "blue" "yellow" "red"))
    '(hl-paren-background-colors nil)
    '(hl-paren-background-colors '("tomato4" "tomato3" "tomato2" "tomato1"))
    )
@@ -219,8 +219,6 @@ To check out the list, evaluate
   ;;-------------------------------
   ;; 折り返し設定
   ;;-------------------------------
-  ;; (setq truncate-lines t)
-  ;; (setq truncate-partial-width-windows t) ;; 縦分割画面で、長い行をwrapさせる。aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   (add-hook 'find-file-hook
 	    '(lambda ()
 	       (setq truncate-lines t)

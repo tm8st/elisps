@@ -584,4 +584,13 @@ default name is filename:current line string."
     (split-window-horizontally))
   (other-window 1))
 
+(defun my-save-all-buffers ()
+  "すべてのバッファの保存 moccur-grep-find後用"
+  (interactive)
+  (dolist (buf (buffer-list))
+    (unless (eq (buffer-file-name buf) nil)
+    (when (file-writable-p (buffer-file-name buf))
+      (set-buffer buf)
+      (save-buffer)))))
+
 (provide 'init-my-misc)
