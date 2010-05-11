@@ -9,19 +9,18 @@
 
 ;;; Code:
 
-(require 'linum)
-;; (require 'linum+)
-(global-linum-mode t)
+(require 'yalinum)
+(global-yalinum-mode t)
 
-;; (defun my-linum-format (line)
-;;   (let ((w (length (number-to-string
-;; 		    (count-lines (point-min) (point-max))))))
-;;     (propertize (format (concat "%" (number-to-string w) "d"))
-;; 		'face (list
-;; 		':background (concat "gray" (number-to-string (/ line count-line)))))))
-
-;;(customize-set-variable 'linum-format 'my-linum-format)
-(customize-set-variable 'linum-format 'dynamic)
+(when (my-is-mac)
+  (setq yalinum-width-base 1)
+  (setq yalinum-width-scale 0.5)
+  (setq yalinum-line-number-display-format " %0$numd")
+  )
+(when (my-is-windows)
+  (setq yalinum-width-base 0)
+  (setq yalinum-width-scale 1)
+  (setq yalinum-line-number-display-format "%0$numd")
+  )
 
 (provide 'init-linum)
-

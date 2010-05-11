@@ -267,7 +267,7 @@
 (global-set-key (kbd "C-q C-t C-t") 'toggle-case-fold-search)
 
 (global-set-key (kbd "C-q C-q") 'quoted-insert)        ;;元のコマンド
-(global-set-key (kbd "C-q C-@") 'linum-mode)           ;;行番号表示
+(global-set-key (kbd "C-q C-@") 'yalinum-mode)           ;;行番号表示
 (global-set-key (kbd "C-q C-w") 'copy-region-as-kill) ;;copy
 (global-set-key (kbd "C-q C-h") 'help-for-help)   ;;ヘルプ
 (global-set-key (kbd "C-q C-;") 'view-mode)

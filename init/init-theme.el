@@ -114,7 +114,6 @@ To check out the list, evaluate
   (when use-font-setting
     (set-face-attribute 'default nil
 			:family "VL Pゴシック"
-			;; :family "VL Pゴシック"
                         :height my-font-size-base)
 
     ;; (set-face-attribute 'default nil
