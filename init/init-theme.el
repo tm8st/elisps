@@ -132,14 +132,14 @@ To check out the list, evaluate
   ;; default frame setting
   (defvar my-frame-setting-list
     (list
-     ;; '(background-color . "gray4") ;; 背景色
-     ;; '(foreground-color . "gray75") ;; 文字色
-     ;; '(cursor-color . "Green") ;; カーソル色
-     ;; '(cursor-type . box) ;; カーソル形状
-     ;; '(cursor-height . 4) ;; カーソルの高さ
-     ;; '(mouse-color . "white") ;; マウスカーソル色
-     ;; '(border-color . "white") ;; 縁の色
-     ;; '(vertical-scroll-bars . 'nil) ;; スクロールバー
+     '(background-color . "gray4") ;; 背景色
+     '(foreground-color . "gray75") ;; 文字色
+     '(cursor-color . "orange") ;; カーソル色
+     '(cursor-type . bar) ;; カーソル形状
+     '(cursor-height . 4) ;; カーソルの高さ
+     '(mouse-color . "white") ;; マウスカーソル色
+     '(border-color . "white") ;; 縁の色
+     '(vertical-scroll-bars . 'nil) ;; スクロールバー
      '(width . 160) ;; 横幅(桁数)
      '(height . 82)	;; 高さ(行数)
      '(left . 0) ;; 左上隅 x 座標
@@ -258,25 +258,18 @@ To check out the list, evaluate
 
   ;;-------------------------------
   ;; コンテキストに合わせてカーソル変更
-  ;; mac だとやけに遅い。
   ;;-------------------------------
-  (when (my-is-windows)
-    (require 'cursor-chg)
-    (custom-set-variables
-     '(curchg-change-cursor-on-overwrite/read-only-flag t)
-     '(curchg-change-cursor-on-input-method-flag t)
-     '(cursor-mode t) ; On for overwrite/read-only/input mode
-     '(curchg-idle-cursor-type 'hbar)
-     '(curchg-overwrite/read-only-cursor-type 'hollow)
-     )
+  (require 'cursor-chg)
+  (custom-set-variables
+   '(curchg-change-cursor-on-overwrite/read-only-flag t)
+   '(curchg-change-cursor-on-input-method-flag t)
+   '(cursor-mode t) ; On for overwrite/read-only/input mode
+   '(curchg-idle-cursor-type 'hbar)
+   '(curchg-overwrite/read-only-cursor-type 'hollow))
 
-    (toggle-cursor-type-when-idle t) ; On when idle
-    ;; (setq curchg-idle-cursor-type 'hbar)
-    )
-
+  ;; (toggle-cursor-type-when-idle t) ; On when idle
   (my-theme-set)
 
-  
   (defun my-text-properties-at-point ()
     ""
     (interactive)
@@ -284,6 +277,22 @@ To check out the list, evaluate
       (message prop)))
   (global-set-key (kbd "C-l C-@ C-p") 'my-text-properties-at-point)
 
+  ;;;-------------------------------
+  ;;; yalinum
+  ;;;-------------------------------
+  (require 'yalinum)
+  (global-yalinum-mode t)
+
+  (when (my-is-mac)
+    (customize-set-variable 'yalinum-width-base 1)
+    (customize-set-variable 'yalinum-width-scale 0.5)
+    (customize-set-variable 'yalinum-line-number-display-format " %0$numd")
+    )
+  (when (my-is-windows)
+    (customize-set-variable 'yalinum-width-base 0)
+    (customize-set-variable 'yalinum-width-scale 1)
+    (customize-set-variable 'yalinum-line-number-display-format "%0$numd")
+    )
   )
 
 (provide 'init-theme)

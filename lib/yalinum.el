@@ -7,12 +7,21 @@
 (defvar yalinum-before-numbering-hook nil
   "Functions run in each buffer before line numbering starts.")
 
-(defvar yalinum-width-base 1
-  "Line number length offset.")
-(defvar yalinum-width-scale 0.5
-  "Line number length to margin space scale.")
-(defvar yalinum-line-number-display-format " %0$numd"
-  "Line number display format. replace $num by line number.")
+(defcustom yalinum-width-base 1
+  "Line number length offset."
+  :group 'yalinum
+  :type 'integer
+  )
+(defcustom yalinum-width-scale 0.5
+  "Line number length to margin space scale."
+  :group 'yalinum
+  :type 'float
+  )
+(defcustom yalinum-line-number-display-format " %0$numd"
+  "Line number display format. replace $num by line number."
+  :group 'yalinum
+  :type 'string
+  )
 
 (mapc #'make-variable-buffer-local '(yalinum-overlays yalinum-available))
 
@@ -125,7 +134,7 @@ and you have to scroll or press \\[recenter-top-bottom] to update the numbers."
 	       yalinum-line-number-display-format)))
 	   (width 0)
 	   ;; calc bar variables.
-	   (bar-height (truncate (* (/ (window-height win) (float line-max)) (window-height win))))
+	   (bar-height (max 1 (truncate (* (/ (window-height win) (float line-max)) (window-height win)))))
 	   (bar-min (min (max start-line 0) (- line-max bar-height)))
 	   (bar-max (min line-max (+ bar-min bar-height))))
       (run-hooks 'yalinum-before-numbering-hook)
