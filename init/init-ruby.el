@@ -45,7 +45,7 @@
 ;;; rsense
 ;;;-------------------------------
 (add-to-list 'load-path (concat my-rsense-home "/etc"))
-(require 'rsense)
+(require 'rsense nil t)
 (customize-set-value 'rsense-home my-rsense-home)
 
 ;; $RSENSE_HOMEはRSenseをインストールしたディレクトリのフルパスに置き換えてください

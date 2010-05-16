@@ -12,11 +12,13 @@
   :group 'yalinum
   :type 'integer
   )
+
 (defcustom yalinum-width-scale 0.5
   "Line number length to margin space scale."
   :group 'yalinum
   :type 'float
   )
+
 (defcustom yalinum-line-number-display-format " %0$numd"
   "Line number display format. replace $num by line number."
   :group 'yalinum
@@ -118,15 +120,14 @@ and you have to scroll or press \\[recenter-top-bottom] to update the numbers."
   (move-to-window-line 0)
   (let* ((top-line (count-lines (point) (point-min)))
 	 ;; avoid zero divide.
-	 (line-max (max 1 (count-lines (point-min) (point-max))))
-	 (start-line (+ top-line (* (/ (float top-line) line-max) (window-height win))))
+	 (line-max (count-lines (point-min) (point-max)))
+	 (start-line (+ top-line (* (/ (float top-line) (max 1 line-max)) (window-height win))))
 	 )
     (goto-char (window-start win))
     (let* ((line (line-number-at-pos))
 	   (limit (window-end win t))
 	   (fmt
-	    (let ((w (length (number-to-string
-			      (count-lines (point-min) (point-max))))))
+	    (let ((w (length (number-to-string line-max))))
 	      ;; replace format string.
 	      (replace-regexp-in-string
 	       "\\$num"
@@ -134,7 +135,7 @@ and you have to scroll or press \\[recenter-top-bottom] to update the numbers."
 	       yalinum-line-number-display-format)))
 	   (width 0)
 	   ;; calc bar variables.
-	   (bar-height (max 1 (truncate (* (/ (window-height win) (float line-max)) (window-height win)))))
+	   (bar-height (max 1 (truncate (* (/ (window-height win) (float (max 1 line-max))) (window-height win)))))
 	   (bar-min (min (max start-line 0) (- line-max bar-height)))
 	   (bar-max (min line-max (+ bar-min bar-height))))
       (run-hooks 'yalinum-before-numbering-hook)

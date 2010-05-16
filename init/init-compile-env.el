@@ -43,6 +43,8 @@
 (add-to-list 'load-path my-elisp-path)
 (add-to-list 'load-path (concat my-elisp-path "/init"))
 
+(defvar init-load-elisp-list nil)
+
 (require 'init-private)
 (require 'private) ;; 値の設定(非公開ファイル)
 (provide 'init-compile-env)

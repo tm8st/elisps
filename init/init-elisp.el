@@ -9,6 +9,9 @@
 
 ;;; Code:
 
+(require 'auto-install)
+(require 'highlight-parentheses)
+
 (defun my-emacs-lisp-mode-hook ()
   ;; (linum-mode t)
   (hl-line-mode t)
@@ -101,11 +104,19 @@
 (defun my-auto-update-elisps ()
   "update elisp from emacswiki."
   (interactive)
-  (setq auto-install-save-confirm nil)
+  (customize-set-value 'auto-install-save-confirm nil)
   (dolist (elisp my-auto-update-elisp-list)
     (sleep-for 3)
     (auto-install-from-emacswiki (concat elisp ".el"))
     ))
+
+(defun my-auto-async-byte-compile-display-function (buf)
+  "ignore."
+  (interactive)
+  (display-message-or-buffer buf)
+  )
+
+(customize-set-value 'auto-async-byte-compile-display-function 'my-auto-async-byte-compile-display-function)
 
 ;; (auto-install-from-url "http://nschum.de/src/emacs/highlight-parentheses/highlight-parentheses.el")
 ;; (auto-install-from-url "http://nschum.de/src/emacs/window-numbering-mode/window-numbering.el")
@@ -120,3 +131,4 @@
 ;; http://nschum.de/src/emacs/window-numbering-mode/window-numbering.el
 
 (provide 'init-elisp)
+

@@ -75,7 +75,7 @@
   ;;----------------------------------------
   ;; init etc
   ;;----------------------------------------
-  (defvar init-load-elisp-list
+  (setq init-load-elisp-list
     (list
      "init-compile-env.el"
      "init-private.el"
@@ -102,7 +102,7 @@
      "init-popups.el"
      "init-keybindings.el"
      "init-theme.el"
-     
+ 
      ;; "init-migemo.el"
      ;; "init-test.el"
      ))
