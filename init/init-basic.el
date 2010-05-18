@@ -208,20 +208,7 @@
     ;; (require 'iswitchb)
     ;; (iswitchb-default-keybindings)
     ;; (add-to-list 'iswitchb-buffer-ignore "")
-    )
-  
-  ;; (setq url-proxy-services '(("http" . "localhost:8339")))
-  ;; (auto-install-compatibility-setup)
-  
-  ;; (let ((buffer (url-retrieve-synchronously
-  ;;                "http://tromey.com/elpa/package-install.el")))
-  ;;   (save-excursion
-  ;;     (set-buffer buffer)
-  ;;     (goto-char (point-min))
-  ;;     (re-search-forward "^$" nil 'move)
-  ;;     (eval-region (point) (point-max))
-  ;;     (kill-buffer (current-buffer))))
-  
+    )  
   )
 
 (provide 'init-basic)

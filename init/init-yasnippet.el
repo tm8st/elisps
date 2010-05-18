@@ -17,8 +17,6 @@
   (yas/load-directory my-yas/load-directory)
   )
 
-(my-update-yasnippet-files)
-
 ;; メニューは使わない
 (setq yas/use-menu nil)
 ;; トリガは使わない
@@ -28,6 +26,7 @@
 (global-set-key (kbd "C-l C-y C-l") 'my-update-yasnippet-files)
 
 (yas/initialize)
+(my-update-yasnippet-files)
 
 (setq yas/buffer-local-condition
       '(or (not (or (string= "font-lock-comment-face"

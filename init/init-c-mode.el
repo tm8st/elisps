@@ -128,7 +128,8 @@
 ;;;----------------------------------------
 ;;;c-mode, c++-mode
 ;;;----------------------------------------
-(require `highlight-parentheses)
+(require 'highlight-parentheses)
+(require 'unreal)
 
 (defun my-c-mode-hook ()
   (hl-line-mode t)
@@ -141,6 +142,9 @@
   (global-set-key (kbd "C-c C-m") 'c-beginning-of-defun)
   ;; (c-set-offset 'c-comment-only-line-offset c-basic-offset)
   ;; (c-set-offset 'innamespace c-basic-offset)
+
+  (when (string-match "\.uc$" (buffer-file-name))
+    (unreal-imenu-set-for-current-buffer))
   )
 
 (setq auto-mode-alist
