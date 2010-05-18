@@ -55,6 +55,6 @@
   (interactive)
   (setq imenu-create-index-function 'unreal-imenu-create-index))
 
-(global-set-key (kbd "C-l C-u") 'unreal-imenu-set-for-current-buffer)
+;; (global-set-key (kbd "C-l C-u") 'unreal-imenu-set-for-current-buffer)
 
 (provide 'unreal)
