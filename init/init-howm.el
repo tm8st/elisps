@@ -103,7 +103,6 @@
   (insert "{_}")
   )
 
-
 (defun my-howm-add-todo ()
   "add todo."
   (interactive)

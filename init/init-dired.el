@@ -39,6 +39,41 @@
 	       ))
   )
 
+;; フック
+(add-hook 'dired-load-hook
+          '(lambda ()
+             (require 'ls-lisp)
+	     (setq ls-lisp-dirs-first t)
+             (setq dired-listing-switches "-oXaF") ;; 
+             ;; (setq find-ls-option '("-exec ls -AFGl {} \\;" . "-AFGl"))
+             ;; (setq grep-find-command "find . -type f -print0 | xargs -0 -e grep -ns ")
+             (require 'wdired)
+             ))
+
+;; 色づけ
+(require 'dired)
+(defvar *original-dired-font-lock-keywords* dired-font-lock-keywords)
+(defun dired-highlight-by-extensions (highlight-list)
+  "highlight-list accept list of (regexp [regexp] ... face)."
+  (let ((lst nil))
+    (dolist (highlight highlight-list)
+      (push `(,(concat "\\.\\(" (regexp-opt (butlast highlight)) "\\)$")
+              (".+" (dired-move-to-filename)
+               nil (0 ,(car (last highlight)))))
+            lst))
+    (setq dired-font-lock-keywords
+          (append *original-dired-font-lock-keywords* lst))))
+
+(dired-highlight-by-extensions
+  (list
+    (append my-source-file-extention-list (list font-lock-builtin-face))
+    (append my-exe-file-extention-list (list font-lock-string-face))
+    (append my-music-file-extention-list (list font-lock-keyword-face))
+    (append my-archive-file-extention-list (list font-lock-comment-face))
+    (append my-doc-file-extention-list (list font-lock-doc-face))
+    ))
+
+(require 'init-misc)
 (defun my-dired-find-file-os ()
   "dired で選択中のファイルをOSの関連付けで開く"
   (interactive)
@@ -67,7 +102,8 @@
 			 (setq grep-find-command "find . -type f -print0 | xargs -0 -e grep -ns ")
 			 (require 'wdired)
 			 ))
-;;; ;;; wdired
+
+;;; wdired
 (require 'wdired)
 (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
 
@@ -78,6 +114,8 @@
 (define-key dired-mode-map (kbd "C-c C-m") 'dired-do-copy)
 (define-key dired-mode-map (kbd "C-j") 'dired-do-shell-command)
 (define-key dired-mode-map (kbd "C-c C-j") 'dired-do-async-shell-command)
+(define-key dired-mode-map (kbd "C-c C-d") 'dired-do-delete)
+(define-key dired-mode-map (kbd "C-c C-i") 'dired-mark-files-regexp)
 
 (require 'browse-kill-ring)
 

@@ -22,6 +22,10 @@
   (global-set-key (kbd "M-f") 'ns-toggle-fullscreen)
   )
 
+;; ゴミ箱を利用する
+(setq delete-by-moving-to-trash t)
+(setq trash-directory "~/.Trash")
+
 ;;;--------------------------------
 ;;; ffap find-file でURLも開ける
 ;;;--------------------------------
@@ -203,28 +207,6 @@
 ;;   )
 
 ;;;-------------------------------
-;;; twittering-mode
-;;;-------------------------------
-(require 'twittering-mode)
-(setq twittering-username my-twittering-username)
-(setq twittering-password my-twittering-password)
-(global-set-key (kbd "C-l C-t C-w") 'twittering-mode)
-
-;; Basic key bindings
-;;
-;;     ‘C-c C-s’ to write a tweet (‘twittering-update-status-interactive’)
-;;     ‘j’ to go to the next tweet (‘twittering-goto-next-status’)
-;;     ‘k’ to go to the previous tweet (‘twittering-goto-previous-status’)
-;;     ‘C-m’ (Enter key) to reply to the current tweet or to open the URL under the cursor (‘twittering-enter’)
-;;     ‘C-c C-m’ (C-c Enter) to retweet the current tweet (‘twittering-retweet’)
-;;     ‘C-c C-f’ to read your friends’ timeline (‘twittering-friends-timeline’)
-;;     ‘C-c C-r’ to read your replies (‘twittering-replies-timeline’)
-;;     ‘C-c C-u’ to read your own timeline (‘twittering-user-timeline’)
-;;     ‘g’ to refresh the current timeline (‘twittering-current-timeline’)
-;;     ‘v’ to view the timeline of the user under the cursor (‘twittering-other-user-timeline’)
-;;     ‘V’ to view the timeline of any user (‘twittering-other-user-timeline-interactive’)
-
-;;;-------------------------------
 ;;; auto byte compile
 ;;;-------------------------------
 (require 'auto-async-byte-compile)
@@ -261,5 +243,47 @@
 (setq text-translator-pre-string-replace-alist nil)
 ;; 翻訳前テキストを残す
 (setq text-translator-leave-string t)
+
+;;;-------------------------------
+;;; twittering-mode
+;;;-------------------------------
+(require 'twittering-mode)
+(setq twittering-username my-twittering-username)
+(setq twittering-password my-twittering-password)
+(global-set-key (kbd "C-l C-t C-w") 'twittering-mode)
+
+;; Basic key bindings
+;;
+;;     ‘C-c C-s’ to write a tweet (‘twittering-update-status-interactive’)
+;;     ‘j’ to go to the next tweet (‘twittering-goto-next-status’)
+;;     ‘k’ to go to the previous tweet (‘twittering-goto-previous-status’)
+;;     ‘C-m’ (Enter key) to reply to the current tweet or to open the URL under the cursor (‘twittering-enter’)
+;;     ‘C-c C-m’ (C-c Enter) to retweet the current tweet (‘twittering-retweet’)
+;;     ‘C-c C-f’ to read your friends’ timeline (‘twittering-friends-timeline’)
+;;     ‘C-c C-r’ to read your replies (‘twittering-replies-timeline’)
+;;     ‘C-c C-u’ to read your own timeline (‘twittering-user-timeline’)
+;;     ‘g’ to refresh the current timeline (‘twittering-current-timeline’)
+;;     ‘v’ to view the timeline of the user under the cursor (‘twittering-other-user-timeline’)
+;;     ‘V’ to view the timeline of any user (‘twittering-other-user-timeline-interactive’)
+
+;;;-------------------------------
+;;; ibuffer
+;;;-------------------------------
+(require 'ibuffer)
+(defun my-ibuffer-extension-type-contain-list (file-ext ext-list)
+  (dolist (ext ext-list)
+    (when (string-match ext file-ext)
+      (return t)
+      )
+    )
+  )
+(unless my-initialized
+  (add-to-list `ibuffer-fontification-alist `(30 (and buffer-file-name
+						      (file-name-extension buffer-file-name)
+						      (my-ibuffer-extension-type-contain-list
+						       (file-name-extension buffer-file-name) my-source-file-extention-list))
+						 font-lock-builtin-face)))
+
+(customize-set-value `ibuffer-default-sorting-mode 'major-mode)
 
 (provide 'init-misc)

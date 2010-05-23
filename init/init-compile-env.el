@@ -35,15 +35,23 @@
 (defvar use-misc-setting (and use-customize t))
 (defvar my-force-recompile-elisps nil)
 (defvar file-cache-path nil)
-
+(defvar my-initialized nil)
 (defgroup my nil "" :group 'my)
 
 (defvar my-elisp-path "~/elisps")
 
-(add-to-list 'load-path my-elisp-path)
-(add-to-list 'load-path (concat my-elisp-path "/init"))
+(unless my-initialized
+  (add-to-list 'load-path my-elisp-path)
+  (add-to-list 'load-path (concat my-elisp-path "/init"))
+  )
 
 (defvar init-load-elisp-list nil)
+
+;;----------------------------------------
+;; original key-binding-prefix
+;;----------------------------------------
+(global-unset-key (kbd "C-q"))
+(global-unset-key (kbd "C-l"))
 
 (require 'init-private)
 (require 'private) ;; 値の設定(非公開ファイル)

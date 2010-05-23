@@ -15,10 +15,6 @@
 ;;;-------------------------------
 ;;; path add
 ;;;-------------------------------
-
-;;;----------------------------------------
-;;; exec path add
-;;;----------------------------------------
 (defvar exec-path-list
   (list
    "~/bin"
@@ -67,12 +63,6 @@
 (when use-customize
 
   ;;----------------------------------------
-  ;; original key-binding-prefix
-  ;;----------------------------------------
-  (global-unset-key (kbd "C-q"))
-  (global-unset-key (kbd "C-l"))
-
-  ;;----------------------------------------
   ;; init etc
   ;;----------------------------------------
   (setq init-load-elisp-list
@@ -111,5 +101,7 @@
 
   (mapc 'load-elisp init-load-elisp-list)
   )
+
+(setq my-initialized t)
 
 (provide 'init)

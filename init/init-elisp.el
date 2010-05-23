@@ -29,7 +29,7 @@
 (add-hook 'emacs-lisp-mode-hook 'my-emacs-lisp-mode-hook)
 
 ;;;-------------------------------
-;;; eldoc lispのヘルプ表示
+;;; eldoc lisp
 ;;;-------------------------------
 (require 'eldoc)
 ;; (install-elisp-from-emacswiki "eldoc-extension.el")

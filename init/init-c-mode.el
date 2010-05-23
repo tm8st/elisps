@@ -120,10 +120,12 @@
 ;;; objective-c 用に追加
 ;;;-------------------------------
 (require 'find-file)
-(add-to-list 'cc-other-file-alist '("\\.h\\'"  (".m" ".mm" ".c" ".cpp")))
-(add-to-list 'cc-other-file-alist '("\\.m\\'"  (".h")))
-(add-to-list 'cc-other-file-alist '("\\.mm\\'"  (".h")))
-(add-to-list 'cc-other-file-alist '("\\.h\\'"  (".inl")))
+(unless my-initialized
+  (add-to-list 'cc-other-file-alist '("\\.h\\'"  (".m" ".mm" ".c" ".cpp")))
+  (add-to-list 'cc-other-file-alist '("\\.m\\'"  (".h")))
+  (add-to-list 'cc-other-file-alist '("\\.mm\\'"  (".h")))
+  (add-to-list 'cc-other-file-alist '("\\.h\\'"  (".inl")))
+  )
 
 ;;;----------------------------------------
 ;;;c-mode, c++-mode

@@ -19,8 +19,9 @@
 
 (customize-set-variable 'org-agenda-include-diary t)
 
-(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-
+(unless my-initialized
+  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+  )
 ;; remember も使う
 (org-remember-insinuate)
 
@@ -105,6 +106,7 @@ containing the properties `:guid' and `:item-full-text'."
 (setq org-feed-default-template "¥n* %h¥n  - %U¥n  - %a  - %description")
 
 (setq org-feed-alist nil)
+
 (add-to-list 'org-feed-alist
   '("hatena" "http://feeds.feedburner.com/hatena/b/hotentry"
     "~/org/rdf.org" "はてな"

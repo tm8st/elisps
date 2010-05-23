@@ -29,8 +29,10 @@
 (require 'redo)
 (global-set-key (kbd "C-/") 'redo)
 (global-set-key (kbd "C-S-z") 'redo)
-(global-set-key (kbd "C-x b") 'buffer-menu-other-window) ;;バッファウィンドウを別ウィンドウに出してフォーカスを写す
-(global-set-key (kbd "C-x C-b") 'buffer-menu) ;;バッファウィンドウを現在ウィンドウに出す
+;; (global-set-key (kbd "C-x b") 'buffer-menu-other-window) ;;バッファウィンドウを別ウィンドウに出してフォーカスを写す
+;; (global-set-key (kbd "C-x C-b") 'buffer-menu) ;;バッファウィンドウを現在ウィンドウに出す
+(global-set-key (kbd "C-x b") 'ibuffer-list-buffers) ;;バッファウィンドウを別ウィンドウに出してフォーカスを写す
+(global-set-key (kbd "C-x C-b") 'ibuffer) ;;バッファウィンドウを現在ウィンドウに出す
 
 (global-set-key (kbd "C-x d") 'dired-other-window)
 (global-set-key (kbd "C-x C-d") 'dired)

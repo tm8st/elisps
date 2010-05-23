@@ -61,14 +61,23 @@
 (defvar my-build-command-assoc-template-list nil)
 (defvar my-directory-name-assoc-template-list (list ))
 
-(when (my-is-mac)
-  (add-to-list 'my-directory-name-assoc-template-list
-	       (list
-		`("Download" "~/Downloads/")
-		`("Picture" "~/Pictures/")
-		`("Document" "~/Documents/")
-		)))
+(unless my-initialized
+  (progn
+    (when (my-is-mac)
+      (add-to-list 'my-directory-name-assoc-template-list
+		   (list
+		    `("Download" "~/Downloads/")
+		    `("Picture" "~/Pictures/")
+		    `("Document" "~/Documents/")
+		    )))
 
-(when (my-is-windows))
+    (when (my-is-windows))
+    ))
+
+(defvar my-source-file-extention-list `("scala" "inl" "uci" "cpp" "c" "h" "uc" "usf" "lisp" "el" "pl" "rb"))
+(defvar my-doc-file-extention-list `("howm" "org" "txt" "pdf" "ppt"))
+(defvar my-music-file-extention-list `("m4a" "mp3" "wav"))
+(defvar my-exe-file-extention-list `("air" "exe" "app"))
+(defvar my-archive-file-extention-list `("lzh" "tar" "tar.gz" "tgz" "tar.bz2" "dmg" "pkg" "jar" "zip" "tar"))
 
 (provide 'init-private)
