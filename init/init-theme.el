@@ -220,8 +220,9 @@ To check out the list, evaluate
   ;;-------------------------------
   (add-hook 'find-file-hook
 	    '(lambda ()
-	       (setq truncate-lines t)
-	       (setq truncate-partial-width-windows t)
+	       (unless (string-match "\\.txt$" (buffer-file-name))
+		 (setq truncate-lines t)
+		 (setq truncate-partial-width-windows t))
 	       )
 	    )
 
@@ -291,7 +292,7 @@ To check out the list, evaluate
   (when (my-is-windows)
     (customize-set-variable 'yalinum-width-base 0)
     (customize-set-variable 'yalinum-width-scale 1)
-    (customize-set-variable 'yalinum-line-number-display-format "%0$numd")
+    (customize-set-variable 'yalinum-line-number-display-format " %0$numd ")
     )
   )
 

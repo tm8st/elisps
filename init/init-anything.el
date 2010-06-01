@@ -35,7 +35,6 @@
 ;;;-------------------------------
 ;;; basic
 ;;;-------------------------------
-
 (setq anything-enable-shortcuts 'alphabet)
 (setq anything-idle-delay 0.2)			;; 候補作成後の表示までの待機時間
 (setq anything-input-idle-delay 0.2)		;; 検索結果表示更新までの待機時間
@@ -179,12 +178,12 @@
   anything-c-source-recentf
   anything-c-source-buffers+
   anything-c-source-files-in-current-dir+
-  anything-c-source-file-name-history
-  anything-c-source-bookmarks
-  anything-c-source-extended-command-history
-  anything-c-source-ffap-guesser
-  anything-c-source-emacs-commands
-  anything-c-source-colors
+  ;; anything-c-source-file-name-history
+  ;; anything-c-source-bookmarks
+  ;; anything-c-source-extended-command-history
+  ;; anything-c-source-ffap-guesser
+  ;; anything-c-source-emacs-commands
+  ;; anything-c-source-colors
   ))
 
 

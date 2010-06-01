@@ -18,7 +18,7 @@
 (gtags-make-complete-list)
 
 (defun my-gtags-update-tags ()
-  ""
+ ""
   (interactive)
   (message (concat "Update " (gtags-get-rootpath) " gtags files."))
   (start-process-shell-command "gtags-update" "*my-gtags-update*" (concat "cd " (gtags-get-rootpath) " && gtags -v"))

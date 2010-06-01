@@ -41,6 +41,7 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;;; shell-mode コマンド履歴
+(require 'shell)
 (define-key shell-mode-map (kbd "C-S-p") 'comint-previous-input)
 (define-key shell-mode-map (kbd "C-S-n") 'comint-next-input)
 (define-key shell-mode-map (kbd "C-c C-j") 'compilation-mode)

@@ -112,7 +112,7 @@
 (define-key dired-mode-map (kbd "C-c C-n") 'dired-create-directory)
 (define-key dired-mode-map (kbd "C-c C-r") 'dired-do-rename)
 (define-key dired-mode-map (kbd "C-c C-m") 'dired-do-copy)
-(define-key dired-mode-map (kbd "C-j") 'dired-do-shell-command)
+(define-key dired-mode-map (kbd "C-c C-z") 'dired-do-shell-command)
 (define-key dired-mode-map (kbd "C-c C-j") 'dired-do-async-shell-command)
 (define-key dired-mode-map (kbd "C-c C-d") 'dired-do-delete)
 (define-key dired-mode-map (kbd "C-c C-i") 'dired-mark-files-regexp)
@@ -165,5 +165,13 @@ well."
 ;; <		dired-prev-dirline
 ;; =		dired-diff
 ;; >		dired-next-dirline
+
+(require `dired)
+(require `dired-aux)
+
+(unless my-initialized
+(add-to-list 'dired-compress-file-suffixes
+  '("\\.zip\\'" "" "unzip"))
+  )
 
 (provide 'init-dired)
