@@ -12,14 +12,23 @@
 ;最小の ewm 設定例
 ;; (auto-install-from-url "http://github.com/kiwanami/emacs-window-layout/raw/master/window-layout.el")
 ;; (auto-install-from-url "http://github.com/kiwanami/emacs-window-manager/raw/master/ewm.el")
-(require 'ewm)
-(global-set-key (kbd "M-+") 'ewm:start-management)
+;; (require 'ewm)
+;; (global-set-key (kbd "M-+") 'ewm:start-management)
 
-(require 'detect-block)
-(detect-block t)
+;; (require 'detect-block)
+;; (detect-block t)
 
 ;; (auto-install-from-url "http://github.com/fukamachi/dont-type-twice-el/raw/master/dont-type-twice.el")
-(require 'dont-type-twice)
-(global-dont-type-twice t)
+;; (require 'dont-type-twice)
+;; (global-dont-type-twice t)
+
+;; (auto-install-from-url "http://github.com/tomoya/hiwin-mode/raw/master/hiwin.el")
+;; (install-elisp "http://github.com/tomoya/hiwin-mode/raw/master/hiwin.el")
+
+;; (require 'hiwin)
+;; (setq hiwin-color "gray13")
+;; (setq hiwin-color "darkslategreen")
+;; (hiwin-mode nil) ; 起動時から有効にしたい場合
+;; (hiwin-mode) ; 起動時から有効にしたい場合
 
 (provide 'init-misc)
