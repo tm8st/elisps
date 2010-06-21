@@ -46,7 +46,7 @@ To check out the list, evaluate
     ;; faces
     (dolist
 	(element
-	 '((default ((t ( :background "#005400" :foreground "gray70"))))
+	 '((default ((t ( :background "#005400" :foreground "gray74"))))
 	   (button ((t (:bold t))))
 	   (cursor ((t (:background "Orange"))))
 	   (highlight ((t (:background "Gray30"))))
@@ -57,24 +57,24 @@ To check out the list, evaluate
 				      :box (:line-width 1 :style released-button)))))
 	   (mode-line-inactive ((t (:background "gray10" :foreground "gray60"
 						:box (:line-width 1 :style released-button)))))
-	   (minibuffer-prompt ((t (:foreground "pink"))))
-	   (tool-bar ((t (:background "pink"
+	   (minibuffer-prompt ((t (:foreground "pink2"))))
+	   (tool-bar ((t (:background "pink2"
 				      :box (:line-width 1 :style released-button)))))
 	   (tooltip ((t (:background "lemon chiffon" :foreground "violet red"))))
 
 	   ;; font-lock
-	   (font-lock-builtin-face ((t (:foreground "turquoise1"))))
-	   (font-lock-comment-delimiter-face ((t (:foreground "green2"))))
-	   (font-lock-comment-face ((t (:foreground "green2"))))
-	   (font-lock-constant-face ((t (:foreground "Pink"))))
+	   (font-lock-builtin-face ((t (:foreground "turquoise3"))))
+	   (font-lock-comment-delimiter-face ((t (:foreground "GreenYellow"))))
+	   (font-lock-comment-face ((t (:foreground "GreenYellow"))))
+	   (font-lock-constant-face ((t (:foreground "Pink2"))))
 	   (font-lock-string-face ((t (:foreground "chocolate1"))))
 	   (font-lock-doc-face ((t (:foreground "coral"))))
-	   (font-lock-function-name-face ((t (:foreground "pink"))))
+	   (font-lock-function-name-face ((t (:foreground "pink2"))))
 	   (font-lock-variable-name-face ((t (:foreground "PaleTurquoise"))))
-	   (font-lock-keyword-face ((t (:foreground "LightBlue"))))
+	   (font-lock-keyword-face ((t (:foreground "CadetBlue1"))))
 	   (font-lock-negation-char-face ((t (:foreground "red"))))
-	   (font-lock-preprocessor-face ((t (:foreground "pink"))))
-	   (font-lock-type-face ((t (:foreground "pink"))))
+	   (font-lock-preprocessor-face ((t (:foreground "pink2"))))
+	   (font-lock-type-face ((t (:foreground "pink2"))))
 	   (font-lock-warning-face ((t (:bold t :foreground "red"))))
 	   
 	   ;; isearch
