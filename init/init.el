@@ -91,9 +91,10 @@
      "init-anything.el"
      "init-org.el"
      "init-popups.el"
-     "init-theme.el"
+     "init-window.el"
      "init-keybindings.el"
- 
+     "init-theme.el"
+     
      ;; "init-migemo.el"
      ;; "init-test.el"
      ))

@@ -44,45 +44,45 @@
 ;;;-------------------------------
 ;;; rsense
 ;;;-------------------------------
-(add-to-list 'load-path (concat my-rsense-home "/etc"))
-(require 'rsense nil t)
-(customize-set-value 'rsense-home my-rsense-home)
+;; (add-to-list 'load-path (concat my-rsense-home "/etc"))
+;; (require 'rsense nil t)
+;; (customize-set-value 'rsense-home my-rsense-home)
 
-;; $RSENSE_HOMEはRSenseをインストールしたディレクトリのフルパスに置き換えてください
-;; (setq rsense-home (expand-file-name "~/opt/rsense-0.2"))
-;; (setq rsense-home "~/opt/rsense-0.2")
-;; UNIX系システムでの例
-;; (setq rsense-home "/home/tomo/opt/rsense-0.2")
-;; あるいは
-;; (setq rsense-home (expand-file-name "~/opt/rsense-0.2"))
-;; Windowsでの例
-;; (setq rsense-home "C:\\rsense-0.2")
+;; ;; $RSENSE_HOMEはRSenseをインストールしたディレクトリのフルパスに置き換えてください
+;; ;; (setq rsense-home (expand-file-name "~/opt/rsense-0.2"))
+;; ;; (setq rsense-home "~/opt/rsense-0.2")
+;; ;; UNIX系システムでの例
+;; ;; (setq rsense-home "/home/tomo/opt/rsense-0.2")
+;; ;; あるいは
+;; ;; (setq rsense-home (expand-file-name "~/opt/rsense-0.2"))
+;; ;; Windowsでの例
+;; ;; (setq rsense-home "C:\\rsense-0.2")
 
-(add-hook 'ruby-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-o") 'ac-complete-rsense)
-	    (local-set-key (kbd "C-c C-o") 'rsense-type-help)
-	    )
-	  )
+;; (add-hook 'ruby-mode-hook
+;;           (lambda ()
+;;             (local-set-key (kbd "C-o") 'ac-complete-rsense)
+;; 	    (local-set-key (kbd "C-c C-o") 'rsense-type-help)
+;; 	    )
+;; 	  )
 
-(add-hook 'ruby-mode-hook
-          (lambda ()
-            (add-to-list 'ac-sources 'ac-source-rsense-method)
-            (add-to-list 'ac-sources 'ac-source-rsense-constant)))
+;; (add-hook 'ruby-mode-hook
+;;           (lambda ()
+;;             (add-to-list 'ac-sources 'ac-source-rsense-method)
+;;             (add-to-list 'ac-sources 'ac-source-rsense-constant)))
 
-;;;-------------------------------
-;;; reference
-;;;-------------------------------
-(defun refe2x (kw)
-  (interactive "sReFe2x: ")
-  (let ((coding-system-for-read 'euc-japan))
-    (with-current-buffer (get-buffer-create (concat "*refe2x:" kw "*"))
-      (when (zerop (buffer-size))
-        (call-process "refe2x" nil t t kw)
-        (diff-mode))
-      (setq minibuffer-scroll-window (get-buffer-window (current-buffer) t))
-      (goto-char (point-min))
-      (display-buffer (current-buffer)))))
+;; ;;;-------------------------------
+;; ;;; reference
+;; ;;;-------------------------------
+;; (defun refe2x (kw)
+;;   (interactive "sReFe2x: ")
+;;   (let ((coding-system-for-read 'euc-japan))
+;;     (with-current-buffer (get-buffer-create (concat "*refe2x:" kw "*"))
+;;       (when (zerop (buffer-size))
+;;         (call-process "refe2x" nil t t kw)
+;;         (diff-mode))
+;;       (setq minibuffer-scroll-window (get-buffer-window (current-buffer) t))
+;;       (goto-char (point-min))
+;;       (display-buffer (current-buffer)))))
 
 ;;;-------------------------------
 ;;; refe

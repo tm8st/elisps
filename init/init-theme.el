@@ -46,7 +46,7 @@ To check out the list, evaluate
     ;; faces
     (dolist
 	(element
-	 '((default ((t ( :background "gray4" :foreground "gray78"))))
+	 '((default ((t ( :background "#005400" :foreground "gray70"))))
 	   (button ((t (:bold t))))
 	   (cursor ((t (:background "Orange"))))
 	   (highlight ((t (:background "Gray30"))))
@@ -63,11 +63,11 @@ To check out the list, evaluate
 	   (tooltip ((t (:background "lemon chiffon" :foreground "violet red"))))
 
 	   ;; font-lock
-	   (font-lock-builtin-face ((t (:foreground "SkyBlue"))))
-	   (font-lock-comment-delimiter-face ((t (:foreground "green"))))
-	   (font-lock-comment-face ((t (:foreground "green"))))
+	   (font-lock-builtin-face ((t (:foreground "turquoise1"))))
+	   (font-lock-comment-delimiter-face ((t (:foreground "green2"))))
+	   (font-lock-comment-face ((t (:foreground "green2"))))
 	   (font-lock-constant-face ((t (:foreground "Pink"))))
-	   (font-lock-string-face ((t (:foreground "sandy brown"))))
+	   (font-lock-string-face ((t (:foreground "chocolate1"))))
 	   (font-lock-doc-face ((t (:foreground "coral"))))
 	   (font-lock-function-name-face ((t (:foreground "pink"))))
 	   (font-lock-variable-name-face ((t (:foreground "PaleTurquoise"))))
@@ -78,7 +78,7 @@ To check out the list, evaluate
 	   (font-lock-warning-face ((t (:bold t :foreground "red"))))
 	   
 	   ;; isearch
-	   (isearch ((t (:foreground "white" :background "dark green"))))
+	   (isearch ((t (:foreground "white" :background "darkgreen"))))
 	   (isearch-lazy-highlight-face ((t (:foreground "bisque"))))
 	   
 	   ;; ;; info-mode
@@ -101,6 +101,64 @@ To check out the list, evaluate
 	  (make-face face))
 	(face-spec-set face spec))))
 
+    ;; ;; faces
+    ;; (dolist
+    ;; 	(element
+    ;; 	 '((default ((t ( :background "gray4" :foreground "gray78"))))
+    ;; 	   (button ((t (:bold t))))
+    ;; 	   (cursor ((t (:background "Orange"))))
+    ;; 	   (highlight ((t (:background "Gray30"))))
+    ;; 	   (region ((t (:background "DarkOrange4"))))
+    ;; 	   (fringe ((t (:background "gray40"))))
+    ;; 	   (menu ((t (:background "moccasin" :foreground "black"))))
+    ;; 	   (modeline ((t (:background "gray25" :foreground "gray75"
+    ;; 				      :box (:line-width 1 :style released-button)))))
+    ;; 	   (mode-line-inactive ((t (:background "gray10" :foreground "gray60"
+    ;; 						:box (:line-width 1 :style released-button)))))
+    ;; 	   (minibuffer-prompt ((t (:foreground "pink"))))
+    ;; 	   (tool-bar ((t (:background "pink"
+    ;; 				      :box (:line-width 1 :style released-button)))))
+    ;; 	   (tooltip ((t (:background "lemon chiffon" :foreground "violet red"))))
+
+    ;; 	   ;; font-lock
+    ;; 	   (font-lock-builtin-face ((t (:foreground "SkyBlue"))))
+    ;; 	   (font-lock-comment-delimiter-face ((t (:foreground "green"))))
+    ;; 	   (font-lock-comment-face ((t (:foreground "green"))))
+    ;; 	   (font-lock-constant-face ((t (:foreground "Pink"))))
+    ;; 	   (font-lock-string-face ((t (:foreground "sandy brown"))))
+    ;; 	   (font-lock-doc-face ((t (:foreground "coral"))))
+    ;; 	   (font-lock-function-name-face ((t (:foreground "pink"))))
+    ;; 	   (font-lock-variable-name-face ((t (:foreground "PaleTurquoise"))))
+    ;; 	   (font-lock-keyword-face ((t (:foreground "LightBlue"))))
+    ;; 	   (font-lock-negation-char-face ((t (:foreground "red"))))
+    ;; 	   (font-lock-preprocessor-face ((t (:foreground "pink"))))
+    ;; 	   (font-lock-type-face ((t (:foreground "pink"))))
+    ;; 	   (font-lock-warning-face ((t (:bold t :foreground "red"))))
+	   
+    ;; 	   ;; isearch
+    ;; 	   (isearch ((t (:foreground "white" :background "dark green"))))
+    ;; 	   (isearch-lazy-highlight-face ((t (:foreground "bisque"))))
+	   
+    ;; 	   ;; ;; info-mode
+    ;; 	   ;; (header-line ((t (:background "deep pink" :foreground "pink"))))
+    ;; 	   ;; ;; calendar
+    ;; 	   ;; (calendar-today-face ((t (:foreground "lemon chiffon"))))
+    ;; 	   ;; (diary-face ((t (:bold t :foreground "yellow"))))
+    ;; 	   ;; (holiday-face ((t (:bold t :foreground "peru"))))
+    ;; 	   ;; ;; cperl
+    ;; 	   ;; (cperl-array-face ((t (:bold t :foreground "tomato"))))
+    ;; 	   ;; (cperl-hash-face  ((t (:bold t :foreground "chocolate"))))
+    ;; 	   ;; (cperl-nonoverridable-face  ((t (:foreground "red"))))
+    ;; 	   ;; ;; makefiles
+    ;; 	   ;; (makefile-shell-face  ((t (:background "linen"))))
+	   
+    ;; 	   ))
+    ;;   (let ((face (car element))
+    ;; 	    (spec (nth 1 element)))
+    ;; 	(unless (facep face)
+    ;; 	  (make-face face))
+    ;; 	(face-spec-set face spec))))
+
   ;;-------------------------------
   ;; Font setting
   ;;-------------------------------
@@ -108,12 +166,12 @@ To check out the list, evaluate
   (defvar my-font-size-base 100)
   (cond
    ((my-is-windows)	(setq my-font-size-base 120))
-   ((my-is-mac)		(setq my-font-size-base 150))
+   ((my-is-mac)	(setq my-font-size-base 150))
    )
 
   (when use-font-setting
     (set-face-attribute 'default nil
-			:family "VL Pゴシック"
+			;; :family "VL Pゴシック"
                         :height my-font-size-base)
 
     ;; (set-face-attribute 'default nil
@@ -132,7 +190,7 @@ To check out the list, evaluate
   ;; default frame setting
   (defvar my-frame-setting-list
     (list
-     '(background-color . "gray4") ;; 背景色
+     '(background-color . "#005400") ;; 背景色
      '(foreground-color . "gray75") ;; 文字色
      '(cursor-color . "orange") ;; カーソル色
      '(cursor-type . bar) ;; カーソル形状
@@ -192,8 +250,15 @@ To check out the list, evaluate
   ;; 現在行の強調 
   ;;-------------------------------
   (require 'hl-line)
+
+  (defface my-hl-line-face
+    '((t (:background "gray10")))
+    "Face for displaying line numbers in the display margin."
+    :group 'yalinum)
+
   ;; (customize-set-value 'hl-line-face 'underline)
-  (customize-set-value 'hl-line-face 'highlight)
+  (customize-set-value 'hl-line-face 'my-hl-line-face)
+  ;; (customize-set-value 'hl-line-face 'highlight)
   (global-hl-line-mode t)
   
   ;;-------------------------------
@@ -201,7 +266,7 @@ To check out the list, evaluate
   ;;-------------------------------
   (require 'paren)							;;対応する括弧を強調表示 & 対応しない場合は 警告する。
   (show-paren-mode t)							;;対応する括弧を表示する
-  (set-face-background 'show-paren-match "gray50")
+  (set-face-background 'show-paren-match "gray30")
   (custom-set-variables
    '(show-paren-ring-bell-on-mismatch t) ;;対応しない括弧を探す。
    '(show-paren-style 'mixed) ;;対応する括弧が画面内になければ、括弧内を強調表示。
@@ -284,10 +349,13 @@ To check out the list, evaluate
   (require 'yalinum)
   (global-yalinum-mode t)
 
+  (set-face-background 'yalinum-face "#005400")
+  (set-face-background 'yalinum-bar-face "#005400")
+  
   (when (my-is-mac)
     (customize-set-variable 'yalinum-width-base 1)
-    (customize-set-variable 'yalinum-width-scale 0.5)
-    (customize-set-variable 'yalinum-line-number-display-format " %0$numd")
+    (customize-set-variable 'yalinum-width-scale 0.9)
+    (customize-set-variable 'yalinum-line-number-display-format " %0$numd ")
     )
   (when (my-is-windows)
     (customize-set-variable 'yalinum-width-base 0)

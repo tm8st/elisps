@@ -333,7 +333,8 @@
 (global-set-key (kbd "+") (smartchr '("+" "++" "+++")))
 ;; (global-set-key (kbd "-") (smartchr '("-" "--" "---")))
 
-(global-set-key (kbd "C-,") `my-replace-string)
+;; (global-set-key (kbd "C-,") `my-replace-string)
+(global-set-key (kbd "C-,") '(lambda () (interactive) (insert "_")))
 
 ;;;-------------------------------
 ;;; windowナンバリング
