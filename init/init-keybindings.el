@@ -352,4 +352,15 @@
 ;; (global-set-key (kbd "C-l C-b C-8") 'select-window-8)
 ;; (global-set-key (kbd "C-l C-b C-9") 'select-window-9)
 
+;;;-------------------------------
+;;; region selectinon
+;;;-------------------------------
+(require 'thing-opt)
+(define-thing-commands)
+(global-unset-key (kbd "C-l C-j"))
+(global-set-key (kbd "C-l C-j C-w") 'mark-word*)
+(global-set-key (kbd "C-l C-j C-e") 'mark-sexp*)
+(global-set-key (kbd "C-l C-j C-s") 'mark-string*)
+(global-set-key (kbd "C-l C-j C-f") 'mark-defun*)
+
 (provide 'init-keybindings)

@@ -10,50 +10,37 @@
 ;;; Code:
 
 (eval-when-compile (require 'cl))
+(require 'easy-imenu-index-create)
 
 (defvar unreal-imenu-alist
 	`(
-	  ((symbol . "[S] ")
+	  ((caption . "[S] ")
 	   (regexp . "^[ \t]*state\\(()\\)?[ \t]*"))
-	  ((symbol . "[V] ")
+	  ((caption . "[V] ")
 	   (regexp . "^[ \t]*var"))
-	  ((symbol . "[F] ")
+	  ((caption . "[F] ")
 	   (regexp . "^[ \t]*\\(native \\)?\\(final \\)?\\(function\\)[ \t]+\\([a-zA-Z_]+[a-zA-Z0-9_]*\\)"))
-	  ((symbol . "[E] ")
+	  ((caption . "[E] ")
 	   (regexp . "^[ \t]*\\(event \\)\\([a-zA-Z_]+[a-zA-Z0-9_]*\\)"))	
-	  ((symbol . "[Class] ")
+	  ((caption . "[Class] ")
 	   (regexp . "^[ \t]*class[ \n\t]+\\([a-zA-Z_]+[a-zA-Z0-9_]*\\)"))
 	  ;; (regexp . "^[ \t]*class[ \n\t]+\\([a-zA-Z_]+[a-zA-Z0-9_]*\\)[ \t\n]*\\(:\\|{\\)"))
-	  ((symbol . "[Strucs] ")
+	  ((caption . "[Strucs] ")
 	   (regexp . "^[ \t]*struct[ \n\t]+\\([a-zA-Z_]+[a-zA-Z0-9_]*\\)[ \t\n]*[{]"))
 	  )
 	"use this when create index."
 	)
 
-(defun unreal-imenu-alist-attr (name iter)
-  (cdr (assq name iter)))
-
 (defun unreal-imenu-create-index ()
-  "get current buffer imenu index."
-  (save-excursion
-    ;; (set-buffer buffer)
-    (let ((index) (case-fold-search nil))
-      (dolist (iter unreal-imenu-alist)
-	(goto-char (point-min))
-	(while (re-search-forward (unreal-imenu-alist-attr 'regexp iter) nil t)
-	  (goto-char (match-beginning 0))
-	  (push (cons
-		 (concat (unreal-imenu-alist-attr 'symbol iter)
-			 (replace-regexp-in-string "[\n\t]" "" (thing-at-point 'line)))
-		 ;; buffer
-		 (point))
-		index)
-	  (goto-char (match-end 0))))
-      (nreverse index))))
+  ""
+  (interactive)
+  (easy-imenu-index-create-imenu-create-index unreal-imenu-alist))
 
 (defun unreal-imenu-set-for-current-buffer ()
   ""
   (interactive)
   (setq imenu-create-index-function 'unreal-imenu-create-index))
+  ;; (easy-imenu-index-create-imenu-set-for-current-buffer unreal-imenu-alist))
+  ;; (easy-imenu-index-create-imenu-set-for-current-buffer 'unreal-imenu-create-index))
 
 (provide 'unreal)

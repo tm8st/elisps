@@ -75,6 +75,7 @@
 ;; 複数の検索語や、特定のフェイスのみマッチ等の機能を有効にする
 ;; 詳細は http://www.bookshelf.jp/soft/meadow_50.html#SEC751
 (setq moccur-split-word t)
+;; (setq moccur-split-word nil)
 
 ;; migemoがrequireできる環境ならmigemoを使う
 (when (require 'migemo nil t) ;第三引数がnon-nilだとloadできなかった場合にエラーではなくnilを返す
@@ -89,6 +90,7 @@
       anything-c-moccur-enable-initial-pattern t) ; `anything-c-moccur-occur-by-moccur'の起動時にポイントの位置の単語を初期パターンにする
 
 ;;; キーバインドの割当(好みに合わせて設定してください)
+(global-set-key (kbd "C-q C-a C-l") 'anything-occur) ;バッファ内検索
 (global-set-key (kbd "C-q C-a C-o") 'anything-c-moccur-occur-by-moccur) ;バッファ内検索
 (global-set-key (kbd "C-q C-a C-u") 'anything-c-moccur-dmoccur) ;ディレクトリ
 (add-hook 'dired-mode-hook ;dired
@@ -217,8 +219,8 @@
 ;; (global-set-key (kbd "C-q C-a C-n") 'anything-next-condidate) ;; ひとつ次の候補を実行
 
 ;; locate検索
-(global-set-key (kbd "C-q C-a C-l") '(lambda () (interactive)
-				       (let ((anything-sources (list anything-c-source-locate))) (anything))))
+;; (global-set-key (kbd "C-q C-a C-l") '(lambda () (interactive)
+;; 				       (let ((anything-sources (list anything-c-source-locate))) (anything))))
 
 ;; bookmark検索
 (global-set-key (kbd "C-q C-a C-b") 'anything-for-bookmarks)
