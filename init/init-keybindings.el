@@ -22,6 +22,9 @@
 (global-set-key (kbd "C-x C-[") 'beginning-of-buffer)
 (global-set-key (kbd "C-x C-]") 'end-of-buffer)
 
+(global-set-key (kbd "C-l C-z") 'toggle-input-method)
+
+
 (global-set-key (kbd "C-h") 'delete-backward-char)
 ;; killではなくてdeleteに削除コマンドを変更
 (global-set-key (kbd "C-k") 'my-delete-line-forward)
@@ -165,7 +168,7 @@
 ;; (define-key global-map (kbd "C-l C-j") `(lambda () (interactive) (set-frame-parameter nil 'alpha 30)))
 ;; (define-key global-map (kbd "C-l C-h") `(lambda () (interactive) (set-frame-parameter nil 'alpha 100)))
 
-(define-key global-map (kbd "C-l C-j") `my-frame-alpha-setting)
+(define-key global-map (kbd "C-l C-\\") `my-frame-alpha-setting)
 
 ;; 重複行削除
 (load "uniq.el" t)
@@ -362,5 +365,28 @@
 (global-set-key (kbd "C-l C-j C-e") 'mark-sexp*)
 (global-set-key (kbd "C-l C-j C-s") 'mark-string*)
 (global-set-key (kbd "C-l C-j C-f") 'mark-defun*)
+
+;;;-------------------------------
+;;; vc keybind
+;;;-------------------------------
+;; C-x v v vc-next-action          次の動作 (commit)
+;; C-x v d vc-directory            登録されたファイルを表示
+;; C-x v = vc-diff                 diff表示
+;; C-x v u vc-revert-buffer        checkinしたものに戻す
+;; C-x v ~ vc-version-other-window 所定のrevを別のwindowへ
+;; C-x v l vc-print-log            log表示
+;; C-x v i vc-register             add
+;; C-x v h vc-insert-headers       version headerを挿入
+;; C-x v r vc-retrieve-snapshot    tag指定checkout
+;; C-x v s vc-create-snapshot      tagをつける
+;; C-x v c vc-cancel-version       保存されたrevを捨てる。
+;; C-x v a vc-update-change-log    GNUスタイルでchangeLogを更新
+
+;;;-------------------------------
+;;; 日本語入力
+;;;-------------------------------
+(require 'quail)
+(define-key quail-translation-keymap (kbd "C-h") 'quail-conversion-backward-char)
+(define-key quail-conversion-keymap (kbd "C-h") 'quail-conversion-backward-char)
 
 (provide 'init-keybindings)

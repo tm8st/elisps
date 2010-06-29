@@ -26,8 +26,9 @@
      )
    (when (my-is-mac)
      "/usr/X11/bin" "/usr/X11R6/bin"
+     "/softwares/scala/bin"
+     "~/softwares"
      )
-   "/softwares/scala/bin"
    ))
 
 (defun add-to-exec-path (dir)

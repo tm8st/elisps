@@ -167,6 +167,7 @@
 
 ;; 通常
 (global-set-key (kbd "C-@") `anything)
+(global-set-key (kbd "C-\\") `anything)
 
 ;; anything-auto-install
 (global-set-key (kbd "C-q C-a C-y")  'anything-auto-install-from-emacswiki)
@@ -255,6 +256,12 @@
  :name 'elisp
  :look-for '(".emacs") ; or
  :include-regexp '("\\.el$") ;or
+ )
+;; scala 登録
+(ap:add-project
+ :name 'scala
+ :look-for '("GTAGS" ".*\\.sln") ; or
+ :include-regexp '("\\.scala$") ;or
  )
 
 ;; ;; ruby 登録
