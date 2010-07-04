@@ -21,7 +21,7 @@
 (global-set-key (kbd "C-a") 'back-to-indentation)
 (global-set-key (kbd "C-x C-[") 'beginning-of-buffer)
 (global-set-key (kbd "C-x C-]") 'end-of-buffer)
-(global-set-key (kbd "C-l C-z") 'toggle-input-method)
+;; (global-set-key (kbd "C-l C-z") 'toggle-input-method)
 
 (global-set-key (kbd "C-j") 'newline-and-indent)
 

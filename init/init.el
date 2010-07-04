@@ -53,7 +53,11 @@
 
 (defun my-byte-recompile-directory (dir)
   (interactive "DByte recompile directory:")
-  (let (save-abbrevs) (byte-recompile-directory (expand-file-name dir) 0 my-force-recompile-elisps)))
+  (let (save-abbrevs)
+    (if my-force-recompile-elisps
+        (byte-recompile-directory (expand-file-name dir) 0 my-force-recompile-elisps)
+      (byte-recompile-directory (expand-file-name dir)))
+    ))
 
 (dolist (d load-path)
   (if (member (expand-file-name d) my-default-load-path) nil
@@ -104,11 +108,11 @@
      ;; "init-window.el"
 
      "init-keybindings.el"
-     
+
      ;; "init-migemo.el"
      ;; "init-test.el"
      ))
-  
+
   (defun load-elisp (file) "" (load file t nil))
 
   (mapc 'load-elisp init-load-elisp-list)

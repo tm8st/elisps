@@ -14,6 +14,13 @@
 ;; (customize-set-value 'skk-show-inline 'vertical)
 (customize-set-value 'skk-auto-insert-paren t)
 
+(when my-initialized
+  (add-hook 'find-file-hook
+	    '(lambda ()
+	       (skk-mode t)
+	       (skk-latin-mode-on)
+	       )))
+
 ;; (customize-set-value 'skk-show-tooltip nil)
 ;; (customize-set-value 'skk-tooltip-y-offset -30)
 ;; (customize-set-value 'skk-tooltip-parameters
@@ -27,7 +34,7 @@
 
 ;; かなモードであることを示すカーソル色。標準では、背景の明暗により "coral4" または "pink" を用います。
 (customize-set-value 'skk-cursor-hiragana-color "pink")
-
+ 
 ;; カナモードであることを示すカーソル色。標準では、背景の明暗により "forestgreen" または "green" を用います。
 (customize-set-value 'skk-cursor-katakana-color "red")
 ;; skk-cursor-katakana-color
@@ -37,7 +44,7 @@
 
 (require 'skk)
 
-(global-set-key "\C-x\C-j" 'skk-mode)
+(global-set-key (kbd "C-l C-h") 'skk-mode)
 (setq skk-tut-file "~/elisps/external/ddskk-20100704/etc/SKK.tut")
 
 ;; (unless skktut-latin-mode-map
