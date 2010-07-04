@@ -18,6 +18,7 @@
 (require 'anything-auto-install)
 (require 'anything-grep)
 (require 'anything-gtags)
+(require 'anything-etags)
 (require 'anything-extension)
 (require 'anything-complete)
 (require 'anything-kyr)
@@ -28,7 +29,6 @@
 ;; (require 'anything-kyr)
 ;; (require 'anything-kyr-config)
 ;; (require 'anything-adaptive)
-;; (require 'anything-etags)
 ;; (require 'anything-c-shell-history)
 ;; (require 'anything-include)
 

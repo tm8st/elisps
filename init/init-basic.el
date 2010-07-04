@@ -13,11 +13,19 @@
 ;;; 文字コード
 ;;;----------------------------------------
 ;; (set-language-environment 'Japanese)
-(prefer-coding-system 'utf-8)
+;; (prefer-coding-system 'utf-8)
+;; (set-terminal-coding-system 'japanese-shift-jis)
+
+;; (set-default-coding-systems 'utf-8)
+;; (prefer-coding-system 'utf-8)
+;; (prefer-coding-system 'utf-8-auto)
+(prefer-coding-system 'sjis)
+(set-terminal-coding-system 'sjis)
+
+;; (prefer-coding-system 'euc-jp)
 
 ;; (set-default-coding-systems 'euc-jp)
 ;; (set-buffer-file-coding-system 'euc-jp)
-;; (set-terminal-coding-system 'euc-jp)
 ;; (setq file-name-coding-system 'euc-jp)
 ;; (set-keyboard-coding-system 'euc-jp)
 ;; (set-clipboard-coding-system 'euc-jp)

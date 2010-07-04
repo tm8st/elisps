@@ -36,4 +36,21 @@
 (global-set-key (kbd "C-q C-p") 'gtags-pop-stack)
 (global-set-key (kbd "C-q C-h") 'gtags-find-tag)
 
+;;;-------------------------------
+;;; etags 
+;;;-------------------------------
+(require 'etags)
+(require 'anything-etags)
+(setq my-etags-command "ctags -R")
+;; (setq my-etags-command "find . -name \"*.*\" -a -type f -a -not -name \"*.svn*\" -a -not -name \"*.bin\" -a -not -name \"*.exe\" -exec etags -a {} +")
+(defun my-etags-update ()
+  (interactive)
+  (async-shell-command my-etags-command "*etags update*" nil)
+  )
+(global-set-key (kbd "C-q C-a C-e") 'anything-etags-select-from-here)
+(global-set-key (kbd "C-q C-a C-w") 'anything-etags-select)
+(global-set-key (kbd "C-q C-a C-n") 'anything-etags-select-from-here)
+(global-set-key (kbd "C-q C-a C-m") 'anything-etags-select)
+;; (global-set-key (kbd "C-l C-j C-u") 'my-etags-update)
+
 (provide 'init-gtags)

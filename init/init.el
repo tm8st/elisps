@@ -42,7 +42,8 @@
 ;;;----------------------------------------
 ;;; loadpath add all ~/elisps subdirs
 ;;;----------------------------------------
-(defvar my-default-load-path load-path)
+(defvar my-default-load-path nil)
+;; (defvar my-default-load-path load-path)
 
 (let ((dir (expand-file-name my-elisp-path)))
   (if (member dir load-path) nil
@@ -51,7 +52,8 @@
       (load (expand-file-name "subdirs.el") t t t))))
 
 (defun my-byte-recompile-directory (dir)
-  (let (save-abbrevs) (byte-recompile-directory (expand-file-name dir) nil my-force-recompile-elisps)))
+  (interactive "DByte recompile directory:")
+  (let (save-abbrevs) (byte-recompile-directory (expand-file-name dir) 0 my-force-recompile-elisps)))
 
 (dolist (d load-path)
   (if (member (expand-file-name d) my-default-load-path) nil
@@ -76,9 +78,11 @@
      "init-misc.el"
      "init-linum.el"
      "init-my-misc.el"
+
      "init-howm.el"
      "init-dired.el"
-     "init-shell.el"
+
+     ;; program lang
      "init-elisp.el"
      "init-c-mode.el"
      "init-ruby.el"
@@ -86,6 +90,7 @@
      "init-go.el"
      "init-scheme.el"
      "init-scala.el"
+
      "init-complete.el"
      "init-yasnippet.el"
      "init-gtags.el"
@@ -93,6 +98,8 @@
      "init-org.el"
      "init-popups.el"
      "init-theme.el"
+     "init-shell.el"
+     "init-skk.el"
 
      ;; "init-window.el"
 
