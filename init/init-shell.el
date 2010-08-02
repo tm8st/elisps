@@ -58,6 +58,8 @@
 (require 'comint)
 (require 'multi-shell)
 (setq multi-shell-use-ansi-color t)
+(setq multi-shell-revert-window-after-complete nil)
+
 ;; (setq multi-shell-bottom-window-height 12)
 ;; (setq multi-shell-buffer-name "*multi-shell*")
 

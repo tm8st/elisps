@@ -31,4 +31,18 @@
 ;; (hiwin-mode nil) ; 起動時から有効にしたい場合
 ;; (hiwin-mode) ; 起動時から有効にしたい場合
 
+(require 'text-translator)
+
+(global-set-key (kbd "C-q C-t C-t") 'text-translator-translate-by-auto-selection)
+(global-set-key (kbd "C-q C-t C-o") 'text-translator-all)
+;; (global-set-key (kbd "C-q C-t C-e") 'text-translator-all)
+;; (global-set-key (kbd "C-q C-t C-o") 'text-translator-all-by-auto-selection)
+
+;; (global-set-key (kbd "C-q C-t C-o") '(lambda () (text-translator-all ))
+;; (global-set-key (kbd "C-q C-t C-") 'text-translator-all)
+
+
+;; プリフィックスキーを変更する場合.
+;; (setq text-translator-prefix-key "\M-n")
+
 (provide 'init-misc)

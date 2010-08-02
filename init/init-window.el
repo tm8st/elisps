@@ -9,17 +9,17 @@
 
 ;;; Code:
 
-(require 'e2wm)
+;; (require 'e2wm)
 
-;; レイアウト
-(setq e2wm:c-code-recipe
-  '(| (:left-max-size 15)
-      (- (:upper-size-ratio 0.5)
-         files history)
-      (- (:upper-size-ratio 0.8)
-         (| (:right-max-size 30)
-            main imenu)
-         sub)))
+;; ;; レイアウト
+;; (setq e2wm:c-code-recipe
+;;   '(| (:left-max-size 15)
+;;       (- (:upper-size-ratio 0.5)
+;;          files history)
+;;       (- (:upper-size-ratio 0.8)
+;;          (| (:right-max-size 30)
+;;             main imenu)
+;;          sub)))
 
 ;; レイアウト
 ;; (setq e2wm:c-code-recipe
@@ -51,6 +51,7 @@
 ;;          ;;    main imenu)
 ;;          sub))
 
-(global-set-key (kbd "C-l C-l C-s") `e2wm:start-management)
-(global-set-key (kbd "C-l C-l C-e") `e2wm:stop-management)
+;; (global-set-key (kbd "C-l C-l C-s") `e2wm:start-management)
+;; (global-set-key (kbd "C-l C-l C-e") `e2wm:stop-management)
 
+(provide 'init-window)

@@ -168,7 +168,7 @@
 ;; (define-key global-map (kbd "C-l C-j") `(lambda () (interactive) (set-frame-parameter nil 'alpha 30)))
 ;; (define-key global-map (kbd "C-l C-h") `(lambda () (interactive) (set-frame-parameter nil 'alpha 100)))
 
-(define-key global-map (kbd "C-l C-\\") `my-frame-alpha-setting)
+(define-key global-map (kbd "C-l C-z") `my-frame-alpha-setting)
 
 ;; 重複行削除
 (load "uniq.el" t)
@@ -329,11 +329,14 @@
 ;; substitute `!!' with cursor
 
 (global-set-key (kbd "{") (smartchr '("{`!!'}" "{")))
-(global-set-key (kbd "}") (smartchr '("{`!!'}" "}")))
+(global-set-key (kbd "}") (smartchr '("}" "{`!!'}" "}")))
 (global-set-key (kbd "\"") (smartchr '("\"`!!'\"" "\"")))
 (global-set-key (kbd "(") (smartchr '("(`!!')" "(")))
 (global-set-key (kbd ")") (smartchr '(")" "(`!!')" )))
 (global-set-key (kbd "+") (smartchr '("+" "++" "+++")))
+(global-set-key (kbd "[") (smartchr '("[`!!']" "[" "]")))
+(global-set-key (kbd "]") (smartchr '("]" "[`!!']" "[]")))
+
 ;; (global-set-key (kbd "-") (smartchr '("-" "--" "---")))
 
 ;; (global-set-key (kbd "C-,") `my-replace-string)

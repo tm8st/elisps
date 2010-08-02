@@ -165,7 +165,8 @@ To check out the list, evaluate
   ;; ベースのフォントサイズ OSによって微妙に変更
   (defvar my-font-size-base 100)
   (cond
-   ((my-is-windows)	(setq my-font-size-base 120))
+   ((my-is-windows) (setq my-font-size-base 120))
+   ;; ((my-is-mac)	(setq my-font-size-base 300))
    ((my-is-mac)	(setq my-font-size-base 150))
    )
 

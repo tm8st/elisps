@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010 tm8st
 
 ;; Author: tm8st <tm8st@hotmail.co.jp>
-;; Keywords: init, funcs, auto-async-byte-compile
+;; Keywords: init, funcs, compile, env
 
 ;;; Commentary:
 

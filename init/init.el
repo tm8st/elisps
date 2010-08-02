@@ -94,6 +94,7 @@
      "init-go.el"
      "init-scheme.el"
      "init-scala.el"
+     "init-haskell.el"
 
      "init-complete.el"
      "init-yasnippet.el"
