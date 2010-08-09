@@ -78,8 +78,8 @@
 ;; (setq moccur-split-word nil)
 
 ;; migemoがrequireできる環境ならmigemoを使う
-(when (require 'migemo nil t) ;第三引数がnon-nilだとloadできなかった場合にエラーではなくnilを返す
-  (setq moccur-use-migemo t))
+;; (when (require 'migemo nil t) ;第三引数がnon-nilだとloadできなかった場合にエラーではなくnilを返す
+;;  (setq moccur-use-migemo t))
 
 ;;; anything-c-moccurの設定
 (require 'anything-c-moccur)

@@ -18,11 +18,17 @@
 
 (setq haskell-literate "haskell-mode")
 
-(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
-;; (add-hook 'haskell-mode-hook '(lambda () ()))
+(defun my-haskell-mode-hook ()
+  (interactive)
+  (turn-on-haskell-doc-mode)
+  (turn-on-haskell-indentation)
+  (turn-on-haskell-indent)
+  (turn-on-haskell-simple-indent)
+  (auto-complete-mode t)
+  (setq ac-sources '(ac-source-words-in-same-mode-buffers ac-source-imenu))
+  )
+
+(add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
 
 (define-key haskell-mode-map (kbd "C-m") `backward-word)
 (define-key haskell-indentation-mode-map (kbd "C-j") `haskell-newline-and-indent)

@@ -7,7 +7,7 @@
 
 ;;; Commentary:
 
-;;; Code:
+;;; Code:a
 
 ;;;----------------------------------------
 ;;; 文字コード
@@ -19,8 +19,10 @@
 ;; (set-default-coding-systems 'utf-8)
 ;; (prefer-coding-system 'utf-8)
 ;; (prefer-coding-system 'utf-8-auto)
-(prefer-coding-system 'sjis)
-(set-terminal-coding-system 'sjis)
+
+;; terminalで日本語表示がおかしくなったため。
+;; (prefer-coding-system 'sjis)
+;; (set-terminal-coding-system 'sjis)
 
 ;; (prefer-coding-system 'euc-jp)
 
@@ -67,6 +69,10 @@
    '(auto-install-update-emacswiki-package-name t)
    )
 
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+  (setq savehist-mode 1)
+  
   ;; C-kで行全体を削除
   (setq kill-whole-line t)
   (setq inhibit-startup-message t) ;;起動画面を表示しない
@@ -108,7 +114,11 @@
   ;; デフォルトは400000
   ;;   (setq gc-cons-threshold 500000)
   (setq gc-cons-threshold 3500000)  ;; あまり大きくするとGCに時間がかかるかも（CVS HEADの値にあわせたMax値。これ以上は意味ないらしい。）
-
+  (setq message-log-max 10000)
+  (setq message-log-max 10000)
+  (setq use-dialog-box nil)
+  (setq echo-keystrokes 0.1)
+  
   ;;(setq required-argument t) ;;file の最後は 必ず newline で終わる様にする。
   (setq line-number-display-limit 10000)   ;;表示される最大行数を大きくする。
   (mouse-wheel-mode t) ;;ホイールマウス
@@ -181,6 +191,9 @@
   (setq visible-bell t)
   ;; (setq visible-bell nil) ;;visible-bell は目が痛い。
 
+  ;; (require 'col-highlight)
+  ;;  (column-hight-mode 1)
+  
   ;;-------------------------------
   ;; マック用設定
   ;;-------------------------------

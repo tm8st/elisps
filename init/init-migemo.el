@@ -13,16 +13,16 @@
 ;;; migemo ローマ字で日本語検索
 ;;;-------------------------------
 (require 'migemo)
-;; (customize-set-value 'migemo-directory (expand-file-name "~/elip/misc/migemo-0.40"))
-;; (migemo-init)
+(customize-set-value 'migemo-directory (expand-file-name "~/elip/misc/migemo-0.40"))
+(migemo-init)
 
 ;; (setq migemo-command "ruby")
 
-;; 基本設定
-(setq migemo-command "CMIGEMO")
-(setq migemo-options '("-q" "--emacs"))
-;; migemo-dict のパスを指定
-(setq migemo-dictionary "~/bin/cmigemo-1.1.013/dict")
+;; ;; 基本設定
+;; (setq migemo-command "CMIGEMO")
+;; (setq migemo-options '("-q" "--emacs"))
+;; ;; migemo-dict のパスを指定
+;; (setq migemo-dictionary "~/bin/cmigemo-1.1.013/dict")
 
 ;; (load-library "migemo")
 ;; (setq migemo-directory "~/elip/migemo")

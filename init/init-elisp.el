@@ -110,13 +110,13 @@
     (auto-install-from-emacswiki (concat elisp ".el"))
     ))
 
-(defun my-auto-async-byte-compile-display-function (buf)
-  "ignore."
-  (interactive)
-  (display-message-or-buffer buf)
-  )
+;; (defun my-auto-async-byte-compile-display-function (buf)
+;;   "ignore."
+;;   (interactive)
+;;   (display-message-or-buffer buf)
+;;   )
 
-(customize-set-value 'auto-async-byte-compile-display-function 'my-auto-async-byte-compile-display-function)
+;; (customize-set-value 'auto-async-byte-compile-display-function 'my-auto-async-byte-compile-display-function)
 
 ;; (auto-install-from-url "http://nschum.de/src/emacs/highlight-parentheses/highlight-parentheses.el")
 ;; (auto-install-from-url "http://nschum.de/src/emacs/window-numbering-mode/window-numbering.el")

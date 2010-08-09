@@ -282,7 +282,7 @@
 (global-set-key (kbd "C-q C-c") 'comment-or-uncomment-region);;コメント付加、解除
 (global-set-key (kbd "C-q C-t C-a") 'align-regexp) ;;特定文字での整列
 (global-set-key (kbd "C-q C-t C-r")  'query-replace-regexp);;置換
-(global-set-key (kbd "C-q C-t C-o") 'overwrite-mode) ;;
+;; (global-set-key (kbd "C-q C-t C-o") 'overwrite-mode) ;;
 (global-set-key (kbd "C-q C-t C-t") 'tabify) ;; tab化
 (global-set-key (kbd "C-q C-t C-u") 'untabify) ;; untab化
 ;; (global-set-key (kbd "C-q C-t C-i")  'indent-region) ;;インデント
@@ -331,6 +331,8 @@
 (global-set-key (kbd "{") (smartchr '("{`!!'}" "{")))
 (global-set-key (kbd "}") (smartchr '("}" "{`!!'}" "}")))
 (global-set-key (kbd "\"") (smartchr '("\"`!!'\"" "\"")))
+(global-set-key (kbd "\'") (smartchr '("\'" "\'`!!'\'")))
+(global-set-key (kbd "`") (smartchr `("`" "``!!'`")))
 (global-set-key (kbd "(") (smartchr '("(`!!')" "(")))
 (global-set-key (kbd ")") (smartchr '(")" "(`!!')" )))
 (global-set-key (kbd "+") (smartchr '("+" "++" "+++")))
@@ -391,5 +393,10 @@
 (require 'quail)
 (define-key quail-translation-keymap (kbd "C-h") 'quail-conversion-backward-char)
 (define-key quail-conversion-keymap (kbd "C-h") 'quail-conversion-backward-char)
+
+;; (require 'sticky)
+;; (use-sticky-key ";" sticky-alist:ja)
+;; (use-sticky-key ";" sticky-alist:ja)
+
 
 (provide 'init-keybindings)
