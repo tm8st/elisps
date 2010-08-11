@@ -9,12 +9,19 @@
 
 ;;; Code:
 
-("tm8st.el"
+("http://github.com/tm8st/elisps/raw/master/tm8st-settings.el"
  (tm8st-all-settings
   virtual nil
   "this is a virtual package to build garaemon's emacs environment"
   (tm8st-anything-settings))
- 
+
+ (tm8st-global-settings
+  library
+  (cvs -z3 -d:pserver:anonymous@cvs.savannah.gnu.org:/sources/global co global)
+  "global is tags util."
+  nil
+  )
+
  (tm8st-anything-settings
   library
   (http://www.emacswiki.org/emacs/download/anything-gtags.el
@@ -27,11 +34,4 @@
   "settings for anything."
   (tm8st-global-settings) ;依存してる他のパッケージ
   (:byte-compile))
-
- (tm8st-global-settings
-  library
-  (cvs -z3 -d:pserver:anonymous@cvs.savannah.gnu.org:/sources/global co global)
-  "global is tags util."
-  nil
-  )
  )
