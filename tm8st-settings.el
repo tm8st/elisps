@@ -1,3 +1,14 @@
+;;; tm8st-settings.el --- tm8st emacs-settings package
+
+;; Copyright (C) 2010 tm8st
+
+;; Author: tm8st <tm8st@hotmail.co.jp>
+;; Keywords: emacs-settings
+;; creation time: Wed Aug 11 20:56:00 2010
+;;; Commentary:
+
+;;; Code:
+
 ("tm8st.el"
  (tm8st-all-settings
   virtual nil
@@ -14,6 +25,13 @@
    http://www.emacswiki.org/emacs/download/anything-project
    http://www.emacswiki.org/emacs/download/anything-howm)
   "settings for anything."
-  nil
+  (tm8st-global-settings) ;依存してる他のパッケージ
   (:byte-compile))
+
+ (tm8st-global-settings
+  library
+  (cvs -z3 -d:pserver:anonymous@cvs.savannah.gnu.org:/sources/global co global)
+  "global is tags util."
+  nil
+  )
  )
