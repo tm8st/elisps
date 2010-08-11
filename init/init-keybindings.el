@@ -71,6 +71,14 @@
 ;; (global-set-key (kbd "C-S-r") 'isearch-backward)
 ;;; インクリメンタルサーチ中にバックスペースが使えるように
 (define-key isearch-mode-map "\C-h" 'isearch-del-char)
+(defun my-isearch-exit-and-move-mark-string-begin ()
+  "インクリメンタルサーチを終了させて現在マークしている文字列の先頭へ"
+  (interactive)
+  (isearch-exit)
+  (backward-sexp))
+
+(define-key isearch-mode-map (kbd "C-j") 'my-isearch-exit-and-move-mark-string-begin)
+
 (global-set-key (kbd "C-.") 'my-just-one-space-toggle)
 
 (global-set-key (kbd "C-w") 'my-kill-region)
@@ -398,5 +406,8 @@
 ;; (use-sticky-key ";" sticky-alist:ja)
 ;; (use-sticky-key ";" sticky-alist:ja)
 
+(require 'follow)
+(global-set-key (kbd "C-l C-l") 'follow-delete-other-windows-and-split)
+;; (global-set-key (kbd "C-l C-l") 'follow-delete-other-windows-and-split)
 
 (provide 'init-keybindings)

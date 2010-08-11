@@ -109,11 +109,6 @@
   (setq scroll-conservatively 35
         scroll-margin 0
         scroll-step 1)
-
-  ;; garbage collectionの頻度を減らして、速度向上
-  ;; デフォルトは400000
-  ;;   (setq gc-cons-threshold 500000)
-  (setq gc-cons-threshold 3500000)  ;; あまり大きくするとGCに時間がかかるかも（CVS HEADの値にあわせたMax値。これ以上は意味ないらしい。）
   (setq message-log-max 10000)
   (setq message-log-max 10000)
   (setq use-dialog-box nil)
@@ -192,7 +187,7 @@
   ;; (setq visible-bell nil) ;;visible-bell は目が痛い。
 
   ;; (require 'col-highlight)
-  ;;  (column-hight-mode 1)
+  ;; (column-hight-mode 1)
   
   ;;-------------------------------
   ;; マック用設定

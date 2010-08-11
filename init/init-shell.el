@@ -9,22 +9,6 @@
 
 ;;; Code:
 
-;;;----------------------------------------
-;;; shell setting.
-;;;----------------------------------------
-(when (my-is-windows)
-  (setq shell-file-name "bash.exe")
-  (setq explicit-shell-file-name "bash.exe")
-  ;; (modify-coding-system-alist 'process ".*bash\.exe" '(undecided-dos . euc-japan))
-  ;; (modify-coding-system-alist 'process ".*sh\.exe" '(undecided-dos . euc-japan))
-  )
-(when (my-is-mac)
-  (setq shell-file-name "/bin/bash")
-  (setq explicit-shell-file-name "/bin/bash")
-  ;; (setq shell-file-name "/bin/bash")
-  ;; (setq explicit-shell-file-name "/bin/bash")
-  )
-
 (setq shell-command-switch "-lc") ;; デバッグ用
 
 ;; (setq shell-command-switch "--rcfile $HOME/.bashrc -c ")
@@ -36,8 +20,8 @@
 ;; (setq shell-command-switch "-xc") ;; 設定ファイルを読むためにログインにする？ デバッグ用
 
 ;; shell-mode 色設定
+(require 'comint)
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" "Set `ansi-color-for-comint-mode' to t." t)
-
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;;; shell-mode コマンド履歴
@@ -55,7 +39,6 @@
 ;;;-------------------------------
 ;;; multi-shell
 ;;;-------------------------------
-(require 'comint)
 (require 'multi-shell)
 (setq multi-shell-use-ansi-color t)
 (setq multi-shell-revert-window-after-complete nil)
@@ -85,5 +68,24 @@
 ;; (ad-activate 'ansi-term)
 
 (global-set-key (kbd "C-l C-s C-p") 'shell-pop)
+
+;;;----------------------------------------
+;;; shell setting.
+;;;----------------------------------------
+(when (my-is-windows)
+  (setq shell-file-name "bash.exe")
+  (setq explicit-shell-file-name "bash.exe")
+  (setq multi-shell-command "bash.exe")
+  ;; (modify-coding-system-alist 'process ".*bash\.exe" '(undecided-dos . euc-japan))
+  ;; (modify-coding-system-alist 'process ".*sh\.exe" '(undecided-dos . euc-japan))
+  )
+(when (my-is-mac)
+  (setq shell-file-name "/bin/bash")
+  (setq explicit-shell-file-name "/bin/bash")
+  (setq multi-shell-command "/bin/bash")
+  ;; (setq shell-file-name "/bin/bash")
+  ;; (setq explicit-shell-file-name "/bin/bash")
+  ;; (setq multi-shell-command "/usr/local/bin/zsh")
+  )
 
 (provide 'init-shell)

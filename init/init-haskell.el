@@ -9,6 +9,7 @@
 
 (require 'haskell-mode)
 (require 'haskell-indentation)
+(require 'inf-haskell)
 
 (setq auto-mode-alist
       (append
