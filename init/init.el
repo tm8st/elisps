@@ -129,9 +129,8 @@
 
      ;; "init-window.el"
 
+     "init-migemo.el"
      "init-keybindings.el"
-
-     ;; "init-migemo.el"
      ;; "init-test.el"
      ))
 

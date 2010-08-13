@@ -13,16 +13,15 @@
 ;;; migemo ローマ字で日本語検索
 ;;;-------------------------------
 (require 'migemo)
-(customize-set-value 'migemo-directory (expand-file-name "~/elip/misc/migemo-0.40"))
 (migemo-init)
 
-;; (setq migemo-command "ruby")
-
 ;; ;; 基本設定
-;; (setq migemo-command "CMIGEMO")
-;; (setq migemo-options '("-q" "--emacs"))
-;; ;; migemo-dict のパスを指定
-;; (setq migemo-dictionary "~/bin/cmigemo-1.1.013/dict")
+(setq migemo-command "cmigemo")
+(setq migemo-options '("-q" "--emacs"))
+;; migemo-dict のパスを指定
+(setq migemo-dictionary "/usr/local/share/migemo/euc-jp/migemo-dict")
+(setq migemo-user-dictionary nil)
+(setq migemo-regex-dictionary nil)
 
 ;; (load-library "migemo")
 ;; (setq migemo-directory "~/elip/migemo")
@@ -48,7 +47,9 @@
 ;; 辞書の文字コードを指定．
 ;; (setq migemo-coding-system 'utf-8)
 
-(global-set-key (kbd "C-S-s") 'migemo-forward)
-(global-set-key (kbd "C-S-r") 'migemo-backward)
+;; (global-set-key (kbd "C-s") 'migemo-forward)
+;; (global-set-key (kbd "C-r") 'migemo-backward)
+;; (global-set-key (kbd "C-S-s") 'migemo-forward)
+;; (global-set-key (kbd "C-S-r") 'migemo-backward)
 
 (provide 'init-migemo)
