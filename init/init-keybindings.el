@@ -21,25 +21,25 @@
 (global-set-key (kbd "C-a") 'back-to-indentation)
 (global-set-key (kbd "C-S-t") 'forward-sexp)
 (global-set-key (kbd "C-S-m") 'backward-sexp)
-
 (global-set-key (kbd "C-x C-[") 'beginning-of-buffer)
 (global-set-key (kbd "C-x C-]") 'end-of-buffer)
-;; (global-set-key (kbd "C-l C-z") 'toggle-input-method)
-
 (global-set-key (kbd "C-j") 'newline-and-indent)
-
 (global-set-key (kbd "C-h") 'delete-backward-char)
 ;; killではなくてdeleteに削除コマンドを変更
 (global-set-key (kbd "C-k") 'my-delete-line-forward)
+
+;; (global-set-key (kbd "C-l C-z") 'toggle-input-method) SKKへ
+
 (global-set-key (kbd "C-z") 'undo)
 (require 'redo)
 (global-set-key (kbd "C-/") 'redo)
 (global-set-key (kbd "C-S-z") 'redo)
-;; (global-set-key (kbd "C-x b") 'buffer-menu-other-window) ;;バッファウィンドウを別ウィンドウに出してフォーカスを写す
-;; (global-set-key (kbd "C-x C-b") 'buffer-menu) ;;バッファウィンドウを現在ウィンドウに出す
+
 (require 'ibuffer)
 (global-set-key (kbd "C-x b") 'ibuffer-list-buffers) ;;バッファウィンドウを別ウィンドウに出してフォーカスを写す
 (global-set-key (kbd "C-x C-b") 'ibuffer) ;;バッファウィンドウを現在ウィンドウに出す
+;; (global-set-key (kbd "C-x b") 'buffer-menu-other-window) ;;バッファウィンドウを別ウィンドウに出してフォーカスを写す
+;; (global-set-key (kbd "C-x C-b") 'buffer-menu) ;;バッファウィンドウを現在ウィンドウに出す
 
 (global-set-key (kbd "C-x d") 'dired-other-window)
 (global-set-key (kbd "C-x C-d") 'dired)
@@ -54,54 +54,31 @@
 
 (global-set-key (kbd "C-:") 'execute-extended-command)
 
-;;選択中の文字のisearch用
-(defadvice isearch-mode (around isearch-mode-default-string (forward &optional regexp op-fun recursive-edit word-p) activate)
-  (if (and transient-mark-mode mark-active)
-      (progn
-        (isearch-update-ring (buffer-substring-no-properties (mark) (point)))
-        (deactivate-mark)
-        ad-do-it
-        (if (not forward)
-            (isearch-repeat-backward)
-          (goto-char (mark))
-          (isearch-repeat-forward)))
-    ad-do-it))
+(global-set-key (kbd "C-s") 'isearch-forward-regexp)
+(global-set-key (kbd "C-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-S-s") 'isearch-forward)
+(global-set-key (kbd "C-S-r") 'isearch-backward)
 
-;; Use regex searches by default.
-(global-set-key (kbd "C-s") 'isearch-forward)
-(global-set-key (kbd "C-r") 'isearch-backward)
-(global-set-key (kbd "C-S-s") 'isearch-forward-regexp)
-(global-set-key (kbd "C-S-r") 'isearch-backward-regexp)
-;; (global-set-key (kbd "C-s") 'isearch-forward-regexp)
-;; (global-set-key (kbd "C-r") 'isearch-backward-regexp)
 ;;; インクリメンタルサーチ中にバックスペースが使えるように
 (define-key isearch-mode-map "\C-h" 'isearch-del-char)
+(defun my-isearch-exit-and-move-backward-sexp ()
+  "インクリメンタルサーチを終了させて現在位置からbackward-sexp"
+  (interactive)
+  (isearch-exit)
+  (backward-sexp))
 (defun my-isearch-exit-and-move-mark-string-begin ()
   "インクリメンタルサーチを終了させて現在マークしている文字列の先頭へ"
   (interactive)
   (isearch-exit)
-  (backward-sexp))
+  (goto-char (- (point) (length isearch-string))))
 
-(define-key isearch-mode-map (kbd "C-j") 'my-isearch-exit-and-move-mark-string-begin)
+(define-key isearch-mode-map (kbd "C-j") 'my-isearch-exit-and-move-backward-sexp)
+(define-key isearch-mode-map (kbd "C-u") 'my-isearch-exit-and-move-mark-string-begin)
 
 (global-set-key (kbd "C-.") 'my-just-one-space-toggle)
 
 (global-set-key (kbd "C-w") 'my-kill-region)
 ;; (global-set-key (kbd "C-S-w") 'my-delete-region-or-follow-kill-word)
-
-;;;-------------------------------
-;;; sequential-command-config
-;;;-------------------------------
-(require 'sequential-command)
-(define-sequential-command beginning-of-anything-seq
-  back-to-indentation beginning-of-line seq-return)
-
-(define-sequential-command end-of-anything-seq
-  end-of-line seq-return)
-
-(require 'sequential-command-config)
-(global-set-key (kbd "C-a") 'beginning-of-anything-seq)
-(global-set-key (kbd "C-e") 'end-of-anything-seq)
 
 ;;;-------------------------------
 ;;; 標準操作
@@ -140,27 +117,6 @@
 (global-set-key (kbd "C-l C-f C-o") 'my-save-all-buffers)
 
 ;;;-------------------------------
-;;; emacsから一発で検索
-;;;-------------------------------
-(require 'search-web)
-
-(defun my-search-web (engine)
-  (interactive)
-  (let ((word (read-string "search-word:")))
-    (browse-url
-     (format
-      (cdr (assoc engine search-engines)) (url-hexify-string word)))))
-
-;; google
-(define-key global-map (kbd "C-l C-s C-s") (lambda () (interactive) (my-search-web "g")))
-;; 英辞郎
-(define-key global-map (kbd "C-l C-s C-e") (lambda () (interactive) (my-search-web "eow")))
-;; AMAZON
-(define-key global-map (kbd "C-l C-s C-a") (lambda () (interactive) (my-search-web "zj")))
-;; udn
-(define-key global-map (kbd "C-l C-s C-u") (lambda () (interactive) (my-search-web "udn")))
-
-;;;-------------------------------
 ;;; frame alpha
 ;;;-------------------------------
 (defun my-frame-alpha-setting (arg)
@@ -184,17 +140,11 @@
 (define-key global-map (kbd "C-l C-z") `my-frame-alpha-setting)
 
 ;; 重複行削除
-(load "uniq.el" t)
+;; (require 'uniq)
 (define-key global-map (kbd "C-l C-t C-d") 'uniq-remove-dup-lines)
 
-;;;-------------------------------
-;;; Profile
-;;;-------------------------------
-(require `elp)
-
-(global-set-key (kbd "C-l C-a C-s") `elp-instrument-package)
-(global-set-key (kbd "C-l C-a C-r") `elp-results)
-(global-set-key (kbd "C-l C-a C-e") `elp-reset-all)
+;;大文字小文字変換
+(global-set-key (kbd "C-q C-u") 'my-changecase-word)
 
 ;;;-------------------------------
 ;;; mocccur 置換用
@@ -252,185 +202,27 @@
 (global-set-key (kbd "C-q C-b C-m") 'bookmark-set)
 (global-set-key (kbd "C-q C-b C-j") 'bookmark-jump)
 
-;; keyboard-macro
-;; C-x (
-;; キーボードマクロの定義を開始する （start-kbd-macro）。
-;; C-x )
-;; キーボードマクロの定義を終了する （end-kbd-macro）。
-;; C-x e
-;; もっとも最近のキーボードマクロを実行する （call-last-kbd-macro）。
-;; C-u C-x (
-;; もっとも最近のキーボードマクロを再実行したうえで、 その定義にキーを追加する。
-;; C-x q
-;; キーボードマクロの実行中にこの場所に到達したら、 実行の確認を求める （kbd-macro-query）。
-;; M-x name-last-kbd-macro
-;; もっとも最近に定義したキーボードマクロに（現在のEmacsセッションだけで有効な） コマンド名を与える。
-;; M-x insert-kbd-macro
-;; キーボードマクロの定義をLispコードとしてバッファに挿入する。
-;; C-x C-k
-;; まえに定義したキーボードマクロを編集する （edit-kbd-macro）。
-;; M-x apply-macro-to-region-lines
-;; リージョン内の各行に対して、最後に定義したキーボードマクロを実行する。
-
-(defun my-last-kbd-macro-name-and-insert ()
-  (interactive)
-  (let ((name (read-string "Macro Name is:")))
-    (name-last-kbd-macro name)
-    (insert-kbd-macro name)
-    ))
-
-(global-set-key (kbd "C-q C-8") 'start-kbd-macro)
-(global-set-key (kbd "C-q C-9") 'end-kbd-macro)
-(global-set-key (kbd "C-q C-0") 'my-last-kbd-macro-name-and-insert)
-
 (global-set-key (kbd "C-q C-t C-t") 'toggle-case-fold-search)
 
-(global-set-key (kbd "C-q C-q") 'quoted-insert)        ;;元のコマンド
-(global-set-key (kbd "C-q C-@") 'yalinum-mode)           ;;行番号表示
+(global-set-key (kbd "C-q C-q") 'quoted-insert)       ;;元のコマンド
+(global-set-key (kbd "C-q C-@") 'yalinum-mode)        ;;行番号表示
 (global-set-key (kbd "C-q C-w") 'copy-region-as-kill) ;;copy
-(global-set-key (kbd "C-q C-h") 'help-for-help)   ;;ヘルプ
+(global-set-key (kbd "C-q C-h") 'help-for-help)	      ;;ヘルプ
 (global-set-key (kbd "C-q C-;") 'view-mode)
 
 ;; text edit.
-(global-set-key (kbd "C-q C-c") 'comment-or-uncomment-region);;コメント付加、解除
-(global-set-key (kbd "C-q C-t C-a") 'align-regexp) ;;特定文字での整列
-(global-set-key (kbd "C-q C-t C-r")  'query-replace-regexp);;置換
+(global-set-key (kbd "C-q C-c") 'comment-or-uncomment-region) ;;コメント付加、解除
+(global-set-key (kbd "C-q C-t C-a") 'align-regexp)	      ;;特定文字での整列
+(global-set-key (kbd "C-q C-t C-r")  'query-replace-regexp)   ;;置換
 ;; (global-set-key (kbd "C-q C-t C-o") 'overwrite-mode) ;;
-(global-set-key (kbd "C-q C-t C-t") 'tabify) ;; tab化
-(global-set-key (kbd "C-q C-t C-u") 'untabify) ;; untab化
+(global-set-key (kbd "C-q C-t C-t") 'tabify)                  ;; tab化
+(global-set-key (kbd "C-q C-t C-u") 'untabify)                ;; untab化
 ;; (global-set-key (kbd "C-q C-t C-i")  'indent-region) ;;インデント
-
-;;大文字小文字変換
-(global-set-key (kbd "C-q C-u")  'my-changecase-word)
 
 ;; killではなくてdelete削除コマンド
 (global-set-key (kbd "C-q C-k")  'my-delete-line-backward)
 (global-set-key (kbd "C-q C-d C-d")  'my-delete-line)
 ;; Perform general cleanup.
 (global-set-key (kbd "C-q C-d C-b") 'clean-buffer-list)
-
-;;補完
-;; e(global-set-key "\C-o" 'dabbrev-expand)    ;;動的補間 anything へ変更
-;; (global-set-key "\C-q\C-o" 'expand-abbrev)     ;;略語展開 yasnippetへ変更
-;; (global-set-key "\C-xam"   'add-mode-abbrev)   ;;MODE略語の追加
-;; (global-set-key "\C-xag"   'add-global-abbrev) ;;GLOBAL略語の追加
-
-;;; jump function
-;; (require 'goto-chg)
-;; (global-set-key "\C-q\C-g\C-["  'goto-last-change)
-;; (global-set-key "\C-q\C-g\C-]"  'goto-last-change-reverse)
-
-;; ;;;google gtags (ggtags)
-;; (setq load-path (append (list (expand-file-name "~/elisps/ggtags")) load-path))
-;; (defvar gtags-use-gtags-mixer nil)
-;; (require 'gtags)
-
-;; (require 'sr-speedbar)
-;; (global-set-key (kbd "s-s") 'sr-speedbar-toggle)
-
-;; (require 'sr-speedbar)
-;; (global-set-key (kbd "C-q C-s") 'sr-speedbar-toggle)
-;; (setq sr-speedbar-width-x 60)
-;; (setq sr-speedbar-max-width 50)
-;; (setq sr-speedbar-right-side nil)
-
-;;-------------------------------
-;; smartchr
-;;-------------------------------
-(require 'smartchr)
-
-;; substitute `!!' with cursor
-
-(global-set-key (kbd "{") (smartchr '("{`!!'}" "{")))
-(global-set-key (kbd "}") (smartchr '("}" "{`!!'}" "}")))
-(global-set-key (kbd "\"") (smartchr '("\"`!!'\"" "\"")))
-(global-set-key (kbd "\'") (smartchr '("\'" "\'`!!'\'")))
-(global-set-key (kbd "`") (smartchr `("`" "``!!'`")))
-(global-set-key (kbd "(") (smartchr '("(`!!')" "(")))
-(global-set-key (kbd ")") (smartchr '(")" "(`!!')" )))
-(global-set-key (kbd "+") (smartchr '("+" "++" "+++")))
-(global-set-key (kbd "[") (smartchr '("[`!!']" "[" "]")))
-(global-set-key (kbd "]") (smartchr '("]" "[`!!']" "[]")))
-
-;; (global-set-key (kbd "-") (smartchr '("-" "--" "---")))
-
-;; (global-set-key (kbd "C-,") `my-replace-string)
-(global-set-key (kbd "C-,") '(lambda () (interactive) (insert "_")))
-
-;;;-------------------------------
-;;; windowナンバリング
-;;;-------------------------------
-(require 'window-numbering)
-(window-numbering-mode 1)
-;; (global-set-key (kbd "C-l C-b C-0") 'select-window-0)
-;; (global-set-key (kbd "C-l C-b C-1") 'select-window-1)
-;; (global-set-key (kbd "C-l C-b C-2") 'select-window-2)
-;; (global-set-key (kbd "C-l C-b C-3") 'select-window-3)
-;; (global-set-key (kbd "C-l C-b C-4") 'select-window-4)
-;; (global-set-key (kbd "C-l C-b C-5") 'select-window-5)
-;; (global-set-key (kbd "C-l C-b C-6") 'select-window-6)
-;; (global-set-key (kbd "C-l C-b C-7") 'select-window-7)
-;; (global-set-key (kbd "C-l C-b C-8") 'select-window-8)
-;; (global-set-key (kbd "C-l C-b C-9") 'select-window-9)
-
-;;;-------------------------------
-;;; region selectinon
-;;;-------------------------------
-(require 'thing-opt)
-(define-thing-commands)
-(global-unset-key (kbd "C-l C-j"))
-(global-set-key (kbd "C-l C-j C-w") 'mark-word*)
-(global-set-key (kbd "C-l C-j C-e") 'mark-sexp*)
-(global-set-key (kbd "C-l C-j C-s") 'mark-string*)
-(global-set-key (kbd "C-l C-j C-f") 'mark-defun*)
-
-;;;-------------------------------
-;;; vc keybind
-;;;-------------------------------
-;; C-x v v vc-next-action          次の動作 (commit)
-;; C-x v d vc-directory            登録されたファイルを表示
-;; C-x v = vc-diff                 diff表示
-;; C-x v u vc-revert-buffer        checkinしたものに戻す
-;; C-x v ~ vc-version-other-window 所定のrevを別のwindowへ
-;; C-x v l vc-print-log            log表示
-;; C-x v i vc-register             add
-;; C-x v h vc-insert-headers       version headerを挿入
-;; C-x v r vc-retrieve-snapshot    tag指定checkout
-;; C-x v s vc-create-snapshot      tagをつける
-;; C-x v c vc-cancel-version       保存されたrevを捨てる。
-;; C-x v a vc-update-change-log    GNUスタイルでchangeLogを更新
-
-;;;-------------------------------
-;;; 日本語入力
-;;;-------------------------------
-(require 'quail)
-(define-key quail-translation-keymap (kbd "C-h") 'quail-conversion-backward-char)
-(define-key quail-conversion-keymap (kbd "C-h") 'quail-conversion-backward-char)
-
-;; (require 'sticky)
-;; (use-sticky-key ";" sticky-alist:ja)
-;; (use-sticky-key ";" sticky-alist:ja)
-
-(require 'follow)
-(global-set-key (kbd "C-l C-l") 'follow-delete-other-windows-and-split)
-;; (global-set-key (kbd "C-l C-l") 'follow-delete-other-windows-and-split)
-
-;; (require 'fastnav)
-;; (global-set-key (kbd "C-S-f") 'jump-to-char-forward)
-;; (global-set-key (kbd "C-S-b") 'jump-to-char-backward)
-;; (global-set-key "\M-z" 'zap-up-to-char-forward)
-;; (global-set-key "\M-Z" 'zap-up-to-char-backward)
-;; (global-set-key "\M-s" 'jump-to-char-forward)
-;; (global-set-key "\M-S" 'jump-to-char-backward)
-;; (global-set-key "\M-r" 'replace-char-forward)
-;; (global-set-key "\M-R" 'replace-char-backward)
-;; (global-set-key "\M-i" 'insert-at-char-forward)
-;; (global-set-key "\M-I" 'insert-at-char-backward)
-;; (global-set-key "\M-j" 'execute-at-char-forward)
-;; (global-set-key "\M-J" 'execute-at-char-backward)
-;; (global-set-key "\M-k" 'delete-char-forward)
-;; (global-set-key "\M-K" 'delete-char-backward)
-;; (global-set-key "\M-m" 'mark-to-char-forward)
-;; (global-set-key "\M-M" 'mark-to-char-backward)
 
 (provide 'init-keybindings)

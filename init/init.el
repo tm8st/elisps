@@ -9,25 +9,30 @@
 
 ;;; Code:
 
+;; "void variable" エラー対策
+(defvar warning-suppress-types nil)
+
 ;;;-------------------------------
 ;;; emacs-settings
 ;;;-------------------------------
 (require 'cl)
 
-(defun update-emacs-settings-site-dir (dir)
-  "add dir and subdirectories of it to load-path"
-  (let ((dirs (remove-if-not #'file-directory-p
-                             (directory-files dir t "^[^.]"))))
-    (dolist (d dirs)
-      (update-emacs-settings-site-dir d))
-    (setq load-path (cons dir load-path))))
-(update-emacs-settings-site-dir "/Users/mys/emacs-settings/emacs.d")
-
-(load "/Users/mys/emacs-settings/init.el")
-(load-emacs-settings "/Users/mys/emacs-settings")
-
 ;; コンパイル用環境の設定 パスを変える場合はここと下のファイルの中の変数の値を変える必要がある
 (load "~/elisps/init/init-compile-env.el")
+(unless my-initialized
+  (progn
+    (defun update-emacs-settings-site-dir (dir)
+      "add dir and subdirectories of it to load-path"
+      (let ((dirs (remove-if-not #'file-directory-p
+				 (directory-files dir t "^[^.]"))))
+	(dolist (d dirs)
+	  (update-emacs-settings-site-dir d))
+	(setq load-path (cons dir load-path))))
+
+    (update-emacs-settings-site-dir "/Users/mys/emacs-settings/emacs.d")
+
+    (load "/Users/mys/emacs-settings/init.el")
+    (load-emacs-settings "/Users/mys/emacs-settings")))
 
 ;;;-------------------------------
 ;;; path add
@@ -45,8 +50,7 @@
      "/usr/X11/bin" "/usr/X11R6/bin"
      "/softwares/scala/bin"
      "~/softwares"
-     )
-   ))
+     )))
 
 (defun add-to-exec-path (dir)
   ""
@@ -73,18 +77,14 @@
   (let (save-abbrevs)
     (if my-force-recompile-elisps
         (byte-recompile-directory (expand-file-name dir) 0 my-force-recompile-elisps)
-      (byte-recompile-directory (expand-file-name dir)))
-    ))
+      (byte-recompile-directory (expand-file-name dir)))))
 
 (dolist (d load-path)
   (if (member (expand-file-name d) my-default-load-path) nil
-    (my-byte-recompile-directory d)
-    )
-  )
+    (my-byte-recompile-directory d)))
 
 (unless my-initialized
-  (add-to-list 'load-path "~/elisps/emacswikipages")
-  )
+  (add-to-list 'load-path "~/elisps/emacswikipages"))
 
 ;;;-------------------------------
 ;;; start customize
@@ -103,6 +103,8 @@
      "init-misc.el"
      "init-linum.el"
      "init-my-misc.el"
+
+     "init-keybindings.el"
 
      "init-howm.el"
      "init-dired.el"
@@ -126,11 +128,10 @@
      "init-theme.el"
      "init-shell.el"
      "init-skk.el"
+     "init-migemo.el"
 
      ;; "init-window.el"
 
-     "init-migemo.el"
-     "init-keybindings.el"
      ;; "init-test.el"
      ))
 
