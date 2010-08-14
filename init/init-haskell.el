@@ -19,21 +19,27 @@
 
 (setq haskell-literate "haskell-mode")
 
+;; haskellでauto-compoleを使う
+(add-to-list 'ac-modes 'haskell-mode)
+
 (defun my-haskell-mode-hook ()
   (interactive)
   (turn-on-haskell-doc-mode)
   (turn-on-haskell-indentation)
   (turn-on-haskell-indent)
   (turn-on-haskell-simple-indent)
+  (global-auto-complete-mode t)
   (auto-complete-mode t)
   (setq ac-sources '(ac-source-words-in-same-mode-buffers ac-source-imenu))
   )
 
 (add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
 
-(define-key haskell-mode-map (kbd "C-m") `backward-word)
-(define-key haskell-indentation-mode-map (kbd "C-j") `haskell-newline-and-indent)
-(define-key haskell-indentation-mode-map (kbd "C-m") `backward-word)
+(define-key haskell-mode-map (kbd "C-m") 'backward-word)
+(define-key haskell-mode-map (kbd "C-c C-h") 'haskell-hoogle)
+(define-key haskell-indentation-mode-map (kbd "C-j") 'haskell-newline-and-indent)
+(define-key haskell-indentation-mode-map (kbd "C-m") 'backward-word)
+
 ;; (define-key haskell-mode-map (kbd "C-m") `my-backward-word)
 ;; (define-key haskell-indentation-mode-map (kbd "C-") `haskell-newline-and-indent)
 

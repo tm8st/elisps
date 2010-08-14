@@ -17,7 +17,7 @@
 ;;;auto-complete setting
 ;;;-------------------------------------
 (require 'auto-complete)
-;; (require 'auto-complete-config)
+(require 'auto-complete-config)
 ;; (ac-config-default)
 (global-auto-complete-mode t)
 (customize-set-value 'ac-dictionary-directories (list "~/elisps/external/complete/m2ym-auto-complete-2c75fd1/dict"))

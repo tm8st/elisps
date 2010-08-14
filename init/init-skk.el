@@ -10,6 +10,8 @@
 ;;; Code:
 
 (customize-set-value 'skk-kakutei-key "\C-o")
+;; (customize-set-value 'skk-kakutei-key "\C-o")
+;; (customize-set-value 'skk-kakutei-key "\C-m")
 (customize-set-value 'skk-show-inline t)
 ;; (customize-set-value 'skk-show-inline 'vertical)
 (customize-set-value 'skk-auto-insert-paren t)

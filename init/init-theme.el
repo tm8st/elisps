@@ -350,9 +350,14 @@ To check out the list, evaluate
   (require 'yalinum)
   (global-yalinum-mode t)
 
+  (set-face-foreground 'yalinum-face "#aaaaaa")
+  (set-face-foreground 'yalinum-bar-face "#eeeeee")
+  
   (set-face-background 'yalinum-face "#005400")
   (set-face-background 'yalinum-bar-face "#005400")
   
+  (customize-set-variable 'yalinum-line-number-length-min 5)
+
   (when (my-is-mac)
     (customize-set-variable 'yalinum-width-base 1)
     (customize-set-variable 'yalinum-width-scale 0.9)

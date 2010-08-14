@@ -7,6 +7,12 @@
 (defvar yalinum-before-numbering-hook nil
   "Functions run in each buffer before line numbering starts.")
 
+(defcustom yalinum-line-number-length-min 1
+  "Line number length min."
+  :group 'yalinum
+  :type 'integer
+  )
+
 (defcustom yalinum-width-base 1
   "Line number length offset."
   :group 'yalinum
@@ -32,12 +38,12 @@
   :group 'convenience)
 
 (defface yalinum-face
-  '((t (:foreground "gray50" :background "black")))
+  '((t (:foreground "gray70" :background "black")))
   "Face for displaying line numbers in the display margin."
   :group 'yalinum)
 
 (defface yalinum-bar-face
-  '((t (:foreground "gray75" :background "gray20")))
+  '((t (:foreground "gray85" :background "gray20")))
   "Face for displaying scroll bar and line numbers in the display margin."
   :group 'yalinum)
 
@@ -131,7 +137,7 @@ and you have to scroll or press \\[recenter-top-bottom] to update the numbers."
 	      ;; replace format string.
 	      (replace-regexp-in-string
 	       "\\$num"
-	       (number-to-string w)
+	       (number-to-string (max w yalinum-line-number-length-min))
 	       yalinum-line-number-display-format)))
 	   (width 0)
 	   ;; calc bar variables.
