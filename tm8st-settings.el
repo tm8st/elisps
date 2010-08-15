@@ -17,21 +17,21 @@
 
  (tm8st-global-settings
   library
-  (cvs -z3 -d:pserver:anonymous@cvs.savannah.gnu.org:/sources/global co global)
+  (cvs :pserver:anonymous@cvs.savannah.gnu.org:/sources/global global)
   "global is tags util."
   nil
   )
 
- (tm8st-anything-settings
-  library
-  (http://www.emacswiki.org/emacs/download/anything-gtags.el
-   http://www.emacswiki.org/emacs/download/anything-etags.el
-   http://www.emacswiki.org/emacs/download/anything-extension.el
-   http://www.emacswiki.org/emacs/download/anything-kyr.el
-   http://www.emacswiki.org/emacs/download/anything-c-moccur
-   http://www.emacswiki.org/emacs/download/anything-project
-   http://www.emacswiki.org/emacs/download/anything-howm)
-  "settings for anything."
-  (tm8st-global-settings) ;依存してる他のパッケージ
-  (:byte-compile))
+ ;; (tm8st-anything-settings
+ ;;  library
+ ;;  (http://www.emacswiki.org/emacs/download/anything-gtags.el
+ ;;   http://www.emacswiki.org/emacs/download/anything-etags.el
+ ;;   http://www.emacswiki.org/emacs/download/anything-extension.el
+ ;;   http://www.emacswiki.org/emacs/download/anything-kyr.el
+ ;;   http://www.emacswiki.org/emacs/download/anything-c-moccur
+ ;;   http://www.emacswiki.org/emacs/download/anything-project
+ ;;   http://www.emacswiki.org/emacs/download/anything-howm)
+ ;;  "settings for anything."
+ ;;  (tm8st-global-settings) ;依存してる他のパッケージ
+ ;;  (:byte-compile))
  )
