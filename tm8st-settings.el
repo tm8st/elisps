@@ -13,15 +13,8 @@
 
  (tm8st-all-settings
   virtual nil
-  "this is a virtual package to build garaemon's emacs environment"
-  (tm8st-global-settings))
-
- (tm8st-global-settings
-  library
-  (cvs :pserver:anonymous@cvs.savannah.gnu.org:/sources/global global)
-  "global is tags util."
-  nil
-  )
+  "this is a virtual package to build tm8st's emacs environment"
+  (global))
 
   (global library
 	  (tar-ball ftp://ftp.gnu.org/pub/gnu/global/global-5.9.1.tar.gz)
