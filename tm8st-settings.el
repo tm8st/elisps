@@ -24,8 +24,10 @@
   )
 
   (global library
-      (tar-ball ftp://ftp.gnu.org/pub/gnu/global/global-5.9.1.tar.gz)
-      "this is source code tags util. for c, c++, java, etc")
+	  (tar-ball ftp://ftp.gnu.org/pub/gnu/global/global-5.9.1.tar.gz)
+	  "this is source code tags util. for c, c++, java, etc"
+	  nil
+	  ("cd global-5.9.1 && ./configure && make"))
  
  ;; (tm8st-anything-settings
  ;;  library
