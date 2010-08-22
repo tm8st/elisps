@@ -363,11 +363,17 @@
   (insert (file-name-directory (buffer-file-name (current-buffer)))))
 
 
-(defun my-get-this-file-name-non-extension ()
+(defun my-get-file-name-non-extension (file-name)
    (interactive)
   ""
-  (let ((name (file-name-nondirectory (buffer-file-name (current-buffer)))))
+  (let ((name (file-name-nondirectory file-name)))
     (substring name 0 (- (length name) (length (file-name-extension name "."))))))
+
+;; (defun my-get-this-file-name-non-extension ()
+;;    (interactive)
+;;   ""
+;;   (let ((name (file-name-nondirectory (buffer-file-name (current-buffer)))))
+;;     (substring name 0 (- (length name) (length (file-name-extension name "."))))))
 
 (defun my-insert-this-file-name ()
    (interactive)
@@ -592,5 +598,11 @@ default name is filename:current line string."
     (when (file-writable-p (buffer-file-name buf))
       (set-buffer buf)
       (save-buffer)))))
+
+(defun my-git-push ()
+  "git push command"
+  (interactive)
+  (async-shell-command "git push origin master" "*git push*")
+  )
 
 (provide 'init-my-misc)

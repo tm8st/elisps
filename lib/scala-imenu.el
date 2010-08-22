@@ -13,17 +13,17 @@
 
 (defvar scala-imenu-alist
 	`(
-	  ((symbol . "[Class] ")
+	  ((symbol . "[CLASS]  ")
 	   (regexp . "^[ \t]*\\(abstract \\)?\\(case \\)?class[ \n\t]+\\([a-zA-Z_]+[a-zA-Z0-9_]*\\)"))
-	  ((symbol . "[Object] ")
+	  ((symbol . "[OBJECT] ")
 	   (regexp . "^[ \t]*object[ \n\t]+\\([a-zA-Z_]+[a-zA-Z0-9_]*\\)"))
-	  ((symbol . "[trait] ")
+	  ((symbol . "[trait]  ")
 	   (regexp . "^[ \t]*trait[ \n\t]+\\([a-zA-Z_]+[a-zA-Z0-9_]*\\)"))
-	  ((symbol . "[F] ")
+	  ((symbol . "[F]      ")
 	   (regexp . "^[ \t]*\\(private \\)?\\(override \\)?\\(final \\)?\\(def \\)+\\([a-zA-Z_]+[a-zA-Z0-9_]*\\)"))
-	  ((symbol . "[VAL] ")
+	  ((symbol . "[VAL]    ")
 	   (regexp . "^[ \t]*\\(private \\)?\\var[ \t]"))
-	  ((symbol . "[VAR] ")
+	  ((symbol . "[VAR]    ")
 	   (regexp . "^[ \t]*\\(private \\)?\\val[ \t]"))
 	  )
 	"use this when create index."

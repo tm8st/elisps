@@ -16,7 +16,7 @@
 
 (setq auto-mode-alist
       (append
-       '(("\\.howm$" . text-mode))
+       '(("\\.howm$" . howm-mode))
        auto-mode-alist))
 
 ;;;-------------------------------

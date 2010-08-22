@@ -189,6 +189,13 @@
   ;; anything-c-source-colors
   ))
 
+;; buffer検索
+(defun anything-for-buffers ()
+  ""
+  (interactive)
+  (anything '(
+	      anything-c-source-buffers+
+	      )))
 
 ;;;-------------------------------
 ;;; anything-grep-find
@@ -223,8 +230,9 @@
 ;; (global-set-key (kbd "C-q C-a C-l") '(lambda () (interactive)
 ;; 				       (let ((anything-sources (list anything-c-source-locate))) (anything))))
 
-;; bookmark検索
-(global-set-key (kbd "C-q C-a C-b") 'anything-for-bookmarks)
+;; buffer検索
+;; (global-set-key (kbd "C-q C-a C-b") 'anything-for-bookmarks)
+(global-set-key (kbd "C-q C-a C-b") 'anything-for-buffers)
 
 (global-set-key (kbd "C-q C-a C-i") 'anything-for-imenu)
 (global-set-key (kbd "C-q C-a C-c") 'anything-for-customize)
@@ -361,5 +369,6 @@
   "Source for retrieving files matching the current input pattern with locate.")
 
 (global-set-key (kbd "C-q C-a C-s") 'anything-call-source)
+
 
 (provide 'init-anything)

@@ -15,6 +15,13 @@
 
 (when use-gui-setting
 
+  ;; (when (my-is-mac)
+  ;;   (set-default-font "Inconsolata-11")
+  ;;   (set-face-font 'variable-pitch "Inconsolata-11")
+  ;;   (set-fontset-font (frame-parameter nil 'font)
+  ;; 		      'japanese-jisx0208
+  ;; 		      '("Takaoゴシック" . "unicode-bmp")))
+  
   (defvar my-theme-foreground-colors
     (let ((candidates)
 	  ;; (red-limit #xe000)
@@ -167,7 +174,7 @@ To check out the list, evaluate
   (cond
    ((my-is-windows) (setq my-font-size-base 120))
    ;; ((my-is-mac)	(setq my-font-size-base 300))
-   ((my-is-mac)	(setq my-font-size-base 150))
+   ((my-is-mac)	(setq my-font-size-base 160))
    )
 
   (when use-font-setting
@@ -199,8 +206,8 @@ To check out the list, evaluate
      '(mouse-color . "white") ;; マウスカーソル色
      '(border-color . "white") ;; 縁の色
      '(vertical-scroll-bars . 'nil) ;; スクロールバー
-     '(width . 160) ;; 横幅(桁数)
-     '(height . 82)	;; 高さ(行数)
+     '(width . 260) ;; 横幅(桁数)
+     '(height . 160)	;; 高さ(行数)
      '(left . 0) ;; 左上隅 x 座標
      '(top . 0) ;; 左上隅 y 座標
      '(alpha . 100) ;; 透明度設定
@@ -350,8 +357,8 @@ To check out the list, evaluate
   (require 'yalinum)
   (global-yalinum-mode t)
 
-  (set-face-foreground 'yalinum-face "#aaaaaa")
-  (set-face-foreground 'yalinum-bar-face "#eeeeee")
+  (set-face-foreground 'yalinum-face "gray65")
+  (set-face-foreground 'yalinum-bar-face "gray85")
   
   (set-face-background 'yalinum-face "#005400")
   (set-face-background 'yalinum-bar-face "#005400")

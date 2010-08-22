@@ -221,4 +221,42 @@
 (global-set-key (kbd "C-q C-9") 'end-kbd-macro)
 (global-set-key (kbd "C-q C-0") 'my-last-kbd-macro-name-and-insert)
 
+
+(require 'doc-view)
+
+;;;-------------------------------
+;;; graphviz mode
+;;;-------------------------------
+(require 'graphviz-dot-mode)
+
+(add-to-list 'auto-mode-alist '("\\.dot$" . graphviz-dot-mode))
+(customize-set-variable 'graphviz-dot-indent-width 2)
+(add-hook 'graphviz-dot-mode-hook (setq tab-width 2))
+
+;; (define-key map "\r"       'electric-graphviz-dot-terminate-line)
+;; (define-key map "{"        'electric-graphviz-dot-open-brace)
+;; (define-key map "}"        'electric-graphviz-dot-close-brace)
+;; (define-key map ";"        'electric-graphviz-dot-semi)
+;; (define-key map "\M-\t"    'graphviz-dot-complete-word)
+;; (define-key map "\C-\M-q"  'graphviz-dot-indent-graph)
+;; (define-key map "\C-cp"    'graphviz-dot-preview)
+;; (define-key map "\C-cc"    'compile)
+;; (define-key map "\C-cv"    'graphviz-dot-view)
+;; (define-key map "\C-c\C-c" 'comment-region)
+;; (define-key map "\C-c\C-u" 'graphviz-dot-uncomment-region)
+
+(let ((map graphviz-dot-mode-map))
+	(define-key map (kbd "C-c C-p")    'graphviz-dot-preview)
+	(define-key map (kbd "C-c C-c")    'compile)
+	(define-key map (kbd "C-c C-e")    'my-graphbiz-execute)
+	(define-key map (kbd "C-c C-v")    'graphviz-dot-view)
+	(define-key map (kbd "C-m")  	   'my-backward-word)
+	)
+
+(defun my-graphbiz-execute ()
+  (interactive)
+	(compile (concat "dot -Tpng " buffer-file-name " > " (my-get-file-name-non-extension buffer-file-name) ".png"))
+	;; (graphviz-dot-preview)
+  )
+
 (provide 'init-misc)

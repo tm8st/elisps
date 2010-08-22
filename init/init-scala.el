@@ -52,6 +52,11 @@
   `my-forward-word)
 
 (when (my-is-mac)
+  (require 'ensime)
+  (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+
+  ;; MINI HOWTO: open .scala file. Ensure bin/server.sh is executable. M-x ensime
+
   ;; (require 'ensime)
   ;; (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 

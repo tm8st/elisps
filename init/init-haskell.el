@@ -24,6 +24,7 @@
 
 (defun my-haskell-mode-hook ()
   (interactive)
+  (setq indent-tabs-mode nil)
   (turn-on-haskell-doc-mode)
   (turn-on-haskell-indentation)
   (turn-on-haskell-indent)

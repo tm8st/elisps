@@ -4,6 +4,7 @@
 
 # 非公開設定ファイル
 private.el
+.DS_Store
 
 # サブディレクトリを含む hoge.elc ファイルの無視
 *.elc

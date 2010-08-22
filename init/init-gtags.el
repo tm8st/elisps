@@ -34,7 +34,7 @@
 (global-set-key (kbd "C-q C-f C-f") 'gtags-find-file)
 (global-set-key (kbd "C-q C-f C-s")'gtags-find-symbol)
 (global-set-key (kbd "C-q C-p") 'gtags-pop-stack)
-(global-set-key (kbd "C-q C-h") 'gtags-find-tag)
+;; (global-set-key (kbd "C-q C-h") 'gtags-find-tag)
 
 ;;;-------------------------------
 ;;; etags 

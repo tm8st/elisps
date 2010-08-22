@@ -86,4 +86,27 @@
 ;; 動的補完で無視する要素の正規表現
 (customize-set-value 'dabbrev-abbrev-skip-leading-regexp "-")
 
+(require 'pcomplete)
+
+(add-to-list 'ac-modes 'shell-mode)
+(add-to-list 'ac-modes 'eshell-mode)
+
+(ac-define-source pcomplete
+  '((candidates . pcomplete-completions)))
+
+(defun my-ac-eshell-mode ()
+  (setq ac-sources
+        '(ac-source-pcomplete
+          ac-source-words-in-buffer
+          ac-source-dictionary)))
+
+(add-hook 'eshell-mode-hook
+          (lambda ()
+            (my-ac-eshell-mode)
+            (define-key eshell-mode-map (kbd "C-o") 'auto-complete)))
+(add-hook 'shell-mode-hook
+          (lambda ()
+            (my-ac-eshell-mode)
+            (define-key shell-mode-map (kbd "C-o") 'auto-complete)))
+
 (provide 'init-complete)
