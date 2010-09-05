@@ -45,15 +45,13 @@
 ;; (setq text-translator-prefix-key "\M-n")
 
 ;;;-------------------------------
-;;; fastnav
+;;; yafastnav
 ;;;-------------------------------
-;; (require 'fastnav)
+(require 'yafastnav)
 ;; (global-set-key (kbd "C-S-f") 'jump-to-char-forward)
 ;; (global-set-key (kbd "C-S-b") 'jump-to-char-backward)
 ;; (global-set-key "\M-z" 'zap-up-to-char-forward)
 ;; (global-set-key "\M-Z" 'zap-up-to-char-backward)
-;; (global-set-key "\M-s" 'jump-to-char-forward)
-;; (global-set-key "\M-S" 'jump-to-char-backward)
 ;; (global-set-key "\M-r" 'replace-char-forward)
 ;; (global-set-key "\M-R" 'replace-char-backward)
 ;; (global-set-key "\M-i" 'insert-at-char-forward)
@@ -64,6 +62,19 @@
 ;; (global-set-key "\M-K" 'delete-char-backward)
 ;; (global-set-key "\M-m" 'mark-to-char-forward)
 ;; (global-set-key "\M-M" 'mark-to-char-backward)
+
+(setq ysfastnav-regex "\\n")
+
+(defun ysfastnav-jump ()
+	"現在画面内の任意の点(正規表現でリストアップ?)にジャンプする。"
+  (interactive "p")
+	
+	(forward-thing 'word)
+	(point)
+  )
+
+(global-set-key "\M-s" 'ysfastnav-jump)
+(global-set-key "\M-S" 'jump-to-char-backward)
 
 ;;-------------------------------
 ;; smartchr
@@ -258,5 +269,69 @@
 	(compile (concat "dot -Tpng " buffer-file-name " > " (my-get-file-name-non-extension buffer-file-name) ".png"))
 	;; (graphviz-dot-preview)
   )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 二分移動
+(defvar binary-move-fence-beginning nil)
+(defvar binary-move-fence-end nil)
+(defvar binary-move-overlay nil)
+(defvar binary-move-face-color "gray20")
+
+(defun binary-move-set-overlay ()
+  (if binary-move-overlay
+      (move-overlay binary-move-overlay 
+                    binary-move-fence-beginning binary-move-fence-end
+                    (current-buffer))
+    (progn
+      (setq binary-move-overlay
+            (make-overlay binary-move-fence-beginning 
+                          binary-move-fence-end))
+      (make-face 'binary-move-face)
+      (set-face-background 'binary-move-face binary-move-face-color)
+    )
+    (overlay-put binary-move-overlay 'face 'binary-move-face))
+  )
+
+(defun binary-move-forward (arg)
+  (interactive "p")
+  (while (save-excursion (beginning-of-line) (looking-at "[ \t]*$"))
+    (next-line))
+  (dotimes (i arg)
+    (if (or
+         (eq last-command 'binary-move-forward)
+         (eq last-command 'binary-move-backward))
+        (setq binary-move-fence-beginning (point))
+      (progn
+        (setq binary-move-fence-beginning (point))
+        (setq binary-move-fence-end (line-end-position))))
+    (binary-move-set-overlay)
+    (goto-char (/ (+ binary-move-fence-beginning 
+                     binary-move-fence-end) 2))
+    (if (= (1- arg) i) (sit-for 1.0))
+    (move-overlay binary-move-overlay (point) (point))
+    ))
+
+(defun binary-move-backward (arg)
+  (interactive "p")
+  (while (save-excursion (beginning-of-line) (looking-at "[ \t]*$"))
+    (previous-line)
+    (end-of-line))
+  (dotimes (i arg)
+    (if (or
+         (eq last-command 'binary-move-forward)
+         (eq last-command 'binary-move-backward))
+        (setq binary-move-fence-end (point))
+      (progn
+        (setq binary-move-fence-beginning (line-beginning-position))
+        (setq binary-move-fence-end (point))))
+    (binary-move-set-overlay)
+    (goto-char (/ (+ binary-move-fence-beginning 
+                     binary-move-fence-end) 2))
+    (if (= (1- arg) i) (sit-for 1.0))
+    (move-overlay binary-move-overlay (point) (point))
+    ))
+
+(global-set-key (kbd "C-S->")  'binary-move-forward)
+(global-set-key (kbd "C-S-<")  'binary-move-backward)
 
 (provide 'init-misc)

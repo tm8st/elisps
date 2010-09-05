@@ -41,6 +41,9 @@
 ;; (set-clipboard-coding-system 'utf-8)
 ;; (set-file-name-coding-system 'utf-8)
 
+(setq delete-by-moving-to-trash t)
+;; (setq trash-directory "~/trash")
+
 ;;;----------------------------------------
 ;;; misc-setting
 ;;;----------------------------------------

@@ -32,7 +32,7 @@
    (concat "scala " (buffer-file-name (current-buffer)))))
 
 (defun my-scala-mode-hook ()
-  (auto-complete-mode t)
+  ;; (auto-complete-mode t)
   (scala-imenu-set-for-current-buffer)
   (hl-line-mode t)
   (highlight-parentheses-mode t)
@@ -52,8 +52,8 @@
   `my-forward-word)
 
 (when (my-is-mac)
-  (require 'ensime)
-  (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+  ;; (require 'ensime)
+  ;; (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
   ;; MINI HOWTO: open .scala file. Ensure bin/server.sh is executable. M-x ensime
 
