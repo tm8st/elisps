@@ -63,17 +63,9 @@
 ;; (global-set-key "\M-m" 'mark-to-char-forward)
 ;; (global-set-key "\M-M" 'mark-to-char-backward)
 
-(setq ysfastnav-regex "\\n")
-
-(defun ysfastnav-jump ()
-	"現在画面内の任意の点(正規表現でリストアップ?)にジャンプする。"
-  (interactive "p")
-	
-	(forward-thing 'word)
-	(point)
-  )
-
-(global-set-key "\M-s" 'ysfastnav-jump)
+(global-set-key (kbd "C-l C-l") 'yafastnav-jump-to-current-screen)
+(global-set-key (kbd "C-l C-.") 'yafastnav-jump-to-forward)
+(global-set-key (kbd "C-l C-r") 'yafastnav-jump-to-backward)
 (global-set-key "\M-S" 'jump-to-char-backward)
 
 ;;-------------------------------
@@ -197,7 +189,7 @@
 ;; (use-sticky-key ";" sticky-alist:ja)
 
 (require 'follow)
-(global-set-key (kbd "C-l C-l") 'follow-delete-other-windows-and-split)
+;; (global-set-key (kbd "C-l C-l") 'follow-delete-other-windows-and-split)
 ;; (global-set-key (kbd "C-l C-l") 'follow-delete-other-windows-and-split)
 
 ;;;-------------------------------

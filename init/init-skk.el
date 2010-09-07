@@ -61,8 +61,8 @@
 (setq skk-show-annotation t)
 
 ;;isearch-mode ‚É“ü‚Á‚½Û‚É©“®“I‚É skk-isearch ‚ğ‹N“®
-(add-hook 'isearch-mode-hook 'skk-isearch-mode-setup)
-(add-hook 'isearch-mode-end-hook 'skk-isearch-mode-cleanup)
+;; (add-hook 'isearch-mode-hook 'skk-isearch-mode-setup)
+;; (add-hook 'isearch-mode-end-hook 'skk-isearch-mode-cleanup)
 
 ;; •ÏŠ·Œó•âˆê——‚Æ’ß (annotation) ‚ğ GUI ‚Û‚­•\¦‚·‚é
 (setq skk-show-tooltip t)
