@@ -18,8 +18,6 @@
 ;;;-------------------------------
 ;;; emacs-settings
 ;;;-------------------------------
-(defvar my-is-use-emacs-settings nil)
-
 (when my-is-use-emacs-settings
 
   (require 'cl)
@@ -89,8 +87,8 @@
   (if (member (expand-file-name d) my-default-load-path) nil
     (my-byte-recompile-directory d)))
 
-;; (unless my-initialized
-;;  (add-to-list 'load-path "~/elisps/emacswikipages" t))
+(unless my-initialized
+ (add-to-list 'load-path "~/emacswikipages" t))
 
 ;;;-------------------------------
 ;;; start customize
@@ -137,18 +135,18 @@
      ;; "init-test.el"
      ))
 
-	(when my-use-shecme-mode
-		(add-to-list 'init-load-elisp-list "init-scheme.el")
-		)
-	(when my-use-scala-mode
-		(add-to-list 'init-load-elisp-list "init-scala.el")
-		)
-	(when my-use-haskell-mode
-		(add-to-list 'init-load-elisp-list "init-haskell.el")
-		)
-	(when my-use-org-mode
-		(add-to-list 'init-load-elisp-list "init-org.el")
-		)
+  (when my-use-shecme-mode
+    (add-to-list 'init-load-elisp-list "init-scheme.el")
+    )
+  (when my-use-scala-mode
+    (add-to-list 'init-load-elisp-list "init-scala.el")
+    )
+  (when my-use-haskell-mode
+    (add-to-list 'init-load-elisp-list "init-haskell.el")
+    )
+  (when my-use-org-mode
+    (add-to-list 'init-load-elisp-list "init-org.el")
+    )
 
   (defun load-elisp (file) "" (load file t nil))
 

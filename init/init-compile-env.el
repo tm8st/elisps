@@ -38,6 +38,7 @@
 (defvar my-initialized nil)
 (defgroup my nil "" :group 'my)
 
+(defvar my-is-use-emacs-settings t)
 (defvar my-use-shecme-mode t)
 (defvar my-use-scala-mode t)
 (defvar my-use-haskell-mode t)

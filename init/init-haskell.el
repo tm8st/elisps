@@ -20,6 +20,7 @@
 (setq haskell-literate "haskell-mode")
 
 ;; haskellでauto-compoleを使う
+(require 'auto-complete)
 (add-to-list 'ac-modes 'haskell-mode)
 
 (defun my-haskell-mode-hook ()
