@@ -9,6 +9,7 @@
 
 ;;; Code:
 
+(require 'imenu)
 (require 'complete) ;; 強力な補完機能を使う
 (partial-completion-mode 1)
 (icomplete-mode t) ;; 補完可能なものを随時表示

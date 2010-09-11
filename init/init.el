@@ -12,27 +12,33 @@
 ;; "void variable" エラー対策
 (defvar warning-suppress-types nil)
 
+;; コンパイル用環境の設定 パスを変える場合はここと下のファイルの中の変数の値を変える必要がある
+(load "~/elisps/init/init-compile-env.el")
+
 ;;;-------------------------------
 ;;; emacs-settings
 ;;;-------------------------------
-(require 'cl)
+(defvar my-is-use-emacs-settings nil)
 
-;; コンパイル用環境の設定 パスを変える場合はここと下のファイルの中の変数の値を変える必要がある
-(load "~/elisps/init/init-compile-env.el")
-(unless my-initialized
-  (progn
-    (defun update-emacs-settings-site-dir (dir)
-      "add dir and subdirectories of it to load-path"
-      (let ((dirs (remove-if-not #'file-directory-p
-				 (directory-files dir t "^[^.]"))))
-	(dolist (d dirs)
-	  (update-emacs-settings-site-dir d))
-	(setq load-path (cons dir load-path))))
+(when my-is-use-emacs-settings
 
-    (update-emacs-settings-site-dir "/Users/mys/emacs-settings/emacs.d")
+  (require 'cl)
 
-    (load "/Users/mys/emacs-settings/init.el")
-    (load-emacs-settings "/Users/mys/emacs-settings")))
+  (unless my-initialized
+    (progn
+      (defun update-emacs-settings-site-dir (dir)
+	"add dir and subdirectories of it to load-path"
+	(let ((dirs (remove-if-not #'file-directory-p
+				   (directory-files dir t "^[^.]"))))
+	  (dolist (d dirs)
+	    (update-emacs-settings-site-dir d))
+	  (setq load-path (cons dir load-path))))
+
+      (update-emacs-settings-site-dir "/Users/mys/emacs-settings/emacs.d")
+
+      (load "/Users/mys/emacs-settings/init.el")
+      (load-emacs-settings "/Users/mys/emacs-settings")))
+  )
 
 ;;;-------------------------------
 ;;; path add
@@ -83,8 +89,8 @@
   (if (member (expand-file-name d) my-default-load-path) nil
     (my-byte-recompile-directory d)))
 
-(unless my-initialized
-  (add-to-list 'load-path "~/elisps/emacswikipages"))
+;; (unless my-initialized
+;;  (add-to-list 'load-path "~/elisps/emacswikipages" t))
 
 ;;;-------------------------------
 ;;; start customize
@@ -115,15 +121,11 @@
      "init-ruby.el"
      "init-lua.el"
      "init-go.el"
-     "init-scheme.el"
-     "init-scala.el"
-     "init-haskell.el"
 
      "init-complete.el"
      "init-yasnippet.el"
      "init-gtags.el"
      "init-anything.el"
-     "init-org.el"
      "init-popups.el"
      "init-theme.el"
      "init-shell.el"
@@ -134,6 +136,19 @@
 
      ;; "init-test.el"
      ))
+
+	(when my-use-shecme-mode
+		(add-to-list 'init-load-elisp-list "init-scheme.el")
+		)
+	(when my-use-scala-mode
+		(add-to-list 'init-load-elisp-list "init-scala.el")
+		)
+	(when my-use-haskell-mode
+		(add-to-list 'init-load-elisp-list "init-haskell.el")
+		)
+	(when my-use-org-mode
+		(add-to-list 'init-load-elisp-list "init-org.el")
+		)
 
   (defun load-elisp (file) "" (load file t nil))
 

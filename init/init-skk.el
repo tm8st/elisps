@@ -58,7 +58,7 @@
 (setq skk-show-japanese-menu t)
 
 ;; •ÏŠ·‚É’ß (annotation) ‚ğ•\¦‚·‚é
-(setq skk-show-annotation nil)
+(setq skk-show-annotation t)
 
 ;;isearch-mode ‚É“ü‚Á‚½Û‚É©“®“I‚É skk-isearch ‚ğ‹N“®
 ;; (add-hook 'isearch-mode-hook 'skk-isearch-mode-setup)

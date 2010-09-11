@@ -38,6 +38,11 @@
 (defvar my-initialized nil)
 (defgroup my nil "" :group 'my)
 
+(defvar my-use-shecme-mode t)
+(defvar my-use-scala-mode t)
+(defvar my-use-haskell-mode t)
+(defvar my-use-org-mode t)
+
 (defvar my-elisp-path "~/elisps")
 
 (unless my-initialized
