@@ -35,6 +35,8 @@
 ;; (global-set-key (kbd "C-l C-.") 'yafastnav-jump-to-forward)
 ;; (global-set-key (kbd "C-l C-r") 'yafastnav-jump-to-backward)
 
+;; TODO: yafastnav-jump-to-backwardがうしろ向き検索になっていないのに対処
+
 ;;; Code:
 
 ;;;-------------------------------
@@ -72,7 +74,6 @@
   '((((class color)) (:foreground "LightPink" :background "gray15"))
     (t ()))
   "ショートカットキーの表示用フェース型"
-  :type 'face
   :group 'yafastnav
   )
 
@@ -88,33 +89,36 @@
 (defun yafastnav-jump-to-current-screen ()
   "現在の画面内の候補へのジャンプ"
  (interactive)
- (save-excursion
-   (move-to-window-line -1)
-   (setq bottom (point))
-   (move-to-window-line 0)
-   (setq top (point))
-   )
- (yafastnav-jump-to-between-point top bottom nil))
+ (let ((top) (bottom))
+   (save-excursion
+     (move-to-window-line -1)
+     (setq bottom (point))
+     (move-to-window-line 0)
+     (setq top (point))
+     )
+   (yafastnav-jump-to-between-point top bottom nil)))
 
 (defun yafastnav-jump-to-forward ()
   "現在の画面内のカーソル位置の下の候補へのジャンプ"
  (interactive)
- (save-excursion
-   (setq top (point))
-   (move-to-window-line -1)
-   (setq bottom (point))
-   )
- (yafastnav-jump-to-between-point top bottom nil))
+ (let ((top) (bottom))
+   (save-excursion
+     (setq top (point))
+     (move-to-window-line -1)
+     (setq bottom (point))
+     )
+   (yafastnav-jump-to-between-point top bottom nil)))
 
 (defun yafastnav-jump-to-backward ()
   "現在の画面内のカーソル位置の上の候補へのジャンプ"
  (interactive)
- (save-excursion
-   (setq top (point))
-   (move-to-window-line 0)
-   (setq bottom (point))
-   )
- (yafastnav-jump-to-between-point top bottom t))
+ (let ((top) (bottom))
+   (save-excursion
+     (setq bottom (point))
+     (move-to-window-line 0)
+     (setq top (point))
+     )
+   (yafastnav-jump-to-between-point top bottom nil)))
 
 (defun yafastnav-jump-to-between-point (top bottom backward)
   "候補の作成とジャンプの実行"
