@@ -50,6 +50,7 @@
 (require 'yafastnav)
 
 (global-set-key (kbd "C--") 'yafastnav-jump-to-current-screen)
+(global-set-key (kbd "C-l C-SPC") 'yafastnav-jump-to-current-screen)
 (global-set-key (kbd "C-l C-l") 'yafastnav-jump-to-current-screen)
 (global-set-key (kbd "C-l C-h") 'yafastnav-jump-to-current-screen)
 (global-set-key (kbd "C-l C-.") 'yafastnav-jump-to-forward)

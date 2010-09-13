@@ -11,7 +11,7 @@
 
 (require 'skk)
 
-(global-set-key (kbd "C-l C-SPC") 'skk-mode)
+(global-set-key (kbd "C-q C-o") 'skk-mode)
 (setq skk-tut-file "~/elisps/external/ddskk-20100704/etc/SKK.tut")
 
 (customize-set-value 'skk-kakutei-key "\C-o")
@@ -58,14 +58,14 @@
 (setq skk-show-japanese-menu t)
 
 ;; 変換時に注釈 (annotation) を表示する
-(setq skk-show-annotation t)
+(setq skk-show-annotation nil)
 
 ;;isearch-mode に入った際に自動的に skk-isearch を起動
 ;; (add-hook 'isearch-mode-hook 'skk-isearch-mode-setup)
 ;; (add-hook 'isearch-mode-end-hook 'skk-isearch-mode-cleanup)
 
 ;; 変換候補一覧と注釈 (annotation) を GUI ぽく表示する
-(setq skk-show-tooltip t)
+(setq skk-show-tooltip nil)
 
 ;;tooltipの色設定
 (when skk-show-tooltip

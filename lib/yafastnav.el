@@ -1,32 +1,32 @@
-;;; yafastnav.el --- yet another fastnav
+;;; yafastnav.el --- yet another fastnav.
 
 ;; Copyright (C) 2010 tm8st
 
-;; Author: tm8st <tm8st@hotmail.co.jp>
+;; Author: tm8st <http://twitter.com/tm8st>
 ;; Version: 0.1
-;; Keywords: cursor-move, fastnav
-;; creation time: Thu Sep  9 00:34:17 2010
+;; Keywords: convenience, move, fastnav
 
-;; This program is free software; you can redistribute it and/or modify
+;; This file is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
+;; the Free Software Foundation; either version 2, or (at your option)
+;; any later version.
 
-;; This program is distributed in the hope that it will be useful,
+;; This file is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+
 ;; GNU General Public License for more details.
 
-;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; You should have received a  copy of the GNU General Public License
+;; along with GNU Emacs; see the file COPYING.	If not, write to the
+;; Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+;; Boston, MA 02110-1301, USA.
 
 ;;; Commentary:
 
-;; 表示されているウィンドウ内への移動の高速化のための拡張。
-;; 最初に正規表現で候補をリストアップし、ショートカットキーと対応づけ、
+;; 表示されているウィンドウ内への移動の高速化のための拡張です。
+;; 最初に正規表現で画面内の候補をリストアップし、ショートカットキーと対応づけ、
 ;; 次にショートカットキーを入力することで、目的の位置へ移動する。
-
-;; 現状テスト実装のため、C-gでキャンセルした場合にちゃんとoverlayが消えなかったりします。
 
 ;; 設定例
 
@@ -37,40 +37,54 @@
 
 ;;; Code:
 
-;; variables
+;;;-------------------------------
+;;; variables
+;;;-------------------------------
+(defgroup yafastnav nil "yet another fastnav."
+  :prefix "yafastnav-" :group 'convenience)
 
-(defvar yafastnav-regex "\\([a-zA-Z_?]+[a-zA-Z0-9_-]+\\)"
-  "リストアップする要素の指定用正規表現")
+(defcustom yafastnav-regex
+  "\\([a-zA-Z_?]+[a-zA-Z0-9_-]+\\)"
+  "リストアップする要素の指定用正規表現"
+  :type 'regexp
+  :group 'yafastnav)
 
-(defvar yafastnav-shortcut-keys
+(defcustom yafastnav-shortcut-keys
      '(
        ?a ?s ?d ?f ?g ?h ?k ?l
        ?q ?w ?e ?r ?t ?y ?u ?i ?o ?p
        ?z ?x ?c ?v ?b ?n ?m
+       ?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9 ?0
+       ?, ?. ?: ?- ?^ ?;
        ?A ?S ?D ?F ?G ?H ?K ?L
        ?Q ?W ?E ?R ?T ?Y ?U ?I ?O ?P
        ?Z ?X ?C ?V ?B ?N ?M
-       ?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9 ?0
-       ?, ?. ?; ?: ?- ?^
        ?< ?> ?@ ?\* ?\[ ?\]
        ?\\ ?\  ?' ?( ?) ?=
        ?~ ?| ?{ ?} ?\_
        ?! ?\" ?# ?$ ?% ?&
        )
      "要素の選択用ショートカットキーリスト"
-     )
+     :type 'string
+     :group 'yafastnav)
 
-(defface yafastnav-shortcut-key-face
+(defface yafastnav-shortcut-key-face-type
   '((((class color)) (:foreground "LightPink" :background "gray15"))
     (t ()))
-  ""
-  ;; :group 'howm-faces
+  "ショートカットキーの表示用フェース型"
+  :type 'face
+  :group 'yafastnav
   )
-(defvar yafastnav-shortcut-key-face 'yafastnav-shortcut-key-face
-  "")
 
-;; functions
+(defcustom yafastnav-shortcut-key-face 'yafastnav-shortcut-key-face-type
+  "ショートカットキーの表示用フェース"
+  :type 'face
+  :group 'yafastnav
+  )
 
+;;;-------------------------------
+;;; functions 
+;;;-------------------------------
 (defun yafastnav-jump-to-current-screen ()
   "現在の画面内の候補へのジャンプ"
  (interactive)
@@ -80,7 +94,7 @@
    (move-to-window-line 0)
    (setq top (point))
    )
- (yafastnav-jump-to-between-point top bottom))
+ (yafastnav-jump-to-between-point top bottom nil))
 
 (defun yafastnav-jump-to-forward ()
   "現在の画面内のカーソル位置の下の候補へのジャンプ"
@@ -90,28 +104,33 @@
    (move-to-window-line -1)
    (setq bottom (point))
    )
- (yafastnav-jump-to-between-point top bottom))
+ (yafastnav-jump-to-between-point top bottom nil))
 
 (defun yafastnav-jump-to-backward ()
   "現在の画面内のカーソル位置の上の候補へのジャンプ"
  (interactive)
  (save-excursion
-   (setq bottom (point))
-   (move-to-window-line 0)
    (setq top (point))
+   (move-to-window-line 0)
+   (setq bottom (point))
    )
- (yafastnav-jump-to-between-point top bottom))
+ (yafastnav-jump-to-between-point top bottom t))
 
-(defun yafastnav-jump-to-between-point (top bottom)
+(defun yafastnav-jump-to-between-point (top bottom backward)
   "候補の作成とジャンプの実行"
- (let ((ret) (ls nil) (index 0))
+ (let ((ret) (ls nil) (ols nil) (index 0) (start-pos (point)))
    (save-excursion
+     (setq inhibit-quit t) ;; C-g で中断されないように
      (goto-char top)
      (while
 	 (and
-	  (re-search-forward yafastnav-regex bottom 1)
+	  (if backward
+	      (re-search-backward yafastnav-regex bottom 1)
+	    (re-search-forward yafastnav-regex bottom 1))
 	  (nth index yafastnav-shortcut-keys)
-	  (<= (point) bottom))
+	  (if backward
+	      (>= (point) bottom)
+	    (<= (point) bottom)))
        (save-excursion
 	 (goto-char (match-beginning 0))
 	 (add-to-list 'ls
@@ -124,19 +143,20 @@
 			 (char-to-string
 			  (nth index yafastnav-shortcut-keys))
 			 'face yafastnav-shortcut-key-face))
-	   ;; 'face lazy-highlight-face))
 	   (overlay-put ov 'window (selected-window))
            (overlay-put ov 'width 1)
            (overlay-put ov 'priority 100)
+	   (add-to-list 'ols ov)
            )
          (setq index (1+ index))))
-     (setq ret
-      (if (> index 0)
-	  (assoc (read-char "jump to?:") ls)
-	nil)))
+     (goto-char start-pos)
+     (when (> index 0)
+       (setq ret (assoc (read-event "jump to?:") ls))
+	nil))
    (if ret
-     (goto-char (nth 1 ret))
-     (message "none candidate.")))
- (remove-overlays))
-
+       (goto-char (nth 1 ret))
+     (message "none candidate."))
+   (dolist (o ols)
+    (delete-overlay o))))
+  
 (provide 'yafastnav)

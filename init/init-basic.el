@@ -115,7 +115,7 @@
   (setq message-log-max 10000)
   (setq message-log-max 10000)
   (setq use-dialog-box nil)
-  (setq echo-keystrokes 0.1)
+  (setq echo-keystrokes 0.2)
   
   ;;(setq required-argument t) ;;file の最後は 必ず newline で終わる様にする。
   (setq line-number-display-limit 10000)   ;;表示される最大行数を大きくする。
