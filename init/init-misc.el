@@ -315,4 +315,8 @@
 (global-set-key (kbd "C-S->")  'binary-move-forward)
 (global-set-key (kbd "C-S-<")  'binary-move-backward)
 
+(require 'inertial-scroll)
+(inertias-global-minor-mode 1)
+;; (inertias-global-minor-mode 0)
+
 (provide 'init-misc)

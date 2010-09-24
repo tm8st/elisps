@@ -239,6 +239,7 @@ To check out the list, evaluate
                 (emacs-version)))
 
   (display-time) ;;モードラインに時間を表示する
+  (setq display-time-day-and-date t)
   (which-function-mode 1)  ;;現在の関数名をモードラインに表示
   (column-number-mode t) ;;カーソルの位置が何文字目かを表示する
   (line-number-mode t) ;;カーソルの位置が何行目かを表示する
