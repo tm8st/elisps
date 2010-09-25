@@ -41,13 +41,14 @@
 ;; (set-clipboard-coding-system 'utf-8)
 ;; (set-file-name-coding-system 'utf-8)
 
-(setq delete-by-moving-to-trash t)
-;; (setq trash-directory "~/trash")
-
 ;;;----------------------------------------
 ;;; misc-setting
 ;;;----------------------------------------
 (when use-misc-setting
+
+  ;; 削除ファイルをゴミ箱へ
+  (setq delete-by-moving-to-trash t)
+  ;; (setq trash-directory "~/trash")
 
   ;;--------------------------------
   ;; filecache
@@ -72,23 +73,15 @@
    '(auto-install-update-emacswiki-package-name t)
    )
 
-  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-
   (setq savehist-mode 1)
-  
-  ;; C-kで行全体を削除
-  (setq kill-whole-line t)
+  (setq kill-whole-line t) ;; C-kで行全体を削除
   (setq inhibit-startup-message t) ;;起動画面を表示しない
   (setq enable-recursive-minibuffers t)	;;前のcommandが終了してなくても、新しいcommandを実行可能にする。
   (global-auto-revert-mode t) ;;file が他から変更されたら、自動的に読み込む。
   (delete-selection-mode 1) ;; マーク選択中の編集コマンドの挙動変更
   (set-default 'indicate-empty-lines t)
-  ;;  (autoload 'kill-summary "kill-summary" nil t)
   (setq ns-pop-up-frames nil) ;; 新規フレームなし。
   (customize-set-value 'next-line-add-newlines nil) ;; カーソル移動で行を作らない
-  
-  ;; C-kで行全体を削除
-  (setq kill-whole-line t)
 
   ;; 改行コードを表示
   (setq eol-mnemonic-dos "(CRLF)")
@@ -108,10 +101,6 @@
   (random t) ;; Seed the random-number generator
   (setq undo-outer-limit 100000);; undo の保存限界
 
-  ;; scroll force 1line.
-  (setq scroll-conservatively 35
-        scroll-margin 0
-        scroll-step 1)
   (setq message-log-max 10000)
   (setq message-log-max 10000)
   (setq use-dialog-box nil)
@@ -124,24 +113,27 @@
 
   ;; (set-locale-environment nil)	;;Localeに合わせた環境の設定
 
-  (setq scroll-step 1) ;; スクロールを一行ずつにする
+  ;; scroll force 1line.
+  (setq scroll-conservatively 35
+        scroll-margin 0
+        scroll-step 1)
+
   (set-scroll-bar-mode nil)
   (setq completion-ignore-case t) ;; 補完時に大文字小文字を区別しない
+  (auto-image-file-mode)
+  (setq-default line-spacing 0)	;; Add 1 pixel between lines
+
   ;; emacs 23用?
   (setq read-buffer-completion-ignore-case t)
   (setq read-file-name-completion-ignore-case t)
 
-  (auto-image-file-mode)
-  
+  ;; 最近使った file を記憶させる。
   (require 'recentf)
-  (recentf-mode 1) ;;最近使った file を記憶させる。
+  (recentf-mode 1)
   (custom-set-variables
    '(recentf-max-menu-items 1000)
    '(recentf-max-saved-items 1000)
    )
-
-  (setq-default line-spacing 0)	;; Add 1 pixel between lines
-  (recentf-mode)			;; Add menu-item "File--Open recent"
 
   ;;別のdirectoryにある同一名のfileを開いた時に、
   ;;numberingではなく、directorynameを表示して区別出来る様にする。
@@ -155,6 +147,9 @@
   ;; file name の TAB 補完する際、拡張子を判別して 色付してくれる。
   ;; (require 'dircolors)
 
+  ;; (require 'col-highlight)
+  ;; (column-hight-mode 1)
+  
   ;;----------------------------------------
   ;; backup files.
   ;;----------------------------------------
@@ -185,13 +180,11 @@
   ;;----------------------------------------
   ;;visible-bell は目が痛いので消す
   (setq ring-bell-function '(lambda ()))
-  ;;beepを消す
-  (setq visible-bell t)
   ;; (setq visible-bell nil) ;;visible-bell は目が痛い。
 
-  ;; (require 'col-highlight)
-  ;; (column-hight-mode 1)
-  
+  ;;beepを消す
+  (setq visible-bell t)
+
   ;;-------------------------------
   ;; マック用設定
   ;;-------------------------------
