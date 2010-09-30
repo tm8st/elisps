@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010 tm8st
 
 ;; Author: tm8st <tm8st@hotmail.co.jp>
-;; Keywords: init, manage
+;; Keywords: init, manage, window
 ;; creation time: Sat Jun 19 15:38:16 2010
 ;;; Commentary:
 

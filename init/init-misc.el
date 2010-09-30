@@ -49,12 +49,9 @@
 ;;;-------------------------------
 (require 'yafastnav)
 
-(global-set-key (kbd "C--") 'yafastnav-jump-to-current-screen)
-(global-set-key (kbd "C-l C-SPC") 'yafastnav-jump-to-current-screen)
-(global-set-key (kbd "C-l C-l") 'yafastnav-jump-to-current-screen)
 (global-set-key (kbd "C-l C-h") 'yafastnav-jump-to-current-screen)
-(global-set-key (kbd "C-l C-.") 'yafastnav-jump-to-forward)
 (global-set-key (kbd "C-l C-r") 'yafastnav-jump-to-backward)
+(global-set-key (kbd "C-l C-SPC") 'yafastnav-jump-to-forward)
 (global-set-key "\M-S" 'jump-to-char-backward)
 
 ;;-------------------------------
@@ -177,7 +174,7 @@
 ;; (use-sticky-key ";" sticky-alist:ja)
 ;; (use-sticky-key ";" sticky-alist:ja)
 
-(require 'follow)
+;; (require 'follow)
 ;; (global-set-key (kbd "C-l C-l") 'follow-delete-other-windows-and-split)
 ;; (global-set-key (kbd "C-l C-l") 'follow-delete-other-windows-and-split)
 
@@ -214,7 +211,7 @@
 (global-set-key (kbd "C-q C-0") 'my-last-kbd-macro-name-and-insert)
 
 
-(require 'doc-view)
+;; (require 'doc-view)
 
 ;;;-------------------------------
 ;;; graphviz mode
@@ -315,8 +312,8 @@
 (global-set-key (kbd "C-S->")  'binary-move-forward)
 (global-set-key (kbd "C-S-<")  'binary-move-backward)
 
-(require 'inertial-scroll)
-(inertias-global-minor-mode 1)
+;; (require 'inertial-scroll)
+;; (inertias-global-minor-mode 1)
 ;; (inertias-global-minor-mode 0)
 
 (provide 'init-misc)

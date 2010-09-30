@@ -204,7 +204,7 @@ To check out the list, evaluate
      '(cursor-type . bar) ;; カーソル形状
      '(cursor-height . 4) ;; カーソルの高さ
      '(mouse-color . "white") ;; マウスカーソル色
-     '(border-color . "white") ;; 縁の色
+     '(border-color . "black") ;; 縁の色
      '(vertical-scroll-bars . 'nil) ;; スクロールバー
      '(width . 260) ;; 横幅(桁数)
      '(height . 160)	;; 高さ(行数)
@@ -340,9 +340,10 @@ To check out the list, evaluate
    '(curchg-change-cursor-on-input-method-flag t)
    '(cursor-mode t) ; On for overwrite/read-only/input mode
    '(curchg-idle-cursor-type 'hbar)
+   '(curchg-default-cursor-type 'bar)
    '(curchg-overwrite/read-only-cursor-type 'hollow))
 
-  ;; (toggle-cursor-type-when-idle t) ; On when idle
+  (toggle-cursor-type-when-idle t) ; On when idle
   (my-theme-set)
 
   (defun my-text-properties-at-point ()
@@ -350,6 +351,7 @@ To check out the list, evaluate
     (interactive)
     (let ((prop (text-properties-at (point))))
       (message prop)))
+
   (global-set-key (kbd "C-l C-@ C-p") 'my-text-properties-at-point)
 
   ;;;-------------------------------
@@ -357,6 +359,7 @@ To check out the list, evaluate
   ;;;-------------------------------
   (require 'yalinum)
   (global-yalinum-mode t)
+  (global-linum-mode -1)
 
   (set-face-foreground 'yalinum-face "gray65")
   (set-face-foreground 'yalinum-bar-face "gray85")

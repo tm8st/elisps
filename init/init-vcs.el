@@ -33,7 +33,7 @@
 ;; M-x vc-resolve-conflicts -- pop up an ediff-merge session on a file with conflict markers
 
  	
-(setq ediff-window-setup-function 'ediff-setup-windows-plain) 	
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
 (setq-default ediff-auto-refine-limit 10000)
 
 (add-hook 'diff-mode-hook

@@ -157,8 +157,17 @@ well."
 	 kill-ring)
 	))
 
+(defun my-open-dired-dir-os ()
+  "diredで開いているdirectorをosの標準機能で開く"
+  (interactive)
+  (when (my-is-mac)
+    (shell-command "open ."))
+  (when (my-is-windows)
+    (shell-command (concat "explorer " (dired-current-directory))))
+  )
+
 (define-key dired-mode-map (kbd "C-c C-f") 'add-dired-file-name-to-killring)
-(global-set-key (kbd "C-c C-o") 'open-dired-dir-os)
+(global-set-key (kbd "C-c C-o") 'my-open-dired-dir-os)
 
 ;; ^		dired-up-directory
 ;; +		dired-create-directory

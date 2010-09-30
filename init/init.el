@@ -103,9 +103,10 @@
      "init-compile-env.el"
      "init-private.el"
      "private.el"
+
      "init-basic.el"
      "init-misc.el"
-     "init-linum.el"
+     ;; "init-linum.el"
      "init-my-misc.el"
 
      "init-keybindings.el"
@@ -131,22 +132,18 @@
      "init-migemo.el"
 
      ;; "init-window.el"
-
      ;; "init-test.el"
      ))
 
+  ;; 環境別の設定ファイル
   (when my-use-shecme-mode
-    (add-to-list 'init-load-elisp-list "init-scheme.el")
-    )
+    (add-to-list 'init-load-elisp-list "init-scheme.el"))
   (when my-use-scala-mode
-    (add-to-list 'init-load-elisp-list "init-scala.el")
-    )
+    (add-to-list 'init-load-elisp-list "init-scala.el"))
   (when my-use-haskell-mode
-    (add-to-list 'init-load-elisp-list "init-haskell.el")
-    )
+    (add-to-list 'init-load-elisp-list "init-haskell.el"))
   (when my-use-org-mode
-    (add-to-list 'init-load-elisp-list "init-org.el")
-    )
+    (add-to-list 'init-load-elisp-list "init-org.el"))
 
   (defun load-elisp (file) "" (load file t nil))
 

@@ -269,7 +269,7 @@
 ;; scala 登録
 (ap:add-project
  :name 'scala
- :look-for '("GTAGS" ".*\\.sln") ; or
+ :look-for '("GTAGS") ; or
  :include-regexp '("\\.scala$") ;or
  )
 

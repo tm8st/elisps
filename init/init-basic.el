@@ -101,8 +101,7 @@
   (random t) ;; Seed the random-number generator
   (setq undo-outer-limit 100000);; undo の保存限界
 
-  (setq message-log-max 10000)
-  (setq message-log-max 10000)
+  (setq message-log-max 100000)
   (setq use-dialog-box nil)
   (setq echo-keystrokes 0.2)
   
@@ -127,6 +126,12 @@
   (setq read-buffer-completion-ignore-case t)
   (setq read-file-name-completion-ignore-case t)
 
+  ;; file name の TAB 補完する際、拡張子を判別して 色付してくれる。
+  ;; (require 'dircolors)
+
+  ;; (require 'col-highlight)
+  ;; (column-hight-mode 1)
+
   ;; 最近使った file を記憶させる。
   (require 'recentf)
   (recentf-mode 1)
@@ -143,12 +148,6 @@
    '(uniquify-ignore-buffers-re "*[^*]+*")
    '(uniquify-buffer-name-style 'forward)
    )
-
-  ;; file name の TAB 補完する際、拡張子を判別して 色付してくれる。
-  ;; (require 'dircolors)
-
-  ;; (require 'col-highlight)
-  ;; (column-hight-mode 1)
   
   ;;----------------------------------------
   ;; backup files.
