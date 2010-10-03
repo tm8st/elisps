@@ -15,10 +15,11 @@
 
 ;; scala-mode
 (unless my-initialized
-  (add-to-list 'load-path "~/Softwares/scala-2.8.0.RC3/misc/scala-tool-support/emacs")
+  ;; (add-to-list 'load-path "~/Softwares/scala-2.8.0.RC3/misc/scala-tool-support/emacs")
   (add-to-list 'auto-mode-alist '("\\.scala\\'" . scala-mode))
   )
 (require 'scala-mode nil t)
+(require 'scala-mode-auto nil t)
 (modify-coding-system-alist 'file "\\.scala$" 'utf-8)
 
 (add-to-list 'auto-mode-alist '("\\.scala$" . scala-mode))

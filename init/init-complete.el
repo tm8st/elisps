@@ -9,6 +9,7 @@
 
 ;;; Code:
 
+(require 'eshell)
 (require 'imenu)
 (require 'complete) ;; 強力な補完機能を使う
 (partial-completion-mode 1)
@@ -27,8 +28,8 @@
 (customize-set-value 'ac-ignore-case 'smart)
 (customize-set-value 'ac-candidate-limit 1000)
 (customize-set-value 'ac-use-fuzzy 'nil)
-(customize-set-value 'ac-use-comphist 'nil)
-(customize-set-value 'ac-use-quick-help 'nil)
+(customize-set-value 'ac-use-comphist 't)
+(customize-set-value 'ac-use-quick-help 't)
 (customize-set-value 'ac-delay 0.2)
 
 (global-set-key (kbd "C-o") 'ac-start)

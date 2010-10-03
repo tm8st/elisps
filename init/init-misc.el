@@ -48,8 +48,10 @@
 ;;; yafastnav
 ;;;-------------------------------
 (require 'yafastnav)
+(require 'jaunte)
 
-(global-set-key (kbd "C-l C-h") 'yafastnav-jump-to-current-screen)
+(global-set-key (kbd "C-l C-h") 'jaunte)
+;; (global-set-key (kbd "C-l C-h") 'yafastnav-jump-to-current-screen)
 (global-set-key (kbd "C-l C-r") 'yafastnav-jump-to-backward)
 (global-set-key (kbd "C-l C-SPC") 'yafastnav-jump-to-forward)
 (global-set-key "\M-S" 'jump-to-char-backward)
@@ -315,5 +317,20 @@
 ;; (require 'inertial-scroll)
 ;; (inertias-global-minor-mode 1)
 ;; (inertias-global-minor-mode 0)
+
+(defun my-bs-cycle (arg)
+  "バッファ進む、戻るの C-uによる選択用"
+  (interactive "P")
+  (cond
+   ((equal arg '(4)) (bs-cycle-next))
+   (t (bs-cycle-previous))))
+
+;; (global-set-key (kbd "C-^") 'bs-cycle-previous)
+;; (global-set-key (kbd "C-¥") 'bs-cycle-next)
+(global-set-key (kbd "C--") 'my-bs-cycle)
+
+;; (global-set-key [?\C-,] 'bs-cycle-next)
+;; (global-set-key [?\C-.] 'bs-cycle-previous)
+;; (global-set-key "\C-x\C-b" 'bs-show)
 
 (provide 'init-misc)
