@@ -333,4 +333,7 @@
 ;; (global-set-key [?\C-.] 'bs-cycle-previous)
 ;; (global-set-key "\C-x\C-b" 'bs-show)
 
+(require 'zlc)
+(setq zlc-select-completion-immediately t)
+
 (provide 'init-misc)
