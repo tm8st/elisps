@@ -371,5 +371,7 @@
 
 (global-set-key (kbd "C-q C-a C-s") 'anything-call-source)
 
+(require 'anything-chrome-bookmark)
+(global-set-key (kbd "C-q C-a C-b") 'anything-chrome-bookmark)
 
 (provide 'init-anything)
