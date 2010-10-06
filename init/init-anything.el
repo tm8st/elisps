@@ -263,13 +263,13 @@
 ;; elisp 登録
 (ap:add-project
  :name 'elisp
- :look-for '(".emacs") ; or
+ :look-for '("\\.emacs") ; or
  :include-regexp '("\\.el$") ;or
  )
 ;; scala 登録
 (ap:add-project
  :name 'scala
- :look-for '("GTAGS") ; or
+ :look-for '("\\.ensime") ; or
  :include-regexp '("\\.scala$") ;or
  )
 
@@ -371,7 +371,8 @@
 
 (global-set-key (kbd "C-q C-a C-s") 'anything-call-source)
 
-(require 'anything-chrome-bookmark)
-(global-set-key (kbd "C-q C-a C-b") 'anything-chrome-bookmark)
+(require 'anything-netscape-bookmark)
+(global-set-key (kbd "C-q C-a C-b") 'anything-netscape-bookmark)
+(global-set-key (kbd "C-q C-a C-v") 'anything-netscape-bookmark-get-dump)
 
 (provide 'init-anything)

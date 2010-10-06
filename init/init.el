@@ -12,6 +12,10 @@
 ;; "void variable" エラー対策
 (defvar warning-suppress-types nil)
 
+;; Windows環境で定義されていないとエラーがでるので定義しておく
+(defun string-to-char-list (str)
+  (string-to-list str))
+
 ;; コンパイル用環境の設定 パスを変える場合はここと下のファイルの中の変数の値を変える必要がある
 (load "~/elisps/init/init-compile-env.el")
 
