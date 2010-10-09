@@ -208,11 +208,18 @@ well."
   (interactive)
   (open-file-dwim (expand-file-name dired-directory)))
 
+;; カーソル下のファイルをパッチ適用
+(defun my-dired-patch ()
+  "run patch under the cursor"
+  (interactive)
+  (shell-command (concat "patch -p0 < " (dired-get-filename)) nil))
+
 ;; キーバインド
 (add-hook 'dired-mode-hook
           (lambda ()
 	    (define-key dired-mode-map (kbd "C-c C-o") 'my-dired-open-dwim)
 	    (define-key dired-mode-map (kbd "C-c C-.") 'my-dired-open-here)
+	    (define-key dired-mode-map (kbd "P") 'my-dired-patch)
 	    ))
 
 (provide 'init-dired)
