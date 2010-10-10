@@ -130,5 +130,14 @@
 ;; "window-numbering"
 ;; http://nschum.de/src/emacs/window-numbering-mode/window-numbering.el
 
+;; Lisp用にSLIMEの設定
+
+;; lisp-mode
+(setq inferior-lisp-program "clisp")    ;; clisp用
+;; (setq inferior-lisp-program "sbcl")  ;; sbcl用
+
+(when (require 'slime nil t)
+  (slime-setup))
+
 (provide 'init-elisp)
 

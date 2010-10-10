@@ -22,12 +22,12 @@
 (require 'auto-complete-config)
 ;; (ac-config-default)
 (global-auto-complete-mode t)
-(customize-set-value 'ac-dictionary-directories (list "~/elisps/external/complete/m2ym-auto-complete-2c75fd1/dict"))
+;; (customize-set-value 'ac-dictionary-directories (list "~/elisps/external/complete/m2ym-auto-complete-2c75fd1/dict"))
 
 (setq ac-auto-start 3)
 (customize-set-value 'ac-ignore-case 'smart)
 (customize-set-value 'ac-candidate-limit 1000)
-(customize-set-value 'ac-use-fuzzy 'nil)
+(customize-set-value 'ac-use-fuzzy 't)
 (customize-set-value 'ac-use-comphist 't)
 (customize-set-value 'ac-use-quick-help 't)
 (customize-set-value 'ac-delay 0.2)
@@ -41,10 +41,11 @@
 (define-key ac-complete-mode-map (kbd "C-i") 'ac-next)
 (define-key ac-complete-mode-map (kbd "C-j") 'ac-complete)
 
-;; (require 'ac-anything)
-;; (define-key ac-complete-mode-map (kbd "C-@") 'ac-complete-with-anything)
+(require 'ac-anything)
+(define-key ac-complete-mode-map (kbd "C-@") 'ac-complete-with-anything)
 
 (require 'popup)
+
 (when use-gui-setting
   (set-face-foreground 'ac-candidate-face "White")
   (set-face-foreground 'ac-selection-face "Pink")
@@ -57,6 +58,30 @@
   (set-face-foreground 'popup-menu-selection-face "Pink")
   (set-face-background 'popup-menu-selection-face "gray30")
   )
+
+(require 'pcomplete)
+(ac-define-source pcomplete
+  '((candidates . pcomplete-completions)))
+
+(defun my-ac-eshell-mode ()
+  (setq ac-sources
+        '(ac-source-pcomplete
+          ac-source-words-in-buffer
+          ac-source-dictionary)))
+
+(add-to-list 'ac-modes 'shell-mode)
+(add-to-list 'ac-modes 'eshell-mode)
+(add-to-list 'ac-modes 'fundamental-mode)
+(add-to-list 'ac-modes 'scala-mode)
+
+(add-hook 'eshell-mode-hook
+          (lambda ()
+            (my-ac-eshell-mode)
+            (define-key eshell-mode-map (kbd "C-o") 'auto-complete)))
+(add-hook 'shell-mode-hook
+          (lambda ()
+            (my-ac-eshell-mode)
+            (define-key shell-mode-map (kbd "C-o") 'auto-complete)))
 
 ;;;-------------------------------------
 ;;;標準補間機能のカスタマイズ completion
@@ -87,28 +112,5 @@
 
 ;; 動的補完で無視する要素の正規表現
 (customize-set-value 'dabbrev-abbrev-skip-leading-regexp "-")
-
-(require 'pcomplete)
-
-(add-to-list 'ac-modes 'shell-mode)
-(add-to-list 'ac-modes 'eshell-mode)
-
-(ac-define-source pcomplete
-  '((candidates . pcomplete-completions)))
-
-(defun my-ac-eshell-mode ()
-  (setq ac-sources
-        '(ac-source-pcomplete
-          ac-source-words-in-buffer
-          ac-source-dictionary)))
-
-(add-hook 'eshell-mode-hook
-          (lambda ()
-            (my-ac-eshell-mode)
-            (define-key eshell-mode-map (kbd "C-o") 'auto-complete)))
-(add-hook 'shell-mode-hook
-          (lambda ()
-            (my-ac-eshell-mode)
-            (define-key shell-mode-map (kbd "C-o") 'auto-complete)))
 
 (provide 'init-complete)

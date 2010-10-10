@@ -36,8 +36,8 @@
 ;;; basic
 ;;;-------------------------------
 (setq anything-enable-shortcuts 'alphabet)
-(setq anything-idle-delay 0.2)			;; 候補作成後の表示までの待機時間
-(setq anything-input-idle-delay 0.2)		;; 検索結果表示更新までの待機時間
+(setq anything-idle-delay 0.05)			;; 候補作成後の表示までの待機時間
+(setq anything-input-idle-delay 0.05)		;; 検索結果表示更新までの待機時間
 (setq anything-candidate-number-limit 1000)	;; 表示する候補数
 ;; (setq anything-samewindow nil) ;; 現在ウィンドウにanything window を作るか
 ;; (setq anything-samewindow t) ;; 現在ウィンドウにanything window を作るか

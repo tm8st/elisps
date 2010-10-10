@@ -23,9 +23,15 @@
 (modify-coding-system-alist 'file "\\.scala$" 'utf-8)
 
 (add-to-list 'auto-mode-alist '("\\.scala$" . scala-mode))
+
+;;;-------------------------------
+;;; ensime
+;;;-------------------------------
 ;; (add-to-list 'load-path "ENSIME_ROOT/elisp/")
+;; (add-to-list 'load-path "/Users/mys/elisps/external/ensime/src/main/elisp/")
 ;; (require 'ensime)
 ;; (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+;; (customize-set-value 'ensime-default-server-cmd "/Users/mys/elisps/external/ensime/etc/scripts/server.sh")
 
 (defun my-run-scala-buffer ()
   (interactive)
