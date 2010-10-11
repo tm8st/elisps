@@ -113,4 +113,7 @@
 ;; 動的補完で無視する要素の正規表現
 (customize-set-value 'dabbrev-abbrev-skip-leading-regexp "-")
 
+;; (when (require 'yaicomplete nil t)
+;;   (yaicomplete-mode))
+
 (provide 'init-complete)

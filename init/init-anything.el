@@ -22,6 +22,9 @@
 (require 'anything-extension)
 (require 'anything-complete)
 (require 'anything-kyr)
+(require 'imenu)
+(require 'imenu+)
+
 ;; (require 'anything-show-completion)
 ;; (require 'anything-dabbrev-expand)
 ;; (require 'anything-migemo)
@@ -272,6 +275,12 @@
  :look-for '("\\.ensime") ; or
  :include-regexp '("\\.scala$") ;or
  )
+;; elisp 登録
+(ap:add-project
+ :name 'elisp
+ :look-for '("subdirs\\.el") ; or
+ :include-regexp '("\\.el$") ;or
+ )
 
 ;; ;; ruby 登録
 ;; (ap:add-project
@@ -334,7 +343,8 @@
 	      anything-c-source-imenu
 	      )))
 
-(setq imenu-max-items 30)
+(setq imenu-max-items 100)
+(setq imenu-max-item-length 160)
 
 ;;; customize
 (defun anything-for-customize ()

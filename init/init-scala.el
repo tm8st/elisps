@@ -40,7 +40,7 @@
 
 (defun my-scala-mode-hook ()
   ;; (auto-complete-mode t)
-  (scala-imenu-set-for-current-buffer)
+  (easy-imenu-index-create-imenu-set-for-current-buffer scala-imenu-source)
   (hl-line-mode t)
   (highlight-parentheses-mode t)
   (setq tab-width 2)
