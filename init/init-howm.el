@@ -30,10 +30,12 @@
    (customize-set-value 'standard-indent 4)
    (setq indent-tabs-mode t)))
 
+;; easy-imenu
+(require 'easy-imenu-index-generator-config)
 (add-hook
  'howm-mode-hook
  (lambda ()
-   (easy-imenu-index-create-imenu-set-for-current-buffer howm-imenu-source)
+   (easy-imenu-index-generator-set-for-current-buffer easy-imenu-index-generator-howm)
    ))
 
 (global-set-key (kbd "C-l C-i") 'indent-region) ; 選択範囲をインデント

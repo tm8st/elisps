@@ -131,7 +131,7 @@
 ;;;c-mode, c++-mode
 ;;;----------------------------------------
 (require 'highlight-parentheses)
-(require 'unreal)
+(require 'easy-imenu-index-generator-config)
 
 (defun my-c-mode-hook ()
   (hl-line-mode t)
@@ -146,7 +146,8 @@
   ;; (c-set-offset 'innamespace c-basic-offset)
 
   (when (string-match "\.uc$" (buffer-file-name))
-    (unreal-imenu-set-for-current-buffer))
+    (easy-imenu-index-generator-set-for-current-buffer easy-imenu-index-generator-unreal)
+    )
   )
 
 (setq auto-mode-alist

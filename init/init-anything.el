@@ -24,10 +24,10 @@
 (require 'anything-kyr)
 (require 'imenu)
 (require 'imenu+)
+(require 'anything-migemo)
 
 ;; (require 'anything-show-completion)
 ;; (require 'anything-dabbrev-expand)
-;; (require 'anything-migemo)
 ;; (require 'anything-startup)
 ;; (require 'anything-kyr)
 ;; (require 'anything-kyr-config)
@@ -339,9 +339,9 @@
 (defun anything-for-imenu ()
   ""
   (interactive)
-  (anything '(
-	      anything-c-source-imenu
-	      )))
+    (anything '(
+		anything-c-source-imenu
+		)))
 
 (setq imenu-max-items 100)
 (setq imenu-max-item-length 160)

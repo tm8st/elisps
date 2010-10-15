@@ -9,7 +9,6 @@
 
 ;;; Code:
 
-(require 'scala-imenu)
 (require 'auto-complete)
 (require 'highlight-parentheses)
 
@@ -38,9 +37,12 @@
   (async-shell-command
    (concat "scala " (buffer-file-name (current-buffer)))))
 
+(require 'easy-imenu-index-generator-config)
+(easy-imenu-index-generator-set-for-current-buffer easy-imenu-index-generator-scala)
+
 (defun my-scala-mode-hook ()
   ;; (auto-complete-mode t)
-  (easy-imenu-index-create-imenu-set-for-current-buffer scala-imenu-source)
+  (easy-imenu-index-generator-set-for-current-buffer easy-imenu-index-generator-scala)
   (hl-line-mode t)
   (highlight-parentheses-mode t)
   (setq tab-width 2)
