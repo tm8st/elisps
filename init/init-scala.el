@@ -38,7 +38,6 @@
    (concat "scala " (buffer-file-name (current-buffer)))))
 
 (require 'easy-imenu-index-generator-config)
-(easy-imenu-index-generator-set-for-current-buffer easy-imenu-index-generator-scala)
 
 (defun my-scala-mode-hook ()
   ;; (auto-complete-mode t)

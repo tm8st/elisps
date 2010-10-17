@@ -36,7 +36,9 @@
  'howm-mode-hook
  (lambda ()
    (easy-imenu-index-generator-set-for-current-buffer easy-imenu-index-generator-howm)
-   ))
+   (define-key howm-mode-map (kbd "C-q C-i")
+     `(lambda () (interactive) (delete-char 1) (insert "."))
+   )))
 
 (global-set-key (kbd "C-l C-i") 'indent-region) ; 選択範囲をインデント
 ;; (global-set-key "¥C-m" 'newline-and-indent) ; リターンで改行とインデント
@@ -118,6 +120,7 @@
   (calendar)
   )
 
+;; key-macro で定義。howm-menu上で選択している項目の[TODO]+を[TODO].へ書き替えする。
 (fset 'my-howm-todo-done
    "\C-a\C-m\C-s+\C-f\C-b\C-h.\C-c\C-c\C-n")
 
@@ -138,6 +141,7 @@
      (define-key calendar-mode-map "\C-m" 'my-insert-day)
      (defun my-insert-day ()
        (interactive)
+       (save-excursion
        (let ((day nil)
              (calendar-date-display-form
 	      '("[" year "-" (format "%02d" (string-to-int month))
@@ -145,7 +149,8 @@
          (setq day (calendar-date-string
                     (calendar-cursor-to-date t)))
          (exit-calendar)
-         (insert (concat day "+ [TODO]"))))))
+         (insert (concat day "+ [TODO]"))
+	 )))))
 
 (setq howm-menu-refresh-after-save nil)
 (setq howm-refresh-after-save nil)

@@ -37,8 +37,7 @@
 	    (setq candidates (cons color candidates)))))
       candidates)
     "Colors to use for nicks in rcirc, for example.
-To check out the list, evaluate
-\(list-colors-display my-theme-foreground-colors).")
+To check out the list, evaluate (list-colors-display my-theme-foreground-colors).")
 
   (defun my-theme-set ()
     "set my color setting."
@@ -107,64 +106,6 @@ To check out the list, evaluate
 	(unless (facep face)
 	  (make-face face))
 	(face-spec-set face spec))))
-
-    ;; ;; faces
-    ;; (dolist
-    ;; 	(element
-    ;; 	 '((default ((t ( :background "gray4" :foreground "gray78"))))
-    ;; 	   (button ((t (:bold t))))
-    ;; 	   (cursor ((t (:background "Orange"))))
-    ;; 	   (highlight ((t (:background "Gray30"))))
-    ;; 	   (region ((t (:background "DarkOrange4"))))
-    ;; 	   (fringe ((t (:background "gray40"))))
-    ;; 	   (menu ((t (:background "moccasin" :foreground "black"))))
-    ;; 	   (modeline ((t (:background "gray25" :foreground "gray75"
-    ;; 				      :box (:line-width 1 :style released-button)))))
-    ;; 	   (mode-line-inactive ((t (:background "gray10" :foreground "gray60"
-    ;; 						:box (:line-width 1 :style released-button)))))
-    ;; 	   (minibuffer-prompt ((t (:foreground "pink"))))
-    ;; 	   (tool-bar ((t (:background "pink"
-    ;; 				      :box (:line-width 1 :style released-button)))))
-    ;; 	   (tooltip ((t (:background "lemon chiffon" :foreground "violet red"))))
-
-    ;; 	   ;; font-lock
-    ;; 	   (font-lock-builtin-face ((t (:foreground "SkyBlue"))))
-    ;; 	   (font-lock-comment-delimiter-face ((t (:foreground "green"))))
-    ;; 	   (font-lock-comment-face ((t (:foreground "green"))))
-    ;; 	   (font-lock-constant-face ((t (:foreground "Pink"))))
-    ;; 	   (font-lock-string-face ((t (:foreground "sandy brown"))))
-    ;; 	   (font-lock-doc-face ((t (:foreground "coral"))))
-    ;; 	   (font-lock-function-name-face ((t (:foreground "pink"))))
-    ;; 	   (font-lock-variable-name-face ((t (:foreground "PaleTurquoise"))))
-    ;; 	   (font-lock-keyword-face ((t (:foreground "LightBlue"))))
-    ;; 	   (font-lock-negation-char-face ((t (:foreground "red"))))
-    ;; 	   (font-lock-preprocessor-face ((t (:foreground "pink"))))
-    ;; 	   (font-lock-type-face ((t (:foreground "pink"))))
-    ;; 	   (font-lock-warning-face ((t (:bold t :foreground "red"))))
-	   
-    ;; 	   ;; isearch
-    ;; 	   (isearch ((t (:foreground "white" :background "dark green"))))
-    ;; 	   (isearch-lazy-highlight-face ((t (:foreground "bisque"))))
-	   
-    ;; 	   ;; ;; info-mode
-    ;; 	   ;; (header-line ((t (:background "deep pink" :foreground "pink"))))
-    ;; 	   ;; ;; calendar
-    ;; 	   ;; (calendar-today-face ((t (:foreground "lemon chiffon"))))
-    ;; 	   ;; (diary-face ((t (:bold t :foreground "yellow"))))
-    ;; 	   ;; (holiday-face ((t (:bold t :foreground "peru"))))
-    ;; 	   ;; ;; cperl
-    ;; 	   ;; (cperl-array-face ((t (:bold t :foreground "tomato"))))
-    ;; 	   ;; (cperl-hash-face  ((t (:bold t :foreground "chocolate"))))
-    ;; 	   ;; (cperl-nonoverridable-face  ((t (:foreground "red"))))
-    ;; 	   ;; ;; makefiles
-    ;; 	   ;; (makefile-shell-face  ((t (:background "linen"))))
-	   
-    ;; 	   ))
-    ;;   (let ((face (car element))
-    ;; 	    (spec (nth 1 element)))
-    ;; 	(unless (facep face)
-    ;; 	  (make-face face))
-    ;; 	(face-spec-set face spec))))
 
   ;;-------------------------------
   ;; Font setting
@@ -258,17 +199,17 @@ To check out the list, evaluate
   ;;-------------------------------
   ;; 現在行の強調 
   ;;-------------------------------
-  (require 'hl-line)
+  (when (require 'hl-line nil t)
+    (defface my-hl-line-face
+      '((t (:background "gray10")))
+      "Face for displaying line numbers in the display margin."
+      :group 'yalinum)
 
-  (defface my-hl-line-face
-    '((t (:background "gray10")))
-    "Face for displaying line numbers in the display margin."
-    :group 'yalinum)
-
-  ;; (customize-set-value 'hl-line-face 'underline)
-  (customize-set-value 'hl-line-face 'my-hl-line-face)
-  ;; (customize-set-value 'hl-line-face 'highlight)
-  (global-hl-line-mode t)
+    ;; (customize-set-value 'hl-line-face 'underline)
+    (customize-set-value 'hl-line-face 'my-hl-line-face)
+    ;; (customize-set-value 'hl-line-face 'highlight)
+    (global-hl-line-mode t)
+    )
   
   ;;-------------------------------
   ;; 対応する括弧を強調表示
@@ -309,7 +250,7 @@ To check out the list, evaluate
   
   ;;-------------------------------------
   ;; タブや全角スペースを表示
-  ;; mac だと通常のfont-lockと競合してしまう
+  ;; mac だと通常のfont-lockと競合してしまう???
   ;;-------------------------------------
   (when (my-is-windows)
     (defface my-face-full-space
@@ -344,15 +285,6 @@ To check out the list, evaluate
    '(curchg-overwrite/read-only-cursor-type 'hollow))
 
   (toggle-cursor-type-when-idle t) ; On when idle
-  (my-theme-set)
-
-  (defun my-text-properties-at-point ()
-    ""
-    (interactive)
-    (let ((prop (text-properties-at (point))))
-      (message prop)))
-
-  (global-set-key (kbd "C-l C-@ C-p") 'my-text-properties-at-point)
 
   ;;;-------------------------------
   ;;; yalinum
@@ -379,6 +311,28 @@ To check out the list, evaluate
     (customize-set-variable 'yalinum-width-scale 1)
     (customize-set-variable 'yalinum-line-number-display-format " %0$numd ")
     )
+
+  (defun my-text-properties-at-point ()
+    ""
+    (interactive)
+    (let ((prop (text-properties-at (point))))
+      (message prop)))
+
+  (global-set-key (kbd "C-l C-@ C-p") 'my-text-properties-at-point)
+
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(highlight ((t (:background "black"))))
+   '(howm-reminder-today-face ((t (:background "black" :foreground "Pink"))))
+   '(howm-reminder-tomorrow-face ((t (:background "black" :foreground "gray70")))))
+
+  (my-theme-set)
+
   )
+
+
 
 (provide 'init-theme)
