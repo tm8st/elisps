@@ -286,6 +286,24 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
 
   (toggle-cursor-type-when-idle t) ; On when idle
 
+  ;;-------------------------------
+  ;; diff
+  ;;-------------------------------
+  (custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(diff-added ((t (:foreground "pink"))))
+ '(diff-context ((t nil)))
+ '(diff-file-header ((((class color) (min-colors 88) (background dark)) (:foreground "RoyalBlue1"))))
+ '(diff-function ((t (:foreground "Orange"))))
+ '(diff-header ((((class color) (min-colors 88) (background dark)) (:foreground "RoyalBlue1"))))
+ '(diff-hunk-header ((t (:foreground "turquoise3"))))
+ '(diff-nonexistent ((t (:inherit diff-file-header :strike-through nil))))
+ '(diff-refine-change ((((class color) (min-colors 88) (background dark)) (:background "#182042"))))
+ '(diff-removed ((t (:foreground "red")))))
+  
   ;;;-------------------------------
   ;;; yalinum
   ;;;-------------------------------
@@ -328,7 +346,6 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
    '(highlight ((t (:background "black"))))
    '(howm-reminder-today-face ((t (:background "black" :foreground "Pink"))))
    '(howm-reminder-tomorrow-face ((t (:background "black" :foreground "gray70")))))
-
   (my-theme-set)
 
   )
