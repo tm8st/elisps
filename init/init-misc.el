@@ -31,12 +31,40 @@
 ;; (hiwin-mode nil) ; 起動時から有効にしたい場合
 ;; (hiwin-mode) ; 起動時から有効にしたい場合
 
+(require 'text-translator-vars)
 (require 'text-translator)
 
-(global-set-key (kbd "C-q C-t C-t") 'text-translator-translate-by-auto-selection)
+;; 自動選択に使用する関数を設定
+(setq text-translator-auto-selection-func
+      'text-translator-translate-by-auto-selection-enja)
+
+(require 'popup)
+(setq text-translator-display-popup t)
+
+;; (setq text-translator-action-insert t)
+;; ;; グローバルキーを設定
+;; (global-set-key "\C-xt" 'text-translator-translate-by-auto-selection)
+
+(defun my-text-translator-toggle-popup ()
+  (interactive)
+  (setq text-translator-display-popup (not text-translator-display-popup))
+  (message (concat "Text-Translator current popup " (if text-translator-display-popup "Enable" "Disable") ".")))
+
+(defun my-text-translator-insert ()
+	""
+	(interactive)
+	(when text-translator-last-translated-text
+	  (insert text-translator-last-translated-text)))
+
+(global-set-key (kbd "C-q C-t C-t") 'text-translator)
 (global-set-key (kbd "C-q C-t C-o") 'text-translator-all)
+(global-set-key (kbd "C-q C-t C-u") 'my-text-translator-toggle-popup)
+(global-set-key (kbd "C-q C-t C-y") 'my-text-translator-insert)
+
+;; (global-set-key (kbd "C-q C-t C-i") 'my-text-translator-insert)
+;; (global-set-key (kbd "C-q C-t C-t") 'my-text-translator)
 ;; (global-set-key (kbd "C-q C-t C-e") 'text-translator-all)
-;; (global-set-key (kbd "C-q C-t C-o") 'text-translator-all-by-auto-selection)
+;; (global-set-key (kbd "C-q C-t C-o") 'my-text-translator-all-by-auto-selection-enja)
 
 ;; (global-set-key (kbd "C-q C-t C-o") '(lambda () (text-translator-all ))
 ;; (global-set-key (kbd "C-q C-t C-") 'text-translator-all)
