@@ -18,6 +18,7 @@
   (when use-gui-setting
     (highlight-parentheses-mode)
     )
+  (easy-imenu-index-generator-set-for-current-buffer easy-imenu-index-generator-setting-elisp-sample)
   )
 
 (setq auto-mode-alist

@@ -34,10 +34,11 @@
    ))
 
 ;;;-------------------------------
-;;; よく使うディレクトリ
+;;; ディレクトリ指定
 ;;;-------------------------------
-(defvar develop-path nil)
-(defvar etc-path nil)
+(defvar my-develop-path nil)
+(defvar my-etc-path nil)
+(defvar my-exec-path nil)
 
 ;;;-------------------------------
 ;;; お気に入りディレクトリ

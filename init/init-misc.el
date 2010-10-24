@@ -9,11 +9,32 @@
 
 ;;; Code:
 
-;最小の ewm 設定例
-;; (auto-install-from-url "http://github.com/kiwanami/emacs-window-layout/raw/master/window-layout.el")
-;; (auto-install-from-url "http://github.com/kiwanami/emacs-window-manager/raw/master/ewm.el")
-;; (require 'ewm)
-;; (global-set-key (kbd "M-+") 'ewm:start-management)
+(require 'doc-view)
+
+;;;-------------------------------
+;;; vc keybind
+;;;-------------------------------
+;; C-x v v vc-next-action          次の動作 (commit)
+;; C-x v d vc-directory            登録されたファイルを表示
+;; C-x v = vc-diff                 diff表示
+;; C-x v u vc-revert-buffer        checkinしたものに戻す
+;; C-x v ~ vc-version-other-window 所定のrevを別のwindowへ
+;; C-x v l vc-print-log            log表示
+;; C-x v i vc-register             add
+;; C-x v h vc-insert-headers       version headerを挿入
+;; C-x v r vc-retrieve-snapshot    tag指定checkout
+;; C-x v s vc-create-snapshot      tagをつける
+;; C-x v c vc-cancel-version       保存されたrevを捨てる。
+;; C-x v a vc-update-change-log    GNUスタイルでchangeLogを更新
+
+;;;-------------------------------
+;;; hiwin
+;;;-------------------------------
+;; (require 'hiwin)
+;; (setq hiwin-color "gray30")
+;; (setq hiwin-color "darkslategreen")
+;; (hiwin-mode t) ; 起動時から有効にしたい場合
+;; (hiwin-mode) ; 起動時から有効にしたい場合
 
 ;; (require 'detect-block)
 ;; (detect-block t)
@@ -25,12 +46,9 @@
 ;; (auto-install-from-url "http://github.com/tomoya/hiwin-mode/raw/master/hiwin.el")
 ;; (install-elisp "http://github.com/tomoya/hiwin-mode/raw/master/hiwin.el")
 
-;; (require 'hiwin)
-;; (setq hiwin-color "gray13")
-;; (setq hiwin-color "darkslategreen")
-;; (hiwin-mode nil) ; 起動時から有効にしたい場合
-;; (hiwin-mode) ; 起動時から有効にしたい場合
-
+;;;-------------------------------
+;;; text-translator
+;;;-------------------------------
 (require 'text-translator-vars)
 (require 'text-translator)
 
@@ -41,17 +59,14 @@
 (require 'popup)
 (setq text-translator-display-popup t)
 
-;; (setq text-translator-action-insert t)
-;; ;; グローバルキーを設定
-;; (global-set-key "\C-xt" 'text-translator-translate-by-auto-selection)
-
 (defun my-text-translator-toggle-popup ()
+	"toggle display setting."
   (interactive)
   (setq text-translator-display-popup (not text-translator-display-popup))
   (message (concat "Text-Translator current popup " (if text-translator-display-popup "Enable" "Disable") ".")))
 
 (defun my-text-translator-insert ()
-	""
+	"insert last translated text."
 	(interactive)
 	(when text-translator-last-translated-text
 	  (insert text-translator-last-translated-text)))
@@ -61,28 +76,15 @@
 (global-set-key (kbd "C-q C-t C-u") 'my-text-translator-toggle-popup)
 (global-set-key (kbd "C-q C-t C-y") 'my-text-translator-insert)
 
-;; (global-set-key (kbd "C-q C-t C-i") 'my-text-translator-insert)
-;; (global-set-key (kbd "C-q C-t C-t") 'my-text-translator)
-;; (global-set-key (kbd "C-q C-t C-e") 'text-translator-all)
-;; (global-set-key (kbd "C-q C-t C-o") 'my-text-translator-all-by-auto-selection-enja)
-
-;; (global-set-key (kbd "C-q C-t C-o") '(lambda () (text-translator-all ))
-;; (global-set-key (kbd "C-q C-t C-") 'text-translator-all)
-
-;; プリフィックスキーを変更する場合.
-;; (setq text-translator-prefix-key "\M-n")
-
 ;;;-------------------------------
-;;; yafastnav
+;;; yafastnav, jaunte
 ;;;-------------------------------
 (require 'yafastnav)
 (require 'jaunte)
 
 (global-set-key (kbd "C-l C-h") 'jaunte)
-;; (global-set-key (kbd "C-l C-h") 'yafastnav-jump-to-current-screen)
 (global-set-key (kbd "C-l C-r") 'yafastnav-jump-to-backward)
 (global-set-key (kbd "C-l C-SPC") 'yafastnav-jump-to-forward)
-(global-set-key "\M-S" 'jump-to-char-backward)
 
 ;;-------------------------------
 ;; smartchr
@@ -91,18 +93,17 @@
 
 ;; substitute `!!' with cursor
 (global-set-key (kbd "{") (smartchr '("{`!!'}" "{")))
-(global-set-key (kbd "}") (smartchr '("}" "{`!!'}" "}")))
+;; (global-set-key (kbd "}") (smartchr '("}" "{`!!'}" "}")))
 (global-set-key (kbd "\"") (smartchr '("\"`!!'\"" "\"")))
 (global-set-key (kbd "\'") (smartchr '("\'" "\'`!!'\'")))
 (global-set-key (kbd "`") (smartchr `("`" "``!!'`")))
 (global-set-key (kbd "(") (smartchr '("(`!!')" "(")))
-(global-set-key (kbd ")") (smartchr '(")" "(`!!')" )))
+;; (global-set-key (kbd ")") (smartchr '(")" "(`!!')" )))
 (global-set-key (kbd "+") (smartchr '("+" "++" "+++")))
 (global-set-key (kbd "[") (smartchr '("[`!!']" "[" "]")))
-(global-set-key (kbd "]") (smartchr '("]" "[`!!']" "[]")))
+;; (global-set-key (kbd "]") (smartchr '("]" "[`!!']" "[]")))
 
 ;; (global-set-key (kbd "-") (smartchr '("-" "--" "---")))
-
 ;; (global-set-key (kbd "C-,") `my-replace-string)
 (global-set-key (kbd "C-,") '(lambda () (interactive) (insert "_")))
 
@@ -151,22 +152,6 @@
 (global-set-key (kbd "C-l C-a C-e") `elp-reset-all)
 
 ;;;-------------------------------
-;;; vc keybind
-;;;-------------------------------
-;; C-x v v vc-next-action          次の動作 (commit)
-;; C-x v d vc-directory            登録されたファイルを表示
-;; C-x v = vc-diff                 diff表示
-;; C-x v u vc-revert-buffer        checkinしたものに戻す
-;; C-x v ~ vc-version-other-window 所定のrevを別のwindowへ
-;; C-x v l vc-print-log            log表示
-;; C-x v i vc-register             add
-;; C-x v h vc-insert-headers       version headerを挿入
-;; C-x v r vc-retrieve-snapshot    tag指定checkout
-;; C-x v s vc-create-snapshot      tagをつける
-;; C-x v c vc-cancel-version       保存されたrevを捨てる。
-;; C-x v a vc-update-change-log    GNUスタイルでchangeLogを更新
-
-;;;-------------------------------
 ;;; windowナンバリング
 ;;;-------------------------------
 (require 'window-numbering)
@@ -190,7 +175,7 @@
 (global-unset-key (kbd "C-l C-j"))
 (global-set-key (kbd "C-l C-j C-w") 'mark-word*)
 (global-set-key (kbd "C-l C-j C-e") 'mark-sexp*)
-(global-set-key (kbd "C-l C-j C-s") 'mark-string*)
+(global-set-key (kbd "C-l C-j C-s") 'mark-string)
 (global-set-key (kbd "C-l C-j C-f") 'mark-defun*)
 
 ;;;-------------------------------
@@ -210,6 +195,7 @@
 
 ;;;-------------------------------
 ;; keyboard-macro
+;;;-------------------------------
 ;; C-x (
 ;; キーボードマクロの定義を開始する （start-kbd-macro）。
 ;; C-x )
@@ -239,9 +225,6 @@
 (global-set-key (kbd "C-q C-8") 'start-kbd-macro)
 (global-set-key (kbd "C-q C-9") 'end-kbd-macro)
 (global-set-key (kbd "C-q C-0") 'my-last-kbd-macro-name-and-insert)
-
-
-;; (require 'doc-view)
 
 ;;;-------------------------------
 ;;; graphviz mode

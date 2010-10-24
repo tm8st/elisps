@@ -65,8 +65,8 @@
 
   ;; MINI HOWTO: open .scala file. Ensure bin/server.sh is executable. M-x ensime
 
-  ;; (require 'ensime)
-  ;; (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+  (require 'ensime)
+  (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
   ;; TAB - Start completing a method/variable.
   ;; C-c t / Double-Click - Inspect the type of the expression under the cursor.
@@ -85,5 +85,17 @@
   ;; C-c c - Type-check the current file.
   ;; C-c a - Type-check all files in the project.
   )
+
+(defun android-search ()
+  (interactive)
+  (let ((w (word-at-point)))
+    (if w
+	(browse-url
+	 (concat "http://developer.android.com/search.html#q="
+		 (url-hexify-string w)
+		 "&t=0"))
+      (error "no word at point"))))
+
+(global-set-key (kbd "C-l C-s C-g") 'android-search)
 
 (provide 'init-scala)

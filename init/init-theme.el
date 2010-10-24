@@ -7,8 +7,6 @@
 ;; creation time: Sun May  9 22:23:56 2010
 ;;; Commentary:
 
-;; this setting base is pink-bllis.
-
 ;;; Code:
 
 (eval-when-compile (require 'cl))

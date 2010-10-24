@@ -9,6 +9,18 @@
 
 ;;; Code:
 
+;; garbage collectionの頻度を減らして、速度向上 デフォルトは400000
+(setq gc-cons-threshold (* gc-cons-threshold 10))
+
+;; turnoff mouse interface.
+(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+(setq my-elisps-directory (getenv "ELISPDIR"))
+(message (concat "init elisp dir is " my-elisps-directory "."))
+(setq my-elisps-directory "~/elisps")
+
 ;; "void variable" エラー対策
 (defvar warning-suppress-types nil)
 
@@ -17,30 +29,29 @@
   (string-to-list str))
 
 ;; コンパイル用環境の設定 パスを変える場合はここと下のファイルの中の変数の値を変える必要がある
-(load "~/elisps/init/init-compile-env.el")
+(load (concat my-elisps-directory "/init/init-compile-env.el"))
 
 ;;;-------------------------------
 ;;; emacs-settings
+;;; いくつか不具合がでたのでちょっととめる
 ;;;-------------------------------
-(when my-is-use-emacs-settings
+;; (when my-is-use-emacs-settings
+;;   (require 'cl)
 
-  (require 'cl)
+;;   (unless my-initialized
+;;     (progn
+;;       (defun update-emacs-settings-site-dir (dir)
+;; 	"add dir and subdirectories of it to load-path"
+;; 	(let ((dirs (remove-if-not #'file-directory-p
+;; 				   (directory-files dir t "^[^.]"))))
+;; 	  (dolist (d dirs)
+;; 	    (update-emacs-settings-site-dir d))
+;; 	  (setq load-path (cons dir load-path))))
 
-  (unless my-initialized
-    (progn
-      (defun update-emacs-settings-site-dir (dir)
-	"add dir and subdirectories of it to load-path"
-	(let ((dirs (remove-if-not #'file-directory-p
-				   (directory-files dir t "^[^.]"))))
-	  (dolist (d dirs)
-	    (update-emacs-settings-site-dir d))
-	  (setq load-path (cons dir load-path))))
+;;       (update-emacs-settings-site-dir "/Users/mys/emacs-settings/emacs.d")
 
-      (update-emacs-settings-site-dir "/Users/mys/emacs-settings/emacs.d")
-
-      (load "/Users/mys/emacs-settings/init.el")
-      (load-emacs-settings "/Users/mys/emacs-settings")))
-  )
+;;       (load "/Users/mys/emacs-settings/init.el")
+;;       (load-emacs-settings "/Users/mys/emacs-settings"))))
 
 ;;;-------------------------------
 ;;; path add
@@ -51,14 +62,7 @@
    "/usr/bin" "/usr/sbin" "/sbin" "/sw/bin" "/sw/sbin"
    "/usr/local/bin"
    "/opt/local/bin" "/opt/local/sbin"
-   (when (my-is-windows)
-     "c:/cygwin/bin"
-     )
-   (when (my-is-mac)
-     "/usr/X11/bin" "/usr/X11R6/bin"
-     "/softwares/scala/bin"
-     "~/softwares"
-     )))
+	 ))
 
 (defun add-to-exec-path (dir)
   ""
@@ -66,6 +70,7 @@
       nil
     (add-to-list 'exec-path (expand-file-name dir))))
 
+(mapc 'add-to-exec-path my-exec-path)
 (mapc 'add-to-exec-path exec-path-list)
 
 ;;;----------------------------------------
@@ -91,8 +96,7 @@
   (if (member (expand-file-name d) my-default-load-path) nil
     (my-byte-recompile-directory d)))
 
-(unless my-initialized
- (add-to-list 'load-path "~/emacswikipages" t))
+(add-to-list 'load-path "~/emacswiki.org" t)
 
 ;;;-------------------------------
 ;;; start customize
@@ -108,13 +112,13 @@
      "init-private.el"
      "private.el"
 
+     "init-keybindings.el"
+
      "init-basic.el"
      "init-misc.el"
      ;; "init-linum.el"
      "init-my-misc.el"
-
-     "init-keybindings.el"
-
+     
      "init-howm.el"
      "init-dired.el"
 
@@ -130,11 +134,12 @@
      "init-gtags.el"
      "init-anything.el"
      "init-popups.el"
-     "init-theme.el"
      "init-shell.el"
      "init-skk.el"
-     "init-migemo.el"
 
+     "init-theme.el"
+
+     ;; "init-migemo.el"
      ;; "init-window.el"
      ;; "init-test.el"
      ))

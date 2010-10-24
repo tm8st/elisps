@@ -214,4 +214,19 @@
    )
 )
 
+;; 内容バッファにも下線 (もちろん RET も効く)
+(add-hook 'howm-view-contents-mode-hook
+          (lambda ()
+            (setq default-directory howm-directory)
+            (howm-mode 1)))
+(defadvice riffle-contents-show (around howm-mode (item-list) activate)
+  ad-do-it
+  (when howm-mode
+    (howm-initialize-buffer)))
+
+;; C-i・M-C-i を「次・前の下線へ」に変更
+(let ((m howm-view-contents-mode-map))
+  (define-key m "\C-i" 'action-lock-goto-next-link)
+  (define-key m "\M-\C-i" 'action-lock-goto-previous-link))
+
 (provide 'init-howm)

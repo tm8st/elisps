@@ -12,13 +12,17 @@
 ;;;----------------------------------------
 ;;; 文字コード
 ;;;----------------------------------------
-;; (set-language-environment 'Japanese)
-;; (prefer-coding-system 'utf-8)
-;; (set-terminal-coding-system 'japanese-shift-jis)
+(when (my-is-windows)
+  (set-language-environment 'Japanese)
+  (prefer-coding-system 'japanese-shift-jis)
+  (set-terminal-coding-system 'japanese-shift-jis)
+  )
 
-;; (set-default-coding-systems 'utf-8)
-;; (prefer-coding-system 'utf-8)
-;; (prefer-coding-system 'utf-8-auto)
+(when (my-is-mac)
+  (set-default-coding-systems 'utf-8)
+  (prefer-coding-system 'utf-8)
+  (prefer-coding-system 'utf-8-auto)
+  )
 
 ;; terminalで日本語表示がおかしくなったため。
 ;; (prefer-coding-system 'sjis)
@@ -46,9 +50,8 @@
 ;;;----------------------------------------
 (when use-misc-setting
 
-  ;; 削除ファイルをゴミ箱へ
+  ;; 削除ファイルをゴミ箱へ/OS毎のデフォルトディレクトリを使用
   (setq delete-by-moving-to-trash t)
-  ;; (setq trash-directory "~/trash")
 
   ;;--------------------------------
   ;; filecache
@@ -56,10 +59,13 @@
   (require 'filecache)
   (file-cache-add-directory-list (list "~/"))
   (file-cache-add-directory-list load-path)
-  (file-cache-add-directory-list develop-path)
   (file-cache-add-directory-list etc-path)
+  (file-cache-add-directory-list exec-path)
   (file-cache-add-directory-list file-cache-path)
-  
+  (file-cache-add-directory-list my-develop-path)
+  (setq file-cache-ignore-case t)
+
+  ;; mini bufferでfile名補完中のFileCache起動キー
   (define-key minibuffer-local-completion-map
     (kbd "C-q C-i") 'file-cache-minibuffer-complete)
 
@@ -68,69 +74,64 @@
   ;;----------------------------------------
   (require 'auto-install)
   (custom-set-variables
-   '(auto-install-directory "~/elisps/new/")
-   '(install-elisp-repository-directory "~/elisps/rep/")
-   '(auto-install-update-emacswiki-package-name t)
-   )
+   '(auto-install-directory (concat my-elisp-directory "/new/"))
+   '(install-elisp-repository-directory (concat my-elisp-directory "/rep/"))
+   '(auto-install-update-emacswiki-package-name t))
 
   (setq savehist-mode 1)
   (setq kill-whole-line t) ;; C-kで行全体を削除
   (setq inhibit-startup-message t) ;;起動画面を表示しない
   (setq enable-recursive-minibuffers t)	;;前のcommandが終了してなくても、新しいcommandを実行可能にする。
   (global-auto-revert-mode t) ;;file が他から変更されたら、自動的に読み込む。
-  (delete-selection-mode 1) ;; マーク選択中の編集コマンドの挙動変更
-  (set-default 'indicate-empty-lines t)
+  (delete-selection-mode 1) ;; マーク選択中の編集コマンドの挙動変更/範囲削除
+  (setq default-indicate-empty-lines t)
   (setq ns-pop-up-frames nil) ;; 新規フレームなし。
   (customize-set-value 'next-line-add-newlines nil) ;; カーソル移動で行を作らない
 
-  ;; 改行コードを表示
+  ;; 改行コード表示をわかりやすく
   (setq eol-mnemonic-dos "(CRLF)")
   (setq eol-mnemonic-mac "(CR)")
   (setq eol-mnemonic-unix "(LF)")
   
   (require 'saveplace)	;;以前編集していた位置を開く
   (setq-default save-place t)
+
   (auto-compression-mode t);; 圧縮ファイルを透過的に開く
 
   (setq indent-tabs-mode t) ;; tab を使うか
-  (setq tab-width 4)	;; tab 幅を 4 に設定
+  (setq tab-width 2)	;; tab 幅設定
   (file-name-shadow-mode t) ;;ファイル名入力時に不用になった部分暗くする
   (setq redisplay-dont-pause t)	 ;; キーリピートにカーソルを追随させる 副作用があるらしい...
+  (random 1000000) ;; Seed the random-number generator
+  (setq undo-outer-limit 10000);; undo の保存限界
+  
   ;;mini buffer での質問に yes/no を入力するのは面倒なのでSPC で yes とする。
   (defalias 'yes-or-no-p 'y-or-n-p)
-  (random t) ;; Seed the random-number generator
-  (setq undo-outer-limit 100000);; undo の保存限界
 
-  (setq message-log-max 100000)
-  (setq use-dialog-box nil)
-  (setq echo-keystrokes 0.2)
-  
-  ;;(setq required-argument t) ;;file の最後は 必ず newline で終わる様にする。
+  (setq message-log-max 100000) ;; messageバッファのログ数
+  (setq use-dialog-box nil) ;; ダイアログはつかわない
+  (setq echo-keystrokes 0.1) ;;
+
+  (setq require-final-newline t) ; file の最後は 必ず newline で終わる様にする。
   (setq line-number-display-limit 10000)   ;;表示される最大行数を大きくする。
-  (mouse-wheel-mode t) ;;ホイールマウス
+  
+  ;;ホイールマウス
+  (mouse-wheel-mode t)
   (setq mouse-wheel-follow-mouse t) ;;
-
-  ;; (set-locale-environment nil)	;;Localeに合わせた環境の設定
 
   ;; scroll force 1line.
   (setq scroll-conservatively 35
         scroll-margin 0
         scroll-step 1)
 
-  (set-scroll-bar-mode nil)
   (setq completion-ignore-case t) ;; 補完時に大文字小文字を区別しない
-  (auto-image-file-mode)
-  (setq-default line-spacing 0)	;; Add 1 pixel between lines
-
-  ;; emacs 23用?
   (setq read-buffer-completion-ignore-case t)
   (setq read-file-name-completion-ignore-case t)
 
-  ;; file name の TAB 補完する際、拡張子を判別して 色付してくれる。
-  ;; (require 'dircolors)
+  (set-scroll-bar-mode nil)
 
-  ;; (require 'col-highlight)
-  ;; (column-hight-mode 1)
+  (auto-image-file-mode)
+  (setq-default line-spacing 0)	;; setting pixel between lines
 
   ;; 最近使った file を記憶させる。
   (require 'recentf)
@@ -152,7 +153,6 @@
   ;;----------------------------------------
   ;; backup files.
   ;;----------------------------------------
-  (setq make-backup-files t)
   (setq make-backup-files t)
   (setq backup-directory-alist
         (cons (cons "\\.*$" (expand-file-name "~/backups"))
@@ -179,9 +179,7 @@
   ;;----------------------------------------
   ;;visible-bell は目が痛いので消す
   (setq ring-bell-function '(lambda ()))
-  ;; (setq visible-bell nil) ;;visible-bell は目が痛い。
-
-  ;;beepを消す
+  ;;beep音を消す
   (setq visible-bell t)
 
   ;;-------------------------------
@@ -197,7 +195,7 @@
   ;; ウィンドウズ用設定 
   ;;----------------------------------------
   (when (my-is-windows)
-    (setq w32-pass-alt-to-system t) ;; ALTの入力をwindowsに通知するか 最大化、移動用
+    (setq w32-pass-alt-to-system t) ;; ALTの入力をwindowsに通知する 最大化、移動用
     (setq w32-phantom-key-code t)
     (setq w32-use-full-screen-buffer t)
     (setq w32-hide-mouse-timeout 1)
@@ -206,19 +204,6 @@
     ;;cygwin風ディレクリ指定
     (require 'cygwin-mount)
     (cygwin-mount-activate)
-
-    ;;-------------------------------
-    ;; IME
-    ;;-------------------------------
-    ;; (require 'info)
-    ;; (set-language-environment "Japanese")
-    ;; (w32-ime-initialize)
-    ;; (setq default-input-method "MW32-IME")
-    ;; (setq-default mw32-ime-mode-line-state-indicator "[--]")
-    ;; (setq mw32-ime-mode-line-state-indicator-list '("[--]" "[あ]" "[--]"))
-    ;; (require 'iswitchb)
-    ;; (iswitchb-default-keybindings)
-    ;; (add-to-list 'iswitchb-buffer-ignore "")
     )  
   )
 

@@ -25,17 +25,18 @@
 ;;;----------------------------------------
 ;;; customize setting
 ;;;----------------------------------------
+(defvar my-initialized nil)
+
 (defvar toggle-debug-on-signal t)
 (defvar debug-on-error t)
 (defvar debug-on-quit t)
 
 (defvar use-customize t)
-(defvar use-gui-setting (and use-customize t))
-(defvar use-font-setting (and use-gui-setting t))
-(defvar use-misc-setting (and use-customize t))
-(defvar my-force-recompile-elisps t)
+(defvar use-gui-setting (and t use-customize))
+(defvar use-font-setting (and t use-gui-setting))
+(defvar use-misc-setting (and t use-customize))
+(defvar my-force-recompile-elisps nil)
 (defvar file-cache-path nil)
-(defvar my-initialized nil)
 (defgroup my nil "" :group 'my)
 
 (defvar my-is-use-emacs-settings t)
