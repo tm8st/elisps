@@ -314,7 +314,7 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
   
   (set-face-background 'yalinum-face "#005400")
   (set-face-background 'yalinum-bar-face "#005400")
-  
+
   (customize-set-variable 'yalinum-line-number-length-min 5)
 
   (when (my-is-mac)
@@ -334,7 +334,7 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
     (let ((prop (text-properties-at (point))))
       (message prop)))
 
-  (global-set-key (kbd "C-l C-@ C-p") 'my-text-properties-at-point)
+  (global-set-key (kbd "C-l C-l") 'my-text-properties-at-point)
 
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
@@ -347,7 +347,5 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
   (my-theme-set)
 
   )
-
-
 
 (provide 'init-theme)

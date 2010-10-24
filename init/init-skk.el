@@ -28,26 +28,12 @@
 	       (skk-latin-mode-on)
 	       )))
 
-;; (customize-set-value 'skk-show-tooltip nil)
-;; (customize-set-value 'skk-tooltip-y-offset -30)
-;; (customize-set-value 'skk-tooltip-parameters
-;; 		     '((foreground-color . "navy blue")
-;; 		       (background-color . "alice blue")
-;; 		       (border-color . "royal blue")
-;; 		       (border-width . 2)))
-(customize-set-value 'skk-use-color-cursor t)
-;; SKK モードがオフであることを示すカーソル色。標準では、カーソルのある該当 フレームにおける標準のカーソル色を使います。
-;; (customize-set-value 'skk-cursor-default-color t)
-
-;; かなモードであることを示すカーソル色。標準では、背景の明暗により "coral4" または "pink" を用います。
-(customize-set-value 'skk-cursor-hiragana-color "pink")
- 
-;; カナモードであることを示すカーソル色。標準では、背景の明暗により "forestgreen" または "green" を用います。
-(customize-set-value 'skk-cursor-katakana-color "red")
-;; skk-cursor-katakana-color
-
-;; アスキーモードであることを示すカーソル色。標準では、背景の明暗により "ivory4" または "gray" を用います。
-(customize-set-value 'skk-cursor-latin-color "ivory")
+;; C-\ でも SKK に切り替えられるように設定
+(setq default-input-method "japanese-skk")
+;; 送り仮名が厳密に正しい候補を優先して表示
+(setq skk-henkan-strict-okuri-precedence t)
+;;漢字登録時、送り仮名が厳密に正しいかをチェック
+(setq skk-check-okurigana-on-touroku t)
 
 ;;;-------------------------------
 ;;; 表示の設定
@@ -68,10 +54,34 @@
 (setq skk-show-tooltip nil)
 
 ;;tooltipの色設定
-(when skk-show-tooltip
-  (setq skk-tooltip-parameters
-        '((background-color . "ForestGreen")
-          (border-color . "royal blue"))))
+;; (when skk-show-tooltip
+;;   (setq skk-tooltip-parameters
+;;         '((background-color . "black")
+;; 	  (foreground-color . "white")
+;;           (border-color . "royal blue"))))
+
+;; (customize-set-value 'skk-show-tooltip nil)
+;; (customize-set-value 'skk-tooltip-y-offset -30)
+;; (customize-set-value 'skk-tooltip-parameters
+;; 		     '((foreground-color . "navy blue")
+;; 		       (background-color . "alice blue")
+;; 		       (border-color . "royal blue")
+;; 		       (border-width . 2)))
+;; (set-face-foreground 'skk-dcomp-multiple-face "white")
+
+(customize-set-value 'skk-use-color-cursor t)
+;; SKK モードがオフであることを示すカーソル色。標準では、カーソルのある該当 フレームにおける標準のカーソル色を使います。
+;; (customize-set-value 'skk-cursor-default-color t)
+
+;; かなモードであることを示すカーソル色。標準では、背景の明暗により "coral4" または "pink" を用います。
+(customize-set-value 'skk-cursor-hiragana-color "pink")
+ 
+;; カナモードであることを示すカーソル色。標準では、背景の明暗により "forestgreen" または "green" を用います。
+(customize-set-value 'skk-cursor-katakana-color "red")
+;; skk-cursor-katakana-color
+
+;; アスキーモードであることを示すカーソル色。標準では、背景の明暗により "ivory4" または "gray" を用います。
+(customize-set-value 'skk-cursor-latin-color "ivory")
 
 ;;コメント行を抜けたらasciiにする。
 (add-hook 'skk-load-hook

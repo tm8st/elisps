@@ -38,7 +38,7 @@
    (easy-imenu-index-generator-set-for-current-buffer easy-imenu-index-generator-howm)
    (define-key howm-mode-map (kbd "C-q C-i")
      `(lambda () (interactive) (delete-char 1) (insert "."))
-   )))
+     )))
 
 (global-set-key (kbd "C-l C-i") 'indent-region) ; 選択範囲をインデント
 ;; (global-set-key "¥C-m" 'newline-and-indent) ; リターンで改行とインデント
@@ -67,7 +67,7 @@
       "^\\(\\([a-zA-Z]:/\\)?[^:]*\\.howm\\):\\([0-9]*\\):\\(.*\\)$")
 ;; 検索しないファイルの正規表現
 (setq howm-excluded-file-regexp
-	  "/\\.#\\|[~#]$\\|\\.bak$\\|/CVS/\\|\\.doc$\\|\\.pdf$\\|\\.ppt$\\|\\.xls$")
+      "/\\.#\\|[~#]$\\|\\.bak$\\|/CVS/\\|\\.doc$\\|\\.pdf$\\|\\.ppt$\\|\\.xls$")
 
 ;; 内容が0であればファイルを削除
 (if (not (memq 'delete-file-if-no-contents after-save-hook))
@@ -122,18 +122,22 @@
 
 ;; key-macro で定義。howm-menu上で選択している項目の[TODO]+を[TODO].へ書き替えする。
 (fset 'my-howm-todo-done
-   "\C-a\C-m\C-s+\C-f\C-b\C-h.\C-c\C-c\C-n")
+      "\C-a\C-m\C-s+\C-f\C-b\C-h.\C-c\C-c\C-n")
 
 (eval-after-load "howm"
   '(progn
-	 (define-key howm-mode-map (kbd "C-c C-c") 'my-save-and-kill-buffer)
-	 (define-key howm-mode-map (kbd "C-c C-l") 'my-howm-add-link)
-	 (define-key howm-mode-map (kbd "C-c C-k") 'my-howm-add-keyword)
-	 (define-key howm-mode-map (kbd "C-c C-m") 'my-howm-add-mark)
-	 (define-key howm-mode-map (kbd "C-c C-t") 'my-howm-add-todo-switch)
-	 (define-key howm-mode-map (kbd "C-c C-d") 'my-howm-add-todo)
-	 (define-key howm-mode-map (kbd "C-c C-j") 'my-howm-todo-done)
-	 ))
+     (define-key howm-mode-map (kbd "C-c C-c") 'my-save-and-kill-buffer)
+     (define-key howm-mode-map (kbd "C-c C-l") 'my-howm-add-link)
+     (define-key howm-mode-map (kbd "C-c C-k") 'my-howm-add-keyword)
+     (define-key howm-mode-map (kbd "C-c C-m") 'my-howm-add-mark)
+     (define-key howm-mode-map (kbd "C-c C-t") 'my-howm-add-todo-switch)
+     (define-key howm-mode-map (kbd "C-c C-d") 'my-howm-add-todo)
+     (define-key howm-mode-map (kbd "C-c C-j") 'my-howm-todo-done)
+     ))
+
+(require 'calendar)
+;; (setq calendar-setup 'one-frame)
+(setq calendar-setup nil)
 
 ;; カレンダーで日付入力
 (eval-after-load "calendar"
@@ -142,15 +146,15 @@
      (defun my-insert-day ()
        (interactive)
        (save-excursion
-       (let ((day nil)
-             (calendar-date-display-form
-	      '("[" year "-" (format "%02d" (string-to-int month))
-		"-" (format "%02d" (string-to-int day)) "]")))
-         (setq day (calendar-date-string
-                    (calendar-cursor-to-date t)))
-         (exit-calendar)
-         (insert (concat day "+ [TODO]"))
-	 )))))
+	 (let ((day nil)
+	       (calendar-date-display-form
+		'("[" year "-" (format "%02d" (string-to-int month))
+		  "-" (format "%02d" (string-to-int day)) "]")))
+	   (setq day (calendar-date-string
+		      (calendar-cursor-to-date t)))
+	   (exit-calendar)
+	   (insert (concat day "+ [TODO]"))
+	   )))))
 
 (setq howm-menu-refresh-after-save nil)
 (setq howm-refresh-after-save nil)
@@ -165,13 +169,57 @@
       (set-window-buffer nil buf)
       )))
 
+(defun my-howm-todo-moccur ()
+  (interactive)
+  (moccur-grep-find
+   "~/.emacs.d/howm"
+   (list "\\[\\([0-9-]+\\)\\]\\+" ".howm")))
+
+(defun my-howm-todo-toggle ()
+  ""
+  (interactive)
+  (save-excursion
+    (goto-char (line-beginning-position))
+    (when (re-search-forward "\\+" (line-end-position) t)
+      (backward-char 1)
+      (delete-char 1)
+      (insert "."))
+    (when (re-search-forward "\\." (line-end-position) t)
+      (backward-char 1)
+      (delete-char 1)
+      (insert "+"))))
+
+(defun my-howm-moccur-all-save-and-kill-buffer ()
+  ""
+  (interactive)
+  (my-save-all-buffers)
+  (kill-buffer "*Moccur*"))
+
+(global-set-key (kbd "C-l C-u C-,") 'my-howm-todo-moccur)
+
+;; (define-key moccur-mode-map (kbd "C-c C-j") 'my-howm-todo-toggle)
+;; (define-key moccur-mode-map (kbd "C-c C-e") 'my-howm-moccur-all-save-and-kill-buffer)
+(define-key moccur-mode-map (kbd "C-v") 'my-scroll-up)
+
+(define-key moccur-edit-mode-map (kbd "C-c C-j") 'my-howm-todo-toggle)
+(define-key moccur-edit-mode-map (kbd "C-c C-c") 'my-howm-moccur-all-save-and-kill-buffer)
+(define-key moccur-edit-mode-map (kbd "C-v") 'my-scroll-up)
+
+(require 'color-moccur)
+(require 'moccur-edit)
+(set-face-background 'moccur-face "#005400")
+(set-face-foreground 'moccur-face "yellow")
+(set-face-underline 'moccur-face t)
+(set-face-foreground 'howm-mode-title-face "pink")
+(set-face-foreground 'moccur-edit-done-face "gray60")
+
 (defun my-howm-command (arg)
   "howm用コマンドのまとめ関数。 C-uした回数で呼び変え"
   (interactive "P")
   (cond
    ((equal arg '(256)) (howm-menu))	;;C-u C-u C-u C-u
    ;; ((equal arg '(64)) (calendar))	;;C-u C-u C-u
-   ((equal arg '(64)) (my-howm-clip))	;;C-u C-u C-u
+   ((equal arg '(64)) (my-howm-todo-moccur));;C-u C-u C-u
    ((equal arg '(16))  (howm-list-grep)) ;;C-u -u
    ((equal arg '(4)) (howm-list-all))	;;C-u
    (t (howm-create))))
@@ -212,7 +260,7 @@
    '(howm-reminder-today-face ((t (:background "black" :foreground "Pink"))))
    '(howm-reminder-tomorrow-face ((t (:background "black" :foreground "gray70"))))
    )
-)
+  )
 
 ;; 内容バッファにも下線 (もちろん RET も効く)
 (add-hook 'howm-view-contents-mode-hook

@@ -7,7 +7,7 @@
 
 ;;; Commentary:
 
-;;; Code:a
+;;; Code:
 
 ;;;----------------------------------------
 ;;; 文字コード
@@ -59,9 +59,9 @@
   (require 'filecache)
   (file-cache-add-directory-list (list "~/"))
   (file-cache-add-directory-list load-path)
-  (file-cache-add-directory-list etc-path)
   (file-cache-add-directory-list exec-path)
   (file-cache-add-directory-list file-cache-path)
+  (file-cache-add-directory-list my-etc-path)
   (file-cache-add-directory-list my-develop-path)
   (setq file-cache-ignore-case t)
 
@@ -85,7 +85,6 @@
   (global-auto-revert-mode t) ;;file が他から変更されたら、自動的に読み込む。
   (delete-selection-mode 1) ;; マーク選択中の編集コマンドの挙動変更/範囲削除
   (setq default-indicate-empty-lines t)
-  (setq ns-pop-up-frames nil) ;; 新規フレームなし。
   (customize-set-value 'next-line-add-newlines nil) ;; カーソル移動で行を作らない
 
   ;; 改行コード表示をわかりやすく
@@ -189,6 +188,8 @@
     ;; Swap Command-Key, Option-Key
     (setq ns-command-modifier (quote meta))
     (setq ns-alternate-modifier (quote super))
+    (define-key global-map [ns-drag-file] 'ns-find-file)
+    (setq ns-pop-up-frames nil) ;; 新規フレームなし。
     )
 
   ;;----------------------------------------
