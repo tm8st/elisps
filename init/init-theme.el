@@ -50,7 +50,7 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
     ;; faces
     (dolist
 	(element
-	 '((default ((t ( :background "#005400" :foreground "gray74"))))
+	 '((default ((t ( :background "#005400" :foreground "gray75"))))
 	   (button ((t (:bold t))))
 	   (cursor ((t (:background "Orange"))))
 	   (highlight ((t (:background "Gray30"))))
@@ -111,25 +111,29 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
   ;; ベースのフォントサイズ OSによって微妙に変更
   (defvar my-font-size-base 100)
   (cond
-   ((my-is-windows) (setq my-font-size-base 120))
+   ((my-is-windows) (setq my-font-size-base 135))
    ;; ((my-is-mac)	(setq my-font-size-base 300))
-   ((my-is-mac)	(setq my-font-size-base 160))
-   )
+   ((my-is-mac)	(setq my-font-size-base 160)))
 
-  (when use-font-setting
-    (set-face-attribute 'default nil
-			;; :family "VL Pゴシック"
-                        :height my-font-size-base)
+  (when (and use-font-setting (my-is-windows)
+	     (set-face-attribute 'default nil
+				 :family "VL ゴシック"
+				 :height my-font-size-base)))
 
-    ;; (set-face-attribute 'default nil
-    ;; 			:family "VL ゴシック"
-    ;; 			:height my-font-size-base)
+  (when (and use-font-setting (my-is-mac)
+	     (set-face-attribute 'default nil
+				 ;; :family "VL Pゴシック"
+				 :height my-font-size-base)))
+    
+  ;; (set-face-attribute 'default nil
+  ;; 			:family "VL ゴシック"
+  ;; 			:height my-font-size-base)
 
-    ;; (setq face-font-rescale-alist
-    ;; 	  '((".*profont-medium.*" . (* my-font-size-base 1.5))
-    ;; 	    (".*profont-bold.*" . (* my-font-size-base 1.8))
-    ;; 	    ("-cdac$" . (* my-font-size-base 1.8))))
-    )
+  ;; (setq face-font-rescale-alist
+  ;; 	  '((".*profont-medium.*" . (* my-font-size-base 1.5))
+  ;; 	    (".*profont-bold.*" . (* my-font-size-base 1.8))
+  ;; 	    ("-cdac$" . (* my-font-size-base 1.8))))
+ 
 
   ;;-------------------------------
   ;; frame setting
@@ -150,39 +154,38 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
      '(left . 0) ;; 左上隅 x 座標
      '(top . 0) ;; 左上隅 y 座標
      '(alpha . 100) ;; 透明度設定
-     )
-    )
+     ))
 
   ;; (add-to-list 'default-frame-alist my-frame-setting-list)
   ;; (add-to-list 'initial-frame-alist my-frame-setting-list)
 
   (setq default-frame-alist
-        (append
-         my-frame-setting-list
-         default-frame-alist))
+	(append
+	 my-frame-setting-list
+	 default-frame-alist))
 
   (setq initial-frame-alist
-        (append
-         my-frame-setting-list
-         initial-frame-alist))
+	(append
+	 my-frame-setting-list
+	 initial-frame-alist))
 
   ;; font lock
   (setq font-lock-support-mode 'jit-lock-mode)
   (global-font-lock-mode 1)			  ;;色を付ける
   (setq font-lock-maximum-decoration t)
-  
+
   ;;タイトルバーにファイル名を表示するタイトルフォーマット設定
   (setq frame-title-format
-        (format "emacs %s : %%f %s"
-                (system-name)
-                (emacs-version)))
+	(format "emacs %s : %%f %s"
+		(system-name)
+		(emacs-version)))
 
   (display-time) ;;モードラインに時間を表示する
   (setq display-time-day-and-date t)
   (which-function-mode 1)  ;;現在の関数名をモードラインに表示
   (column-number-mode t) ;;カーソルの位置が何文字目かを表示する
   (line-number-mode t) ;;カーソルの位置が何行目かを表示する
-  
+
   ;;-------------------------------
   ;; 日本語入力のON/OFFでカーソルの色を変える 
   ;;-------------------------------
@@ -208,7 +211,7 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
     ;; (customize-set-value 'hl-line-face 'highlight)
     (global-hl-line-mode t)
     )
-  
+
   ;;-------------------------------
   ;; 対応する括弧を強調表示
   ;;-------------------------------
@@ -245,7 +248,7 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
   (tool-bar-mode -1)
   (menu-bar-mode -1)
   (tooltip-mode -1)
-  
+
   ;;-------------------------------------
   ;; タブや全角スペースを表示
   ;; mac だと通常のfont-lockと競合してしまう???
@@ -263,9 +266,9 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
       (font-lock-add-keywords
        major-mode
        '(
-         ;; ("\t" 0 my-face-tab append)
-         ("　" 0 my-face-full-space append)
-         )))
+	 ;; ("\t" 0 my-face-tab append)
+	 ("　" 0 my-face-full-space append)
+	 )))
     (ad-enable-advice 'font-lock-mode 'before 'my-font-lock-mode)
     (ad-activate 'font-lock-mode)
     )
@@ -288,20 +291,20 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
   ;; diff
   ;;-------------------------------
   (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(diff-added ((t (:foreground "pink"))))
- '(diff-context ((t nil)))
- '(diff-file-header ((((class color) (min-colors 88) (background dark)) (:foreground "RoyalBlue1"))))
- '(diff-function ((t (:foreground "Orange"))))
- '(diff-header ((((class color) (min-colors 88) (background dark)) (:foreground "RoyalBlue1"))))
- '(diff-hunk-header ((t (:foreground "turquoise3"))))
- '(diff-nonexistent ((t (:inherit diff-file-header :strike-through nil))))
- '(diff-refine-change ((((class color) (min-colors 88) (background dark)) (:background "#182042"))))
- '(diff-removed ((t (:foreground "red")))))
-  
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(diff-added ((t (:foreground "pink"))))
+   '(diff-context ((t nil)))
+   '(diff-file-header ((((class color) (min-colors 88) (background dark)) (:foreground "RoyalBlue1"))))
+   '(diff-function ((t (:foreground "Orange"))))
+   '(diff-header ((((class color) (min-colors 88) (background dark)) (:foreground "RoyalBlue1"))))
+   '(diff-hunk-header ((t (:foreground "turquoise3"))))
+   '(diff-nonexistent ((t (:inherit diff-file-header :strike-through nil))))
+   '(diff-refine-change ((((class color) (min-colors 88) (background dark)) (:background "#182042"))))
+   '(diff-removed ((t (:foreground "red")))))
+
   ;;;-------------------------------
   ;;; yalinum
   ;;;-------------------------------
@@ -309,9 +312,9 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
   (global-yalinum-mode t)
   (global-linum-mode -1)
 
-  (set-face-foreground 'yalinum-face "gray65")
-  (set-face-foreground 'yalinum-bar-face "gray85")
-  
+  (set-face-foreground 'yalinum-face "gray70")
+  (set-face-foreground 'yalinum-bar-face "Pink")
+
   (set-face-background 'yalinum-face "#005400")
   (set-face-background 'yalinum-bar-face "#005400")
 
@@ -345,7 +348,6 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
    '(howm-reminder-today-face ((t (:background "black" :foreground "Pink"))))
    '(howm-reminder-tomorrow-face ((t (:background "black" :foreground "gray70")))))
   (my-theme-set)
-
   )
 
 (provide 'init-theme)

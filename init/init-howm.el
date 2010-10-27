@@ -192,26 +192,29 @@
 (defun my-howm-moccur-all-save-and-kill-buffer ()
   ""
   (interactive)
+  (moccur-edit-finish-edit)
   (my-save-all-buffers)
   (kill-buffer "*Moccur*"))
 
 (global-set-key (kbd "C-l C-u C-,") 'my-howm-todo-moccur)
 
-;; (define-key moccur-mode-map (kbd "C-c C-j") 'my-howm-todo-toggle)
-;; (define-key moccur-mode-map (kbd "C-c C-e") 'my-howm-moccur-all-save-and-kill-buffer)
+(define-key moccur-mode-map (kbd "C-c C-j") 'my-howm-todo-toggle)
+(define-key moccur-mode-map (kbd "C-c C-e") 'my-howm-moccur-all-save-and-kill-buffer)
 (define-key moccur-mode-map (kbd "C-v") 'my-scroll-up)
 
 (define-key moccur-edit-mode-map (kbd "C-c C-j") 'my-howm-todo-toggle)
-(define-key moccur-edit-mode-map (kbd "C-c C-c") 'my-howm-moccur-all-save-and-kill-buffer)
+(define-key moccur-edit-mode-map (kbd "C-c C-e") 'my-howm-moccur-all-save-and-kill-buffer)
 (define-key moccur-edit-mode-map (kbd "C-v") 'my-scroll-up)
 
 (require 'color-moccur)
 (require 'moccur-edit)
+
 (set-face-background 'moccur-face "#005400")
-(set-face-foreground 'moccur-face "yellow")
+(set-face-foreground 'moccur-face "orange")
 (set-face-underline 'moccur-face t)
 (set-face-foreground 'howm-mode-title-face "pink")
 (set-face-foreground 'moccur-edit-done-face "gray60")
+(set-face-background 'moccur-edit-done-face "gray1")
 
 (defun my-howm-command (arg)
   "howm用コマンドのまとめ関数。 C-uした回数で呼び変え"

@@ -23,7 +23,7 @@
 (require 'anything-complete)
 (require 'anything-kyr)
 (require 'imenu)
-(require 'imenu+)
+;; (require 'imenu+)
 (require 'anything-migemo)
 
 ;; (require 'anything-show-completion)
