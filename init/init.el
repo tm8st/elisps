@@ -136,10 +136,10 @@
      "init-popups.el"
      "init-shell.el"
      "init-skk.el"
+     ;; "init-migemo.el"
 
      "init-theme.el"
 
-     ;; "init-migemo.el"
      ;; "init-window.el"
      ;; "init-test.el"
      ))

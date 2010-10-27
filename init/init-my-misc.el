@@ -599,9 +599,10 @@ default name is filename:current line string."
       (set-buffer buf)
       (save-buffer)))))
 
-(defun my-git-push ()
-  "git push command"
+(defun my-git-commit-and-push ()
+  "git commit and push command"
   (interactive)
+  (async-shell-command (concat "git commit -a -m " "\""(read-string "commit log:") "\"") "*git commit*")
   (async-shell-command "git push origin master" "*git push*")
   )
 
