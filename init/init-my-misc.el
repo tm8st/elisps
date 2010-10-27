@@ -120,6 +120,36 @@
 		(kill-region start end))
 	(backward-kill-word arg)))
 
+;;;-------------------------------
+;;; delete functions
+;;;-------------------------------
+(defun my-delete-follow-word ()
+  (interactive)
+  (mark-word*)
+  (delete-region (mark) (point)))
+
+(defun my-delete-follow-string ()
+  (interactive)
+  (mark-string)
+  (delete-region (mark) (point)))
+
+(defun my-delete-follow-sexp ()
+  (interactive)
+  (mark-sexp*)
+  (delete-region (mark) (point)))
+
+(defun my-delete-forward-search-char ()
+  (interactive)
+  (save-excursion
+    (let ((s (point)) (e (re-search-forward (char-to-string (read-char "forward search:")))))
+      (delete-region s e))))
+
+(defun my-delete-backward-search-char ()
+  (interactive)
+  (save-excursion
+    (let ((e (point)) (s (re-search-backward (char-to-string (read-char "backward search:")))))
+      (delete-region s e))))
+
 (defun my-delete-region-or-follow-kill-word ()
   "リージョンがアクティブでなければカーソルが乗っている単語を削除"
   (interactive)

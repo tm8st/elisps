@@ -219,10 +219,26 @@
 (global-set-key (kbd "C-q C-t C-u") 'untabify)                ;; untab化
 ;; (global-set-key (kbd "C-q C-t C-i")  'indent-region) ;;インデント
 
-;; killではなくてdelete削除コマンド
-(global-set-key (kbd "C-q C-k")  'my-delete-line-backward)
-(global-set-key (kbd "C-q C-d C-d")  'my-delete-line)
 ;; Perform general cleanup.
 (global-set-key (kbd "C-q C-d C-b") 'clean-buffer-list)
+
+;;;-------------------------------
+;;; C-d combination
+;;;-------------------------------
+(require 'init-my-misc)
+(global-unset-key (kbd "C-d"))
+(global-set-key (kbd "C-d C-j") 'delete-char)
+(global-set-key (kbd "C-d C-d") 'my-replace-string)
+(global-set-key (kbd "C-d C-w") 'my-delete-follow-word)
+(global-set-key (kbd "C-d C-f") 'my-delete-line-forward)
+(global-set-key (kbd "C-d C-b") 'my-delete-line-backward)
+(global-set-key (kbd "C-d C-s") 'my-delete-forward-search-char)
+(global-set-key (kbd "C-d C-r") 'my-delete-backward-search-char)
+(global-set-key (kbd "C-d C-e") 'my-delete-follow-sexp)
+(global-set-key (kbd "C-d C-l") 'my-delete-follow-string)
+
+;; killではなくてdelete削除コマンド
+(global-set-key (kbd "C-q C-k")  'my-delete-line-backward)
+;; (global-set-key (kbd "C-q C-d C-d") 'my-delete-line)
 
 (provide 'init-keybindings)
