@@ -318,6 +318,10 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
   (set-face-background 'yalinum-face "#005400")
   (set-face-background 'yalinum-bar-face "#005400")
 
+  (require 'jaunte)
+  (set-face-foreground 'jaunte-hint-face "pink")
+  (set-face-background 'jaunte-hint-face "black")
+
   (customize-set-variable 'yalinum-line-number-length-min 5)
 
   (when (my-is-mac)

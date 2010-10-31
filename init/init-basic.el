@@ -109,7 +109,13 @@
 
   (setq message-log-max 100000) ;; messageバッファのログ数
   (setq use-dialog-box nil) ;; ダイアログはつかわない
-  (setq echo-keystrokes 0.1) ;;
+  (setq echo-keystrokes 0.15) ;;
+
+  ;; 
+  (defadvice save-buffers-kill-terminal (before my-save-buffers-kill-terminal activate)
+  (when (process-list)
+    (dolist (p (process-list))
+      (set-process-query-on-exit-flag p nil))))
 
   (setq require-final-newline t) ; file の最後は 必ず newline で終わる様にする。
   (setq line-number-display-limit 10000)   ;;表示される最大行数を大きくする。
@@ -180,6 +186,22 @@
   (setq ring-bell-function '(lambda ()))
   ;;beep音を消す
   (setq visible-bell t)
+
+  ;; This is normal if you executed a command that made a huge change
+  ;; to the buffer.  In that case, to prevent similar problems in the
+  ;; future, set `undo-outer-limit' to a value that is large enough to
+  ;; cover the maximum size of normal changes you expect a single
+  ;; command to make, but not so large that it might exceed the
+  ;; maximum memory allotted to Emacs.
+
+  ;; If you did not execute any such command, the situation is
+  ;; probably due to a bug and you should report it.
+
+  ;; You can disable the popping up of this buffer by adding the entry
+  ;; (undo discard-info) to the user option `warning-suppress-types',
+  ;; which is defined in the `warnings' library.
+
+  (setq undo-outer-limit 1000000)
 
   ;;-------------------------------
   ;; マック用設定

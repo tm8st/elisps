@@ -269,12 +269,14 @@
  :look-for '("\\.emacs") ; or
  :include-regexp '("\\.el$") ;or
  )
+
 ;; scala 登録
 (ap:add-project
  :name 'scala
- :look-for '("\\.ensime") ; or
+ :look-for '("ensime") ; or
  :include-regexp '("\\.scala$") ;or
  )
+
 ;; elisp 登録
 (ap:add-project
  :name 'elisp

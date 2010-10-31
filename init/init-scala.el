@@ -65,8 +65,8 @@
 
   ;; MINI HOWTO: open .scala file. Ensure bin/server.sh is executable. M-x ensime
 
-  (require 'ensime)
-  (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+  ;; (require 'ensime)
+  ;; (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
   ;; TAB - Start completing a method/variable.
   ;; C-c t / Double-Click - Inspect the type of the expression under the cursor.

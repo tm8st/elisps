@@ -11,6 +11,11 @@
 
 (require 'init-my-misc)
 
+;;;-------------------------------
+;;; delete, mark, kill some ranges.
+;;;-------------------------------
+(require 'generic-range-opt)
+
 ;;標準操作
 (global-set-key (kbd "C-f") 'forward-char)
 (global-set-key (kbd "C-b") 'backward-char)
@@ -77,7 +82,8 @@
 
 (global-set-key (kbd "C-.") 'my-just-one-space-toggle)
 
-(global-set-key (kbd "C-w") 'my-kill-region)
+(global-set-key (kbd "C-w") 'gro-kill-follow-word)
+
 ;; (global-set-key (kbd "C-S-w") 'my-delete-region-or-follow-kill-word)
 
 ;;;-------------------------------
@@ -206,7 +212,8 @@
 
 (global-set-key (kbd "C-q C-q") 'quoted-insert)       ;;元のコマンド
 (global-set-key (kbd "C-q C-@") 'yalinum-mode)        ;;行番号表示
-(global-set-key (kbd "C-q C-w") 'copy-region-as-kill) ;;copy
+(global-set-key (kbd "C-q C-w") 'gro-copy-follow-word) ;;copy
+;; (global-set-key (kbd "C-q C-w") 'copy-region-as-kill) ;;copy
 (global-set-key (kbd "C-q C-h") 'help-for-help)	      ;;ヘルプ
 (global-set-key (kbd "C-q C-;") 'view-mode)
 
@@ -222,23 +229,37 @@
 ;; Perform general cleanup.
 (global-set-key (kbd "C-q C-d C-b") 'clean-buffer-list)
 
+(global-set-key (kbd "C-q C-k") 'my-delete-line-backward)
+
 ;;;-------------------------------
-;;; C-d combination
+;;; delete, mark, kill some ranges.
 ;;;-------------------------------
-(require 'init-my-misc)
+(require 'generic-range-opt)
 (global-unset-key (kbd "C-d"))
 (global-set-key (kbd "C-d C-j") 'delete-char)
-(global-set-key (kbd "C-d C-d") 'my-replace-string)
-(global-set-key (kbd "C-d C-w") 'my-delete-follow-word)
-(global-set-key (kbd "C-d C-f") 'my-delete-line-forward)
-(global-set-key (kbd "C-d C-b") 'my-delete-line-backward)
-(global-set-key (kbd "C-d C-s") 'my-delete-forward-search-char)
-(global-set-key (kbd "C-d C-r") 'my-delete-backward-search-char)
-(global-set-key (kbd "C-d C-e") 'my-delete-follow-sexp)
-(global-set-key (kbd "C-d C-l") 'my-delete-follow-string)
+(global-set-key (kbd "C-d C-i") 'gro-delete-follow-word)
+(global-set-key (kbd "C-d C-f") 'gro-delete-forward-line)
+(global-set-key (kbd "C-d C-b") 'gro-delete-backward-line)
+(global-set-key (kbd "C-d C-s") 'gro-delete-search-forward-char)
+(global-set-key (kbd "C-d C-r") 'gro-delete-search-backward-char)
+(global-set-key (kbd "C-d C-e") 'gro-delete-follow-sexp)
+(global-set-key (kbd "C-d C-w") 'gro-delete-follow-string)
+(global-set-key (kbd "C-d C-d") 'gro-delete-current-line)
+(global-set-key (kbd "C-d C-n") 'gro-delete-next-line)
+(global-set-key (kbd "C-d C-p") 'gro-delete-prev-line)
+(global-set-key (kbd "C-d C-h") 'gro-delete-jaunte-prev)
 
-;; killではなくてdelete削除コマンド
-(global-set-key (kbd "C-q C-k")  'my-delete-line-backward)
-;; (global-set-key (kbd "C-q C-d C-d") 'my-delete-line)
+(global-unset-key (kbd "C-8"))
+(global-set-key (kbd "C-8 C-i") 'gro-mark-follow-word)
+(global-set-key (kbd "C-8 C-f") 'gro-mark-forward-line)
+(global-set-key (kbd "C-8 C-b") 'gro-mark-backward-line)
+(global-set-key (kbd "C-8 C-s") 'gro-mark-search-forward-char)
+(global-set-key (kbd "C-8 C-r") 'gro-mark-search-backward-char)
+(global-set-key (kbd "C-8 C-e") 'gro-mark-follow-sexp)
+(global-set-key (kbd "C-8 C-w") 'gro-mark-follow-string)
+(global-set-key (kbd "C-8 C-8") 'gro-mark-current-line)
+(global-set-key (kbd "C-8 C-n") 'gro-mark-next-line)
+(global-set-key (kbd "C-8 C-p") 'gro-mark-prev-line)
+(global-set-key (kbd "C-8 C-h") 'gro-mark-jaunte-prev)
 
 (provide 'init-keybindings)
