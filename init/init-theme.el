@@ -113,7 +113,7 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
   (cond
    ((my-is-windows) (setq my-font-size-base 135))
    ;; ((my-is-mac)	(setq my-font-size-base 300))
-   ((my-is-mac)	(setq my-font-size-base 160)))
+   ((my-is-mac)	(setq my-font-size-base 180)))
 
   (when (and use-font-setting (my-is-windows)
 	     (set-face-attribute 'default nil

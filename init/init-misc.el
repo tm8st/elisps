@@ -71,7 +71,18 @@
 	(when text-translator-last-translated-text
 	  (insert text-translator-last-translated-text)))
 
-(global-set-key (kbd "C-q C-t C-t") 'text-translator)
+(defun my-text-translator-jaen ()
+	"insert last translated text."
+	(interactive)
+	(text-translator nil nil "google.com_jaen"))
+
+(defun my-text-translator-enja ()
+	"insert last translated text."
+	(interactive)
+	(text-translator nil nil "google.com_enja"))
+
+(global-set-key (kbd "C-q C-t C-t") 'my-text-translator-enja)
+(global-set-key (kbd "C-q C-t C-i") 'my-text-translator-jaen)
 (global-set-key (kbd "C-q C-t C-o") 'text-translator-all)
 (global-set-key (kbd "C-q C-t C-u") 'my-text-translator-toggle-popup)
 (global-set-key (kbd "C-q C-t C-y") 'my-text-translator-insert)

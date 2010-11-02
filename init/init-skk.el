@@ -11,7 +11,7 @@
 
 (require 'skk)
 
-(global-set-key (kbd "C-q C-o") 'skk-mode)
+(global-set-key (kbd "C-c C-SPC") 'skk-mode)
 (setq skk-tut-file "~/elisps/external/ddskk-20100704/etc/SKK.tut")
 
 (customize-set-value 'skk-kakutei-key "\C-o")
