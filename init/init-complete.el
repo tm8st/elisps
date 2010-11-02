@@ -20,9 +20,11 @@
 ;;;-------------------------------------
 (require 'auto-complete)
 (require 'auto-complete-config)
-;; (ac-config-default)
+(ac-config-default)
+
 (global-auto-complete-mode t)
-;; (customize-set-value 'ac-dictionary-directories (list "~/elisps/external/complete/m2ym-auto-complete-2c75fd1/dict"))
+(customize-set-value 'ac-dictionary-directories (list "~/elisps/external/complete/m2ym-auto-complete/dict"))
+(add-to-list 'ac-user-dictionary-files "~/elisps/resource/dict/globish.txt")
 
 (setq ac-auto-start 3)
 (customize-set-value 'ac-ignore-case 'smart)
@@ -63,25 +65,20 @@
 (ac-define-source pcomplete
   '((candidates . pcomplete-completions)))
 
-(defun my-ac-eshell-mode ()
-  (setq ac-sources
-        '(ac-source-pcomplete
-          ac-source-words-in-buffer
-          ac-source-dictionary)))
+;; ac source setting. all mode use same setting.
+(setq ac-sources
+      '(ac-source-pcomplete
+	ac-source-words-in-buffer
+	ac-source-gtags
+	ac-source-filename
+	ac-source-symbols
+	ac-source-dictionary))
 
+;; use ac modes.
 (add-to-list 'ac-modes 'shell-mode)
 (add-to-list 'ac-modes 'eshell-mode)
 (add-to-list 'ac-modes 'fundamental-mode)
 (add-to-list 'ac-modes 'scala-mode)
-
-(add-hook 'eshell-mode-hook
-          (lambda ()
-            (my-ac-eshell-mode)
-            (define-key eshell-mode-map (kbd "C-o") 'auto-complete)))
-(add-hook 'shell-mode-hook
-          (lambda ()
-            (my-ac-eshell-mode)
-            (define-key shell-mode-map (kbd "C-o") 'auto-complete)))
 
 ;;;-------------------------------------
 ;;;標準補間機能のカスタマイズ completion
@@ -112,8 +109,5 @@
 
 ;; 動的補完で無視する要素の正規表現
 (customize-set-value 'dabbrev-abbrev-skip-leading-regexp "-")
-
-;; (when (require 'yaicomplete nil t)
-;;   (yaicomplete-mode))
 
 (provide 'init-complete)
