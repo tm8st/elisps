@@ -82,7 +82,7 @@
 
 (global-set-key (kbd "C-.") 'my-just-one-space-toggle)
 
-(global-set-key (kbd "C-w") 'gro-kill-follow-word)
+;; (global-set-key (kbd "C-w") 'gro-kill-follow-word)
 
 ;; (global-set-key (kbd "C-S-w") 'my-delete-region-or-follow-kill-word)
 
@@ -235,6 +235,7 @@
 ;;; delete, mark, kill some ranges.
 ;;;-------------------------------
 (require 'generic-range-opt)
+
 (global-unset-key (kbd "C-d"))
 (global-set-key (kbd "C-d C-j") 'delete-char)
 (global-set-key (kbd "C-d C-i") 'gro-delete-follow-word)
@@ -261,5 +262,6 @@
 (global-set-key (kbd "C-8 C-n") 'gro-mark-next-line)
 (global-set-key (kbd "C-8 C-p") 'gro-mark-prev-line)
 (global-set-key (kbd "C-8 C-h") 'gro-mark-jaunte-prev)
+(global-set-key (kbd "C-8 C-d") 'gro-mark-defun*)
 
 (provide 'init-keybindings)
