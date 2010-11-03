@@ -14,12 +14,10 @@
 ;;;-------------------------------
 (require 'migemo)
 (migemo-init)
-
 ;; ;; 基本設定
 (setq migemo-command "cmigemo")
 (setq migemo-options '("-q" "--emacs"))
-;; migemo-dict のパスを指定
-(setq migemo-dictionary "/usr/local/share/migemo/euc-jp/migemo-dict")
+;; migemo-dict のパスを指定(setq migemo-dictionary "/usr/local/share/migemo/euc-jp/migemo-dict")
 (setq migemo-user-dictionary nil)
 (setq migemo-regex-dictionary nil)
 

@@ -28,37 +28,42 @@
 	       (skk-latin-mode-on)
 	       )))
 
-;; C-\ ‚Å‚à SKK ‚ÉØ‚è‘Ö‚¦‚ç‚ê‚é‚æ‚¤‚Éİ’è
+
+;; C-\ ã§ã‚‚ SKK ã«åˆ‡ã‚Šæ›¿ãˆã‚‰ã‚Œã‚‹ã‚ˆã†ã«è¨­å®š
 (setq default-input-method "japanese-skk")
-;; ‘—‚è‰¼–¼‚ªŒµ–§‚É³‚µ‚¢Œó•â‚ğ—Dæ‚µ‚Ä•\¦
+(global-set-key (kbd "C-Â¥") 'toggle-input-method)
+
+;; é€ã‚Šä»®åãŒå³å¯†ã«æ­£ã—ã„å€™è£œã‚’å„ªå…ˆã—ã¦è¡¨ç¤º
 (setq skk-henkan-strict-okuri-precedence t)
-;;Š¿š“o˜^A‘—‚è‰¼–¼‚ªŒµ–§‚É³‚µ‚¢‚©‚ğƒ`ƒFƒbƒN
+;;æ¼¢å­—ç™»éŒ²æ™‚ã€é€ã‚Šä»®åãŒå³å¯†ã«æ­£ã—ã„ã‹ã‚’ãƒã‚§ãƒƒã‚¯
 (setq skk-check-okurigana-on-touroku t)
 
 ;;;-------------------------------
-;;; •\¦‚Ìİ’è
+;;; è¡¨ç¤ºã®è¨­å®š
 ;;;-------------------------------
-;; ƒƒbƒZ[ƒW‚ğ“ú–{Œê‚Å’Ê’m‚·‚é
+;; ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’æ—¥æœ¬èªã§é€šçŸ¥ã™ã‚‹
 (setq skk-japanese-message-and-error t)
-;; ƒƒjƒ…[‚ğ‰pŒê‚Å•\¦‚·‚é
-(setq skk-show-japanese-menu t)
+;; ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’è‹±èªã§è¡¨ç¤ºã™ã‚‹
+(setq skk-show-japanese-menu nil)
 
-;; •ÏŠ·‚É’ß (annotation) ‚ğ•\¦‚·‚é
+;; å¤‰æ›æ™‚ã«æ³¨é‡ˆ (annotation) ã‚’è¡¨ç¤ºã™ã‚‹
 (setq skk-show-annotation nil)
 
-;;isearch-mode ‚É“ü‚Á‚½Û‚É©“®“I‚É skk-isearch ‚ğ‹N“®
+;;isearch-mode ã«å…¥ã£ãŸéš›ã«è‡ªå‹•çš„ã« skk-isearch ã‚’èµ·å‹•
 ;; (add-hook 'isearch-mode-hook 'skk-isearch-mode-setup)
 ;; (add-hook 'isearch-mode-end-hook 'skk-isearch-mode-cleanup)
 
-;; •ÏŠ·Œó•âˆê——‚Æ’ß (annotation) ‚ğ GUI ‚Û‚­•\¦‚·‚é
-(setq skk-show-tooltip nil)
+;; å¤‰æ›å€™è£œä¸€è¦§ã¨æ³¨é‡ˆ (annotation) ã‚’ GUI ã½ãè¡¨ç¤ºã™ã‚‹
+(setq skk-show-tooltip t)
+(set-face-foreground 'skk-treat-default "white")
+(set-face-background 'tooltip "black")
 
-;;tooltip‚ÌFİ’è
-;; (when skk-show-tooltip
-;;   (setq skk-tooltip-parameters
-;;         '((background-color . "black")
-;; 	  (foreground-color . "white")
-;;           (border-color . "royal blue"))))
+;; tooltipã®è‰²è¨­å®š
+(when skk-show-tooltip
+  (setq skk-tooltip-parameters
+        '((background-color . "black")
+	  (foreground-color . "white")
+          (border-color . "royal blue"))))
 
 ;; (customize-set-value 'skk-show-tooltip nil)
 ;; (customize-set-value 'skk-tooltip-y-offset -30)
@@ -70,136 +75,138 @@
 ;; (set-face-foreground 'skk-dcomp-multiple-face "white")
 
 (customize-set-value 'skk-use-color-cursor t)
-;; SKK ƒ‚[ƒh‚ªƒIƒt‚Å‚ ‚é‚±‚Æ‚ğ¦‚·ƒJ[ƒ\ƒ‹FB•W€‚Å‚ÍAƒJ[ƒ\ƒ‹‚Ì‚ ‚éŠY“– ƒtƒŒ[ƒ€‚É‚¨‚¯‚é•W€‚ÌƒJ[ƒ\ƒ‹F‚ğg‚¢‚Ü‚·B
+;; SKK ãƒ¢ãƒ¼ãƒ‰ãŒã‚ªãƒ•ã§ã‚ã‚‹ã“ã¨ã‚’ç¤ºã™ã‚«ãƒ¼ã‚½ãƒ«è‰²ã€‚æ¨™æº–ã§ã¯ã€ã‚«ãƒ¼ã‚½ãƒ«ã®ã‚ã‚‹è©²å½“ ãƒ•ãƒ¬ãƒ¼ãƒ ã«ãŠã‘ã‚‹æ¨™æº–ã®ã‚«ãƒ¼ã‚½ãƒ«è‰²ã‚’ä½¿ã„ã¾ã™ã€‚
 ;; (customize-set-value 'skk-cursor-default-color t)
 
-;; ‚©‚Èƒ‚[ƒh‚Å‚ ‚é‚±‚Æ‚ğ¦‚·ƒJ[ƒ\ƒ‹FB•W€‚Å‚ÍA”wŒi‚Ì–¾ˆÃ‚É‚æ‚è "coral4" ‚Ü‚½‚Í "pink" ‚ğ—p‚¢‚Ü‚·B
+;; ã‹ãªãƒ¢ãƒ¼ãƒ‰ã§ã‚ã‚‹ã“ã¨ã‚’ç¤ºã™ã‚«ãƒ¼ã‚½ãƒ«è‰²ã€‚æ¨™æº–ã§ã¯ã€èƒŒæ™¯ã®æ˜æš—ã«ã‚ˆã‚Š "coral4" ã¾ãŸã¯ "pink" ã‚’ç”¨ã„ã¾ã™ã€‚
 (customize-set-value 'skk-cursor-hiragana-color "pink")
  
-;; ƒJƒiƒ‚[ƒh‚Å‚ ‚é‚±‚Æ‚ğ¦‚·ƒJ[ƒ\ƒ‹FB•W€‚Å‚ÍA”wŒi‚Ì–¾ˆÃ‚É‚æ‚è "forestgreen" ‚Ü‚½‚Í "green" ‚ğ—p‚¢‚Ü‚·B
+;; ã‚«ãƒŠãƒ¢ãƒ¼ãƒ‰ã§ã‚ã‚‹ã“ã¨ã‚’ç¤ºã™ã‚«ãƒ¼ã‚½ãƒ«è‰²ã€‚æ¨™æº–ã§ã¯ã€èƒŒæ™¯ã®æ˜æš—ã«ã‚ˆã‚Š "forestgreen" ã¾ãŸã¯ "green" ã‚’ç”¨ã„ã¾ã™ã€‚
 (customize-set-value 'skk-cursor-katakana-color "red")
 ;; skk-cursor-katakana-color
 
-;; ƒAƒXƒL[ƒ‚[ƒh‚Å‚ ‚é‚±‚Æ‚ğ¦‚·ƒJ[ƒ\ƒ‹FB•W€‚Å‚ÍA”wŒi‚Ì–¾ˆÃ‚É‚æ‚è "ivory4" ‚Ü‚½‚Í "gray" ‚ğ—p‚¢‚Ü‚·B
+;; ã‚¢ã‚¹ã‚­ãƒ¼ãƒ¢ãƒ¼ãƒ‰ã§ã‚ã‚‹ã“ã¨ã‚’ç¤ºã™ã‚«ãƒ¼ã‚½ãƒ«è‰²ã€‚æ¨™æº–ã§ã¯ã€èƒŒæ™¯ã®æ˜æš—ã«ã‚ˆã‚Š "ivory4" ã¾ãŸã¯ "gray" ã‚’ç”¨ã„ã¾ã™ã€‚
+
 (customize-set-value 'skk-cursor-latin-color "ivory")
 
-;;ƒRƒƒ“ƒgs‚ğ”²‚¯‚½‚çascii‚É‚·‚éB
-(add-hook 'skk-load-hook
-          (lambda ()
-            (require 'context-skk)))
-
-;; •ÏŠ·Œó•â‚ğƒCƒ“ƒ‰ƒCƒ“‚É•\¦‚·‚é
+(setq skk-echo nil)
+;; å¤‰æ›å€™è£œã‚’ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³ã«è¡¨ç¤ºã™ã‚‹
 (setq skk-show-inline t)
 
-;; •ÏŠ·Œó•â‚ğcŒ^ƒCƒ“ƒ‰ƒCƒ“‚É•\¦‚·‚é
+;; å¤‰æ›å€™è£œã‚’ç¸¦å‹ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³ã«è¡¨ç¤ºã™ã‚‹
 ;; (setq skk-show-inline 'vertical)
 
 (when skk-show-inline
-  ;; •Ï” skk-treat-candidate-appearance-function ‚ğ—˜—p‚µ‚Ä©‘O‚ÅŒó•â‚É
-  ;; F‚ğ•t‚¯‚éê‡‚Í‚±‚Ì•Ï”‚ğ nil ‚Éİ’è‚·‚éB
-  (setq skk-inline-show-face nil))
+  ;; å¤‰æ•° skk-treat-candidate-appearance-function ã‚’åˆ©ç”¨ã—ã¦è‡ªå‰ã§å€™è£œã«
+  ;; è‰²ã‚’ä»˜ã‘ã‚‹å ´åˆã¯ã“ã®å¤‰æ•°ã‚’ nil ã«è¨­å®šã™ã‚‹ã€‚
+  (setq skk-inline-show-face nil)
+  (setq skk-inline-show-background-color "gray30"))
 
 ;;;-------------------------------
-;;; Šî–{“I‚Èƒ†[ƒUEƒCƒ“ƒ^[ƒtƒF[ƒX
+;;; åŸºæœ¬çš„ãªãƒ¦ãƒ¼ã‚¶ãƒ»ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
 ;;;-------------------------------
 
-;; Enter ƒL[‚ğ‰Ÿ‚µ‚½‚Æ‚«‚É‚ÍŠm’è‚·‚é
+;; Enter ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸã¨ãã«ã¯ç¢ºå®šã™ã‚‹
 ;; (setq skk-egg-like-newline t)
 (setq skk-egg-like-newline t)
 
-;; ‘Î‰‚·‚é•ÂŠ‡ŒÊ‚ğ©“®“I‚É‘}“ü‚·‚é
+;; å¯¾å¿œã™ã‚‹é–‰æ‹¬å¼§ã‚’è‡ªå‹•çš„ã«æŒ¿å…¥ã™ã‚‹
 (setq skk-auto-insert-paren t)
 
-;; ‹å“Ç“_‚ğ“®“I‚ÉŒˆ’è‚·‚é
+;; å¥èª­ç‚¹ã‚’å‹•çš„ã«æ±ºå®šã™ã‚‹
 (add-hook 'skk-mode-hook
           (lambda ()
             (save-excursion
               (goto-char 0)
               (make-local-variable 'skk-kutouten-type)
-              (if (re-search-forward "B" 10000 t)
+              (if (re-search-forward "ã€‚" 10000 t)
                   (setq skk-kutouten-type 'en)
                 (setq skk-kutouten-type 'jp)))))
 
-;; “®“I‚È•âŠ®‚ğg‚¤
+;; å‹•çš„ãªè£œå®Œã‚’ä½¿ã†
 (setq skk-dcomp-activate t)
 
-;; “®“I•âŠ®‚Ì‰Â”Û‚ğ”»’è‚·‚é‚æ‚è‚“x‚Èİ’è—á
+;; å‹•çš„è£œå®Œã®å¯å¦ã‚’åˆ¤å®šã™ã‚‹ã‚ˆã‚Šé«˜åº¦ãªè¨­å®šä¾‹
 (setq skk-dcomp-activate
       #'(lambda ()
           (and
-           ;; -nw ‚Å‚Í“®“I•âŠ®‚ğ‚µ‚È‚¢B
+           ;; -nw ã§ã¯å‹•çš„è£œå®Œã‚’ã—ãªã„ã€‚
            window-system
-           ;; Šî–{“I‚És––‚Ì‚Æ‚«‚Ì‚İ•âŠ®‚·‚éB‚½‚¾‚µs––‚Å‚È‚­‚Ä‚àŒ»İ‚Ì
-           ;; ƒ|ƒCƒ“ƒg‚©‚çs––‚Ü‚Å‚Ì•¶š‚ª‹ó”’‚Ì‚İ‚¾‚Á‚½‚ç•âŠ®‚·‚éB
+           ;; åŸºæœ¬çš„ã«è¡Œæœ«ã®ã¨ãã®ã¿è£œå®Œã™ã‚‹ã€‚ãŸã ã—è¡Œæœ«ã§ãªãã¦ã‚‚ç¾åœ¨ã®
+           ;; ãƒã‚¤ãƒ³ãƒˆã‹ã‚‰è¡Œæœ«ã¾ã§ã®æ–‡å­—ãŒç©ºç™½ã®ã¿ã ã£ãŸã‚‰è£œå®Œã™ã‚‹ã€‚
            (or (eolp)
                (looking-at "[ \t]+$")))))
 
-;; “®“I•âŠ®‚ÅŒó•â‚ğ•¡”•\¦‚·‚é
+;; å‹•çš„è£œå®Œã§å€™è£œã‚’è¤‡æ•°è¡¨ç¤ºã™ã‚‹
 (setq skk-dcomp-multiple-activate t)
 
+;; ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã§ã¯æ–‡å­—åˆ—ã€ã‚³ãƒ¡ãƒ³ãƒˆä»¥å¤–ã§æ—¥æœ¬èªã‚’ã¤ã‹ã‚ãªã„
+(require 'context-skk)
+(add-to-list 'context-skk-programming-mode 'scala-mode)
+
 ;;;-------------------------------
-;;; •ÏŠ·“®ì‚Ì’²®
+;;; å¤‰æ›å‹•ä½œã®èª¿æ•´
 ;;;-------------------------------
-;; ‘—‚è‰¼–¼‚ªŒµ–§‚É³‚µ‚¢Œó•â‚ğ—Dæ‚µ‚Ä•\¦‚·‚é
+;; é€ã‚Šä»®åãŒå³å¯†ã«æ­£ã—ã„å€™è£œã‚’å„ªå…ˆã—ã¦è¡¨ç¤ºã™ã‚‹
 (setq skk-henkan-strict-okuri-precedence t)
-;; «‘“o˜^‚Ì‚Æ‚«A—]Œv‚È‘—‚è‰¼–¼‚ğ‘—‚ç‚È‚¢‚æ‚¤‚É‚·‚é
+;; è¾æ›¸ç™»éŒ²ã®ã¨ãã€ä½™è¨ˆãªé€ã‚Šä»®åã‚’é€ã‚‰ãªã„ã‚ˆã†ã«ã™ã‚‹
 (setq skk-check-okurigana-on-touroku 'auto)
-;; •ÏŠ·‚ÌŠwK
+;; å¤‰æ›ã®å­¦ç¿’
 (require 'skk-study)
-;;’PŠ¿šŒŸõ‚ÌƒL[‚ğ!‚É‚·‚é
+;;å˜æ¼¢å­—æ¤œç´¢ã®ã‚­ãƒ¼ã‚’!ã«ã™ã‚‹
 (setq skk-tankan-search-key ?!)
 
 ;;;-------------------------------
-;;; ŒŸõ‚ÉŠÖ˜A‚µ‚½İ’è
+;;; æ¤œç´¢ã«é–¢é€£ã—ãŸè¨­å®š
 ;;;-------------------------------
-;; look ƒRƒ}ƒ“ƒh‚ğg‚Á‚½ŒŸõ‚ğ‚·‚é
+;; look ã‚³ãƒãƒ³ãƒ‰ã‚’ä½¿ã£ãŸæ¤œç´¢ã‚’ã™ã‚‹
 (setq skk-use-look t)
 
 (when skk-use-look
-  ;; look ‚ªŒ©‚Â‚¯‚½Œê‚ğŒ©o‚µŒê‚Æ‚µ‚ÄŒŸõ‚·‚é
+  ;; look ãŒè¦‹ã¤ã‘ãŸèªã‚’è¦‹å‡ºã—èªã¨ã—ã¦æ¤œç´¢ã™ã‚‹
   (setq skk-look-recursive-search t)
-  ;; ispell ‚ğ look ‚Æˆê‚Ég‚¤‚Ì‚Í‚â‚ß‚é
+  ;; ispell ã‚’ look ã¨ä¸€ç·’ã«ä½¿ã†ã®ã¯ã‚„ã‚ã‚‹
   (setq skk-look-use-ispell nil)
-  ;; look ‚É“n‚·ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“ƒIƒvƒVƒ‡ƒ“‚Ìİ’èB•âŠ®‚ÆŒŸõ‚»‚ê‚¼‚ê‚É
-  ;; ‚Â‚¢‚Äİ’è‚Å‚«‚éB
-  ;; look ‚Å case ‚ğŒ©‚é‚Æ‚«‚ÍA‚»‚êê—p‚Ì«‘‚ğ sort ƒRƒ}ƒ“ƒh‚Åì‚é•K—v
-  ;; ‚ª‚ ‚é (look ‚Ìˆø” -d, -f ‚Í sort ‚Ìˆø” -d, -f ‚Æˆê’v‚³‚¹‚Ä‚¨‚­•K
-  ;; —v‚ª‚ ‚é)B
-  ;; (*) •âŠ®‚É‚Íˆø” -d ‚ğw’è‚·‚é‚Æ dcomp ‚Æ‚Ì•¹—p‚É–â‘è‚ ‚é‚±‚Æ‚ª
-  ;; •ñ‚³‚ê‚Ä‚¢‚é‚½‚ßA-d ‚ğw’è‚µ‚È‚¢‚±‚Æ‚ğ‚¨Š©‚ß‚µ‚Ü‚·B
+  ;; look ã«æ¸¡ã™ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã®è¨­å®šã€‚è£œå®Œæ™‚ã¨æ¤œç´¢æ™‚ãã‚Œãã‚Œã«
+  ;; ã¤ã„ã¦è¨­å®šã§ãã‚‹ã€‚
+  ;; look ã§ case ã‚’è¦‹ã‚‹ã¨ãã¯ã€ãã‚Œå°‚ç”¨ã®è¾æ›¸ã‚’ sort ã‚³ãƒãƒ³ãƒ‰ã§ä½œã‚‹å¿…è¦
+  ;; ãŒã‚ã‚‹ (look ã®å¼•æ•° -d, -f ã¯ sort ã®å¼•æ•° -d, -f ã¨ä¸€è‡´ã•ã›ã¦ãŠãå¿…
+  ;; è¦ãŒã‚ã‚‹)ã€‚
+  ;; (*) è£œå®Œæ™‚ã«ã¯å¼•æ•° -d ã‚’æŒ‡å®šã™ã‚‹ã¨ dcomp ã¨ã®ä½µç”¨æ™‚ã«å•é¡Œã‚ã‚‹ã“ã¨ãŒ
+  ;; å ±å‘Šã•ã‚Œã¦ã„ã‚‹ãŸã‚ã€-d ã‚’æŒ‡å®šã—ãªã„ã“ã¨ã‚’ãŠå‹§ã‚ã—ã¾ã™ã€‚
   (setq skk-look-completion-arguments "%s /usr/share/dict/words")
   (setq skk-look-conversion-arguments "-df %s /usr/share/dict/words")
-  ;; `skk-abbrev-mode' ‚Å skk-look ‚ğg‚Á‚½ŒŸõ‚ğ‚µ‚½‚Æ‚«‚ÉŠm’èî•ñ‚ğ
-  ;; ŒÂl«‘‚É‹L˜^‚µ‚È‚¢‚æ‚¤‚É‚·‚é
+  ;; `skk-abbrev-mode' ã§ skk-look ã‚’ä½¿ã£ãŸæ¤œç´¢ã‚’ã—ãŸã¨ãã«ç¢ºå®šæƒ…å ±ã‚’
+  ;; å€‹äººè¾æ›¸ã«è¨˜éŒ²ã—ãªã„ã‚ˆã†ã«ã™ã‚‹
   (add-hook 'skk-search-excluding-word-pattern-function
-            ;; KAKUTEI-WORD ‚ğˆø”‚É‚µ‚ÄƒR[ƒ‹‚³‚ê‚é‚Ì‚ÅA•s—v‚Å‚àˆø”‚ğæ‚é
-            ;; •K—v‚ ‚è
+            ;; KAKUTEI-WORD ã‚’å¼•æ•°ã«ã—ã¦ã‚³ãƒ¼ãƒ«ã•ã‚Œã‚‹ã®ã§ã€ä¸è¦ã§ã‚‚å¼•æ•°ã‚’å–ã‚‹
+            ;; å¿…è¦ã‚ã‚Š
             #'(lambda (kakutei-word)
                 (and skk-abbrev-mode
                      (save-match-data
-                       ;; `skk-henkan-key' ‚ª "*" ‚ÅI‚í‚é‚Æ‚«A‚Ü‚½‚Í
-                       ;; `skk-henkan-key' ‚ª”š‚Ì‚İ‚Ì‚Æ‚«
+                       ;; `skk-henkan-key' ãŒ "*" ã§çµ‚ã‚ã‚‹ã¨ãã€ã¾ãŸã¯
+                       ;; `skk-henkan-key' ãŒæ•°å­—ã®ã¿ã®ã¨ã
                        (or (string-match "\\*$" skk-henkan-key)
                            (string-match "^[0-9]*$" skk-henkan-key)))))))
 
-;; ”’l•ÏŠ·‹@”\‚ğg‚¤
+;; æ•°å€¤å¤‰æ›æ©Ÿèƒ½ã‚’ä½¿ã†
 (setq skk-use-numeric-conversion t)
 
-;; ƒJƒ^ƒJƒiŒê‚ğ•ÏŠ·Œó•â‚É‰Á‚¦‚éB
+;; ã‚«ã‚¿ã‚«ãƒŠèªã‚’å¤‰æ›å€™è£œã«åŠ ãˆã‚‹ã€‚
 (setq skk-search-prog-list
       (skk-nunion skk-search-prog-list
                   '((skk-search-katakana))))
 ;;;-------------------------------
-;;; «‘‚ÉŠÖ‚·‚éİ’è
+;;; è¾æ›¸ã«é–¢ã™ã‚‹è¨­å®š
 ;;;-------------------------------
-;; «‘ƒT[ƒo‚ğg‚¤‚½‚ß‚Ìİ’è
+;; è¾æ›¸ã‚µãƒ¼ãƒã‚’ä½¿ã†ãŸã‚ã®è¨­å®š
 (setq skk-server-host "localhost")
 (setq skk-server-portnum 1178)
 
-;; •¡”‚Ì Emacsen ‚ğ‹N“®‚µ‚ÄŒÂl«‘‚ğ‹¤—L‚·‚é
+;; è¤‡æ•°ã® Emacsen ã‚’èµ·å‹•ã—ã¦å€‹äººè¾æ›¸ã‚’å…±æœ‰ã™ã‚‹
 (setq skk-share-private-jisyo t)
 
-;; 10 •ª•ú’u‚·‚é‚ÆŒÂl«‘‚ª©“®“I‚É•Û‘¶‚³‚ê‚éİ’è
+;; 10 åˆ†æ”¾ç½®ã™ã‚‹ã¨å€‹äººè¾æ›¸ãŒè‡ªå‹•çš„ã«ä¿å­˜ã•ã‚Œã‚‹è¨­å®š
 (defvar skk-auto-save-jisyo-interval 600)
 (defun skk-auto-save-jisyo ()
   (skk-save-jisyo)
@@ -209,34 +216,34 @@
                      'skk-auto-save-jisyo)
 
 ;;;-------------------------------
-;;; ‚»‚Ì‘¼‚¢‚ë‚¢‚ë
+;;; ãã®ä»–ã„ã‚ã„ã‚
 ;;;-------------------------------
-;; ‚©‚Èƒ‚[ƒh‚Ì“ü—Í‚Å (ƒ‚[ƒh•ÏX‚ğs‚È‚í‚¸‚É) ’·‰¹([)‚ğ
-;; ASCII ”š‚Ì’¼Œã‚Å‚Í `-' ‚ÉA‘SŠp”š‚Ì’¼Œã‚Å‚Í `?' ‚É‚µ‚½‚¢B
+;; ã‹ãªãƒ¢ãƒ¼ãƒ‰ã®å…¥åŠ›ã§ (ãƒ¢ãƒ¼ãƒ‰å¤‰æ›´ã‚’è¡Œãªã‚ãšã«) é•·éŸ³(ãƒ¼)ã‚’
+;; ASCII æ•°å­—ã®ç›´å¾Œã§ã¯ `-' ã«ã€å…¨è§’æ•°å­—ã®ç›´å¾Œã§ã¯ `?' ã«ã—ãŸã„ã€‚
 (setq skk-rom-kana-rule-list
 	  (cons '("-" nil skk-hyphen)
 			skk-rom-kana-rule-list))
 
 (defun skk-hyphen (arg)
   (let ((c (char-before (point))))
-    (cond ((null c) "[")
+    (cond ((null c) "ãƒ¼")
           ((and (<= ?0 c) (>= ?9 c)) "-")
-          ((and (<= ?‚O c) (>= ?‚X c)) "?")
-          (t "["))))
+          ((and (<= ?ï¼ c) (>= ?ï¼™ c)) "?")
+          (t "ãƒ¼"))))
 
-;; ‚©‚Èƒ‚[ƒh‚Ì“ü—Í‚Åƒ‚[ƒh•ÏX‚ğs‚í‚¸‚ÉA”š“ü—Í’†‚Ì
-;; ¬”“_ (.) ‚¨‚æ‚ÑƒJƒ“ƒ} (,) “ü—Í‚ğÀŒ»‚·‚éB
-;; (—á) ‚©‚Èƒ‚[ƒh‚Ì‚Ü‚Ü 1.23 ‚â 1,234,567 ‚È‚Ç‚Ì‹Lq‚ğs‚¦‚éB
+;; ã‹ãªãƒ¢ãƒ¼ãƒ‰ã®å…¥åŠ›ã§ãƒ¢ãƒ¼ãƒ‰å¤‰æ›´ã‚’è¡Œã‚ãšã«ã€æ•°å­—å…¥åŠ›ä¸­ã®
+;; å°æ•°ç‚¹ (.) ãŠã‚ˆã³ã‚«ãƒ³ãƒ (,) å…¥åŠ›ã‚’å®Ÿç¾ã™ã‚‹ã€‚
+;; (ä¾‹) ã‹ãªãƒ¢ãƒ¼ãƒ‰ã®ã¾ã¾ 1.23 ã‚„ 1,234,567 ãªã©ã®è¨˜è¿°ã‚’è¡Œãˆã‚‹ã€‚
 ;; period
 (setq skk-rom-kana-rule-list
 	  (cons '("." nil skk-period)
 			skk-rom-kana-rule-list))
 (defun skk-period (arg)
   (let ((c (char-before (point))))
-    (cond ((null c) "B")
+    (cond ((null c) "ã€‚")
           ((and (<= ?0 c) (>= ?9 c)) ".")
-          ((and (<= ?‚O c) (>= ?‚X c)) "D")
-          (t "B"))))
+          ((and (<= ?ï¼ c) (>= ?ï¼™ c)) "ï¼")
+          (t "ã€‚"))))
 
 ;; comma
 (setq skk-rom-kana-rule-list
@@ -244,9 +251,9 @@
 			skk-rom-kana-rule-list))
 (defun skk-comma (arg)
   (let ((c (char-before (point))))
-    (cond ((null c) "A")
+    (cond ((null c) "ã€")
           ((and (<= ?0 c) (>= ?9 c)) ",")
-          ((and (<= ?‚O c) (>= ?‚X c)) "C")
-          (t "A"))))
+          ((and (<= ?ï¼ c) (>= ?ï¼™ c)) "ï¼Œ")
+          (t "ã€"))))
 
 (provide 'init-skk)

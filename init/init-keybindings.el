@@ -83,7 +83,6 @@
 (global-set-key (kbd "C-.") 'my-just-one-space-toggle)
 
 ;; (global-set-key (kbd "C-w") 'gro-kill-follow-word)
-
 ;; (global-set-key (kbd "C-S-w") 'my-delete-region-or-follow-kill-word)
 
 ;;;-------------------------------
@@ -263,5 +262,9 @@
 (global-set-key (kbd "C-8 C-p") 'gro-mark-prev-line)
 (global-set-key (kbd "C-8 C-h") 'gro-mark-jaunte-prev)
 (global-set-key (kbd "C-8 C-d") 'gro-mark-defun*)
+
+;; エラー箇所へのジャンプ用
+(global-set-key (kbd "C-l C-;") 'compilation-minor-mode)
+(define-key compilation-minor-mode-map (kbd "C-c C-c") 'comint-interrupt-subjob)
 
 (provide 'init-keybindings)

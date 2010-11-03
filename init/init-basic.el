@@ -119,7 +119,7 @@
 
   (setq require-final-newline t) ; file の最後は 必ず newline で終わる様にする。
   (setq line-number-display-limit 10000)   ;;表示される最大行数を大きくする。
-  
+
   ;;ホイールマウス
   (mouse-wheel-mode t)
   (setq mouse-wheel-follow-mouse t) ;;

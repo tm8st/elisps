@@ -136,7 +136,7 @@
      "init-popups.el"
      "init-shell.el"
      "init-skk.el"
-     ;; "init-migemo.el"
+     "init-migemo.el"
 
      "init-theme.el"
 
