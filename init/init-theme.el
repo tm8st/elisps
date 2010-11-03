@@ -335,13 +335,21 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
     (customize-set-variable 'yalinum-line-number-display-format " %0$numd ")
     )
 
-  (defun my-text-properties-at-point ()
-    ""
-    (interactive)
-    (let ((prop (text-properties-at (point))))
-      (message prop)))
+  ;; (defun my-text-properties-at-point ()
+  ;;   ""
+  ;;   (interactive)
+  ;;   (let ((prop (text-properties-at (point))))
+  ;;     (message prop)))
 
-  (global-set-key (kbd "C-l C-l") 'my-text-properties-at-point)
+  ;; (global-set-key (kbd "C-l C-l") 'my-text-properties-at-point)
+
+  (defun what-face-at-point (pos)
+    (interactive "d")
+    (let ((face (or (get-char-property (point) 'read-face-name)
+		    (get-char-property (point) 'face))))
+      (if face (message "Face: %s" face) (message "No face at %d" pos))))
+  
+  (global-set-key (kbd "C-l C-l") 'what-face-at-point)
 
   (custom-set-faces
    ;; custom-set-faces was added by Custom.

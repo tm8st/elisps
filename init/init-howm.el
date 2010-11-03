@@ -210,11 +210,13 @@
 (require 'moccur-edit)
 
 (set-face-background 'moccur-face "#005400")
-(set-face-foreground 'moccur-face "orange")
+(set-face-foreground 'moccur-face "orange1")
 (set-face-underline 'moccur-face t)
 (set-face-foreground 'howm-mode-title-face "pink")
 (set-face-foreground 'moccur-edit-done-face "gray60")
 (set-face-background 'moccur-edit-done-face "gray1")
+(set-face-foreground 'moccur-edit-face "orange2")
+(set-face-background 'moccur-edit-face "gray20")
 
 (defun my-howm-command (arg)
   "howm用コマンドのまとめ関数。 C-uした回数で呼び変え"

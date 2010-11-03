@@ -55,8 +55,8 @@
 
 ;; 変換候補一覧と注釈 (annotation) を GUI ぽく表示する
 (setq skk-show-tooltip t)
-(set-face-foreground 'skk-treat-default "white")
-(set-face-background 'tooltip "black")
+;; (set-face-foreground 'skk-treat-default "white")
+;; (set-face-background 'tooltip "black")
 
 ;; tooltipの色設定
 (when skk-show-tooltip
@@ -100,7 +100,7 @@
   ;; 変数 skk-treat-candidate-appearance-function を利用して自前で候補に
   ;; 色を付ける場合はこの変数を nil に設定する。
   (setq skk-inline-show-face nil)
-  (setq skk-inline-show-background-color "gray30"))
+  (setq skk-inline-show-background-color "gray20"))
 
 ;;;-------------------------------
 ;;; 基本的なユーザ・インターフェース

@@ -1,4 +1,4 @@
-;;; init.el --- init emacs
+;;; init.el --- inmyit emacs
 
 ;; Copyright (C) 2010 tm8st
 
