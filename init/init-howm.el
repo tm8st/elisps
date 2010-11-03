@@ -50,11 +50,11 @@
      (define-key howm-mode-map [tab] 'action-lock-goto-next-link)
      (define-key howm-mode-map [(meta tab)] 'action-lock-goto-previous-link)))
 
-(setq howm-list-recent-title t)	;; 最近のメモ一覧でタイトル表示
-(setq howm-list-all-title t)	;; 全メモ一覧でタイトル表示
+(setq howm-list-recent-title t) ;; 最近のメモ一覧でタイトル表示
+(setq howm-list-all-title t)    ;; 全メモ一覧でタイトル表示
 (setq howm-menu-expiry-hours 2) ;;メニューを二時間キャッシュ
 ;; (add-hook 'howm-mode-on-hook '(lambda () (auto-fill-mode nil))) ;;auto-fill
-(setq howm-view-summary-persistent nil)		;; ファイルを開く時、バッファを消す
+(setq howm-view-summary-persistent nil)         ;; ファイルを開く時、バッファを消す
 (setq howm-content-from-region t) ;; リージョン選択中であればそれを内容にする
 ;; メニューの表示範囲
 (setq howm-menu-schedule-days-before 20)
@@ -62,7 +62,7 @@
 ;; howm の ファイル名フォーマット
 ;; (setq howm-file-name-format "%Y/%m/%Y-%m-%d-%H%M%S.howm") ;; １メモ１ファイル
 (setq howm-file-name-format "%Y/%m/%Y-%m-%d.howm") ;; １日１ファイル
-;; 
+;;
 (setq howm-view-grep-parse-line
       "^\\(\\([a-zA-Z]:/\\)?[^:]*\\.howm\\):\\([0-9]*\\):\\(.*\\)$")
 ;; 検索しないファイルの正規表現
@@ -73,7 +73,7 @@
 (if (not (memq 'delete-file-if-no-contents after-save-hook))
     (setq after-save-hook
           (cons 'delete-file-if-no-contents after-save-hook)))
-;; 
+;;
 (defun delete-file-if-no-contents ()
   (when (and
          (buffer-file-name (current-buffer))
@@ -146,15 +146,15 @@
      (defun my-insert-day ()
        (interactive)
        (save-excursion
-	 (let ((day nil)
-	       (calendar-date-display-form
-		'("[" year "-" (format "%02d" (string-to-int month))
-		  "-" (format "%02d" (string-to-int day)) "]")))
-	   (setq day (calendar-date-string
-		      (calendar-cursor-to-date t)))
-	   (exit-calendar)
-	   (insert (concat day "+ [TODO]"))
-	   )))))
+         (let ((day nil)
+               (calendar-date-display-form
+                '("[" year "-" (format "%02d" (string-to-int month))
+                  "-" (format "%02d" (string-to-int day)) "]")))
+           (setq day (calendar-date-string
+                      (calendar-cursor-to-date t)))
+           (exit-calendar)
+           (insert (concat day "+ [TODO]"))
+           )))))
 
 (setq howm-menu-refresh-after-save nil)
 (setq howm-refresh-after-save nil)
@@ -202,9 +202,9 @@
 (define-key moccur-mode-map (kbd "C-c C-e") 'my-howm-moccur-all-save-and-kill-buffer)
 (define-key moccur-mode-map (kbd "C-v") 'my-scroll-up)
 
-(define-key moccur-edit-mode-map (kbd "C-c C-j") 'my-howm-todo-toggle)
-(define-key moccur-edit-mode-map (kbd "C-c C-e") 'my-howm-moccur-all-save-and-kill-buffer)
-(define-key moccur-edit-mode-map (kbd "C-v") 'my-scroll-up)
+;; (define-key moccur-edit-mode-map (kbd "C-c C-j") 'my-howm-todo-toggle)
+;; (define-key moccur-edit-mode-map (kbd "C-c C-e") 'my-howm-moccur-all-save-and-kill-buffer)
+;; (define-key moccur-edit-mode-map (kbd "C-v") 'my-scroll-up)
 
 (require 'color-moccur)
 (require 'moccur-edit)
@@ -222,11 +222,11 @@
   "howm用コマンドのまとめ関数。 C-uした回数で呼び変え"
   (interactive "P")
   (cond
-   ((equal arg '(256)) (howm-menu))	;;C-u C-u C-u C-u
-   ;; ((equal arg '(64)) (calendar))	;;C-u C-u C-u
+   ((equal arg '(256)) (howm-menu))     ;;C-u C-u C-u C-u
+   ;; ((equal arg '(64)) (calendar))    ;;C-u C-u C-u
    ((equal arg '(64)) (my-howm-todo-moccur));;C-u C-u C-u
    ((equal arg '(16))  (howm-list-grep)) ;;C-u -u
-   ((equal arg '(4)) (howm-list-all))	;;C-u
+   ((equal arg '(4)) (howm-list-all))   ;;C-u
    (t (howm-create))))
 
 ;; ;; 行番号を挿入するように変更 リンク問題があるため一時封印改行などで変更？
@@ -242,7 +242,7 @@
 ;;            (file (cond ((not use-file) "")
 ;;                        ((null f) "")
 ;;                        ((string= f (buffer-file-name)) "")
-;; 					   (t (format howm-template-file-format af (my-get-buffer-line))))))
+;;                                         (t (format howm-template-file-format af (my-get-buffer-line))))))
 ;;       (let ((arg `((title . ,title) (date . ,date) (file . ,file)))
 ;;             (end (point-marker)))
 ;;         (howm-replace howm-template-rules arg beg end)
@@ -252,7 +252,7 @@
 (global-set-key (kbd "C-l C-,") 'howm-menu)
 
 ;; 色設定
-(when use-gui-setting  
+(when use-gui-setting
   (set-face-foreground 'howm-view-hilit-face "white") ;; 検索時のヒット文字列
   (set-face-background 'howm-view-name-face "black")
   ;; (set-face-foreground 'howm-reminder-today-face "gray60")
