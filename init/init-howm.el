@@ -139,6 +139,24 @@
 ;; (setq calendar-setup 'one-frame)
 (setq calendar-setup nil)
 
+;; キーの設定
+(define-key calendar-mode-map "f" 'calendar-forward-day)
+(define-key calendar-mode-map "n" 'calendar-forward-day)
+(define-key calendar-mode-map "b" 'calendar-backward-day)
+
+;; 祝日をマークする
+(setq calendar-mark-holidays-flag t)
+(require 'japanese-holidays)
+(setq calendar-holidays
+      (append japanese-holidays holiday-local-holidays holiday-other-holidays))
+;; 今日をマークする
+(add-hook 'today-visible-calendar-hook 'calendar-mark-today)
+
+;; 日曜日をマークにする
+(setq calendar-weekend-marker 'diary)
+(add-hook 'today-visible-calendar-hook 'calendar-mark-weekend)
+(add-hook 'today-invisible-calendar-hook 'calendar-mark-weekend)
+
 ;; カレンダーで日付入力
 (eval-after-load "calendar"
   '(progn
@@ -168,6 +186,9 @@
       (insert title)
       (set-window-buffer nil buf)
       )))
+
+(require 'color-moccur)
+(require 'moccur-edit)
 
 (defun my-howm-todo-moccur ()
   (interactive)
@@ -202,12 +223,9 @@
 (define-key moccur-mode-map (kbd "C-c C-e") 'my-howm-moccur-all-save-and-kill-buffer)
 (define-key moccur-mode-map (kbd "C-v") 'my-scroll-up)
 
-;; (define-key moccur-edit-mode-map (kbd "C-c C-j") 'my-howm-todo-toggle)
-;; (define-key moccur-edit-mode-map (kbd "C-c C-e") 'my-howm-moccur-all-save-and-kill-buffer)
-;; (define-key moccur-edit-mode-map (kbd "C-v") 'my-scroll-up)
-
-(require 'color-moccur)
-(require 'moccur-edit)
+(define-key moccur-edit-mode-map (kbd "C-c C-j") 'my-howm-todo-toggle)
+(define-key moccur-edit-mode-map (kbd "C-c C-e") 'my-howm-moccur-all-save-and-kill-buffer)
+(define-key moccur-edit-mode-map (kbd "C-v") 'my-scroll-up)
 
 (set-face-background 'moccur-face "#005400")
 (set-face-foreground 'moccur-face "orange1")
@@ -282,4 +300,45 @@
   (define-key m "\C-i" 'action-lock-goto-next-link)
   (define-key m "\M-\C-i" 'action-lock-goto-previous-link))
 
+;; howm todo grep-find用コマンドの設定/ windowsでfindコマンドを別名にしているため。
+(defvar my-homw-todo-grep-find-command nil)
+(if (my-is-windows)
+    (setq my-homw-todo-grep-find-command "gnufind . -name \"*.howm\" -a -type f -a -not -name \"*.svn*\" -a -not -name \"*.bin\" -exec grep -ni -e \"\[\\[0-9-\\]\\\]+\" {} +")
+  (setq my-homw-todo-grep-find-command "find . -name \"*.howm\" -a -type f -a -not -name \"*.svn*\" -a -not -name \"*.bin\" -exec grep -ni -e \"\[\\[0-9-\\]\\\]+\" {} +")
+  )
+
+(defun my-howm-todo-grep-find-output-filename (is-morning)
+  (expand-file-name (format "%showm-tood-%s-%s.log" howm-directory (format-time-string "%m-%d" (current-time))
+			    (if is-morning
+				"morning"
+			      "night"))))
+
+(defun my-howm-todo-grep-find-morning ()
+  "grep howm todo."
+  (interactive)
+  (my-howm-todo-grep-find-inner t))
+
+(defun my-howm-todo-grep-find-night ()
+  "grep howm todo."
+  (interactive)
+  (my-howm-todo-grep-find-inner nil)
+  ;; diff
+  (diff (my-howm-todo-grep-find-output-filename t)
+	 (my-howm-todo-grep-find-output-filename nil) "-u")
+  )
+
+(defun my-howm-todo-grep-find-inner (is-morning)
+  "grep howm todo."
+  (interactive)
+  (save-excursion
+    (let ((buf (get-buffer "*Shell Command Output*")))
+      (shell-command (concat "cd " (expand-file-name howm-directory) " && " my-homw-todo-grep-find-command) buf)
+      ;; (shell-command (concat "cd " (expand-file-name howm-directory) " ; ") my-homw-todo-grep-find-command buf)
+      (set-buffer buf)
+      (write-region (point-min) (point-max) (my-howm-todo-grep-find-output-filename is-morning)))))
+
+(global-set-key (kbd "C-l C-u C-m") 'my-howm-todo-grep-find-morning)
+(global-set-key (kbd "C-l C-u C-n") 'my-howm-todo-grep-find-night)
+
 (provide 'init-howm)
+

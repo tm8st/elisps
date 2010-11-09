@@ -14,8 +14,8 @@
 ;;;----------------------------------------
 (when (my-is-windows)
   (set-language-environment 'Japanese)
-  (prefer-coding-system 'japanese-shift-jis)
-  (set-terminal-coding-system 'japanese-shift-jis)
+  (prefer-coding-system 'japanese-shift-jis-dos)
+  (set-terminal-coding-system 'japanese-shift-jis-dos)
   )
 
 (when (my-is-mac)

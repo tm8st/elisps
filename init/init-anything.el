@@ -216,7 +216,7 @@
   (let ((command (format my-anything-grep-find-command (read-string "Search Text:")))
 	(directory (read-directory-name "Directory: " default-directory default-directory t)))
     (message (concat "anything-grep-find:" command))
-    (anything-grep command default-directory)))
+    (anything-grep command directory)))
 
 ;; ヘルプメニュー
 (global-set-key (kbd "C-q C-a C-h") '(lambda () (interactive)
