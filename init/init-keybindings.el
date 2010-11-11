@@ -82,7 +82,8 @@
 
 (global-set-key (kbd "C-.") 'my-just-one-space-toggle)
 
-;; (global-set-key (kbd "C-w") 'gro-kill-follow-word)
+;; (global-set-key (kbd "C-w") 'kill-word*)
+(global-set-key (kbd "C-w") 'gro-kill-follow-word)
 ;; (global-set-key (kbd "C-S-w") 'my-delete-region-or-follow-kill-word)
 
 ;;;-------------------------------
@@ -248,6 +249,10 @@
 (global-set-key (kbd "C-d C-n") 'gro-delete-next-line)
 (global-set-key (kbd "C-d C-p") 'gro-delete-prev-line)
 (global-set-key (kbd "C-d C-h") 'gro-delete-jaunte-prev)
+(global-set-key (kbd "C-d C-l") 'gro-delete-goto-line)
+(global-set-key (kbd "C-d C-SPC") 'gro-delete-between-jaunte)
+(global-set-key (kbd "C-d C-x") 'gro-delete-between-yafastnav)
+(global-set-key (kbd "C-d C-c") 'gro-delete-yafastnav-prev)
 
 (global-unset-key (kbd "C-8"))
 (global-set-key (kbd "C-8 C-i") 'gro-mark-follow-word)

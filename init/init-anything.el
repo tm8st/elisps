@@ -256,11 +256,12 @@
 (require 'anything-project)
 (global-set-key (kbd "C-q C-a C-p") 'anything-project)
 
-;; c++ 登録
+;; c++ & scala 登録
+;; 同じ look-for設定で別のプロジェクトを登録するとバグるので。
 (ap:add-project
- :name 'c++
+ :name 'c++-scala
  :look-for '("GTAGS" ".*\\.sln") ; or
- :include-regexp '("\\.h$" "\\.sln$" "\\.cpp$" "\\.c$" "\\.h$" "\\.inl$" "\\.fx$" "\\.ini$" "\\.txt$" "\\.uc$" "\\.usf$") ;or
+ :include-regexp '("\\.scala$" "\\.h$" "\\.sln$" "\\.cpp$" "\\.c$" "\\.h$" "\\.inl$" "\\.fx$" "\\.ini$" "\\.txt$" "\\.uc$" "\\.usf$") ;or
  )
 
 ;; elisp 登録
@@ -271,11 +272,11 @@
  )
 
 ;; scala 登録
-(ap:add-project
- :name 'scala
- :look-for '("GTAGS") ; or
- :include-regexp '("\\.scala$") ;or
- )
+;; (ap:add-project
+;;  :name 'scala
+;;  :look-for '("GTAGS") ; or
+;;  :include-regexp '("\\.scala$") ;or
+;;  )
 
 ;; elisp 登録
 (ap:add-project

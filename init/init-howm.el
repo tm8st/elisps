@@ -306,6 +306,11 @@
     (setq my-homw-todo-grep-find-command "gnufind . -name \"*.howm\" -a -type f -a -not -name \"*.svn*\" -a -not -name \"*.bin\" -exec grep -ni -e \"\[\\[0-9-\\]\\\]+\" {} +")
   (setq my-homw-todo-grep-find-command "find . -name \"*.howm\" -a -type f -a -not -name \"*.svn*\" -a -not -name \"*.bin\" -exec grep -ni -e \"\[\\[0-9-\\]\\\]+\" {} +")
   )
+(defvar my-homw-done-grep-find-command nil)
+(if (my-is-windows)
+    (setq my-homw-done-grep-find-command "gnufind . -name \"*.howm\" -a -type f -a -not -name \"*.svn*\" -a -not -name \"*.bin\" -exec grep -ni -e \"\[\\[0-9-\\]\\\]\\.\" {} +")
+  (setq my-homw-done-grep-find-command "find . -name \"*.howm\" -a -type f -a -not -name \"*.svn*\" -a -not -name \"*.bin\" -exec grep -ni -e \"\[\\[0-9-\\]\\\]\\.\" {} +")
+  )
 
 (defun my-howm-todo-grep-find-output-filename (is-morning)
   (expand-file-name (format "%showm-tood-%s-%s.log" howm-directory (format-time-string "%m-%d" (current-time))
@@ -332,13 +337,12 @@
   (interactive)
   (save-excursion
     (let ((buf (get-buffer "*Shell Command Output*")))
-      (shell-command (concat "cd " (expand-file-name howm-directory) " && " my-homw-todo-grep-find-command) buf)
+      (shell-command (concat "cd " (expand-file-name howm-directory) " && " my-homw-todo-grep-find-command " && " my-homw-done-grep-find-command) buf)
       ;; (shell-command (concat "cd " (expand-file-name howm-directory) " ; ") my-homw-todo-grep-find-command buf)
       (set-buffer buf)
-      (write-region (point-min) (point-max) (my-howm-todo-grep-find-output-filename is-morning)))))
+      (write-region (point-min) (point-max) (my-howm-todo-grep-find-output-filename is-morning) nil nil))))
 
 (global-set-key (kbd "C-l C-u C-m") 'my-howm-todo-grep-find-morning)
 (global-set-key (kbd "C-l C-u C-n") 'my-howm-todo-grep-find-night)
 
 (provide 'init-howm)
-

@@ -323,7 +323,8 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
   (set-face-background 'jaunte-hint-face "black")
 
   (customize-set-variable 'yalinum-line-number-length-min 5)
-
+  (customize-set-variable 'yalinum-eager nil)
+    
   (when (my-is-mac)
     (customize-set-variable 'yalinum-width-base 1)
     (customize-set-variable 'yalinum-width-scale 0.9)

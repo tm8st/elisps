@@ -34,6 +34,7 @@
 
  	
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+(setq ediff-multiframe nil)
 (setq-default ediff-auto-refine-limit 10000)
 
 (add-hook 'diff-mode-hook
