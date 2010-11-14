@@ -116,29 +116,28 @@
 
      "init-basic.el"
      "init-misc.el"
-     ;; "init-linum.el"
      "init-my-misc.el"
      
      "init-howm.el"
      "init-dired.el"
 
      ;; program lang
-     "init-elisp.el"
-     "init-c-mode.el"
-     "init-ruby.el"
-     "init-lua.el"
-     "init-go.el"
+    "init-elisp.el"
+    "init-c-mode.el"
+    "init-ruby.el"
+    "init-lua.el"
+    "init-go.el"
 
-     "init-complete.el"
-     "init-yasnippet.el"
-     "init-gtags.el"
-     "init-anything.el"
-     "init-popups.el"
-     "init-shell.el"
-     "init-skk.el"
-     "init-migemo.el"
+    "init-complete.el"
+    "init-yasnippet.el"
+    "init-gtags.el"
+    "init-anything.el"
+    "init-popups.el"
+    "init-shell.el"
+    "init-skk.el"
+    "init-migemo.el"
 
-     "init-theme.el"
+    "init-theme.el"
 
      ;; "init-window.el"
      ;; "init-test.el"

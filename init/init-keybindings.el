@@ -236,23 +236,56 @@
 ;;;-------------------------------
 (require 'generic-range-opt)
 
-(global-unset-key (kbd "C-d"))
-(global-set-key (kbd "C-d C-j") 'delete-char)
-(global-set-key (kbd "C-d C-i") 'gro-delete-follow-word)
-(global-set-key (kbd "C-d C-f") 'gro-delete-forward-line)
-(global-set-key (kbd "C-d C-b") 'gro-delete-backward-line)
-(global-set-key (kbd "C-d C-s") 'gro-delete-search-forward-char)
-(global-set-key (kbd "C-d C-r") 'gro-delete-search-backward-char)
-(global-set-key (kbd "C-d C-e") 'gro-delete-follow-sexp)
-(global-set-key (kbd "C-d C-w") 'gro-delete-follow-string)
-(global-set-key (kbd "C-d C-d") 'gro-delete-current-line)
-(global-set-key (kbd "C-d C-n") 'gro-delete-next-line)
-(global-set-key (kbd "C-d C-p") 'gro-delete-prev-line)
-(global-set-key (kbd "C-d C-h") 'gro-delete-jaunte-prev)
-(global-set-key (kbd "C-d C-l") 'gro-delete-goto-line)
-(global-set-key (kbd "C-d C-SPC") 'gro-delete-between-jaunte)
-(global-set-key (kbd "C-d C-x") 'gro-delete-between-yafastnav)
-(global-set-key (kbd "C-d C-c") 'gro-delete-yafastnav-prev)
+(defun my-delete-char (arg)
+  (interactive "P")
+  (if arg
+      (let ((key (read-event "gro-delete-opt: ")))
+	(cond
+	 ((eq key ?\^F) (gro-delete-forward-line))
+	 ((eq key ?\^B) (gro-delete-backward-line))
+	 ((eq key ?\^D) (gro-delete-current-line))
+	 ((eq key ?\^E) (gro-delete-follow-sexp))
+	 ((eq key ?\^N) (gro-delete-next-line))
+	 ((eq key ?\^P) (gro-delete-prev-line))
+	 ((eq key ?\^L) (gro-delete-goto-line))
+	 ((eq key ?\^ ) (gro-delete-between-jaunte))
+	 ((eq key ?\^C) (gro-delete-yafastnav-prev))))
+    (delete-char 1)))
+
+(global-set-key (kbd "C-d") 'my-delete-char)
+
+;; ;; マイナーモードの定義
+;; (easy-mmode-define-minor-mode gro-delete-mode
+;;  ;; ドキュメント
+;;    "This is Generic Range Operation for delete Mode."
+;;  ;; 初期値
+;;  nil
+;;  ;; on の時のモード行への表示
+;;  " GROd"
+;;  ;; マイナーモード用キーマップの初期値
+;;  '(keymap
+;;    ("C-f" . gro-delete-forward-line)
+;;    ("C-b" . gro-delete-backward-line)
+;;    ) 
+;;  )
+
+;; (global-unset-key (kbd "C-d"))
+;; (global-set-key (kbd "C-d C-j") 'delete-char)
+;; (global-set-key (kbd "C-d C-i") 'gro-delete-follow-word)
+;; (global-set-key (kbd "C-d C-f") 'gro-delete-forward-line)
+;; (global-set-key (kbd "C-d C-b") 'gro-delete-backward-line)
+;; (global-set-key (kbd "C-d C-s") 'gro-delete-search-forward-char)
+;; (global-set-key (kbd "C-d C-r") 'gro-delete-search-backward-char)
+;; (global-set-key (kbd "C-d C-e") 'gro-delete-follow-sexp)
+;; (global-set-key (kbd "C-d C-w") 'gro-delete-follow-string)
+;; (global-set-key (kbd "C-d C-d") 'gro-delete-current-line)
+;; (global-set-key (kbd "C-d C-n") 'gro-delete-next-line)
+;; (global-set-key (kbd "C-d C-p") 'gro-delete-prev-line)
+;; (global-set-key (kbd "C-d C-h") 'gro-delete-jaunte-prev)
+;; (global-set-key (kbd "C-d C-l") 'gro-delete-goto-line)
+;; (global-set-key (kbd "C-d C-SPC") 'gro-delete-between-jaunte)
+;; (global-set-key (kbd "C-d C-x") 'gro-delete-between-yafastnav)
+;; (global-set-key (kbd "C-d C-c") 'gro-delete-yafastnav-prev)
 
 (global-unset-key (kbd "C-8"))
 (global-set-key (kbd "C-8 C-i") 'gro-mark-follow-word)

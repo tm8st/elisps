@@ -11,7 +11,6 @@
 
 ;;GNU GLOBAL(gtags)
 (require 'gtags)
-(autoload 'gtags-mode "gtags" "" t)
 (gtags-mode t)
 (customize-set-value 'gtags-path-style 'relative)
 
@@ -21,7 +20,10 @@
  ""
   (interactive)
   (message (concat "Update " (gtags-get-rootpath) " gtags files."))
-  (start-process-shell-command "gtags-update" "*my-gtags-update*" (concat "cd " (gtags-get-rootpath) " && gtags -v"))
+  (start-process-shell-command
+   "gtags-update"
+   "*my-gtags-update*"
+   (concat "cd " (gtags-get-rootpath) " && gtags -v"))
   )
 
 (global-set-key (kbd "C-q C-e")  'my-gtags-update-tags)
@@ -34,7 +36,6 @@
 (global-set-key (kbd "C-q C-f C-f") 'gtags-find-file)
 (global-set-key (kbd "C-q C-f C-s")'gtags-find-symbol)
 (global-set-key (kbd "C-q C-p") 'gtags-pop-stack)
-;; (global-set-key (kbd "C-q C-h") 'gtags-find-tag)
 
 ;;;-------------------------------
 ;;; etags 
