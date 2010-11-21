@@ -15,15 +15,19 @@
 ;;; delete, mark, kill some ranges.
 ;;;-------------------------------
 (require 'generic-range-opt)
+;; (require 'prefix-arg-commands)
 
 ;;標準操作
-(global-set-key (kbd "C-f") 'forward-char)
-(global-set-key (kbd "C-b") 'backward-char)
+(global-set-key (kbd "C-f") 'prefix-arg-commands-forward-move-commands)
+(global-set-key (kbd "C-b") 'prefix-arg-commands-backward-move-commands)
 (global-set-key (kbd "C-t") 'my-forward-word)
 (global-set-key (kbd "C-m") 'my-backward-word)
+(global-set-key (kbd "C-a") 'prefix-arg-commands-back-to-indentation-move-commands)
+(global-set-key (kbd "C-e") 'prefix-arg-commands-end-of-line-move-commands)
+;; (global-set-key (kbd "C-a") 'back-to-indentation)
+;; (global-set-key (kbd "C-e") 'prefix-arg-commands-back-to-indentation-move-commands)
 (global-set-key (kbd "C-;") 'my-scroll-down)
 (global-set-key (kbd "C-v") 'my-scroll-up)
-(global-set-key (kbd "C-a") 'back-to-indentation)
 (global-set-key (kbd "C-S-t") 'forward-sexp)
 (global-set-key (kbd "C-S-m") 'backward-sexp)
 (global-set-key (kbd "C-x C-[") 'beginning-of-buffer)
@@ -122,28 +126,7 @@
 
 (global-set-key (kbd "C-l C-f C-o") 'my-save-all-buffers)
 
-;;;-------------------------------
-;;; frame alpha
-;;;-------------------------------
-(defun my-frame-alpha-setting (arg)
-  "アルファの値の設定関数"
-  (interactive "P")
-  (cond
-   ((equal arg '(8192)) (set-frame-parameter nil 'alpha 5))	;;C-u C-u C-u C-u C-u C-u C-u
-   ((equal arg '(4096)) (set-frame-parameter nil 'alpha 10))	;;C-u C-u C-u C-u C-u C-u
-   ((equal arg '(2048)) (set-frame-parameter nil 'alpha 25))	;;C-u C-u C-u C-u C-u
-   ((equal arg '(1024)) (set-frame-parameter nil 'alpha 50))	;;C-u C-u C-u C-u
-   ((equal arg '(256)) (set-frame-parameter nil 'alpha 60))	;;C-u C-u C-u C-u
-   ((equal arg '(64)) (set-frame-parameter nil 'alpha 70))	;;C-u C-u C-u
-   ((equal arg '(16))  (set-frame-parameter nil 'alpha 80)) 	;;C-u -u
-   ((equal arg '(4)) (set-frame-parameter nil 'alpha 90))	;;C-u
-   (t (set-frame-parameter nil 'alpha 100))))
-
-;; 現在フレームの透明度変更
-;; (define-key global-map (kbd "C-l C-j") `(lambda () (interactive) (set-frame-parameter nil 'alpha 30)))
-;; (define-key global-map (kbd "C-l C-h") `(lambda () (interactive) (set-frame-parameter nil 'alpha 100)))
-
-(define-key global-map (kbd "C-l C-z") `my-frame-alpha-setting)
+(define-key global-map (kbd "C-l C-z") `prefix-arg-commands-set-frame-alpha)
 
 ;; 重複行削除
 ;; (require 'uniq)

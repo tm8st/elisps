@@ -312,8 +312,14 @@
   (setq my-homw-done-grep-find-command "find . -name \"*.howm\" -a -type f -a -not -name \"*.svn*\" -a -not -name \"*.bin\" -exec grep -ni -e \"\[\\[0-9-\\]\\\]\\.\" {} +")
   )
 
+;; howm-directory以下だとhowmのgrepに引っ掛るので、別の場所におく。 
+(defvar my-howm-todo-grep-result-directory "~/.emacs.d/howm-todo-dayly-result/")
+
 (defun my-howm-todo-grep-find-output-filename (is-morning)
-  (expand-file-name (format "%showm-tood-%s-%s.log" howm-directory (format-time-string "%m-%d" (current-time))
+  (expand-file-name (format "%s%s/howm-tood-%s-%s.log"
+			    my-howm-todo-grep-result-directory
+			    (format-time-string "%Y" (current-time))
+			    (format-time-string "%m-%d" (current-time))
 			    (if is-morning
 				"morning"
 			      "night"))))
@@ -336,11 +342,14 @@
   "grep howm todo."
   (interactive)
   (save-excursion
-    (let ((buf (get-buffer "*Shell Command Output*")))
-      (shell-command (concat "cd " (expand-file-name howm-directory) " && " my-homw-todo-grep-find-command " && " my-homw-done-grep-find-command) buf)
-      ;; (shell-command (concat "cd " (expand-file-name howm-directory) " ; ") my-homw-todo-grep-find-command buf)
+    (let ((buf (get-buffer "*Shell Command Output*"))
+	  (output-filename (my-howm-todo-grep-find-output-filename is-morning)))
+      (shell-command (concat "mkdir -p " (file-name-directory output-filename)
+			     " && " "cd " howm-directory
+			     " && " my-homw-todo-grep-find-command
+			     " && " my-homw-done-grep-find-command) buf)
       (set-buffer buf)
-      (write-region (point-min) (point-max) (my-howm-todo-grep-find-output-filename is-morning) nil nil))))
+      (write-region (point-min) (point-max) output-filename nil nil nil nil))))
 
 (global-set-key (kbd "C-l C-u C-m") 'my-howm-todo-grep-find-morning)
 (global-set-key (kbd "C-l C-u C-n") 'my-howm-todo-grep-find-night)

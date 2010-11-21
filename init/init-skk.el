@@ -256,4 +256,8 @@
           ((and (<= ?０ c) (>= ?９ c)) "，")
           (t "、"))))
 
+;; (require 'sekka) 
+;; ;;(setq sekka-sticky-shift t)  ;; sticky-shiftを使用する場合、この行を有効にする
+;; (global-sekka-mode 1)
+
 (provide 'init-skk)

@@ -19,9 +19,9 @@
   )
 
 (when (my-is-mac)
-  (set-default-coding-systems 'utf-8-auto)
-  (prefer-coding-system 'utf-8-auto)
-  (set-terminal-coding-system 'utf-8-auto)
+  (set-default-coding-systems 'utf-8)
+  (prefer-coding-system 'utf-8)
+  (set-terminal-coding-system 'utf-8)
   )
 
 ;; terminalで日本語表示がおかしくなったため。
@@ -154,6 +154,9 @@
    '(uniquify-ignore-buffers-re "*[^*]+*")
    '(uniquify-buffer-name-style 'forward)
    )
+
+	;;ファイル名がカーソルの下にある場合にfind-fileで開く
+  (require 'ffap)
   
   ;;----------------------------------------
   ;; backup files.
