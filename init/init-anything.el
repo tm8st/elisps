@@ -388,4 +388,36 @@
 (global-set-key (kbd "C-q C-a C-b") 'anything-netscape-bookmark)
 (global-set-key (kbd "C-q C-a C-v") 'anything-netscape-bookmark-get-dump)
 
+(require 'anything-books)
+(setq abks:books-dir (expand-file-name "~/Downloads/")) ; PDFファイルのあるディレクトリ（★必須）
+(setq abks:open-command "acroread") ; LinuxのAdobeReaderを使う (default)
+
+(setq abks:cmd-copy "cp") ; ファイルコピーのコマンド
+(setq abks:copy-by-command nil) ; nilにするとEmacsの機能でコピーする（Windowsはnilがいいかも）
+(setq abks:preview-temp-dir "/tmp") ; 作業ディレクトリ
+
+;; for evince setting (default)
+(setq abks:cache-pixel "600")
+(setq abks:mkcover-cmd-pdf-postfix nil)
+(setq abks:mkcover-cmd '("evince-thumbnailer" "-s" size pdf jpeg))
+
+;; for ImageMagick and GhostScript setting
+;; (setq abks:cache-pixel "600x600")
+;; (setq abks:mkcover-cmd-pdf-postfix "[0]")
+;; (setq abks:mkcover-cmd '("convert" "-resize" size pdf jpeg))
+(global-set-key (kbd "C-q C-a C-d") 'anything-books-command) ; キーバインド
+
+;; doc-view で開く
+(defadvice abks:open-file (around my-abks:open-file activate)
+  (if (require 'doc-view  nil t)
+      (find-file (ad-get-arg 0))
+    ad-do-it))
+
+(add-hook 'view-mode-hook
+          (lambda ()
+            (when (eql major-mode 'doc-view-mode)
+              (define-key view-mode-map "-" nil)
+              (define-key view-mode-map "n" nil)
+              (define-key view-mode-map "p" nil))))
+
 (provide 'init-anything)

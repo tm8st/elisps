@@ -15,7 +15,7 @@
 ;;; delete, mark, kill some ranges.
 ;;;-------------------------------
 (require 'generic-range-opt)
-;; (require 'prefix-arg-commands)
+(require 'prefix-arg-commands)
 
 ;;標準操作
 (global-set-key (kbd "C-f") 'prefix-arg-commands-forward-move-commands)
@@ -121,6 +121,7 @@
 (global-set-key (kbd "C-l C-f C-w") 'my-buffer-cygstart-exe)
 ;; windowsの関連付けでopen-file
 (global-set-key (kbd "C-l C-f C-f") 'my-open-file-os)
+
 ;;ソースとヘッダファイルの移動用
 (global-set-key (kbd "C-l C-f C-s") 'ff-find-other-file)
 

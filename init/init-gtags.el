@@ -16,6 +16,20 @@
 
 (gtags-make-complete-list)
 
+(defun my-is-use-gtags ()
+  ""
+  (if (eq (gtags-get-rootpath) nil)
+      t
+      nil))
+
+(defun my-find-tags-from-here ()
+  ""
+  (interactive)
+  (if (my-is-use-gtags)
+      (gtags-find-tag-from-here)
+    (anything-etags-select-from-here)))
+
+
 (defun my-gtags-update-tags ()
  ""
   (interactive)
@@ -29,9 +43,9 @@
 (global-set-key (kbd "C-q C-e")  'my-gtags-update-tags)
 
 ;; 手軽に使えるようなキーバインド 
-(global-set-key (kbd "C-q C-n")  'gtags-find-tag)
-(global-set-key (kbd "C-q C-m")  'gtags-find-rtag)
-(global-set-key (kbd "C-q C-j") 'gtags-find-tag-from-here)
+(global-set-key (kbd "C-q C-n") 'gtags-find-tag)
+(global-set-key (kbd "C-q C-m") 'gtags-find-rtag)
+(global-set-key (kbd "C-q C-j") 'my-find-tags-from-here)
 (global-set-key (kbd "C-q C-f C-g") 'gtags-find-with-grep)
 (global-set-key (kbd "C-q C-f C-f") 'gtags-find-file)
 (global-set-key (kbd "C-q C-f C-s")'gtags-find-symbol)
@@ -42,16 +56,21 @@
 ;;;-------------------------------
 (require 'etags)
 (require 'anything-etags)
-(setq my-etags-command "ctags -R")
+(setq my-etags-command "ctags -e --recurse")
 ;; (setq my-etags-command "find . -name \"*.*\" -a -type f -a -not -name \"*.svn*\" -a -not -name \"*.bin\" -a -not -name \"*.exe\" -exec etags -a {} +")
+
+;; get the path of gtags root directory.
+(defun etags-get-rootpath ()
+  (anything-etags-find-tag-file (file-name-directory (buffer-file-name))))
+
 (defun my-etags-update ()
   (interactive)
-  (async-shell-command my-etags-command "*etags update*" nil)
-  )
+  (async-shell-command (concat "cd \"" (etags-get-rootpath) "\" " my-etags-command "*etags update*" nil)))
+
 (global-set-key (kbd "C-q C-a C-e") 'anything-etags-select-from-here)
 (global-set-key (kbd "C-q C-a C-w") 'anything-etags-select)
-(global-set-key (kbd "C-q C-a C-n") 'anything-etags-select-from-here)
-(global-set-key (kbd "C-q C-a C-m") 'anything-etags-select)
+;; (global-set-key (kbd "C-q C-a C-n") 'anything-etags-select-from-here)
+;; (global-set-key (kbd "C-q C-a C-m") 'anything-etags-select)
 ;; (global-set-key (kbd "C-l C-j C-u") 'my-etags-update)
 
 (provide 'init-gtags)

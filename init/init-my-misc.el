@@ -597,16 +597,13 @@ default name is filename:current line string."
 	     (mapcar 'switch-to-buffer (nreverse value))
 	   (switch-to-buffer value)
 	   (my-buffer-cygstart-exe)
-	   (kill-buffer (current-buffer)))))))
-  )
+	   (kill-buffer (current-buffer))))))))
 
 (when (my-is-mac)
-  (defun my-open-file-os (filename &optional isdir)
+  (defun my-open-file-os ()
     "osの関連付けを利用してファイルを開く mac 用"
     (interactive)
-    (let ((path (
-		 (if isdir (directory-file-name filename) filename))))
-    (shell-command (concat "open " filename)))))
+    (shell-command (concat "open " (buffer-file-name)))))
 
 (defun my-open-dir-os (path)
   "osの関連付けを利用してファイルを開く mac 用"
