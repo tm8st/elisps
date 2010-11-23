@@ -86,4 +86,10 @@
 (defvar my-exe-file-extention-list `("air" "exe" "app"))
 (defvar my-archive-file-extention-list `("lzh" "tar" "tar.gz" "tgz" "tar.bz2" "dmg" "pkg" "jar" "zip" "tar"))
 
+(defvar my-use-shecme-mode nil)
+(defvar my-use-scala-mode nil)
+(defvar my-use-haskell-mode nil)
+(defvar my-use-org-mode nil)
+(defvar my-use-twitter-mode nil)
+
 (provide 'init-private)

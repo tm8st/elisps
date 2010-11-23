@@ -152,10 +152,14 @@
     (add-to-list 'init-load-elisp-list "init-haskell.el"))
   (when my-use-org-mode
     (add-to-list 'init-load-elisp-list "init-org.el"))
+  (when my-use-twitter-mode
+    (add-to-list 'init-load-elisp-list "init-twitter.el"))
 
-  (defun load-elisp (file) "" (load file t nil))
+  (defun my-init-load-elisp (file) ""
+    (load file t nil)
+    )
 
-  (mapc 'load-elisp init-load-elisp-list)
+  (mapc 'my-init-load-elisp init-load-elisp-list)
   )
 
 (setq my-initialized t)

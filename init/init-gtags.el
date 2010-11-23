@@ -12,23 +12,8 @@
 ;;GNU GLOBAL(gtags)
 (require 'gtags)
 (gtags-mode t)
-(customize-set-value 'gtags-path-style 'relative)
-
 (gtags-make-complete-list)
-
-(defun my-is-use-gtags ()
-  ""
-  (if (eq (gtags-get-rootpath) nil)
-      t
-      nil))
-
-(defun my-find-tags-from-here ()
-  ""
-  (interactive)
-  (if (my-is-use-gtags)
-      (gtags-find-tag-from-here)
-    (anything-etags-select-from-here)))
-
+(customize-set-value 'gtags-path-style 'relative)
 
 (defun my-gtags-update-tags ()
  ""
@@ -40,9 +25,9 @@
    (concat "cd " (gtags-get-rootpath) " && gtags -v"))
   )
 
-(global-set-key (kbd "C-q C-e")  'my-gtags-update-tags)
+(global-set-key (kbd "C-q C-e") 'my-gtags-update-tags)
 
-;; 手軽に使えるようなキーバインド 
+;; 手軽に使えるようなキーバインド
 (global-set-key (kbd "C-q C-n") 'gtags-find-tag)
 (global-set-key (kbd "C-q C-m") 'gtags-find-rtag)
 (global-set-key (kbd "C-q C-j") 'my-find-tags-from-here)
@@ -60,17 +45,23 @@
 ;; (setq my-etags-command "find . -name \"*.*\" -a -type f -a -not -name \"*.svn*\" -a -not -name \"*.bin\" -a -not -name \"*.exe\" -exec etags -a {} +")
 
 ;; get the path of gtags root directory.
-(defun etags-get-rootpath ()
+(defun my-etags-get-rootpath ()
   (anything-etags-find-tag-file (file-name-directory (buffer-file-name))))
 
 (defun my-etags-update ()
   (interactive)
-  (async-shell-command (concat "cd \"" (etags-get-rootpath) "\" " my-etags-command "*etags update*" nil)))
+  (async-shell-command (concat "cd \"" (my-etags-get-rootpath) "\" " my-etags-command "*etags update*" nil)))
 
 (global-set-key (kbd "C-q C-a C-e") 'anything-etags-select-from-here)
 (global-set-key (kbd "C-q C-a C-w") 'anything-etags-select)
 ;; (global-set-key (kbd "C-q C-a C-n") 'anything-etags-select-from-here)
 ;; (global-set-key (kbd "C-q C-a C-m") 'anything-etags-select)
 ;; (global-set-key (kbd "C-l C-j C-u") 'my-etags-update)
+
+(require 'virtual-tags)
+(global-set-key (kbd "C-q C-e") 'virtual-tags-update-tags)
+(global-set-key (kbd "C-q C-@") 'virtual-tags-init-tags)
+(global-set-key (kbd "C-q C-j") 'virtual-tags-find-tags-from-here)
+(global-set-key (kbd "C-q C-m") 'virtual-tags-find-tags)
 
 (provide 'init-gtags)

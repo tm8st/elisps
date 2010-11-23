@@ -122,7 +122,7 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
 
   (when (and use-font-setting (my-is-mac)
              (set-face-attribute 'default nil
-                                 ;; :family "VL Pゴシック"
+                                 ;; :family "VL ゴシック"
                                  :height my-font-size-base)))
 
   ;; (set-face-attribute 'default nil
@@ -327,8 +327,8 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
     
   (when (my-is-mac)
     (customize-set-variable 'yalinum-width-base 1)
-    (customize-set-variable 'yalinum-width-scale 0.9)
-    (customize-set-variable 'yalinum-line-number-display-format " %0$numd ")
+    (customize-set-variable 'yalinum-width-scale 0.85)
+    (customize-set-variable 'yalinum-line-number-display-format "%0$numd ")
     )
   (when (my-is-windows)
     (customize-set-variable 'yalinum-width-base 0)
