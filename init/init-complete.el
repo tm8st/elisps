@@ -78,7 +78,6 @@
 (add-to-list 'ac-modes 'shell-mode)
 (add-to-list 'ac-modes 'eshell-mode)
 (add-to-list 'ac-modes 'fundamental-mode)
-(add-to-list 'ac-modes 'scala-mode)
 (add-to-list 'ac-modes 'text-mode)
 
 ;;;-------------------------------------
