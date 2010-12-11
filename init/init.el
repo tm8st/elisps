@@ -144,16 +144,16 @@
      ))
 
   ;; 環境別の設定ファイル
-  (when my-use-shecme-mode
-    (add-to-list 'init-load-elisp-list "init-scheme.el"))
-  (when my-use-scala-mode
-    (add-to-list 'init-load-elisp-list "init-scala.el"))
-  (when my-use-haskell-mode
-    (add-to-list 'init-load-elisp-list "init-haskell.el"))
-  (when my-use-org-mode
-    (add-to-list 'init-load-elisp-list "init-org.el"))
-  (when my-use-twitter-mode
-    (add-to-list 'init-load-elisp-list "init-twitter.el"))
+  ;; (when my-use-shecme-mode
+  ;;   (add-to-list 'init-load-elisp-list "init-scheme.el"))
+  ;; (when my-use-scala-mode
+  ;;   (add-to-list 'init-load-elisp-list "init-scala.el"))
+  ;; (when my-use-haskell-mode
+  ;;   (add-to-list 'init-load-elisp-list "init-haskell.el"))
+  ;; (when my-use-org-mode
+  ;;   (add-to-list 'init-load-elisp-list "init-org.el"))
+  ;; (when my-use-twitter-mode
+  ;;   (add-to-list 'init-load-elisp-list "init-twitter.el"))
 
   (defun my-init-load-elisp (file) ""
     (load file t nil)

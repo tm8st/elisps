@@ -13,15 +13,37 @@
 
 (setq auto-mode-alist
       (append
-       '(("\\.hs$" . haskell-mode)
-	 )
+       '(("\\.hs$" . haskell-mode))
        auto-mode-alist))
 
 (setq haskell-literate "haskell-mode")
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+(add-hook 'haskell-mode-hook 'font-lock-mode)
+(add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
 
 ;; haskellでauto-compoleを使う
 (require 'auto-complete)
 (add-to-list 'ac-modes 'haskell-mode)
+(add-to-list 'ac-modes 'inferior-haskell-mode)
+
+;;for haskell-mode                                                                                  
+(autoload 'ghc-init "ghc" nil t)
+
+(defun haskell-individual-setup ()
+  (let ((mapping '(([f5] . "\C-c\C-l\C-x\omain\C-m\C-xo")
+                   ("\C-c\C-i" . ghc-complete)
+                   ([backtab] . haskell-indent-cycle))))    
+    (loop for (key . f) in mapping
+          do (define-key haskell-mode-map key f))
+    
+    (turn-on-haskell-doc-mode)
+    (turn-on-haskell-indent)
+    (imenu-add-menubar-index)
+    (ghc-init)
+    (flymake-mode)))
+
+(add-hook 'haskell-mode-hook 'haskell-individual-setup)
 
 (defun my-haskell-mode-hook ()
   (interactive)
@@ -41,6 +63,8 @@
 (define-key haskell-mode-map (kbd "C-c C-h") 'haskell-hoogle)
 (define-key haskell-indentation-mode-map (kbd "C-j") 'haskell-newline-and-indent)
 (define-key haskell-indentation-mode-map (kbd "C-m") 'backward-word)
+(define-key inferior-haskell-mode-map (kbd "C-m") 'backward-word)
+(define-key inferior-haskell-mode-map (kbd "C-j") 'comint-send-input)
 
 ;; (define-key haskell-mode-map (kbd "C-m") `my-backward-word)
 ;; (define-key haskell-indentation-mode-map (kbd "C-") `haskell-newline-and-indent)

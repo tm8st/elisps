@@ -97,7 +97,7 @@
 
   (auto-compression-mode t);; 圧縮ファイルを透過的に開く
 
-  (setq indent-tabs-mode t) ;; tab を使うか
+  (setq indent-tabs-mode nil) ;; tab を使うか
   (setq tab-width 2)	;; tab 幅設定
   (file-name-shadow-mode t) ;;ファイル名入力時に不用になった部分暗くする
   (setq redisplay-dont-pause t)	 ;; キーリピートにカーソルを追随させる 副作用があるらしい...

@@ -110,4 +110,12 @@
 ;; 動的補完で無視する要素の正規表現
 (customize-set-value 'dabbrev-abbrev-skip-leading-regexp "-")
 
+;;;-------------------------------
+;;;
+;;;-------------------------------
+(require 'complete)
+(define-key minibuffer-local-completion-map "C-j" 'PC-complete-and-exit)
+(define-key minibuffer-local-completion-map "C-m" 'backward-word)
+(define-key minibuffer-local-completion-map "RET" 'backward-word)
+
 (provide 'init-complete)
