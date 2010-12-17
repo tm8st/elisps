@@ -22,7 +22,7 @@
 (defvar my-twittering-password "???")
 
 ;;;-------------------------------
-;;; 
+;;;
 ;;;-------------------------------
 (defvar my-force-recompile-elisps nil)
 
@@ -71,11 +71,11 @@
   (progn
     (when (my-is-mac)
       (add-to-list 'my-directory-name-assoc-template-list
-		   (list
-		    `("Download" "~/Downloads/")
-		    `("Picture" "~/Pictures/")
-		    `("Document" "~/Documents/")
-		    )))
+                   (list
+                    `("Download" "~/Downloads/")
+                    `("Picture" "~/Pictures/")
+                    `("Document" "~/Documents/")
+                    )))
 
     (when (my-is-windows))
     ))

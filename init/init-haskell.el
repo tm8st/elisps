@@ -7,6 +7,7 @@
 ;; creation time: [Sun Aug  1 18:12:46 2010]
 ;;; Commentary:
 
+(require 'cl)
 (require 'haskell-mode)
 (require 'haskell-indentation)
 (require 'inf-haskell)
@@ -45,6 +46,8 @@
 
 (add-hook 'haskell-mode-hook 'haskell-individual-setup)
 
+(require 'easy-imenu-index-generator-config)
+
 (defun my-haskell-mode-hook ()
   (interactive)
   (setq indent-tabs-mode nil)
@@ -55,6 +58,7 @@
   (global-auto-complete-mode t)
   (auto-complete-mode t)
   (setq ac-sources '(ac-source-words-in-same-mode-buffers ac-source-imenu))
+  ;; (easy-imenu-index-generator-set-for-current-buffer easy-imenu-index-generator-haskell)
   )
 
 (add-hook 'haskell-mode-hook 'my-haskell-mode-hook)

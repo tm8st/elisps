@@ -60,9 +60,16 @@
   (file-cache-add-directory-list (list "~/"))
   (file-cache-add-directory-list load-path)
   (file-cache-add-directory-list exec-path)
-  (file-cache-add-directory-list file-cache-path)
-  (file-cache-add-directory-list my-etc-path)
-  (file-cache-add-directory-list my-develop-path)
+
+  (when file-cache-path
+    (file-cache-add-directory-list file-cache-path)
+    )
+  (when my-etc-path
+    (file-cache-add-directory-list my-etc-path)
+   )
+  (when my-develop-path
+    (file-cache-add-directory-list my-develop-path)
+    )
   (setq file-cache-ignore-case t)
 
   ;; mini bufferでfile名補完中のFileCache起動キー
@@ -81,7 +88,7 @@
   (setq savehist-mode 1)
   (setq kill-whole-line t) ;; C-kで行全体を削除
   (setq inhibit-startup-message t) ;;起動画面を表示しない
-  (setq enable-recursive-minibuffers t)	;;前のcommandが終了してなくても、新しいcommandを実行可能にする。
+  (setq enable-recursive-minibuffers t) ;;前のcommandが終了してなくても、新しいcommandを実行可能にする。
   (global-auto-revert-mode t) ;;file が他から変更されたら、自動的に読み込む。
   (delete-selection-mode 1) ;; マーク選択中の編集コマンドの挙動変更/範囲削除
   (setq default-indicate-empty-lines t)
@@ -91,19 +98,19 @@
   (setq eol-mnemonic-dos "(CRLF)")
   (setq eol-mnemonic-mac "(CR)")
   (setq eol-mnemonic-unix "(LF)")
-  
-  (require 'saveplace)	;;以前編集していた位置を開く
+
+  (require 'saveplace)  ;;以前編集していた位置を開く
   (setq-default save-place t)
 
   (auto-compression-mode t);; 圧縮ファイルを透過的に開く
 
   (setq indent-tabs-mode nil) ;; tab を使うか
-  (setq tab-width 2)	;; tab 幅設定
+  (setq tab-width 2)  ;; tab 幅設定
   (file-name-shadow-mode t) ;;ファイル名入力時に不用になった部分暗くする
-  (setq redisplay-dont-pause t)	 ;; キーリピートにカーソルを追随させる 副作用があるらしい...
+  (setq redisplay-dont-pause t)  ;; キーリピートにカーソルを追随させる 副作用があるらしい...
   (random 1000000) ;; Seed the random-number generator
   (setq undo-outer-limit 10000);; undo の保存限界
-  
+
   ;;mini buffer での質問に yes/no を入力するのは面倒なのでSPC で yes とする。
   (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -111,7 +118,7 @@
   (setq use-dialog-box nil) ;; ダイアログはつかわない
   (setq echo-keystrokes 0.15) ;;
 
-  ;; 
+  ;;
   (defadvice save-buffers-kill-terminal (before my-save-buffers-kill-terminal activate)
   (when (process-list)
     (dolist (p (process-list))
@@ -136,7 +143,7 @@
   (set-scroll-bar-mode nil)
 
   (auto-image-file-mode)
-  (setq-default line-spacing 0)	;; setting pixel between lines
+  (setq-default line-spacing 0) ;; setting pixel between lines
 
   ;; 最近使った file を記憶させる。
   (require 'recentf)
@@ -155,9 +162,9 @@
    '(uniquify-buffer-name-style 'forward)
    )
 
-	;;ファイル名がカーソルの下にある場合にfind-fileで開く
+  ;;ファイル名がカーソルの下にある場合にfind-fileで開く
   (require 'ffap)
-  
+
   ;;----------------------------------------
   ;; backup files.
   ;;----------------------------------------
@@ -218,7 +225,7 @@
     )
 
   ;;----------------------------------------
-  ;; ウィンドウズ用設定 
+  ;; ウィンドウズ用設定
   ;;----------------------------------------
   (when (my-is-windows)
     (setq w32-pass-alt-to-system t) ;; ALTの入力をwindowsに通知する 最大化、移動用
@@ -230,7 +237,7 @@
     ;;cygwin風ディレクリ指定
     (require 'cygwin-mount)
     (cygwin-mount-activate)
-    )  
+    )
   )
 
 (provide 'init-basic)

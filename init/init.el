@@ -41,12 +41,12 @@
 ;;   (unless my-initialized
 ;;     (progn
 ;;       (defun update-emacs-settings-site-dir (dir)
-;; 	"add dir and subdirectories of it to load-path"
-;; 	(let ((dirs (remove-if-not #'file-directory-p
-;; 				   (directory-files dir t "^[^.]"))))
-;; 	  (dolist (d dirs)
-;; 	    (update-emacs-settings-site-dir d))
-;; 	  (setq load-path (cons dir load-path))))
+;;      "add dir and subdirectories of it to load-path"
+;;      (let ((dirs (remove-if-not #'file-directory-p
+;;                                 (directory-files dir t "^[^.]"))))
+;;        (dolist (d dirs)
+;;          (update-emacs-settings-site-dir d))
+;;        (setq load-path (cons dir load-path))))
 
 ;;       (update-emacs-settings-site-dir "/Users/mys/emacs-settings/emacs.d")
 
@@ -62,7 +62,7 @@
    "/usr/bin" "/usr/sbin" "/sbin" "/sw/bin" "/sw/sbin"
    "/usr/local/bin"
    "/opt/local/bin" "/opt/local/sbin"
-	 ))
+         ))
 
 (defun add-to-exec-path (dir)
   ""
@@ -76,8 +76,7 @@
 ;;;----------------------------------------
 ;;; loadpath add all ~/elisps subdirs
 ;;;----------------------------------------
-(defvar my-default-load-path nil)
-;; (defvar my-default-load-path load-path)
+(defvar my-default-load-path load-path)
 
 (let ((dir (expand-file-name my-elisp-path)))
   (if (member dir load-path) nil
@@ -117,7 +116,7 @@
      "init-basic.el"
      "init-misc.el"
      "init-my-misc.el"
-     
+
      "init-howm.el"
      "init-dired.el"
 
@@ -144,16 +143,16 @@
      ))
 
   ;; 環境別の設定ファイル
-  ;; (when my-use-shecme-mode
-  ;;   (add-to-list 'init-load-elisp-list "init-scheme.el"))
-  ;; (when my-use-scala-mode
-  ;;   (add-to-list 'init-load-elisp-list "init-scala.el"))
-  ;; (when my-use-haskell-mode
-  ;;   (add-to-list 'init-load-elisp-list "init-haskell.el"))
-  ;; (when my-use-org-mode
-  ;;   (add-to-list 'init-load-elisp-list "init-org.el"))
-  ;; (when my-use-twitter-mode
-  ;;   (add-to-list 'init-load-elisp-list "init-twitter.el"))
+  (when my-use-shecme-mode
+    (add-to-list 'init-load-elisp-list "init-scheme.el"))
+  (when my-use-scala-mode
+    (add-to-list 'init-load-elisp-list "init-scala.el"))
+  (when my-use-haskell-mode
+    (add-to-list 'init-load-elisp-list "init-haskell.el"))
+  (when my-use-org-mode
+    (add-to-list 'init-load-elisp-list "init-org.el"))
+  (when my-use-twitter-mode
+    (add-to-list 'init-load-elisp-list "init-twitter.el"))
 
   (defun my-init-load-elisp (file) ""
     (load file t nil)

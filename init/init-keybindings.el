@@ -135,6 +135,7 @@
 
 ;;大文字小文字変換
 (global-set-key (kbd "C-q C-u") 'my-changecase-word)
+(global-set-key (kbd "C-q C-e") 'eval-buffer)
 
 ;;;-------------------------------
 ;;; mocccur 置換用
@@ -148,13 +149,13 @@
 
 (setq moccur-split-word t)
 (setq *moccur-buffer-name-exclusion-list*
-	  '(".+TAGS.+" "*Completions*" "*Messages*"
-		"newsrc.eld" " *migemo*" ".bbdb"))
+          '(".+TAGS.+" "*Completions*" "*Messages*"
+                "newsrc.eld" " *migemo*" ".bbdb"))
 
 (setq dmoccur-list
       '(
-	("cd" default-directory (".*") nil)
-	))
+        ("cd" default-directory (".*") nil)
+        ))
 
 (set 'dmoccur-use-list t)
 (set 'dmoccur-maximum-size 1000)
@@ -169,24 +170,24 @@
 ;; (define-key undo-tree-visualizer-map (kbd "C-g") `undo-tree-visualizer-quit)
 
 ;; Key bindings (describe-bindings)
-;; C-b		undo-tree-visualize-switch-branch-left
-;; C-f		undo-tree-visualize-switch-branch-right
-;; C-n		undo-tree-visualize-redo
-;; C-p		undo-tree-visualize-undo
-;; C-q		undo-tree-visualizer-quit
-;; ,		undo-tree-visualizer-scroll-left
-;; .		undo-tree-visualizer-scroll-right
-;; <		undo-tree-visualizer-scroll-left
-;; >		undo-tree-visualizer-scroll-right
-;; b		undo-tree-visualize-switch-branch-left
-;; f		undo-tree-visualize-switch-branch-right
-;; n		undo-tree-visualize-redo
-;; p		undo-tree-visualize-undo
-;; q		undo-tree-visualizer-quit
-;; t		undo-tree-visualizer-toggle-timestamps
-;; <down>	undo-tree-visualize-redo
-;; <left>	undo-tree-visualize-switch-branch-left
-;; <mouse-1>	undo-tree-visualizer-set
+;; C-b          undo-tree-visualize-switch-branch-left
+;; C-f          undo-tree-visualize-switch-branch-right
+;; C-n          undo-tree-visualize-redo
+;; C-p          undo-tree-visualize-undo
+;; C-q          undo-tree-visualizer-quit
+;; ,            undo-tree-visualizer-scroll-left
+;; .            undo-tree-visualizer-scroll-right
+;; <            undo-tree-visualizer-scroll-left
+;; >            undo-tree-visualizer-scroll-right
+;; b            undo-tree-visualize-switch-branch-left
+;; f            undo-tree-visualize-switch-branch-right
+;; n            undo-tree-visualize-redo
+;; p            undo-tree-visualize-undo
+;; q            undo-tree-visualizer-quit
+;; t            undo-tree-visualizer-toggle-timestamps
+;; <down>       undo-tree-visualize-redo
+;; <left>       undo-tree-visualize-switch-branch-left
+;; <mouse-1>    undo-tree-visualizer-set
 
 ;; ブックマーク設定
 (global-set-key (kbd "C-q C-b C-m") 'bookmark-set)
@@ -198,12 +199,12 @@
 (global-set-key (kbd "C-q C-@") 'yalinum-mode)        ;;行番号表示
 (global-set-key (kbd "C-q C-w") 'gro-copy-follow-word) ;;copy
 ;; (global-set-key (kbd "C-q C-w") 'copy-region-as-kill) ;;copy
-(global-set-key (kbd "C-q C-h") 'help-for-help)	      ;;ヘルプ
+(global-set-key (kbd "C-q C-h") 'help-for-help)       ;;ヘルプ
 (global-set-key (kbd "C-q C-;") 'view-mode)
 
 ;; text edit.
 (global-set-key (kbd "C-q C-c") 'comment-or-uncomment-region) ;;コメント付加、解除
-(global-set-key (kbd "C-q C-t C-a") 'align-regexp)	      ;;特定文字での整列
+(global-set-key (kbd "C-q C-t C-a") 'align-regexp)            ;;特定文字での整列
 (global-set-key (kbd "C-q C-t C-r")  'query-replace-regexp)   ;;置換
 ;; (global-set-key (kbd "C-q C-t C-o") 'overwrite-mode) ;;
 (global-set-key (kbd "C-q C-t C-t") 'tabify)                  ;; tab化
@@ -224,16 +225,16 @@
   (interactive "P")
   (if arg
       (let ((key (read-event "gro-delete-opt: ")))
-	(cond
-	 ((eq key ?\^F) (gro-delete-forward-line))
-	 ((eq key ?\^B) (gro-delete-backward-line))
-	 ((eq key ?\^D) (gro-delete-current-line))
-	 ((eq key ?\^E) (gro-delete-follow-sexp))
-	 ((eq key ?\^N) (gro-delete-next-line))
-	 ((eq key ?\^P) (gro-delete-prev-line))
-	 ((eq key ?\^L) (gro-delete-goto-line))
-	 ((eq key ?\^ ) (gro-delete-between-jaunte))
-	 ((eq key ?\^C) (gro-delete-yafastnav-prev))))
+        (cond
+         ((eq key ?\^F) (gro-delete-forward-line))
+         ((eq key ?\^B) (gro-delete-backward-line))
+         ((eq key ?\^D) (gro-delete-current-line))
+         ((eq key ?\^E) (gro-delete-follow-sexp))
+         ((eq key ?\^N) (gro-delete-next-line))
+         ((eq key ?\^P) (gro-delete-prev-line))
+         ((eq key ?\^L) (gro-delete-goto-line))
+         ((eq key ?\^ ) (gro-delete-between-jaunte))
+         ((eq key ?\^C) (gro-delete-yafastnav-prev))))
     (delete-char 1)))
 
 (global-set-key (kbd "C-d") 'my-delete-char)
@@ -250,7 +251,7 @@
 ;;  '(keymap
 ;;    ("C-f" . gro-delete-forward-line)
 ;;    ("C-b" . gro-delete-backward-line)
-;;    ) 
+;;    )
 ;;  )
 
 ;; (global-unset-key (kbd "C-d"))
@@ -284,6 +285,8 @@
 (global-set-key (kbd "C-8 C-p") 'gro-mark-prev-line)
 (global-set-key (kbd "C-8 C-h") 'gro-mark-jaunte-prev)
 (global-set-key (kbd "C-8 C-d") 'gro-mark-defun*)
+
+;; (global-set-key (kbd "C-|") 'goto-line)
 
 ;; エラー箇所へのジャンプ用
 (global-set-key (kbd "C-l C-;") 'compilation-minor-mode)
