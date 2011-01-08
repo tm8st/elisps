@@ -30,7 +30,7 @@
 ;; 手軽に使えるようなキーバインド
 (global-set-key (kbd "C-q C-n") 'gtags-find-tag)
 (global-set-key (kbd "C-q C-m") 'gtags-find-rtag)
-(global-set-key (kbd "C-q C-j") 'my-find-tags-from-here)
+(global-set-key (kbd "C-q C-j") 'gtags-find-tag-from-here)
 (global-set-key (kbd "C-q C-f C-g") 'gtags-find-with-grep)
 (global-set-key (kbd "C-q C-f C-f") 'gtags-find-file)
 (global-set-key (kbd "C-q C-f C-s")'gtags-find-symbol)
@@ -41,7 +41,7 @@
 ;;;-------------------------------
 (require 'etags)
 (require 'anything-etags)
-(setq my-etags-command "ctags -e --recurse")
+(defvar my-etags-command "ctags -e --recurse")
 ;; (setq my-etags-command "find . -name \"*.*\" -a -type f -a -not -name \"*.svn*\" -a -not -name \"*.bin\" -a -not -name \"*.exe\" -exec etags -a {} +")
 
 ;; get the path of gtags root directory.
@@ -58,10 +58,10 @@
 ;; (global-set-key (kbd "C-q C-a C-m") 'anything-etags-select)
 ;; (global-set-key (kbd "C-l C-j C-u") 'my-etags-update)
 
-(require 'virtual-tags)
-(global-set-key (kbd "C-q C-e") 'virtual-tags-update-tags)
-(global-set-key (kbd "C-q C-@") 'virtual-tags-init-tags)
-(global-set-key (kbd "C-q C-j") 'virtual-tags-find-tags-from-here)
-(global-set-key (kbd "C-q C-m") 'virtual-tags-find-tags)
+;; (require 'virtual-tags)
+;; (global-set-key (kbd "C-q C-e") 'virtual-tags-update-tags)
+;; (global-set-key (kbd "C-q C-@") 'virtual-tags-init-tags)
+;; (global-set-key (kbd "C-q C-j") 'virtual-tags-find-tags-from-here)
+;; (global-set-key (kbd "C-q C-m") 'virtual-tags-find-tags)
 
 (provide 'init-gtags)

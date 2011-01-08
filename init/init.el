@@ -92,8 +92,14 @@
       (byte-recompile-directory (expand-file-name dir)))))
 
 (dolist (d load-path)
-  (if (member (expand-file-name d) my-default-load-path) nil
-    (my-byte-recompile-directory d)))
+  (unless (eq d nil)
+    (if (member (expand-file-name d) my-default-load-path) nil
+      (my-byte-recompile-directory d))))
+
+;; (dolist (d load-path)
+;; (if (member (expand-file-name d) my-default-load-path) nil
+;;   (my-byte-recompile-directory d)))
+
 
 (add-to-list 'load-path "~/emacswiki.org" t)
 
@@ -136,7 +142,7 @@
     "init-skk.el"
     "init-migemo.el"
 
-    "init-theme.el"
+     "init-theme.el"
 
      ;; "init-window.el"
      ;; "init-test.el"

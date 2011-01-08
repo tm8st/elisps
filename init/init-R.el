@@ -1,3 +1,4 @@
+
 ;;; init-R.el --- R setting
 
 ;; Copyright (C) 2010 tm8st
@@ -105,3 +106,4 @@
 	))
 
 (provide 'init-R)
+

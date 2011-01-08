@@ -187,55 +187,6 @@
       (set-window-buffer nil buf)
       )))
 
-(require 'color-moccur)
-(require 'moccur-edit)
-
-(defun my-howm-todo-moccur ()
-  (interactive)
-  (moccur-grep-find
-   "~/.emacs.d/howm"
-   (list "\\[\\([0-9-]+\\)\\]\\+" ".howm")))
-
-(defun my-howm-todo-toggle ()
-  ""
-  (interactive)
-  (save-excursion
-    (goto-char (line-beginning-position))
-    (when (re-search-forward "\\+" (line-end-position) t)
-      (backward-char 1)
-      (delete-char 1)
-      (insert "."))
-    (when (re-search-forward "\\." (line-end-position) t)
-      (backward-char 1)
-      (delete-char 1)
-      (insert "+"))))
-
-(defun my-howm-moccur-all-save-and-kill-buffer ()
-  ""
-  (interactive)
-  (moccur-edit-finish-edit)
-  (my-save-all-buffers)
-  (kill-buffer "*Moccur*"))
-
-(global-set-key (kbd "C-l C-u C-,") 'my-howm-todo-moccur)
-
-(define-key moccur-mode-map (kbd "C-c C-j") 'my-howm-todo-toggle)
-(define-key moccur-mode-map (kbd "C-c C-e") 'my-howm-moccur-all-save-and-kill-buffer)
-(define-key moccur-mode-map (kbd "C-v") 'my-scroll-up)
-
-(define-key moccur-edit-mode-map (kbd "C-c C-j") 'my-howm-todo-toggle)
-(define-key moccur-edit-mode-map (kbd "C-c C-e") 'my-howm-moccur-all-save-and-kill-buffer)
-(define-key moccur-edit-mode-map (kbd "C-v") 'my-scroll-up)
-
-(set-face-background 'moccur-face "#005400")
-(set-face-foreground 'moccur-face "orange1")
-(set-face-underline 'moccur-face t)
-(set-face-foreground 'howm-mode-title-face "pink")
-(set-face-foreground 'moccur-edit-done-face "gray60")
-(set-face-background 'moccur-edit-done-face "gray1")
-(set-face-foreground 'moccur-edit-face "orange2")
-(set-face-background 'moccur-edit-face "gray20")
-
 (defun my-howm-command (arg)
   "howm用コマンドのまとめ関数。 C-uした回数で呼び変え"
   (interactive "P")
@@ -353,5 +304,57 @@
 
 (global-set-key (kbd "C-l C-u C-m") 'my-howm-todo-grep-find-morning)
 (global-set-key (kbd "C-l C-u C-n") 'my-howm-todo-grep-find-night)
+
+;;;-------------------------------
+;;; howmのTODOリストをmoccur-editで編集
+;;;-------------------------------
+(require 'color-moccur)
+(require 'moccur-edit)
+
+(defun my-howm-todo-moccur ()
+  (interactive)
+  (moccur-grep-find
+   "~/.emacs.d/howm"
+   (list "\\[\\([0-9-]+\\)\\]\\+" ".howm")))
+
+(defun my-howm-todo-toggle ()
+  ""
+  (interactive)
+  (save-excursion
+    (goto-char (line-beginning-position))
+    (when (re-search-forward (concat "\\[" howm-date-regexp "\\]" "\\+") (line-end-position) t)
+      (backward-char 1)
+      (delete-char 1)
+      (insert "."))
+    (when (re-search-forward (concat "\\[" howm-date-regexp "\\]" "\\.") (line-end-position) t)
+      (backward-char 1)
+      (delete-char 1)
+      (insert "+"))))
+
+(defun my-howm-moccur-all-save-and-kill-buffer ()
+  ""
+  (interactive)
+  (moccur-edit-finish-edit)
+  (my-save-all-buffers)
+  (kill-buffer "*Moccur*"))
+
+(global-set-key (kbd "C-l C-u C-,") 'my-howm-todo-moccur)
+
+(define-key moccur-mode-map (kbd "C-c C-j") 'my-howm-todo-toggle)
+(define-key moccur-mode-map (kbd "C-c C-e") 'my-howm-moccur-all-save-and-kill-buffer)
+(define-key moccur-mode-map (kbd "C-v") 'my-scroll-up)
+
+(define-key moccur-edit-mode-map (kbd "C-c C-j") 'my-howm-todo-toggle)
+(define-key moccur-edit-mode-map (kbd "C-c C-e") 'my-howm-moccur-all-save-and-kill-buffer)
+(define-key moccur-edit-mode-map (kbd "C-v") 'my-scroll-up)
+
+(set-face-foreground 'howm-mode-title-face "pink")
+(set-face-background 'moccur-face "#005400")
+(set-face-foreground 'moccur-face "orange1")
+(set-face-underline 'moccur-face t)
+(set-face-foreground 'moccur-edit-done-face "gray60")
+(set-face-background 'moccur-edit-done-face "gray1")
+(set-face-foreground 'moccur-edit-face "orange2")
+(set-face-background 'moccur-edit-face "gray20")
 
 (provide 'init-howm)

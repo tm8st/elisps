@@ -43,5 +43,7 @@
           '(lambda () (yas/minor-mode-on)))
 (add-hook 'ruby-mode-hook
           '(lambda () (yas/minor-mode-on)))
+(add-hook 'haskell-mode-hook
+          '(lambda () (yas/minor-mode-on)))
 
 (provide 'init-yasnippet)

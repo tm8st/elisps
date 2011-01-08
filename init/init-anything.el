@@ -105,8 +105,8 @@
 ;;; gtags
 ;;;-------------------------------
 (setq anything-gtags-enable-initial-pattern t)
-(setq anything-gtags-classify nil) ;; fileでグループ分けを行う。
-(setq gtags-path-style 'absolute)
+(setq anything-gtags-classify nil) ;; fileでグループ分けを行うか?
+;; (setq gtags-path-style 'absolute)
 
 ;;;-------------------------------
 ;;; anything-favolite-directories

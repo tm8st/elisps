@@ -50,7 +50,7 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
     ;; faces
     (dolist
         (element
-         '((default ((t ( :background "#005400" :foreground "gray75"))))
+         '((default ((t ( :background "#cfcca9" :foreground "gray75"))))
            (button ((t (:bold t))))
            (cursor ((t (:background "Orange"))))
            (highlight ((t (:background "Gray30"))))
@@ -353,12 +353,13 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
 	'((space-mark ?\x3000 [?\□])
 	  (tab-mark   ?\t   [?\xBB ?\t])
 	  ))
-  (require 'whitespace)
-  (global-whitespace-mode 1)
-  (set-face-foreground 'whitespace-space "LightSlateGray")
-  (set-face-background 'whitespace-space "DarkSlateGray")
-  (set-face-foreground 'whitespace-tab "LightSlateGray")
-  (set-face-background 'whitespace-tab "DarkSlateGray")
+
+  ;; (require 'whitespace)
+  ;; (global-whitespace-mode 1)
+  ;; (set-face-foreground 'whitespace-space "LightSlateGray")
+  ;; (set-face-background 'whitespace-space "DarkSlateGray")
+  ;; (set-face-foreground 'whitespace-tab "LightSlateGray")
+  ;; (set-face-background 'whitespace-tab "DarkSlateGray")
 
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
