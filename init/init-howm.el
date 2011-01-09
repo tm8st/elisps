@@ -120,10 +120,6 @@
   (calendar)
   )
 
-;; key-macro で定義。howm-menu上で選択している項目の[TODO]+を[TODO].へ書き替えする。
-(fset 'my-howm-todo-done
-      "\C-a\C-m\C-s+\C-f\C-b\C-h.\C-c\C-c\C-n")
-
 (eval-after-load "howm"
   '(progn
      (define-key howm-mode-map (kbd "C-c C-c") 'my-save-and-kill-buffer)
@@ -132,7 +128,6 @@
      (define-key howm-mode-map (kbd "C-c C-m") 'my-howm-add-mark)
      (define-key howm-mode-map (kbd "C-c C-t") 'my-howm-add-todo-switch)
      (define-key howm-mode-map (kbd "C-c C-d") 'my-howm-add-todo)
-     (define-key howm-mode-map (kbd "C-c C-j") 'my-howm-todo-done)
      ))
 
 (require 'calendar)
@@ -191,31 +186,11 @@
   "howm用コマンドのまとめ関数。 C-uした回数で呼び変え"
   (interactive "P")
   (cond
-   ((equal arg '(256)) (howm-menu))     ;;C-u C-u C-u C-u
-   ;; ((equal arg '(64)) (calendar))    ;;C-u C-u C-u
-   ((equal arg '(64)) (my-howm-todo-moccur));;C-u C-u C-u
+   ((equal arg '(256)) (howm-menu))      ;;C-u C-u C-u C-u
+   ((equal arg '(64)) (calendar))        ;;C-u C-u C-u
    ((equal arg '(16))  (howm-list-grep)) ;;C-u -u
-   ((equal arg '(4)) (howm-list-all))   ;;C-u
+   ((equal arg '(4)) (my-howm-clip))     ;;C-u
    (t (howm-create))))
-
-;; ;; 行番号を挿入するように変更 リンク問題があるため一時封印改行などで変更？
-;; (setq howm-template-file-format (concat howm-ref-header " %s [%d]"))
-;; (defun howm-insert-template (title &optional
-;;                                    previous-buffer which-template not-use-file)
-;;   (let* ((beg (point))
-;;          (f (buffer-file-name previous-buffer))
-;;          (af (and f (howm-abbreviate-file-name f))))
-;;     (insert (howm-template-string which-template previous-buffer))
-;;     (let* ((date (format-time-string howm-template-date-format))
-;;            (use-file (not not-use-file))
-;;            (file (cond ((not use-file) "")
-;;                        ((null f) "")
-;;                        ((string= f (buffer-file-name)) "")
-;;                                         (t (format howm-template-file-format af (my-get-buffer-line))))))
-;;       (let ((arg `((title . ,title) (date . ,date) (file . ,file)))
-;;             (end (point-marker)))
-;;         (howm-replace howm-template-rules arg beg end)
-;;         end))))
 
 (global-set-key (kbd "C-q C-,") 'my-howm-command)
 (global-set-key (kbd "C-l C-,") 'howm-menu)
@@ -311,47 +286,56 @@
 (require 'color-moccur)
 (require 'moccur-edit)
 
-(defun my-howm-todo-moccur ()
-  (interactive)
-  (moccur-grep-find
-   "~/.emacs.d/howm"
-   (list "\\[\\([0-9-]+\\)\\]\\+" ".howm")))
+(defvar my-howm-active-todo-regexp (concat "\\[" howm-date-regexp "\\]\\+")
+  "howmのtodoの正規表現")
 
-(defun my-howm-todo-toggle ()
-  ""
+(defvar my-howm-sleeping-todo-regexp (concat "\\[" howm-date-regexp "\\]\\.")
+  "howmのsleeping-todoの正規表現")
+
+(defun my-howm-active-todo-moccur ()
+  (interactive)
+  "howmのactive-todoをリストアップ。"
+  (moccur-grep-find
+   howm-directory
+   (list my-howm-active-todo-regexp ".howm")))
+
+(defun my-howm-currentline-todo-toggle ()
+  "同一行にあるhowmのtodoマークのアクティブ(+)<->スリープ(.)をトグル。"
   (interactive)
   (save-excursion
     (goto-char (line-beginning-position))
-    (when (re-search-forward (concat "\\[" howm-date-regexp "\\]" "\\+") (line-end-position) t)
-      (backward-char 1)
-      (delete-char 1)
+    (when (re-search-forward my-howm-active-todo-regexp (line-end-position) t)
+      (delete-backward-char 1)
       (insert "."))
-    (when (re-search-forward (concat "\\[" howm-date-regexp "\\]" "\\.") (line-end-position) t)
-      (backward-char 1)
-      (delete-char 1)
+    (when (re-search-forward my-howm-sleeping-todo-regexp (line-end-position) t)
+      (delete-backward-char 1)
       (insert "+"))))
 
+(defun my-howm-save-all-buffers ()
+  "すべてのhowmバッファの保存"
+  (interactive)
+  (dolist (buf (buffer-list))
+    (when (eq (file-name-extension (buffer-file-name buf)) "howm")
+      (when (file-writable-p (buffer-file-name buf))
+	(set-buffer buf)
+	(save-buffer)))))
+
 (defun my-howm-moccur-all-save-and-kill-buffer ()
-  ""
+  "編集終了後に全変更の適用してMoccurバッファを閉じる。"
   (interactive)
   (moccur-edit-finish-edit)
   (my-save-all-buffers)
   (kill-buffer "*Moccur*"))
 
-(global-set-key (kbd "C-l C-u C-,") 'my-howm-todo-moccur)
+(global-set-key (kbd "C-l C-u C-,") 'my-howm-active-todo-moccur)
 
-(define-key moccur-mode-map (kbd "C-c C-j") 'my-howm-todo-toggle)
-(define-key moccur-mode-map (kbd "C-c C-e") 'my-howm-moccur-all-save-and-kill-buffer)
-(define-key moccur-mode-map (kbd "C-v") 'my-scroll-up)
-
-(define-key moccur-edit-mode-map (kbd "C-c C-j") 'my-howm-todo-toggle)
+(define-key moccur-edit-mode-map (kbd "C-c C-j") 'my-howm-currentline-todo-toggle)
 (define-key moccur-edit-mode-map (kbd "C-c C-e") 'my-howm-moccur-all-save-and-kill-buffer)
-(define-key moccur-edit-mode-map (kbd "C-v") 'my-scroll-up)
 
 (set-face-foreground 'howm-mode-title-face "pink")
 (set-face-background 'moccur-face "#005400")
 (set-face-foreground 'moccur-face "orange1")
-(set-face-underline 'moccur-face t)
+(set-face-underline-p 'moccur-face t)
 (set-face-foreground 'moccur-edit-done-face "gray60")
 (set-face-background 'moccur-edit-done-face "gray1")
 (set-face-foreground 'moccur-edit-face "orange2")
