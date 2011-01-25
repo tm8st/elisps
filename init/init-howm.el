@@ -338,13 +338,15 @@
 (define-key moccur-edit-mode-map (kbd "C-c C-e") 'my-howm-moccur-all-save-and-kill-buffer)
 
 ;; 色設定
-(set-face-foreground 'howm-mode-title-face "pink")
-(set-face-background 'moccur-face "#005400")
-(set-face-foreground 'moccur-face "orange1")
-(set-face-underline-p 'moccur-face t)
-(set-face-foreground 'moccur-edit-done-face "gray60")
-(set-face-background 'moccur-edit-done-face "gray1")
-(set-face-foreground 'moccur-edit-face "orange2")
-(set-face-background 'moccur-edit-face "gray20")
+(when use-gui-setting
+  (set-face-foreground 'howm-mode-title-face "pink")
+  (set-face-background 'moccur-face "#005400")
+  (set-face-foreground 'moccur-face "orange1")
+  (set-face-underline-p 'moccur-face t)
+  (set-face-foreground 'moccur-edit-done-face "gray60")
+  (set-face-background 'moccur-edit-done-face "gray1")
+  (set-face-foreground 'moccur-edit-face "orange2")
+  (set-face-background 'moccur-edit-face "gray20")
+  )
 
 (provide 'init-howm)

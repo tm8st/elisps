@@ -39,6 +39,7 @@
 
 ;; (global-set-key (kbd "C-l C-z") 'toggle-input-method) SKKへ
 
+
 (global-set-key (kbd "C-z") 'undo)
 (require 'redo)
 (global-set-key (kbd "C-/") 'redo)
@@ -62,6 +63,8 @@
 ;; (global-set-key (kbd "C-x p") '(lambda (arg) (interactive "p") (other-window (- arg))))
 
 (global-set-key (kbd "C-:") 'execute-extended-command)
+;; (global-set-key (kbd "C-,") `my-replace-string)
+(global-set-key (kbd "C-,") '(lambda () (interactive) (insert "_")))
 
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
@@ -287,6 +290,9 @@
 (global-set-key (kbd "C-8 C-d") 'gro-mark-defun*)
 
 ;; (global-set-key (kbd "C-|") 'goto-line)
+;; 一行野郎バージョン
+(global-set-key (kbd "C-l C-l") '(lambda () (interactive) (recenter 3)))
+;; (global-set-key (kbd "C-l C-l") 'what-face-at-point)
 
 ;; エラー箇所へのジャンプ用
 (global-set-key (kbd "C-l C-;") 'compilation-minor-mode)

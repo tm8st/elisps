@@ -344,8 +344,6 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
                     (get-char-property (point) 'face))))
       (if face (message "Face: %s" face) (message "No face at %d" pos))))
 
-  (global-set-key (kbd "C-l C-l") 'what-face-at-point)
-
   (setq whitespace-style
 	'(tabs tab-mark spaces space-mark))
   (setq whitespace-space-regexp "\\(\x3000+\\)")

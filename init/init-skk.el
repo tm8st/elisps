@@ -47,7 +47,7 @@
 (setq skk-show-japanese-menu nil)
 
 ;; 変換時に注釈 (annotation) を表示する
-(setq skk-show-annotation nil)
+(setq skk-show-annotation t)
 
 ;;isearch-mode に入った際に自動的に skk-isearch を起動
 ;; (add-hook 'isearch-mode-hook 'skk-isearch-mode-setup)
@@ -59,7 +59,7 @@
 ;; (set-face-background 'tooltip "black")
 
 ;; tooltipの色設定
-(when skk-show-tooltip
+(when (and skk-show-tooltip use-gui-setting)
   (setq skk-tooltip-parameters
         '((background-color . "black")
 	  (foreground-color . "white")
@@ -74,20 +74,22 @@
 ;; 		       (border-width . 2)))
 ;; (set-face-foreground 'skk-dcomp-multiple-face "white")
 
-(customize-set-value 'skk-use-color-cursor t)
-;; SKK モードがオフであることを示すカーソル色。標準では、カーソルのある該当 フレームにおける標準のカーソル色を使います。
-;; (customize-set-value 'skk-cursor-default-color t)
+(when use-gui-setting
+  (customize-set-value 'skk-use-color-cursor t)
+  ;; SKK モードがオフであることを示すカーソル色。標準では、カーソルのある該当 フレームにおける標準のカーソル色を使います。
+  ;; (customize-set-value 'skk-cursor-default-color t)
 
-;; かなモードであることを示すカーソル色。標準では、背景の明暗により "coral4" または "pink" を用います。
-(customize-set-value 'skk-cursor-hiragana-color "pink")
- 
-;; カナモードであることを示すカーソル色。標準では、背景の明暗により "forestgreen" または "green" を用います。
-(customize-set-value 'skk-cursor-katakana-color "red")
-;; skk-cursor-katakana-color
+  ;; かなモードであることを示すカーソル色。標準では、背景の明暗により "coral4" または "pink" を用います。
+  (customize-set-value 'skk-cursor-hiragana-color "pink")
+  
+  ;; カナモードであることを示すカーソル色。標準では、背景の明暗により "forestgreen" または "green" を用います。
+  (customize-set-value 'skk-cursor-katakana-color "red")
+  ;; skk-cursor-katakana-color
 
-;; アスキーモードであることを示すカーソル色。標準では、背景の明暗により "ivory4" または "gray" を用います。
+  ;; アスキーモードであることを示すカーソル色。標準では、背景の明暗により "ivory4" または "gray" を用います。
 
-(customize-set-value 'skk-cursor-latin-color "ivory")
+  (customize-set-value 'skk-cursor-latin-color "ivory")
+  )
 
 (setq skk-echo nil)
 ;; 変換候補をインラインに表示する

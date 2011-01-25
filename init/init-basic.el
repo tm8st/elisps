@@ -62,20 +62,24 @@
   (file-cache-add-directory-list exec-path)
 
   (when file-cache-path
-    (file-cache-add-directory-list file-cache-path)
-    )
+    (file-cache-add-directory-list file-cache-path))
   (when my-etc-path
-    (file-cache-add-directory-list my-etc-path)
-   )
+    (file-cache-add-directory-list my-etc-path))
   (when my-develop-path
-    (file-cache-add-directory-list my-develop-path)
-    )
-  (setq file-cache-ignore-case t)
+    (file-cache-add-directory-list my-develop-path))
+
+  (customize-set-value 'file-cache-ignore-case t)
 
   ;; mini bufferでfile名補完中のFileCache起動キー
   (define-key minibuffer-local-completion-map
     (kbd "C-q C-i") 'file-cache-minibuffer-complete)
 
+  (setq file-name-shadow-mode t) ;;ファイル名入力時に不用になった部分暗くする
+
+  (require 'saveplace)  ;;以前編集していた位置を開く
+  (setq-default save-place t)
+  (auto-compression-mode t);; 圧縮ファイルを透過的に開く
+  
   ;;----------------------------------------
   ;; elisp-install
   ;;----------------------------------------
@@ -85,38 +89,38 @@
    '(install-elisp-repository-directory (concat my-elisp-directory "/rep/"))
    '(auto-install-update-emacswiki-package-name t))
 
+  (require 'savehist) ;; mini buffer 入力履歴
   (setq savehist-mode 1)
+  
   (setq kill-whole-line t) ;; C-kで行全体を削除
   (setq inhibit-startup-message t) ;;起動画面を表示しない
   (setq enable-recursive-minibuffers t) ;;前のcommandが終了してなくても、新しいcommandを実行可能にする。
   (global-auto-revert-mode t) ;;file が他から変更されたら、自動的に読み込む。
-  (delete-selection-mode 1) ;; マーク選択中の編集コマンドの挙動変更/範囲削除
-  (setq default-indicate-empty-lines t)
+  (delete-selection-mode t) ;; マーク選択中の編集コマンドの挙動変更/範囲削除
+  (customize-set-value 'indicate-empty-lines t) ;; バッファの最後に空行を追加
+  ;; (setq default-indicate-empty-lines t)
   (customize-set-value 'next-line-add-newlines nil) ;; カーソル移動で行を作らない
 
   ;; 改行コード表示をわかりやすく
   (setq eol-mnemonic-dos "(CRLF)")
   (setq eol-mnemonic-mac "(CR)")
   (setq eol-mnemonic-unix "(LF)")
+  (setq eol-mnemonic-undecided "(INVALID)")
 
-  (require 'saveplace)  ;;以前編集していた位置を開く
-  (setq-default save-place t)
-
-  (auto-compression-mode t);; 圧縮ファイルを透過的に開く
-
-  (setq indent-tabs-mode nil) ;; tab を使うか
+  (setq indent-tabs-mode nil) ;; インデントにtab を使うか
   (setq tab-width 2)  ;; tab 幅設定
-  (file-name-shadow-mode t) ;;ファイル名入力時に不用になった部分暗くする
-  (setq redisplay-dont-pause t)  ;; キーリピートにカーソルを追随させる 副作用があるらしい...
-  (random 1000000) ;; Seed the random-number generator
+  (setq redisplay-dont-pause t)  ;; キーリピートにカーソルを追随させる
   (setq undo-outer-limit 10000);; undo の保存限界
-
+  
+  (random 1000000) ;; Seed the random-number generator
+  
   ;;mini buffer での質問に yes/no を入力するのは面倒なのでSPC で yes とする。
   (defalias 'yes-or-no-p 'y-or-n-p)
 
   (setq message-log-max 100000) ;; messageバッファのログ数
   (setq use-dialog-box nil) ;; ダイアログはつかわない
-  (setq echo-keystrokes 0.15) ;;
+  ;; (setq echo-keystrokes 0.15) ;;
+  (setq echo-keystrokes 0.0) ;;
 
   ;;
   (defadvice save-buffers-kill-terminal (before my-save-buffers-kill-terminal activate)
@@ -196,20 +200,6 @@
   (setq ring-bell-function '(lambda ()))
   ;;beep音を消す
   (setq visible-bell t)
-
-  ;; This is normal if you executed a command that made a huge change
-  ;; to the buffer.  In that case, to prevent similar problems in the
-  ;; future, set `undo-outer-limit' to a value that is large enough to
-  ;; cover the maximum size of normal changes you expect a single
-  ;; command to make, but not so large that it might exceed the
-  ;; maximum memory allotted to Emacs.
-
-  ;; If you did not execute any such command, the situation is
-  ;; probably due to a bug and you should report it.
-
-  ;; You can disable the popping up of this buffer by adding the entry
-  ;; (undo discard-info) to the user option `warning-suppress-types',
-  ;; which is defined in the `warnings' library.
 
   (setq undo-outer-limit 1000000)
 

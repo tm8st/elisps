@@ -579,7 +579,7 @@ default name is filename:current line string."
   (interactive)
   (if mark-active
 	  (eval-region (mark) (point))
-	(eval-current-buffer)))
+	(eval-buffer (current-buffer))))
 
 (when (my-is-windows)
   (defun my-open-file-os (&optional filename)

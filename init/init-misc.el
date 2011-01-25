@@ -12,41 +12,6 @@
 (require 'doc-view)
 
 ;;;-------------------------------
-;;; vc keybind
-;;;-------------------------------
-;; C-x v v vc-next-action          次の動作 (commit)
-;; C-x v d vc-directory            登録されたファイルを表示
-;; C-x v = vc-diff                 diff表示
-;; C-x v u vc-revert-buffer        checkinしたものに戻す
-;; C-x v ~ vc-version-other-window 所定のrevを別のwindowへ
-;; C-x v l vc-print-log            log表示
-;; C-x v i vc-register             add
-;; C-x v h vc-insert-headers       version headerを挿入
-;; C-x v r vc-retrieve-snapshot    tag指定checkout
-;; C-x v s vc-create-snapshot      tagをつける
-;; C-x v c vc-cancel-version       保存されたrevを捨てる。
-;; C-x v a vc-update-change-log    GNUスタイルでchangeLogを更新
-
-;;;-------------------------------
-;;; hiwin
-;;;-------------------------------
-;; (require 'hiwin)
-;; (setq hiwin-color "gray30")
-;; (setq hiwin-color "darkslategreen")
-;; (hiwin-mode t) ; 起動時から有効にしたい場合
-;; (hiwin-mode) ; 起動時から有効にしたい場合
-
-;; (require 'detect-block)
-;; (detect-block t)
-
-;; (auto-install-from-url "http://github.com/fukamachi/dont-type-twice-el/raw/master/dont-type-twice.el")
-;; (require 'dont-type-twice)
-;; (global-dont-type-twice t)
-
-;; (auto-install-from-url "http://github.com/tomoya/hiwin-mode/raw/master/hiwin.el")
-;; (install-elisp "http://github.com/tomoya/hiwin-mode/raw/master/hiwin.el")
-
-;;;-------------------------------
 ;;; text-translator
 ;;;-------------------------------
 (require 'text-translator-vars)
@@ -111,12 +76,9 @@
 (global-set-key (kbd "(") (smartchr '("(`!!')" "(")))
 ;; (global-set-key (kbd ")") (smartchr '(")" "(`!!')" )))
 (global-set-key (kbd "+") (smartchr '("+" "++" "+++")))
+;; (global-set-key (kbd "-") (smartchr '("-" "--" "---")))
 (global-set-key (kbd "[") (smartchr '("[`!!']" "[" "]")))
 ;; (global-set-key (kbd "]") (smartchr '("]" "[`!!']" "[]")))
-
-;; (global-set-key (kbd "-") (smartchr '("-" "--" "---")))
-;; (global-set-key (kbd "C-,") `my-replace-string)
-(global-set-key (kbd "C-,") '(lambda () (interactive) (insert "_")))
 
 ;;;-------------------------------
 ;;; sequential-command-config
@@ -166,17 +128,7 @@
 ;;; windowナンバリング
 ;;;-------------------------------
 (require 'window-numbering)
-(window-numbering-mode 1)
-;; (global-set-key (kbd "C-l C-b C-0") 'select-window-0)
-;; (global-set-key (kbd "C-l C-b C-1") 'select-window-1)
-;; (global-set-key (kbd "C-l C-b C-2") 'select-window-2)
-;; (global-set-key (kbd "C-l C-b C-3") 'select-window-3)
-;; (global-set-key (kbd "C-l C-b C-4") 'select-window-4)
-;; (global-set-key (kbd "C-l C-b C-5") 'select-window-5)
-;; (global-set-key (kbd "C-l C-b C-6") 'select-window-6)
-;; (global-set-key (kbd "C-l C-b C-7") 'select-window-7)
-;; (global-set-key (kbd "C-l C-b C-8") 'select-window-8)
-;; (global-set-key (kbd "C-l C-b C-9") 'select-window-9)
+(window-numbering-mode t) ;; M-numberで移動
 
 ;;;-------------------------------
 ;;; region selectinon
@@ -188,21 +140,6 @@
 (global-set-key (kbd "C-l C-j C-e") 'mark-sexp*)
 (global-set-key (kbd "C-l C-j C-s") 'mark-string)
 (global-set-key (kbd "C-l C-j C-f") 'mark-defun*)
-
-;;;-------------------------------
-;;; 日本語入力
-;;;-------------------------------
-;; (require 'quail)
-;; (define-key quail-translation-keymap (kbd "C-h") 'quail-conversion-backward-char)
-;; (define-key quail-conversion-keymap (kbd "C-h") 'quail-conversion-backward-char)
-
-;; (require 'sticky)
-;; (use-sticky-key ";" sticky-alist:ja)
-;; (use-sticky-key ";" sticky-alist:ja)
-
-;; (require 'follow)
-;; (global-set-key (kbd "C-l C-l") 'follow-delete-other-windows-and-split)
-;; (global-set-key (kbd "C-l C-l") 'follow-delete-other-windows-and-split)
 
 ;;;-------------------------------
 ;; keyboard-macro
@@ -246,6 +183,18 @@
 (customize-set-variable 'graphviz-dot-indent-width 2)
 (add-hook 'graphviz-dot-mode-hook (setq tab-width 2))
 
+(defun my-graphbiz-execute ()
+  (interactive)
+	(compile (concat "dot -Tpng " buffer-file-name " > " (my-get-file-name-non-extension buffer-file-name) ".png"))
+	;; (graphviz-dot-preview)
+  )
+
+(let ((map graphviz-dot-mode-map))
+	(define-key map (kbd "C-c C-p")    'graphviz-dot-preview)
+	(define-key map (kbd "C-c C-c")    'compile)
+	(define-key map (kbd "C-c C-e")    'my-graphbiz-execute)
+	(define-key map (kbd "C-c C-v")    'graphviz-dot-view)
+	(define-key map (kbd "C-m")  	     'my-backward-word)
 ;; (define-key map "\r"       'electric-graphviz-dot-terminate-line)
 ;; (define-key map "{"        'electric-graphviz-dot-open-brace)
 ;; (define-key map "}"        'electric-graphviz-dot-close-brace)
@@ -257,88 +206,7 @@
 ;; (define-key map "\C-cv"    'graphviz-dot-view)
 ;; (define-key map "\C-c\C-c" 'comment-region)
 ;; (define-key map "\C-c\C-u" 'graphviz-dot-uncomment-region)
-
-(let ((map graphviz-dot-mode-map))
-	(define-key map (kbd "C-c C-p")    'graphviz-dot-preview)
-	(define-key map (kbd "C-c C-c")    'compile)
-	(define-key map (kbd "C-c C-e")    'my-graphbiz-execute)
-	(define-key map (kbd "C-c C-v")    'graphviz-dot-view)
-	(define-key map (kbd "C-m")  	   'my-backward-word)
 	)
-
-(defun my-graphbiz-execute ()
-  (interactive)
-	(compile (concat "dot -Tpng " buffer-file-name " > " (my-get-file-name-non-extension buffer-file-name) ".png"))
-	;; (graphviz-dot-preview)
-  )
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 二分移動
-(defvar binary-move-fence-beginning nil)
-(defvar binary-move-fence-end nil)
-(defvar binary-move-overlay nil)
-(defvar binary-move-face-color "gray20")
-
-(defun binary-move-set-overlay ()
-  (if binary-move-overlay
-      (move-overlay binary-move-overlay 
-                    binary-move-fence-beginning binary-move-fence-end
-                    (current-buffer))
-    (progn
-      (setq binary-move-overlay
-            (make-overlay binary-move-fence-beginning 
-                          binary-move-fence-end))
-      (make-face 'binary-move-face)
-      (set-face-background 'binary-move-face binary-move-face-color)
-    )
-    (overlay-put binary-move-overlay 'face 'binary-move-face))
-  )
-
-(defun binary-move-forward (arg)
-  (interactive "p")
-  (while (save-excursion (beginning-of-line) (looking-at "[ \t]*$"))
-    (next-line))
-  (dotimes (i arg)
-    (if (or
-         (eq last-command 'binary-move-forward)
-         (eq last-command 'binary-move-backward))
-        (setq binary-move-fence-beginning (point))
-      (progn
-        (setq binary-move-fence-beginning (point))
-        (setq binary-move-fence-end (line-end-position))))
-    (binary-move-set-overlay)
-    (goto-char (/ (+ binary-move-fence-beginning 
-                     binary-move-fence-end) 2))
-    (if (= (1- arg) i) (sit-for 1.0))
-    (move-overlay binary-move-overlay (point) (point))
-    ))
-
-(defun binary-move-backward (arg)
-  (interactive "p")
-  (while (save-excursion (beginning-of-line) (looking-at "[ \t]*$"))
-    (previous-line)
-    (end-of-line))
-  (dotimes (i arg)
-    (if (or
-         (eq last-command 'binary-move-forward)
-         (eq last-command 'binary-move-backward))
-        (setq binary-move-fence-end (point))
-      (progn
-        (setq binary-move-fence-beginning (line-beginning-position))
-        (setq binary-move-fence-end (point))))
-    (binary-move-set-overlay)
-    (goto-char (/ (+ binary-move-fence-beginning 
-                     binary-move-fence-end) 2))
-    (if (= (1- arg) i) (sit-for 1.0))
-    (move-overlay binary-move-overlay (point) (point))
-    ))
-
-(global-set-key (kbd "C-S->")  'binary-move-forward)
-(global-set-key (kbd "C-S-<")  'binary-move-backward)
-
-;; (require 'inertial-scroll)
-;; (inertias-global-minor-mode 1)
-;; (inertias-global-minor-mode 0)
 
 (defun my-bs-cycle (arg)
   "バッファ進む、戻るの C-uによる選択用"
@@ -347,21 +215,55 @@
    ((equal arg '(4)) (bs-cycle-next))
    (t (bs-cycle-previous))))
 
-;; (global-set-key (kbd "C-^") 'bs-cycle-previous)
-;; (global-set-key (kbd "C-¥") 'bs-cycle-next)
-(global-set-key (kbd "C--") 'my-bs-cycle)
-
 ;; (global-set-key [?\C-,] 'bs-cycle-next)
 ;; (global-set-key [?\C-.] 'bs-cycle-previous)
-;; (global-set-key "\C-x\C-b" 'bs-show)
+;; (global-set-key "\C-q\C-b" 'bs-show)
+(global-set-key (kbd "C--") 'my-bs-cycle)
 
 (require 'zlc)
 (setq zlc-select-completion-immediately t)
 
-;; (require 'auto-highlight-symbol)
-;; (global-auto-highlight-symbol-mode t)
+;; auto-highlight-symbol
+(require 'auto-highlight-symbol)
+(global-auto-highlight-symbol-mode t)
+(set-face-background ahs-face "black")
+(customize-set-value 'ahs-idle-interval 0.5)
 
 (require 'popwin)
 (setq display-buffer-function 'popwin:display-buffer)
+
+;;;-------------------------------
+;;; vc keybind
+;;;-------------------------------
+;; C-x v v vc-next-action          次の動作 (commit)
+;; C-x v d vc-directory            登録されたファイルを表示
+;; C-x v = vc-diff                 diff表示
+;; C-x v u vc-revert-buffer        checkinしたものに戻す
+;; C-x v ~ vc-version-other-window 所定のrevを別のwindowへ
+;; C-x v l vc-print-log            log表示
+;; C-x v i vc-register             add
+;; C-x v h vc-insert-headers       version headerを挿入
+;; C-x v r vc-retrieve-snapshot    tag指定checkout
+;; C-x v s vc-create-snapshot      tagをつける
+;; C-x v c vc-cancel-version       保存されたrevを捨てる。
+;; C-x v a vc-update-change-log    GNUスタイルでchangeLogを更新
+
+;;;-------------------------------
+;;; hiwin
+;;;-------------------------------
+;; (require 'hiwin)
+;; (setq hiwin-color "gray30")
+;; (setq hiwin-color "darkslategreen")
+;; (hiwin-mode t) ; 起動時から有効にしたい場合
+
+;; (require 'detect-block)
+;; (detect-block t)
+
+;; (auto-install-from-url "http://github.com/fukamachi/dont-type-twice-el/raw/master/dont-type-twice.el")
+;; (require 'dont-type-twice)
+;; (global-dont-type-twice t)
+
+;; (auto-install-from-url "http://github.com/tomoya/hiwin-mode/raw/master/hiwin.el")
+;; (install-elisp "http://github.com/tomoya/hiwin-mode/raw/master/hiwin.el")
 
 (provide 'init-misc)
