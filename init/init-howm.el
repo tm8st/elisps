@@ -36,9 +36,7 @@
  'howm-mode-hook
  (lambda ()
    (easy-imenu-index-generator-set-for-current-buffer easy-imenu-index-generator-howm)
-   (define-key howm-mode-map (kbd "C-q C-i")
-     `(lambda () (interactive) (delete-char 1) (insert "."))
-     )))
+     ))
 
 (global-set-key (kbd "C-l C-i") 'indent-region) ; 選択範囲をインデント
 ;; (global-set-key "¥C-m" 'newline-and-indent) ; リターンで改行とインデント
@@ -280,13 +278,16 @@
 (global-set-key (kbd "C-l C-u C-m") 'my-howm-todo-grep-find-morning)
 (global-set-key (kbd "C-l C-u C-n") 'my-howm-todo-grep-find-night)
 
+(define-key howm-mode-map (kbd "C-c C-j") 'my-howm-currentline-todo-toggle)
+
 ;;;-------------------------------
 ;;; howmのTODOリストをmoccur-editで編集
 ;;;-------------------------------
+(require 'howm-mode)
 (require 'color-moccur)
 (require 'moccur-edit)
 
-(defvar my-howm-active-todo-regexp (concat "\\[" howm-date-regexp "\\]\\+")
+(defvar my-howm-active-todo-regexp (concat "\\[" howm-date-regexp "\\]\\([-~!@\+]\\)")
   "howmのtodoの正規表現")
 
 (defvar my-howm-sleeping-todo-regexp (concat "\\[" howm-date-regexp "\\]\\.")
@@ -295,12 +296,13 @@
 (defun my-howm-active-todo-moccur ()
   (interactive)
   "howmのactive-todoをリストアップ。"
-  (moccur-grep-find
-   howm-directory
-   (list my-howm-active-todo-regexp ".howm")))
+  (let ((moccur-display-result-buffer-filename t))
+    (moccur-grep-find
+     howm-directory
+     (list my-howm-active-todo-regexp ".howm"))))
 
 (defun my-howm-currentline-todo-toggle ()
-  "同一行にあるhowmのtodoマークのアクティブ(+)<->スリープ(.)をトグル。"
+  "同一行にあるhowmのtodoマークのアクティブ(+)、スリープ(.)をトグル。"
   (interactive)
   (save-excursion
     (goto-char (line-beginning-position))
@@ -314,9 +316,12 @@
 (defun my-howm-save-all-buffers ()
   "すべてのhowmバッファの保存"
   (interactive)
-  (dolist (buf (buffer-list))
-    (when (eq (file-name-extension (buffer-file-name buf)) "howm")
-      (when (file-writable-p (buffer-file-name buf))
+  (save-excursion
+    (dolist (buf (buffer-list))
+      (when (and
+	     (buffer-file-name buf)
+	     (string-match "\\.howm" (buffer-file-name buf))
+	     (file-writable-p (buffer-file-name buf)))
 	(set-buffer buf)
 	(save-buffer)))))
 
@@ -324,7 +329,7 @@
   "編集終了後に全変更の適用してMoccurバッファを閉じる。"
   (interactive)
   (moccur-edit-finish-edit)
-  (my-save-all-buffers)
+  (my-howm-save-all-buffers)
   (kill-buffer "*Moccur*"))
 
 (global-set-key (kbd "C-l C-u C-,") 'my-howm-active-todo-moccur)
@@ -332,6 +337,7 @@
 (define-key moccur-edit-mode-map (kbd "C-c C-j") 'my-howm-currentline-todo-toggle)
 (define-key moccur-edit-mode-map (kbd "C-c C-e") 'my-howm-moccur-all-save-and-kill-buffer)
 
+;; 色設定
 (set-face-foreground 'howm-mode-title-face "pink")
 (set-face-background 'moccur-face "#005400")
 (set-face-foreground 'moccur-face "orange1")

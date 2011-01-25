@@ -361,4 +361,7 @@
 ;; (require 'auto-highlight-symbol)
 ;; (global-auto-highlight-symbol-mode t)
 
+(require 'popwin)
+(setq display-buffer-function 'popwin:display-buffer)
+
 (provide 'init-misc)

@@ -369,6 +369,10 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
    '(highlight ((t (:background "black"))))
    '(howm-reminder-today-face ((t (:background "black" :foreground "Pink"))))
    '(howm-reminder-tomorrow-face ((t (:background "black" :foreground "gray70")))))
+
+  (set-face-foreground 'font-lock-regexp-grouping-backslash "#999")
+  (set-face-foreground 'font-lock-regexp-grouping-construct "#999")
+
   (my-theme-set)
   )
 

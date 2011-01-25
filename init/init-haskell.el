@@ -73,4 +73,39 @@
 ;; (define-key haskell-mode-map (kbd "C-m") `my-backward-word)
 ;; (define-key haskell-indentation-mode-map (kbd "C-") `haskell-newline-and-indent)
 
+;; (setq haskell-ghci-program-args "+RTS" "-M2G" "-K100M" "-RTS")
+
+;; (defun my/haskell-mode-simple ()
+;;   "Hook for haskell-mode."
+;;   (progn
+;;     (setq tab-width 4 indent-tabs-mode nil)
+;;     (local-set-key "C-ch" 'haskell-hoogle)))
+; should better use ghc-mod at Hackage
+
+; indeed
+(defun my/haskell-mode ()
+  (progn
+    (ac-haskell-mode-setup) ; Emacs Wiki "auto-complete"
+    (auto-complete-mode t)
+    (require 'hs-lint) ; Hackage hlint
+    (require 'hs-scan) ; google it 'Haskell style scanner'
+    (require 'scion)   ; Emacs wiki "scion"
+    (setq scion-completing-read-function 'ido-completing-read)
+    (scion-mode t)
+    (scion-flycheck-on-save nil) ; conflict with auto-buffer-save
+    (if (and (not (nuoll buffer-filename))
+             (file-exists-p buffer-fullname))
+       (progn
+          (flyspell-prog-mode) ; use flyspell
+          ;; no (flymake-mode t) in the default haskell-mode
+          ;; but use chunk
+          ;; (defun haskell-flymake-init () blah)
+       ))
+    (setq tab-width 4 indent-tabs-mode nil)
+    (local-set-key "\C-ch" 'haskell-hoogle)
+    (local-set-key "\C-cl" 'hs-lint)
+    (local-set-key "\C-c\C-x." 'scion-goto-definition)
+  ))
+(add-hook 'haskell-mode-hook 'my/haskell-mode)
+
 (provide 'init-haskell)

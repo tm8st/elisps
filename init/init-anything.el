@@ -423,4 +423,13 @@
 ;;               (define-key view-mode-map "n" nil)
 ;;               (define-key view-mode-map "p" nil))))
 
+;; (require 'anything-gist)
+;; (defun my-anything-gist ()
+;;   (interactive)
+;;   (anything anything-c-source-gist)
+;;   )
+
+;; ;; (global-set-key (kbd "C-q C-a C-g") 'anything-for-gist)
+;; (global-set-key (kbd "C-q C-a C-g") 'my-anything-gist)
+
 (provide 'init-anything)
