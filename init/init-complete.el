@@ -113,9 +113,9 @@
 ;;;-------------------------------
 ;;;
 ;;;-------------------------------
-(require 'complete)
-(define-key minibuffer-local-completion-map "C-j" 'PC-complete-and-exit)
-(define-key minibuffer-local-completion-map "C-m" 'backward-word)
-(define-key minibuffer-local-completion-map "RET" 'backward-word)
+;; (require 'complete)
+;; (define-key minibuffer-local-completion-map "C-j" 'PC-complete-and-exit)
+;; (define-key minibuffer-local-completion-map "C-m" 'backward-word)
+;; (define-key minibuffer-local-completion-map "RET" 'backward-word)
 
 (provide 'init-complete)

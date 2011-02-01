@@ -58,13 +58,18 @@
   (global-auto-complete-mode t)
   (auto-complete-mode t)
   (setq ac-sources '(ac-source-words-in-same-mode-buffers ac-source-imenu))
-  ;; (easy-imenu-index-generator-set-for-current-buffer easy-imenu-index-generator-haskell)
+  (easy-imenu-index-generator-set-for-current-buffer easy-imenu-index-generator-haskell)
   )
 
 (add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
 
 (define-key haskell-mode-map (kbd "C-m") 'backward-word)
 (define-key haskell-mode-map (kbd "C-c C-h") 'haskell-hoogle)
+(define-key haskell-mode-map (kbd "C-c C-l") '(lambda () (interactive) (insert-string "<- ")))
+(define-key haskell-mode-map (kbd "C-c C-r") '(lambda () (interactive) (insert-string "-> ")))
+(define-key haskell-mode-map (kbd "C-c C-c") 'inferior-haskell-load-file)
+(define-key haskell-mode-map (kbd "C-c C-e") 'inferior-haskell-load-and-run)
+
 (define-key haskell-indentation-mode-map (kbd "C-j") 'haskell-newline-and-indent)
 (define-key haskell-indentation-mode-map (kbd "C-m") 'backward-word)
 (define-key inferior-haskell-mode-map (kbd "C-m") 'backward-word)

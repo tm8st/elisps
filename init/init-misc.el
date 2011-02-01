@@ -76,6 +76,7 @@
 (global-set-key (kbd "(") (smartchr '("(`!!')" "(")))
 ;; (global-set-key (kbd ")") (smartchr '(")" "(`!!')" )))
 (global-set-key (kbd "+") (smartchr '("+" "++" "+++")))
+;; (global-set-key (kbd "-") (smartchr '("-" "->" "<->")))
 ;; (global-set-key (kbd "-") (smartchr '("-" "--" "---")))
 (global-set-key (kbd "[") (smartchr '("[`!!']" "[" "]")))
 ;; (global-set-key (kbd "]") (smartchr '("]" "[`!!']" "[]")))
@@ -226,11 +227,48 @@
 ;; auto-highlight-symbol
 (require 'auto-highlight-symbol)
 (global-auto-highlight-symbol-mode t)
-(set-face-background ahs-face "black")
+(set-face-background ahs-face "gray30")
+(set-face-foreground ahs-face "pink")
 (customize-set-value 'ahs-idle-interval 0.5)
+(add-to-list 'ahs-modes 'haskell-mode)
 
 (require 'popwin)
 (setq display-buffer-function 'popwin:display-buffer)
+
+(require 'frame-arrange)
+(when (my-is-mac)
+	(frange:regist-frame-position-parameter
+	 'my-frame-arrange-with-twitter-client
+	 '((top + -0) (left + -1380) (height . 720) (width . 123)))
+
+	(frange:regist-frame-position-parameter
+	 'my-frame-arrange-full-screen
+	 '((top + -0) (left + -1680) (height . 1080) (width . 1920)))
+	)
+
+(when (my-is-windows)
+	(frange:regist-frame-position-parameter
+	 'my-frame-arrange-with-twitter-client
+	 '((top + -0) (left + 0) (height . 720) (width . 114)))
+
+	(frange:regist-frame-position-parameter
+	 'my-frame-arrange-full-screen
+	 '((top + -0) (left + -1680) (height . 1080) (width . 1920)))
+	)
+
+(define-key global-map (kbd "C-l C-o C-m")
+  #'(lambda ()
+      (interactive)
+      (frange:restore-frame-position-parameter
+       (selected-frame)
+       'my-frame-arrange-with-twitter-client)))
+
+(define-key global-map (kbd "C-l C-o C-f")
+  #'(lambda ()
+      (interactive)
+      (frange:restore-frame-position-parameter
+       (selected-frame)
+       'my-frame-arrange-full-screen)))
 
 ;;;-------------------------------
 ;;; vc keybind

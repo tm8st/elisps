@@ -50,7 +50,7 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
     ;; faces
     (dolist
         (element
-         '((default ((t ( :background "#cfcca9" :foreground "gray75"))))
+	 '((default ((t ( :background "#005400" :foreground "gray75"))))
            (button ((t (:bold t))))
            (cursor ((t (:background "Orange"))))
            (highlight ((t (:background "Gray30"))))
