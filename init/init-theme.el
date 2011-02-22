@@ -12,14 +12,6 @@
 (eval-when-compile (require 'cl))
 
 (when use-gui-setting
-
-  ;; (when (my-is-mac)
-  ;;   (set-default-font "Inconsolata-11")
-  ;;   (set-face-font 'variable-pitch "Inconsolata-11")
-  ;;   (set-fontset-font (frame-parameter nil 'font)
-  ;;                  'japanese-jisx0208
-  ;;                  '("Takaoゴシック" . "unicode-bmp")))
-
   (defvar my-theme-foreground-colors
     (let ((candidates)
           ;; (red-limit #xe000)
@@ -112,28 +104,17 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
   (defvar my-font-size-base 100)
   (cond
    ((my-is-windows) (setq my-font-size-base 135))
-   ;; ((my-is-mac)      (setq my-font-size-base 300))
-   ((my-is-mac) (setq my-font-size-base 180)))
+   ((my-is-mac) (setq my-font-size-base 190)))
 
   (when (and use-font-setting (my-is-windows)
              (set-face-attribute 'default nil
                                  :family "VL ゴシック"
                                  :height my-font-size-base)))
-
+    
   (when (and use-font-setting (my-is-mac)
              (set-face-attribute 'default nil
-                                 ;; :family "VL ゴシック"
+                                 ;; :family "Hiragino Kaku Gothic ProN"
                                  :height my-font-size-base)))
-
-  ;; (set-face-attribute 'default nil
-  ;;                    :family "VL ゴシック"
-  ;;                    :height my-font-size-base)
-
-  ;; (setq face-font-rescale-alist
-  ;;      '((".*profont-medium.*" . (* my-font-size-base 1.5))
-  ;;        (".*profont-bold.*" . (* my-font-size-base 1.8))
-  ;;        ("-cdac$" . (* my-font-size-base 1.8))))
-
 
   ;;-------------------------------
   ;; frame setting
@@ -326,9 +307,9 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
   (customize-set-variable 'yalinum-eager nil)
     
   (when (my-is-mac)
-    (customize-set-variable 'yalinum-width-base 1)
-    (customize-set-variable 'yalinum-width-scale 0.85)
-    (customize-set-variable 'yalinum-line-number-display-format "%0$numd ")
+    (customize-set-variable 'yalinum-width-base 0)
+    (customize-set-variable 'yalinum-width-scale 1.0)
+    (customize-set-variable 'yalinum-line-number-display-format " %0$numd")
     )
   (when (my-is-windows)
     (customize-set-variable 'yalinum-width-base 0)

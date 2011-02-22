@@ -235,6 +235,9 @@
 (require 'popwin)
 (setq display-buffer-function 'popwin:display-buffer)
 
+;;;-------------------------------
+;;; frame-arrange
+;;;-------------------------------
 (require 'frame-arrange)
 (when (my-is-mac)
 	(frange:regist-frame-position-parameter
@@ -244,6 +247,14 @@
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-full-screen
 	 '((top + -0) (left + -1680) (height . 1080) (width . 1920)))
+
+	(frange:regist-frame-position-parameter
+	 'my-frame-arrange-default
+	 '((top + 0) (left + 0) (height . 1080) (width . 1920)))
+
+	(frange:regist-frame-position-parameter
+	 'my-frame-arrange-with-twitter-client-main
+	 '((top + 0) (left + 0) (height . 1080) (width . 35)))
 	)
 
 (when (my-is-windows)
@@ -254,6 +265,14 @@
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-full-screen
 	 '((top + -0) (left + -1680) (height . 1080) (width . 1920)))
+
+	(frange:regist-frame-position-parameter
+	 'my-frame-arrange-default
+	 '((top + 0) (left + 0) (height . 1080) (width . 1920)))
+
+	(frange:regist-frame-position-parameter
+	 'my-frame-arrange-with-twitter-client-main
+	 '((top + 0) (left + 0) (height . 1080) (width . 123)))
 	)
 
 (define-key global-map (kbd "C-l C-o C-m")
@@ -269,6 +288,39 @@
       (frange:restore-frame-position-parameter
        (selected-frame)
        'my-frame-arrange-full-screen)))
+
+(define-key global-map (kbd "C-l C-o C-d")
+  #'(lambda ()
+      (interactive)
+      (frange:restore-frame-position-parameter
+       (selected-frame)
+       'my-frame-arrange-default)))
+
+(define-key global-map (kbd "C-l C-o C-s")
+  #'(lambda ()
+      (interactive)
+      (frange:restore-frame-position-parameter
+       (selected-frame)
+       'my-frame-arrange-with-twitter-client-main)))
+
+
+;;;-------------------------------
+;;; Rakefile
+;;;-------------------------------
+(add-to-list 'auto-mode-alist '("\\Rakefile$\\'" . ruby-mode))
+(define-key global-map (kbd "C-l C-o C-c")
+  #'(lambda ()
+      (interactive)
+      (start-process-shell-command "Rakefile build" "*Rakefile Build*" "rake -t" )))
+(define-key global-map (kbd "C-l C-o C-t")
+  #'(lambda ()
+      (interactive)
+      (start-process-shell-command "Rakefile test" "*Rakefile Test*" "rake -t test" )))
+
+  ;; (start-process-shell-command
+  ;;  "gtags-update"
+  ;;  "*my-gtags-update*"
+  ;;  (concat "cd " (gtags-get-rootpath) " && gtags -v"))
 
 ;;;-------------------------------
 ;;; vc keybind

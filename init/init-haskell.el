@@ -106,11 +106,16 @@
           ;; but use chunk
           ;; (defun haskell-flymake-init () blah)
        ))
-    (setq tab-width 4 indent-tabs-mode nil)
+    (setq tab-width 2 indent-tabs-mode nil)
     (local-set-key "\C-ch" 'haskell-hoogle)
     (local-set-key "\C-cl" 'hs-lint)
     (local-set-key "\C-c\C-x." 'scion-goto-definition)
   ))
+(defun my/haskell-cabal-mode ()
+  (progn
+    (setq tab-width 2 indent-tabs-mode nil)
+  ))
 (add-hook 'haskell-mode-hook 'my/haskell-mode)
+(add-hook 'haskell-cabal-mode-hook 'my/haskell-cabal-mode)
 
 (provide 'init-haskell)

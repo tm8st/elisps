@@ -336,6 +336,9 @@
 
 (define-key moccur-edit-mode-map (kbd "C-c C-j") 'my-howm-currentline-todo-toggle)
 (define-key moccur-edit-mode-map (kbd "C-c C-e") 'my-howm-moccur-all-save-and-kill-buffer)
+(define-key moccur-edit-mode-map (kbd "C-c C-m") 'moccur-grep-goto)
+(define-key moccur-edit-mode-map (kbd "C-c C-n") 'moccur-next)
+(define-key moccur-edit-mode-map (kbd "C-c C-p") 'moccur-prev)
 
 ;; 色設定
 (when use-gui-setting
