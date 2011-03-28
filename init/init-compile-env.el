@@ -27,9 +27,9 @@
 ;;;----------------------------------------
 (defvar my-initialized nil)
 
-(defvar toggle-debug-on-signal t)
-(defvar debug-on-error t)
-(defvar debug-on-quit t)
+(setq toggle-debug-on-signal t)
+(setq debug-on-error t)
+(setq debug-on-quit t)
 
 (defvar use-customize t)
 (defvar use-gui-setting (and t use-customize))

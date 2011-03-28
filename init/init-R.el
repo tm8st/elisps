@@ -25,12 +25,12 @@
 
 (setq anything-c-source-R-help
       '((name . "R objects / help")
-	(init . (lambda ()
-		  ;; this grabs the process name associated with the buffer
-		  (setq anything-c-ess-local-process-name ess-local-process-name)))
-	(candidates . (lambda ()
-			(condition-case nil
-			    (ess-get-object-list anything-c-ess-local-process-name)
+				(init . (lambda ()
+        ;; this grabs the process name associated with the buffer
+			  (setq anything-c-ess-local-process-name ess-local-process-name)))
+				(candidates . (lambda ()
+												(condition-case nil
+														(ess-get-object-list anything-c-ess-local-process-name)
 			  (error nil))))
 	(action
 	 ("help" . ess-display-help-on-object)

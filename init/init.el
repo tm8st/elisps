@@ -130,8 +130,9 @@
     "init-elisp.el"
     "init-c-mode.el"
     "init-ruby.el"
-    "init-lua.el"
-    "init-go.el"
+
+    ;; "init-lua.el"
+    ;; "init-go.el"
 
     "init-complete.el"
     "init-yasnippet.el"
@@ -149,7 +150,7 @@
      ;; "init-test.el"
      ))
 
-  ;; 環境別の設定ファイル
+  ;; 環境によってOn/Offする設定ファイル
   (when my-use-shecme-mode
     (add-to-list 'init-load-elisp-list "init-scheme.el"))
   (when my-use-scala-mode
@@ -162,8 +163,7 @@
     (add-to-list 'init-load-elisp-list "init-twitter.el"))
 
   (defun my-init-load-elisp (file) ""
-    (load file t nil)
-    )
+    (load file t nil))
 
   (mapc 'my-init-load-elisp init-load-elisp-list)
   )

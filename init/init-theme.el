@@ -42,7 +42,7 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
     ;; faces
     (dolist
         (element
-	 '((default ((t ( :background "#005400" :foreground "gray75"))))
+	 '((default ((t ( :background "#007100" :foreground "gray75"))))
            (button ((t (:bold t))))
            (cursor ((t (:background "Orange"))))
            (highlight ((t (:background "Gray30"))))
@@ -104,15 +104,24 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
   (defvar my-font-size-base 100)
   (cond
    ((my-is-windows) (setq my-font-size-base 135))
-   ((my-is-mac) (setq my-font-size-base 190)))
+   ((my-is-mac) (setq my-font-size-base 235)))
 
   (when (and use-font-setting (my-is-windows)
              (set-face-attribute 'default nil
-                                 :family "VL ゴシック"
+																 :family "VL ゴシック"
                                  :height my-font-size-base)))
     
   (when (and use-font-setting (my-is-mac)
              (set-face-attribute 'default nil
+																 :family "Inconsolata"
+																 ;; :family "Osaka"
+																 ;; :family "MigMix 1M"
+																 ;; :family "AppleGothic"
+																 ;; :family "Helvetica Neue"
+																 ;; :family "Helvetica"
+																 ;; :family "Hiragino Kaku Gothic Std"
+																 ;; :family "VL PGothic"
+																 ;; :family "VL ゴシック"
                                  ;; :family "Hiragino Kaku Gothic ProN"
                                  :height my-font-size-base)))
 
@@ -122,7 +131,7 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
   ;; default frame setting
   (defvar my-frame-setting-list
     (list
-     '(background-color . "#005400") ;; 背景色
+     '(background-color . "#007100") ;; 背景色
      '(foreground-color . "gray75") ;; 文字色
      '(cursor-color . "orange") ;; カーソル色
      '(cursor-type . bar) ;; カーソル形状
@@ -296,8 +305,8 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
   (set-face-foreground 'yalinum-face "gray70")
   (set-face-foreground 'yalinum-bar-face "Pink")
 
-  (set-face-background 'yalinum-face "#005400")
-  (set-face-background 'yalinum-bar-face "#005400")
+  (set-face-background 'yalinum-face "#006300")
+  (set-face-background 'yalinum-bar-face "#006300")
 
   (require 'jaunte)
   (set-face-foreground 'jaunte-hint-face "pink")
@@ -309,8 +318,9 @@ To check out the list, evaluate (list-colors-display my-theme-foreground-colors)
   (when (my-is-mac)
     (customize-set-variable 'yalinum-width-base 0)
     (customize-set-variable 'yalinum-width-scale 1.0)
-    (customize-set-variable 'yalinum-line-number-display-format " %0$numd")
+    (customize-set-variable 'yalinum-line-number-display-format " %0$numd ")
     )
+
   (when (my-is-windows)
     (customize-set-variable 'yalinum-width-base 0)
     (customize-set-variable 'yalinum-width-scale 1)

@@ -12,6 +12,18 @@
 (require 'doc-view)
 
 ;;;-------------------------------
+;;; popwin
+;;;-------------------------------
+(require 'popwin)
+(setq display-buffer-function 'popwin:display-buffer)
+;; (setq special-display-function 'popwin:special-display-popup-window)
+(add-to-list 'popwin:special-display-config '("*Compile-Log*"))
+(add-to-list 'popwin:special-display-config '("*Dired log*"))
+(add-to-list 'popwin:special-display-config '("*Rake*"))
+
+(define-key global-map (kbd "C-l p") 'popwin:display-last-buffer)
+
+;;;-------------------------------
 ;;; text-translator
 ;;;-------------------------------
 (require 'text-translator-vars)
@@ -242,7 +254,7 @@
 (when (my-is-mac)
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-with-twitter-client
-	 '((top + -0) (left + -1380) (height . 720) (width . 123)))
+	 '((top + -0) (left + -1680) (height . 720) (width .100)))
 
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-full-screen
@@ -254,7 +266,7 @@
 
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-with-twitter-client-main
-	 '((top + 0) (left + 0) (height . 1080) (width . 35)))
+	 '((top + 0) (left + 0) (height . 1080) (width . 110)))
 	)
 
 (when (my-is-windows)
@@ -272,7 +284,7 @@
 
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-with-twitter-client-main
-	 '((top + 0) (left + 0) (height . 1080) (width . 123)))
+	 '((top + 0) (left + 0) (height . 1080) (width . 120)))
 	)
 
 (define-key global-map (kbd "C-l C-o C-m")
@@ -311,11 +323,14 @@
 (define-key global-map (kbd "C-l C-o C-c")
   #'(lambda ()
       (interactive)
-      (start-process-shell-command "Rakefile build" "*Rakefile Build*" "rake -t" )))
+			(async-shell-command "rake -t" (get-buffer-create "*Rake*"))))
+
 (define-key global-map (kbd "C-l C-o C-t")
   #'(lambda ()
       (interactive)
-      (start-process-shell-command "Rakefile test" "*Rakefile Test*" "rake -t test" )))
+			(async-shell-command "rake -t test" (get-buffer-create "*Rake*"))))
+
+(add-to-list 'auto-mode-alist '("RAKEFILE$" . ruby-mode))
 
   ;; (start-process-shell-command
   ;;  "gtags-update"
