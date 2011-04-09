@@ -12,6 +12,7 @@
 (require 'inf-haskell)
 
 (add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
+(add-to-list 'auto-mode-alist '("\\.hsc$" . haskell-mode))
 
 (require 'auto-complete)
 (add-to-list 'ac-modes 'haskell-mode)
@@ -24,10 +25,9 @@
 ;; (add-to-list 'popwin:special-display-config '("*hs-lint*")) ;; 勝手に閉じてしまう. popwin.el 0.2
 ;; (setq popwin:special-display-config '(("*haskell*" :height 0.4 :noselect)))
 
-;; (setq haskell-literate "haskell-mode")
-
 (require 'ghc)
-(setq ghc-module-command "~/.cabal/bin/ghc-mod")
+;; (setq ghc-module-command "ghc-mod")
+(setq ghc-module-command "/Users/mys/Library/Haskell/bin/ghc-mod")
 
 (define-key haskell-mode-map (kbd "C-c C-o") 'ghc-complete)
 (define-key haskell-mode-map (kbd "C-c C-i") 'ghc-show-info)

@@ -246,6 +246,7 @@
 
 (require 'popwin)
 (setq display-buffer-function 'popwin:display-buffer)
+(add-to-list 'popwin:special-display-config '("*Backtrace*" :height 0.5))
 
 ;;;-------------------------------
 ;;; frame-arrange
@@ -254,7 +255,7 @@
 (when (my-is-mac)
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-with-twitter-client
-	 '((top + -0) (left + -1680) (height . 720) (width .100)))
+	 '((top + -0) (left + -1680) (height . 720) (width .110)))
 
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-full-screen
@@ -266,13 +267,13 @@
 
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-with-twitter-client-main
-	 '((top + 0) (left + 0) (height . 1080) (width . 110)))
+	 '((top + 0) (left + 0) (height . 1080) (width . 102)))
 	)
 
 (when (my-is-windows)
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-with-twitter-client
-	 '((top + -0) (left + 0) (height . 720) (width . 114)))
+	 '((top + -0) (left + 0) (height . 720) (width . 110)))
 
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-full-screen
@@ -331,6 +332,13 @@
 			(async-shell-command "rake -t test" (get-buffer-create "*Rake*"))))
 
 (add-to-list 'auto-mode-alist '("RAKEFILE$" . ruby-mode))
+
+;;;-------------------------------
+;;; yalinum
+;;;-------------------------------
+(require 'yalinum)
+(global-yalinum-mode t)
+(global-linum-mode -1)
 
   ;; (start-process-shell-command
   ;;  "gtags-update"

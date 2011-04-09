@@ -130,6 +130,8 @@
 
 (global-set-key (kbd "C-l C-f C-o") 'my-save-all-buffers)
 
+(define-key global-map (kbd "C-l C-j C-r") `string-rectangle)
+
 (define-key global-map (kbd "C-l C-z") `prefix-arg-commands-set-frame-alpha)
 
 ;; 重複行削除

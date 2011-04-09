@@ -68,11 +68,12 @@
 ;; ac source setting. all mode use same setting.
 (setq ac-sources
       '(ac-source-pcomplete
-	ac-source-words-in-buffer
-	ac-source-gtags
-	ac-source-filename
-	ac-source-symbols
-	ac-source-dictionary))
+				;; ac-source-words-in-buffer
+				;; ac-source-gtags
+				ya-gtags
+				ac-source-filename
+				ac-source-symbols
+				ac-source-dictionary))
 
 ;; use ac modes.
 (add-to-list 'ac-modes 'shell-mode)
