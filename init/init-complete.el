@@ -49,6 +49,7 @@
 (require 'popup)
 
 (when use-gui-setting
+
   (set-face-foreground 'ac-candidate-face "White")
   (set-face-foreground 'ac-selection-face "Pink")
   (set-face-background 'ac-candidate-face "gray30")
@@ -70,7 +71,7 @@
       '(ac-source-pcomplete
 				;; ac-source-words-in-buffer
 				;; ac-source-gtags
-				ya-gtags
+				;; ya-gtags
 				ac-source-filename
 				ac-source-symbols
 				ac-source-dictionary))

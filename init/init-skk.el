@@ -35,6 +35,7 @@
 
 ;; 送り仮名が厳密に正しい候補を優先して表示
 (setq skk-henkan-strict-okuri-precedence t)
+
 ;;漢字登録時、送り仮名が厳密に正しいかをチェック
 (setq skk-check-okurigana-on-touroku t)
 
@@ -76,19 +77,21 @@
 
 (when use-gui-setting
   (customize-set-value 'skk-use-color-cursor t)
-  ;; SKK モードがオフであることを示すカーソル色。標準では、カーソルのある該当 フレームにおける標準のカーソル色を使います。
+  ;; SKK モードがオフであることを示すカーソル色。
+	;; 標準では、カーソルのある該当 フレームにおける標準のカーソル色を使います。
   ;; (customize-set-value 'skk-cursor-default-color t)
 
-  ;; かなモードであることを示すカーソル色。標準では、背景の明暗により "coral4" または "pink" を用います。
-  (customize-set-value 'skk-cursor-hiragana-color "pink")
+  ;; かなモードであることを示すカーソル色。
+	;; 標準では、背景の明暗により "coral4" または "pink" を用います。
+  (customize-set-value 'skk-cursor-hiragana-color "coral4")
   
-  ;; カナモードであることを示すカーソル色。標準では、背景の明暗により "forestgreen" または "green" を用います。
-  (customize-set-value 'skk-cursor-katakana-color "red")
-  ;; skk-cursor-katakana-color
+  ;; カナモードであることを示すカーソル色。
+	;; 標準では、背景の明暗により "forestgreen" または "green" を用います。
+  (customize-set-value 'skk-cursor-katakana-color "forestgreen")
 
-  ;; アスキーモードであることを示すカーソル色。標準では、背景の明暗により "ivory4" または "gray" を用います。
-
-  (customize-set-value 'skk-cursor-latin-color "ivory")
+  ;; アスキーモードであることを示すカーソル色。
+	;; 標準では、背景の明暗により "ivory4" または "gray" を用います。
+  (customize-set-value 'skk-cursor-latin-color "ivory4")
   )
 
 (setq skk-echo nil)

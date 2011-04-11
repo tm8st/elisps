@@ -36,7 +36,7 @@
 		(list
 		 '(my-dired-today-search . my-face-dired-tody-change)
 		 ))		     
-	       ))
+				 ))
   )
 
 ;; フック

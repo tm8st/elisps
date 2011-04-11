@@ -33,7 +33,7 @@
                                  :height my-font-size-base)))
 
   (require 'yalinum)
-  (customize-set-variable 'yalinum-line-number-length-min 5)
+  (customize-set-variable 'yalinum-line-number-length-min 0)
   (customize-set-variable 'yalinum-eager nil)
 	
   (when (my-is-mac)
@@ -46,22 +46,56 @@
     (customize-set-variable 'yalinum-width-base 0)
     (customize-set-variable 'yalinum-width-scale 1)
     (customize-set-variable 'yalinum-line-number-display-format " %0$numd ")
-    )
-
-	(defvar default-background-color "#fdf6e3")
-	
-  (set-face-foreground 'yalinum-face "gray50")
-  (set-face-foreground 'yalinum-bar-face "Pink3")
-	
-	(set-face-background 'yalinum-face default-background-color)
-	(set-face-background 'yalinum-bar-face default-background-color)
-
-  (require 'jaunte)
-  (set-face-foreground 'jaunte-hint-face "pink3")
-  (set-face-background 'jaunte-hint-face "gray50")  
-	)
+    ))
 
 (when use-gui-setting
+
+	(load "init-color-theme-solarized.el")
+
+	(require 'yalinum)
+  (set-face-foreground 'yalinum-face defaul-font-color)
+  (set-face-foreground 'yalinum-bar-face defaul-font-color)
+	(set-face-background 'yalinum-face default-background-color)
+	(set-face-background 'yalinum-bar-face dummy-region-color)
+
+	(require 'yafastnav)
+	(set-face-foreground 'yafastnav-shortcut-key-face-type highlight-font-color)
+	(set-face-background 'yafastnav-shortcut-key-face-type highlight-background-color)
+
+  (require 'jaunte)
+  (set-face-foreground 'jaunte-hint-face highlight-font-color-2)
+  (set-face-background 'jaunte-hint-face highlight-background-color)
+
+	(setq my-popup-cadidate-color defaul-font-color)
+	(setq my-popup-selection-color highlight-font-color)
+	(setq my-popup-background-color highlight-background-color)
+
+	(set-face-foreground 'ac-candidate-face my-popup-cadidate-color)
+	(set-face-foreground 'ac-selection-face my-popup-selection-color)
+	(set-face-background 'ac-candidate-face my-popup-background-color)
+	(set-face-background 'ac-selection-face my-popup-background-color)
+
+	(set-face-foreground 'popup-menu-face my-popup-cadidate-color)
+	(set-face-foreground 'popup-menu-selection-face my-popup-selection-color)
+	(set-face-background 'popup-menu-selection-face my-popup-background-color)
+	(set-face-background 'popup-menu-selection-face my-popup-background-color)
+	(set-face-background 'popup-menu-face my-popup-background-color)
+
+	(set-face-foreground 'howm-view-hilit-face "black")
+	(set-face-background 'howm-view-name-face dummy-region-color)
+	(set-face-background 'howm-reminder-today-face dummy-region-color)
+	(set-face-foreground 'howm-reminder-today-face highlight-font-color)
+	(set-face-foreground 'howm-reminder-tomorrow-face highlight-font-color-2)
+	(set-face-background 'howm-reminder-tomorrow-face dummy-region-color)
+
+	(set-face-foreground 'howm-mode-title-face highlight-font-color-2)
+	(set-face-foreground 'moccur-face "orange4")
+	(set-face-background 'moccur-face dummy-region-color)
+	(set-face-underline-p 'moccur-face t)
+	(set-face-foreground 'moccur-edit-done-face "gray10")
+	(set-face-background 'moccur-edit-done-face dummy-region-color)
+	(set-face-foreground 'moccur-edit-face "orange4")
+	(set-face-background 'moccur-edit-face dummy-region-color)
 
   ;;-------------------------------
   ;; frame setting
@@ -69,8 +103,8 @@
   ;; default frame setting
   (defvar my-frame-setting-list
     (list
-     '(background-color . "#006000")
-     '(foreground-color . "gray75")
+		 '(foreground-color . "black")
+     '(background-color . "white")
      '(cursor-color . "orange")
      '(cursor-type . bar)
      '(cursor-height . 4)
@@ -110,6 +144,13 @@
   (which-function-mode 1)
   (column-number-mode t)
   (line-number-mode t)
+  (set-scroll-bar-mode nil)
+	;; (set-scroll-bar-mode 'right)
+  (blink-cursor-mode 0)
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (tooltip-mode -1)
+	(setq frame-alpha-lower-limit 0.01)
 
   (when (my-is-windows)
     (add-hook 'mw32-ime-on-hook
@@ -120,21 +161,8 @@
     )
 
   (when (require 'hl-line nil t)
-    ;; (defface;;  my-hl-line-face
-    ;;   '((t (:background "gray10")))
-    ;;   ""
-    ;;   :group 'yalinum)
-		
-    ;; ;; (customize-set-value 'hl-line-face 'underline)
-    ;; (customize-set-value 'hl-line-face 'my-hl-line-face)
-    ;; ;; (customize-set-value 'hl-line-face 'highlight)
+    (global-hl-line-mode t))
 
-    (global-hl-line-mode t)
-    )
-
-  ;;-------------------------------
-  ;;  
-  ;;-------------------------------
   (require 'paren)
   (show-paren-mode t)
   (custom-set-variables
@@ -143,17 +171,12 @@
    )
 		 
 	;;
-  (require 'highlight-parentheses)
-  (highlight-parentheses-mode)
-  (custom-set-variables
-	 '(hl-paren-background-colors '("#fdf6e3"))
-	 '(hl-paren-colors '("red" "orange" "green" "bule" "black"))
-	 ;; '(hl-paren-foreground-colors '("tomato4" "tomato3" "tomato2" "tomato1"))
-	 ;; '(hl-paren-foreground-colors '("tomato4" "tomato3" "tomato2" "tomato1"))
-   ;; '(hl-paren-background-colors '("tomato4" "tomato3" "tomato2" "tomato1"))
-   ;; '(hl-paren-colors '("orange" "blue" "yellow" "red"))
-   ;; '(hl-paren-background-colors nil)
-   )
+  (when (require 'highlight-parentheses nil t)
+		(highlight-parentheses-mode)
+		(custom-set-variables
+		 '(hl-paren-background-colors '(dummy-region-color))
+		 '(hl-paren-colors '("firebrick2" "IndianRed2" "IndianRed3" "IndianRed4"))
+		 ))
 	
   ;;-------------------------------
   ;; disable truncate-line in text file.
@@ -163,16 +186,7 @@
                (unless (string-match "\\.txt$" (buffer-file-name))
                  (setq truncate-lines t)
                  (setq truncate-partial-width-windows t))
-               )
-            )
-
-  (set-scroll-bar-mode nil)
-  ;; (set-scroll-bar-mode 'right)
-  (blink-cursor-mode 0)
-  (tool-bar-mode -1)
-  (menu-bar-mode -1)
-  (tooltip-mode -1)
-	(setq frame-alpha-lower-limit 0.01)
+               ))
 
   ;;-------------------------------------
   ;; 
@@ -201,7 +215,6 @@
   (set-face-foreground 'font-lock-regexp-grouping-construct "#999")
   )
 
-(require 'color-theme-solarized)
 (color-theme-solarized-light)
 
 (provide 'init-theme)

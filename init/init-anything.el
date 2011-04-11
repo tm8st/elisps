@@ -63,11 +63,11 @@
 ;;;-------------------------------
 ;;; faces
 ;;;-------------------------------
-(when use-gui-setting
-  (set-face-foreground 'anything-file-name "Pink")
-  (set-face-foreground 'anything-dir-heading "SkyBlue")
-  (set-face-foreground 'anything-dir-priv "SkyBlue")
-  )
+;; (when use-gui-setting
+;;   (set-face-foreground 'anything-file-name "Pink")
+;;   (set-face-foreground 'anything-dir-heading "SkyBlue")
+;;   (set-face-foreground 'anything-dir-priv "SkyBlue")
+;;   )
 
 ;;;-------------------------------
 ;;; anything color moccur 
