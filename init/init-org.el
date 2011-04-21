@@ -9,28 +9,41 @@
 
 ;;; Code:
 
-(require 'org)
+;; (require 'org)
 (require 'org-install)
 (setq org-startup-truncated nil)
 (setq org-return-follows-link t)
 (setq org-log-done 'time) ;; DONEの時刻を記録
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (org-remember-insinuate) ;; remember も使う
+(add-hook 'org-mode-hook 'turn-on-font-lock) ;; org-modeでの強調表示を可能にする
+;; (setq org-hide-leading-stars t) ;; 見出しの余分な*を消す
+(setq org-hide-leading-stars nil) ;; 見出しの余分な*を消さない
+(setq org-agenda-include-all-todo t)
+
 (customize-set-variable 'org-agenda-include-diary t)
-(setq org-directory "~/.emacs.d/org/")
+
+(if my-use-dropbox
+		(setq org-directory (concat my-dropbox-directory "Org/"))
+	(setq org-directory "~/.emacs.d/org/"))
+
 (setq org-default-notes-file (concat org-directory "index.org"))
 (setq org-agenda-files (list org-directory))
+
+;; TASKの状態遷移
+(setq org-todo-keywords '("TASK(t)" "WAIT(w)" "SOMEDAY(s)" "DONE(d)")
+      org-todo-interpretation 'sequence)
+
 (setq org-remember-templates
-      '(("TODO" ?t "** TODO %?\n   %i\n   %a\n   %t" nil "Inbox")
-        ("Bug" ?b "** TODO %?   :bug:\n   %i\n   %a\n   %t" nil "Inbox")
-        ("Idea" ?i "** %?\n   %i\n   %a\n   %t" nil "New Ideas")
+      '(("TASK" ?t "** TASK \n  %i\n  %a\n  %U\n" nil "INBOX")
+        ("IDEA" ?i "** SOMEDAY \n  %i\n  %a\n  %U\n" nil "IDEAS")
+				("MEMO" ?m "** \n  %i\n  %a\n  %U\n" nil "NOTES")
         ))
 
-;; ファイル、ディレクトリ設定
 ;; MobileOrgで新しく作ったノートを保存するファイルの名前を設定
 (setq org-mobile-inbox-for-pull "~/.emacs.d/org/pulled.org")
 ;; Dropbox直下のMobileOrgフォルダへのパスを設定
-(setq org-mobile-directory "~/Dropbox/MobileOrg")
+(setq org-mobile-directory (concat my-dropbox-directory "MobileOrg"))
 
 ;; アジェンダ表示で下線を用いる
 (add-hook 'org-agenda-mode-hook
@@ -39,12 +52,31 @@
     (setq hl-line-face 'underline)
     ))
 
-;; 標準の祝日を利用しない
-(customize-set-variable 'org-calendar-holidays nil)
+;; 標準の祝日を利用する
+(customize-set-variable 'org-calendar-holidays t)
 
-;; TODOの状態遷移
-;; (setq org-todo-keywords '("TODO" "Wait" "DONE")
-;;       org-todo-interpretation 'sequence)
+;; キーバインドの設定
+(define-key global-map (kbd "C-l C-o C-r") 'org-remember)
+
+;; index fileを開く
+(defun my-org-open-index ()
+	(interactive)
+	(find-file org-default-notes-file))
+
+(define-key global-map (kbd "C-l C-o C-o") 'my-org-open-index)
+(define-key global-map (kbd "C-l C-o C-l") 'org-store-link)
+
+(define-key org-mode-map (kbd "C-TAB") 'org-force-cycle-archived)
+(org-defkey org-mode-map [(meta left)]  'org-metaleft)
+(org-defkey org-mode-map [(meta right)] 'org-metaright)
+(org-defkey org-mode-map [(meta up)]    'org-metaup)
+(org-defkey org-mode-map [(meta down)]  'org-metadown)
+
+;; (org-defkey org-mode-map (kbd "M-b") 'org-forward-same-level)
+;; (org-defkey org-mode-map (kbd "M-f") 'org-)
+(org-defkey org-mode-map (kbd "M-p") 'org-backward-same-level)
+(org-defkey org-mode-map (kbd "M-n") 'org-forward-same-level)
+(define-key org-mode-map (kbd "C-m") 'my-backward-word)
 
 ;; ;; next actionのない項目の検索時の条件設定
 ;; (customize-set-variable 'org-stuck-projects
@@ -72,7 +104,7 @@
 ;;   (find-file org-default-notes-file))
 
 ;; (define-key global-map (kbd "C-l C-;") 'org-remember)
-;; (define-key global-map (kbd "C-l C-o C-a") 'org-agenda)
+(define-key global-map (kbd "C-l C-o C-a") 'org-agenda)
 ;; (define-key global-map (kbd "C-l C-o C-s") 'org-store-link)
 ;; (define-key global-map (kbd "C-l C-o C-o") 'my-open-gtd)
 ;; (define-key org-mode-map (kbd "C-l C-o C-t") 'org-todo)

@@ -9,6 +9,11 @@
 
 ;;; Code:
 
+;; % cvs -d :pserver:anonymous@cvs.namazu.org:/storage/cvsroot login
+;; CVS password:
+;; # パスワードは設定されていません．単に Enter/Return キーを押して下さい．
+;; % cvs -d :pserver:anonymous@cvs.namazu.org:/storage/cvsroot co emacs-w3m
+
 (require 'w3m)
 
 ;; (require 'ldr)
