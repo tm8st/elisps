@@ -9,8 +9,11 @@
 
 ;;; Code:
 
-;; (require 'org)
+(require 'org)
 (require 'org-install)
+(require 'org-agenda)
+(require 'org-mobile)
+
 (setq org-startup-truncated nil)
 (setq org-return-follows-link t)
 (setq org-log-done 'time) ;; DONEの時刻を記録
@@ -19,7 +22,10 @@
 (add-hook 'org-mode-hook 'turn-on-font-lock) ;; org-modeでの強調表示を可能にする
 ;; (setq org-hide-leading-stars t) ;; 見出しの余分な*を消す
 (setq org-hide-leading-stars nil) ;; 見出しの余分な*を消さない
+
 (setq org-agenda-include-all-todo t)
+(setq org-tags-column -100)
+(setq org-fast-tag-selection-single-key t)
 
 (customize-set-variable 'org-agenda-include-diary t)
 
@@ -27,12 +33,15 @@
 		(setq org-directory (concat my-dropbox-directory "Org/"))
 	(setq org-directory "~/.emacs.d/org/"))
 
-(setq org-default-notes-file (concat org-directory "index.org"))
+(setq org-default-notes-file (concat org-directory "main.org"))
 (setq org-agenda-files (list org-directory))
 
-;; TASKの状態遷移
-(setq org-todo-keywords '("TASK(t)" "WAIT(w)" "SOMEDAY(s)" "DONE(d)")
-      org-todo-interpretation 'sequence)
+;; TODOの状態遷移
+(setq org-todo-keywords
+      '((sequence "TASK(t)" "WAIT(w)" "DONE(d)" "SOMEDAY(s)")))
+
+;; DONEの時刻を記録
+(setq org-log-done 'time)
 
 (setq org-remember-templates
       '(("TASK" ?t "** TASK \n  %i\n  %a\n  %U\n" nil "INBOX")
@@ -40,17 +49,9 @@
 				("MEMO" ?m "** \n  %i\n  %a\n  %U\n" nil "NOTES")
         ))
 
-;; MobileOrgで新しく作ったノートを保存するファイルの名前を設定
-(setq org-mobile-inbox-for-pull "~/.emacs.d/org/pulled.org")
+(setq org-mobile-inbox-for-pull (concat org-directory "pulled.org"))
 ;; Dropbox直下のMobileOrgフォルダへのパスを設定
 (setq org-mobile-directory (concat my-dropbox-directory "MobileOrg"))
-
-;; アジェンダ表示で下線を用いる
-(add-hook 'org-agenda-mode-hook
-   '(lambda ()
-    (hl-line-mode 1)
-    (setq hl-line-face 'underline)
-    ))
 
 ;; 標準の祝日を利用する
 (customize-set-variable 'org-calendar-holidays t)
@@ -67,91 +68,43 @@
 (define-key global-map (kbd "C-l C-o C-l") 'org-store-link)
 
 (define-key org-mode-map (kbd "C-TAB") 'org-force-cycle-archived)
-(org-defkey org-mode-map [(meta left)]  'org-metaleft)
-(org-defkey org-mode-map [(meta right)] 'org-metaright)
-(org-defkey org-mode-map [(meta up)]    'org-metaup)
-(org-defkey org-mode-map [(meta down)]  'org-metadown)
+(define-key org-mode-map [(meta left)]  'org-metaleft)
+(define-key org-mode-map [(meta right)] 'org-metaright)
+(define-key org-mode-map [(meta up)]    'org-metaup)
+(define-key org-mode-map [(meta down)]  'org-metadown)
 
-;; (org-defkey org-mode-map (kbd "M-b") 'org-forward-same-level)
-;; (org-defkey org-mode-map (kbd "M-f") 'org-)
-(org-defkey org-mode-map (kbd "M-p") 'org-backward-same-level)
-(org-defkey org-mode-map (kbd "M-n") 'org-forward-same-level)
+(define-key org-mode-map (kbd "M-n") 'org-forward-same-level)
+(define-key org-mode-map (kbd "M-p") 'org-backward-same-level)
 (define-key org-mode-map (kbd "C-m") 'my-backward-word)
 
-;; ;; next actionのない項目の検索時の条件設定
-;; (customize-set-variable 'org-stuck-projects
-;;       '("+LEVEL=2" ("TODO" "Wait") ("SOMEDAY" "MEMO" "SCHEDULE")))
+;;;-------------------------------
+;;; org-agenda setting.
+;;;-------------------------------
+(require 'org-agenda)
 
-;; ;; 項目設定
-;; (customize-set-variable 'org-remember-templates
-;;       '(
-;; 	("Work"  ?w "** TODO %? :WORK:\n   %i\n   %a\n   %t" nil "Tasks")
-;;         ("TODO"  ?t "** TODO %? :ETC:\n   %i\n   %a\n   %t" nil "Tasks")
-;;         ("Idea"  ?i "** IDEA %? :IDEA:\n %i\n %a\n %t" nil "Ideas")
-;;         ("Anime" ?h "** MEMO %? :ANIME:\n   %i\n   %a\n   %t" nil "Anime")
-;;         ("MEMO" ?m "** MEMO %? \n   %i\n   %a\n   %t" nil "Memo")
-;;         ("Emacs MEMO" ?e "** MEMO %? :EMACS:MEMO:\n   %i\n   %a\n   %t" nil "Emacs")
-;; 	("Ruby MEMO"  ?r "** MEMO %? :Ruby:MEMO:\n   %i\n   %a\n   %t" nil "Ruby")
-;;         ))
+(add-hook 'org-agenda-mode-hook
+   '(lambda ()
+    (hl-line-mode 1)
+    (setq hl-line-face 'underline)))
 
-;; ;; auto-isearchを使うので設定しない
-;; ;; (define-key org-goto-map "C-p" `outline-previous-visible-heading)
-;; ;; (define-key org-goto-map "C-n" `outline-next-visible-heading)
-
-;; (defun my-open-gtd ()
-;;   "GTDファイルを開く"
-;;   (interactive)
-;;   (find-file org-default-notes-file))
-
-;; (define-key global-map (kbd "C-l C-;") 'org-remember)
 (define-key global-map (kbd "C-l C-o C-a") 'org-agenda)
-;; (define-key global-map (kbd "C-l C-o C-s") 'org-store-link)
-;; (define-key global-map (kbd "C-l C-o C-o") 'my-open-gtd)
-;; (define-key org-mode-map (kbd "C-l C-o C-t") 'org-todo)
+(define-key global-map (kbd "C-l C-o C-l") 'org-agenda-list)
 
-;; ;;;-------------------------------
-;; ;;; rss reader
-;; ;;;-------------------------------
-;; (defun org-feed-parse-rdf-feed (buffer)
-;;   "Parse BUFFER for RDF feed entries.
-;; Returns a list of entries, with each entry a property list,
-;; containing the properties `:guid' and `:item-full-text'."
-;;   (let (entries beg end item guid entry)
-;;     (with-current-buffer buffer
-;;       (widen)
-;;       (goto-char (point-min))
-;;       (while (re-search-forward "<item[> ]" nil t)
-;; 	(setq beg (point)
-;; 	      end (and (re-search-forward "</item>" nil t)
-;; 		       (match-beginning 0)))
-;; 	(setq item (buffer-substring beg end)
-;; 	      guid (if (string-match "<link¥¥>.*?>¥¥(.*?¥¥)</link>" item)
-;; 		       (org-match-string-no-properties 1 item)))
-;; 	(setq entry (list :guid guid :item-full-text item))
-;; 	(push entry entries)
-;; 	(widen)
-;; 	(goto-char end))
-;;       (nreverse entries))))
+(require 'popwin)
+(setq display-buffer-function 'popwin:display-buffer)
+(add-to-list 'popwin:special-display-config '("*Org Agenda*" :height 0.5))
 
-;; ; (setq org-feed-retrieve-method 'wget)
-;; (setq org-feed-retrieve-method 'curl)
+(defun my-org-agenda-open-buffer ()
+	(interactive)
+	(display-buffer "*Org Agenda*"))
 
-;; (setq org-feed-default-template "¥n* %h¥n  - %U¥n  - %a  - %description")
+(define-key global-map (kbd "C-l C-o C-z") 'my-org-agenda-open-buffer)
 
-;; (setq org-feed-alist nil)
+;; timer start, stop.
+(define-key org-mode-map (kbd "C-c C-i") 'org-clock-in)
+(define-key org-mode-map (kbd "C-c C-o") 'org-clock-out)
 
-;; (add-to-list 'org-feed-alist
-;;   '("hatena" "http://feeds.feedburner.com/hatena/b/hotentry"
-;;     "~/org/rdf.org" "はてな"
-;;     :parse-feed org-feed-parse-rdf-feed))
-;; (add-to-list 'org-feed-alist
-;;   '("tamura70" "http://d.hatena.ne.jp/tamura70/rdf"
-;;     "~/org/rdf.org" "屯遁"
-;;     :parse-feed org-feed-parse-rdf-feed))
-
-;; (add-to-list 'org-feed-alist
-;;   '("game" "http://rdfblog.ameba.jp/get6-2/rdf20.xml"
-;;     "~/org/rdf.org" "game"
-;;     :parse-feed org-feed-parse-rdf-feed))
+(define-key org-agenda-mode-map (kbd "C-i") 'org-agenda-clock-in)
+(define-key org-agenda-mode-map (kbd "C-o") 'org-agenda-clock-out)
 
 (provide 'init-org)

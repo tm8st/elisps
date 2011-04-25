@@ -24,6 +24,8 @@
 
 (global-set-key (kbd "C-q TAB") 'yas/expand)
 (global-set-key (kbd "C-l C-y C-l") 'my-update-yasnippet-files)
+(global-set-key (kbd "C-l C-y C-n") 'yas/new-snippet)
+(global-set-key (kbd "C-l C-y C-v") 'yas/visit-snippet-file)
 
 (yas/initialize)
 (my-update-yasnippet-files)

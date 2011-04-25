@@ -255,11 +255,11 @@
 (when (my-is-mac)
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-with-twitter-client
-	 '((top + -0) (left + -1680) (height . 720) (width .110)))
+	 '((top + -0) (left + -1700) (height . 720) (width . 113)))
 
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-full-screen
-	 '((top + -0) (left + -1680) (height . 1080) (width . 1920)))
+	 '((top + -0) (left + -1920) (height . 1080) (width . 1920)))
 
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-default
@@ -267,7 +267,7 @@
 
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-with-twitter-client-main
-	 '((top + 0) (left + 0) (height . 1080) (width . 102)))
+	 '((top + 0) (left + 0) (height . 1080) (width . 129)))
 	)
 
 (when (my-is-windows)

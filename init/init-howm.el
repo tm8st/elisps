@@ -142,13 +142,14 @@
 (require 'japanese-holidays)
 (setq calendar-holidays
       (append japanese-holidays holiday-local-holidays holiday-other-holidays))
+
 ;; 今日をマークする
 (add-hook 'today-visible-calendar-hook 'calendar-mark-today)
 
-;; 日曜日をマークにする
-(setq calendar-weekend-marker 'diary)
-(add-hook 'today-visible-calendar-hook 'calendar-mark-weekend)
-(add-hook 'today-invisible-calendar-hook 'calendar-mark-weekend)
+;; 日曜日をマークする
+;; (setq calendar-weekend-marker 'diary)
+;; (add-hook 'today-visible-calendar-hook 'calendar-mark-weekend)
+;; (add-hook 'today-invisible-calendar-hook 'calendar-mark-weekend)
 
 ;; カレンダーで日付入力
 (eval-after-load "calendar"

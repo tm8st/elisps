@@ -1,3 +1,11 @@
+;;; init-theme.el --- theme setting
+
+;; Copyright (C) 2010, 2011 tm8st
+
+;; Author: tm8st <tm8st@hotmail.co.jp>
+;; Keywords: init, theme
+
+;;; Commentary:
 
 ;;; Code:
 
@@ -11,26 +19,47 @@
   (defvar my-font-size-base 100)
   (cond
    ((my-is-windows) (setq my-font-size-base 135))
-   ((my-is-mac) (setq my-font-size-base 230)))
+   ((my-is-mac) (setq my-font-size-base 250)))
 
   (when (and use-font-setting (my-is-windows)
              (set-face-attribute 'default nil
 																 :family "VL ゴシック"
-                                 :height my-font-size-base)))
+																 :height my-font-size-base)))
     
-  (when (and use-font-setting (my-is-mac)
-             (set-face-attribute 'default nil
-																 :family "Inconsolata"
-																 ;; :family "MiguMix 1M"
-																 ;; :family "Osaka"
-																 ;; :family "AppleGothic"
-																 ;; :family "Helvetica Neue"
-																 ;; :family "Helvetica"
-																 ;; :family "Hiragino Kaku Gothic Std"
-																 ;; :family "VL PGothic"
-																 ;; :family "VL Gothic"
-                                 ;; :family "Hiragino Kaku Gothic ProN"
-                                 :height my-font-size-base)))
+	(when (>= emacs-major-version 23)
+		(when (and use-font-setting (my-is-mac))
+			(set-face-attribute 'default nil
+													:family "Inconsolata"
+													:height my-font-size-base)
+
+			(set-fontset-font
+			 (frame-parameter nil 'font)
+			 'japanese-jisx0208
+			 '("IPAGothic" . "iso10646-1"))
+
+			(set-fontset-font
+			 (frame-parameter nil 'font)
+			 'japanese-jisx0212
+			 '("IPAGothic" . "iso10646-1"))
+
+			(set-fontset-font
+			 (frame-parameter nil 'font)
+			 'mule-unicode-0100-24ff
+			 '("Inconsolata" . "iso10646-1"))
+			)
+
+		(setq face-font-rescale-alist
+					'(("^-apple-hiragino.*" . 1.2)
+						(".*osaka-bold.*" . 0.82)
+						(".*osaka-medium.*" . 0.82)
+						(".*VL\ .*" . 0.8)
+						(".*IPAGothic.*" . 0.86)
+						("NfMotoya Birch Std" . 0.8)
+						(".*courier-bold-.*-mac-roman" . 1.0)
+						(".*monaco cy-bold-.*-mac-cyrillic" . 0.9)
+						(".*monaco-bold-.*-mac-roman" . 0.9)
+						("-cdac$" . 1.3)))
+	)
 
   (require 'yalinum)
   (customize-set-variable 'yalinum-line-number-length-min 0)
@@ -106,7 +135,7 @@
 		 '(foreground-color . "black")
      '(background-color . "white")
      '(cursor-color . "orange")
-     '(cursor-type . bar)
+     '(cursor-type . box)
      '(cursor-height . 4)
      '(mouse-color . "white")
      '(border-color . "black")
@@ -215,6 +244,12 @@
   (set-face-foreground 'font-lock-regexp-grouping-construct "#999")
   )
 
-(color-theme-solarized-light)
+(defun my-set-default-color-theme ()
+	"初期化のタイミングでうまく設定できないので初期化後に設定するために
+コマンド化しておく"
+	(interactive)
+	(color-theme-solarized-light))
+
+(global-set-key (kbd "C-l C-o C-e") 'my-set-default-color-theme)
 
 (provide 'init-theme)

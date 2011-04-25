@@ -1,4 +1,4 @@
-;;; init.el --- inmyit emacs
+;;; init.el --- init emacs
 
 ;; Copyright (C) 2010 tm8st
 
@@ -108,15 +108,15 @@
 ;;;-------------------------------
 (when use-customize
 
+	(load "init-compile-env.el")
+	(load "init-private.el")
+	(load "private.el")
+
   ;;----------------------------------------
   ;; init etc
   ;;----------------------------------------
   (setq init-load-elisp-list
     (list
-     "init-compile-env.el"
-     "init-private.el"
-     "private.el"
-
      "init-keybindings.el"
 
      "init-basic.el"
