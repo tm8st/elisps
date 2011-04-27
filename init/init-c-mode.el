@@ -120,11 +120,11 @@
 ;;; objective-c 用に追加
 ;;;-------------------------------
 (require 'find-file)
+
 (unless my-initialized
-  (add-to-list 'cc-other-file-alist '("\\.h\\'"  (".m" ".mm" ".c" ".cpp")))
+  (add-to-list 'cc-other-file-alist '("\\.h\\'"  (".m" ".mm" ".c" ".cpp" ".inl")))
   (add-to-list 'cc-other-file-alist '("\\.m\\'"  (".h")))
   (add-to-list 'cc-other-file-alist '("\\.mm\\'"  (".h")))
-  (add-to-list 'cc-other-file-alist '("\\.h\\'"  (".inl")))
   )
 
 ;;;----------------------------------------
@@ -153,22 +153,41 @@
 (setq auto-mode-alist
       (append
        '(("\\.[ch][pp]*$" . c++-mode)
-	 ("\\.usf$" . c++-mode)
-	 ("\\.inl$" . c++-mode)
-	 ("\\.cg$" . c++-mode)
-	 ("\\.fx$" . c++-mode)
-	 ("\\.cgh$" . c++-mode)
-	 ("\\.hlsl$" . c++-mode)
-	 ("\\.uc$" . c++-mode)
-	 ("\\.uci$" . c++-mode)
-	 ("\\.uch$" . c++-mode)
-	 ("\\.cs$" . c++-mode)
-	 ("\\.mm$" . objc-mode)
-	 ("\\.m$" . objc-mode)
-	 ("\\.vsh$" . c++-mode)
-	 ("\\.fsh$" . c++-mode)
-	 )
+				 ("\\.h$" . c++-mode)
+				 ("\\.usf$" . c++-mode)
+				 ("\\.inl$" . c++-mode)
+				 ("\\.cg$" . c++-mode)
+				 ("\\.fx$" . c++-mode)
+				 ("\\.cgh$" . c++-mode)
+				 ("\\.hlsl$" . c++-mode)
+				 ("\\.uc$" . c++-mode)
+				 ("\\.uci$" . c++-mode)
+				 ("\\.uch$" . c++-mode)
+				 ("\\.cs$" . c++-mode)
+				 ("\\.mm$" . objc-mode)
+				 ("\\.m$" . objc-mode)
+				 ("\\.vsh$" . c++-mode)
+				 ("\\.fsh$" . c++-mode)
+				 )
        auto-mode-alist))
+
+;;;-------------------------------
+;;; ff-find-other-file
+;;;-------------------------------
+(defun my-ff-find-other-file ()
+	"add current directory files."
+	(interactive)
+	(unless (eq buffer-file-name nil)
+		(let* ((current-dir (file-name-directory (buffer-file-name)))
+					 (cc-search-directories
+					 (append (list
+										(concat current-dir "../Inc")
+										(concat current-dir "../Src"))
+									 cc-search-directories)))
+			(ff-find-other-file)))
+	(ff-find-other-file))
+
+(global-set-key (kbd "C-l C-f C-s") 'my-ff-find-other-file)
 
 (add-hook 'c-mode-hook 'my-c-mode-hook)
 (add-hook 'c++-mode-hook 'my-c-mode-hook)

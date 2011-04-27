@@ -15,17 +15,17 @@
   (require 'color-theme))
 
 ;; 
-(setq defaul-font-color "#657080")
-(setq default-background-color "#fdf6e3")
-;; (setq defaul-font-color "#657b83")
-(setq region-color "#e0e0b0")
-;; (setq region-color "#e0e0d0")
-(setq dummy-region-color "#eee0d0")
-;; (setq dummy-region-color "#afeaae")
-(setq comment-face-color "#af8050")
-(setq highlight-font-color "orange2")
-(setq highlight-font-color-2 "orange4")
-(setq highlight-background-color "#eee8d5")
+(defvar defaul-font-color "#657080")
+(defvar default-background-color "#fdf6e3")
+;; (defvar defaul-font-color "#657b83")
+(defvar region-color "#e0e0b0")
+;; (defvar region-color "#e0e0d0")
+(defvar dummy-region-color "#eee0d0")
+;; (defvar dummy-region-color "#afeaae")
+(defvar comment-face-color "#af8050")
+(defvar highlight-font-color "orange2")
+(defvar highlight-font-color-2 "orange4")
+(defvar highlight-background-color "#eee8d5")
 
 (defun color-theme-solarized (mode)
   "Color theme by Ethan Schoonover, created 2011-03-24.
@@ -129,7 +129,7 @@ Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized."
        (org-todo ((t (:foreground ,red :bold t))))
        (org-done ((t (:foreground ,green :bold t))))
        ;; show-paren
-			 (show-paren-match-face ((t (:background ,dummy-region-color))))
+			 (show-paren-match-face ((t (:background ,green))))
        ;; (show-paren-match-face ((t (:background ,dummy-region-color :foreground ,base3))))
        (show-paren-mismatch-face ((t (:background ,red))))
 			 ;; (show-paren-mismatch-face ((t (:background ,red :foreground ,base3))))
