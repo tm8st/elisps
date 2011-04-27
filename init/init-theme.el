@@ -19,7 +19,7 @@
   (defvar my-font-size-base 100)
   (cond
    ((my-is-windows) (setq my-font-size-base 135))
-   ((my-is-mac) (setq my-font-size-base 250)))
+   ((my-is-mac) (setq my-font-size-base 260)))
 
   (when (and use-font-setting (my-is-windows)
              (set-face-attribute 'default nil
@@ -81,9 +81,27 @@
 
 	(load "init-color-theme-solarized.el")
 
+	(require 'anything)
+	(set-face-foreground 'anything-header default-font-color)
+	(set-face-background 'anything-header dummy-region-color)
+
+	(require 'skk-vars)
+	(skk-make-face 'default-font-color/dummy-region-color)
+	(setq skk-henkan-face 'default-font-color/dummy-region-color)
+	(customize-set-variable 'skk-use-face nil)
+
+	(when skk-show-inline
+		;; 変数 skk-treat-candidate-appearance-function を利用して自前で候補に
+		;; 色を付ける場合はこの変数を nil に設定する。
+		;; (setq skk-inline-show-face )
+		(setq skk-inline-show-background-color dummy-region-color))
+
+	;; (set-face-foreground 'skk-tooltip-face default-font-color)
+	;; (set-face-background 'skk-tooltip-face dummy-region-color)
+
 	(require 'yalinum)
-  (set-face-foreground 'yalinum-face defaul-font-color)
-  (set-face-foreground 'yalinum-bar-face defaul-font-color)
+  (set-face-foreground 'yalinum-face default-font-color)
+  (set-face-foreground 'yalinum-bar-face default-font-color)
 	(set-face-background 'yalinum-face default-background-color)
 	(set-face-background 'yalinum-bar-face dummy-region-color)
 
@@ -95,7 +113,7 @@
   (set-face-foreground 'jaunte-hint-face highlight-font-color-2)
   (set-face-background 'jaunte-hint-face highlight-background-color)
 
-	(setq my-popup-cadidate-color defaul-font-color)
+	(setq my-popup-cadidate-color default-font-color)
 	(setq my-popup-selection-color highlight-font-color)
 	(setq my-popup-background-color highlight-background-color)
 

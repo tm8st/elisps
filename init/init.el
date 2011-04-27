@@ -32,28 +32,6 @@
 (load (concat my-elisps-directory "/init/init-compile-env.el"))
 
 ;;;-------------------------------
-;;; emacs-settings
-;;; いくつか不具合がでたのでちょっととめる
-;;;-------------------------------
-;; (when my-is-use-emacs-settings
-;;   (require 'cl)
-
-;;   (unless my-initialized
-;;     (progn
-;;       (defun update-emacs-settings-site-dir (dir)
-;;      "add dir and subdirectories of it to load-path"
-;;      (let ((dirs (remove-if-not #'file-directory-p
-;;                                 (directory-files dir t "^[^.]"))))
-;;        (dolist (d dirs)
-;;          (update-emacs-settings-site-dir d))
-;;        (setq load-path (cons dir load-path))))
-
-;;       (update-emacs-settings-site-dir "/Users/mys/emacs-settings/emacs.d")
-
-;;       (load "/Users/mys/emacs-settings/init.el")
-;;       (load-emacs-settings "/Users/mys/emacs-settings"))))
-
-;;;-------------------------------
 ;;; path add
 ;;;-------------------------------
 (defvar exec-path-list

@@ -295,7 +295,7 @@
 
 ;; (global-set-key (kbd "C-|") 'goto-line)
 ;; 一行野郎バージョン
-(global-set-key (kbd "C-l C-l") '(lambda () (interactive) (recenter 3)))
+(global-set-key (kbd "C-l C-l") '(lambda () (interactive) (recenter 5)))
 ;; (global-set-key (kbd "C-l C-l") 'what-face-at-point)
 
 ;; エラー箇所へのジャンプ用

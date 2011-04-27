@@ -26,8 +26,6 @@
 ;; (setq popwin:special-display-config '(("*haskell*" :height 0.4 :noselect)))
 
 (require 'ghc)
-;; (setq ghc-module-command "ghc-mod")
-(setq ghc-module-command "/Users/mys/Library/Haskell/bin/ghc-mod")
 
 (define-key haskell-mode-map (kbd "C-c C-o") 'ghc-complete)
 (define-key haskell-mode-map (kbd "C-c C-i") 'ghc-show-info)

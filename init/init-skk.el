@@ -17,9 +17,8 @@
 (customize-set-value 'skk-kakutei-key "\C-o")
 ;; (customize-set-value 'skk-kakutei-key "\C-o")
 ;; (customize-set-value 'skk-kakutei-key "\C-m")
-(customize-set-value 'skk-show-inline t)
-;; (customize-set-value 'skk-show-inline 'vertical)
-(customize-set-value 'skk-auto-insert-paren t)
+;; 対応する閉括弧を自動的に挿入する
+(setq skk-auto-insert-paren t)
 
 (when my-initialized
   (add-hook 'find-file-hook
@@ -27,7 +26,6 @@
 	       (skk-mode t)
 	       (skk-latin-mode-on)
 	       )))
-
 
 ;; C-\ でも SKK に切り替えられるように設定
 (setq default-input-method "japanese-skk")
@@ -44,27 +42,30 @@
 ;;;-------------------------------
 ;; メッセージを日本語で通知する
 (setq skk-japanese-message-and-error t)
-;; メニューを英語で表示する
-(setq skk-show-japanese-menu nil)
+;; メニューを日本語で表示する
+(setq skk-show-japanese-menu t)
 
-;; 変換時に注釈 (annotation) を表示する
-(setq skk-show-annotation t)
+(customize-set-value 'skk-show-inline t)
+;; (customize-set-value 'skk-show-inline t) 
+(customize-set-value 'skk-show-inline 'vertical)
 
-;;isearch-mode に入った際に自動的に skk-isearch を起動
+;;isearch-mode に入った際に自動的に skk-isearch を起動 
 ;; (add-hook 'isearch-mode-hook 'skk-isearch-mode-setup)
 ;; (add-hook 'isearch-mode-end-hook 'skk-isearch-mode-cleanup)
 
 ;; 変換候補一覧と注釈 (annotation) を GUI ぽく表示する
 (setq skk-show-tooltip t)
-;; (set-face-foreground 'skk-treat-default "white")
-;; (set-face-background 'tooltip "black")
+;; 変換時に注釈 (annotation) を表示する
+(setq skk-show-annotation t)
+;; (set-face-foreground 'skk-treat-default "white") 
+;; (set-face-background 'tooltip "white")
 
 ;; tooltipの色設定
-(when (and skk-show-tooltip use-gui-setting)
-  (setq skk-tooltip-parameters
-        '((background-color . "black")
-	  (foreground-color . "white")
-          (border-color . "royal blue"))))
+;; (when (and skk-show-tooltip use-gui-setting)
+;;   (setq skk-tooltip-parameters
+;;         '((background-color . "white")
+;; 	  (foreground-color . "white")
+;;           (border-color . "royal blue"))))
 
 ;; (customize-set-value 'skk-show-tooltip nil)
 ;; (customize-set-value 'skk-tooltip-y-offset -30)
@@ -94,18 +95,7 @@
   (customize-set-value 'skk-cursor-latin-color "ivory4")
   )
 
-(setq skk-echo nil)
-;; 変換候補をインラインに表示する
-(setq skk-show-inline t)
-
-;; 変換候補を縦型インラインに表示する
-;; (setq skk-show-inline 'vertical)
-
-(when skk-show-inline
-  ;; 変数 skk-treat-candidate-appearance-function を利用して自前で候補に
-  ;; 色を付ける場合はこの変数を nil に設定する。
-  (setq skk-inline-show-face nil)
-  (setq skk-inline-show-background-color "gray20"))
+(setq skk-echo t)
 
 ;;;-------------------------------
 ;;; 基本的なユーザ・インターフェース
@@ -114,9 +104,6 @@
 ;; Enter キーを押したときには確定する
 ;; (setq skk-egg-like-newline t)
 (setq skk-egg-like-newline t)
-
-;; 対応する閉括弧を自動的に挿入する
-(setq skk-auto-insert-paren t)
 
 ;; 句読点を動的に決定する
 (add-hook 'skk-mode-hook
@@ -201,6 +188,7 @@
 (setq skk-search-prog-list
       (skk-nunion skk-search-prog-list
                   '((skk-search-katakana))))
+
 ;;;-------------------------------
 ;;; 辞書に関する設定
 ;;;-------------------------------
@@ -214,8 +202,8 @@
 ;; 10 分放置すると個人辞書が自動的に保存される設定
 (defvar skk-auto-save-jisyo-interval 600)
 (defun skk-auto-save-jisyo ()
-  (skk-save-jisyo)
-  )
+  (skk-save-jisyo))
+
 (run-with-idle-timer skk-auto-save-jisyo-interval
                      skk-auto-save-jisyo-interval
                      'skk-auto-save-jisyo)
@@ -262,7 +250,7 @@
           (t "、"))))
 
 ;; (require 'sekka) 
-;; ;;(setq sekka-sticky-shift t)  ;; sticky-shiftを使用する場合、この行を有効にする
+;; (setq sekka-sticky-shift t)  ;; sticky-shiftを使用する場合、この行を有効にする
 ;; (global-sekka-mode 1)
 
 (provide 'init-skk)

@@ -73,6 +73,8 @@
 (define-key org-mode-map [(meta up)]    'org-metaup)
 (define-key org-mode-map [(meta down)]  'org-metadown)
 
+(define-key org-mode-map (kbd "M-N") 'org-metadown)
+(define-key org-mode-map (kbd "M-P") 'org-metaup)
 (define-key org-mode-map (kbd "M-n") 'org-forward-same-level)
 (define-key org-mode-map (kbd "M-p") 'org-backward-same-level)
 (define-key org-mode-map (kbd "C-m") 'my-backward-word)
