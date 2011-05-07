@@ -23,11 +23,14 @@
 
 (setq auto-mode-alist
 	  (append
-	   '(("\\.el*$" . emacs-lisp-mode)
+	   '(("\\.el$" . emacs-lisp-mode)
 		 )
 	   auto-mode-alist))
 
 (add-hook 'emacs-lisp-mode-hook 'my-emacs-lisp-mode-hook)
+
+(define-key emacs-lisp-mode-map (kbd "C-q C-e") 'eval-buffer)
+(define-key emacs-lisp-mode-map (kbd "C-l C-e") 'my-eval-buffer-or-region)
 
 ;;;-------------------------------
 ;;; eldoc lisp

@@ -13,19 +13,31 @@
 (require 'org-install)
 (require 'org-agenda)
 (require 'org-mobile)
+(require 'org-habit)
 
 (setq org-startup-truncated nil)
 (setq org-return-follows-link t)
 (setq org-log-done 'time) ;; DONEの時刻を記録
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (org-remember-insinuate) ;; remember も使う
-(add-hook 'org-mode-hook 'turn-on-font-lock) ;; org-modeでの強調表示を可能にする
+
+(add-hook 'org-mode-hook
+   '(lambda ()
+			(turn-on-font-lock)
+			(setq indent-tabs-mode nil)
+			(setq tab-width 2)
+			(setq default-tab-width 2)
+			))
+
 ;; (setq org-hide-leading-stars t) ;; 見出しの余分な*を消す
 (setq org-hide-leading-stars nil) ;; 見出しの余分な*を消さない
 
 (setq org-agenda-include-all-todo t)
 (setq org-tags-column -100)
 (setq org-fast-tag-selection-single-key t)
+
+(require 'auto-complete)
+(add-to-list 'ac-modes 'org-mode)
 
 (customize-set-variable 'org-agenda-include-diary t)
 
@@ -38,7 +50,7 @@
 
 ;; TODOの状態遷移
 (setq org-todo-keywords
-      '((sequence "TASK(t)" "WAIT(w)" "DONE(d)" "SOMEDAY(s)")))
+      '((sequence "TODO(t)" "WAIT(w!)" "|" "DONE(d)" "SOMEDAY(s)")))
 
 ;; DONEの時刻を記録
 (setq org-log-done 'time)
@@ -47,11 +59,13 @@
       '(("TASK" ?t "** TASK \n  %i\n  %a\n  %U\n" nil "INBOX")
         ("IDEA" ?i "** SOMEDAY \n  %i\n  %a\n  %U\n" nil "IDEAS")
 				("MEMO" ?m "** \n  %i\n  %a\n  %U\n" nil "NOTES")
+				("HABIT" ?h "** \n:PROPERTIES:\n:LOGGING: DONE(!) logrepeat\n:END:\n%i\n  %a\n  %U\n" nil "HABIT")
         ))
 
 (setq org-mobile-inbox-for-pull (concat org-directory "pulled.org"))
 ;; Dropbox直下のMobileOrgフォルダへのパスを設定
 (setq org-mobile-directory (concat my-dropbox-directory "MobileOrg"))
+(setq org-mobile-force-id-on-agenda-items nil)
 
 ;; 標準の祝日を利用する
 (customize-set-variable 'org-calendar-holidays t)
@@ -65,7 +79,8 @@
 	(find-file org-default-notes-file))
 
 (define-key global-map (kbd "C-l C-o C-o") 'my-org-open-index)
-(define-key global-map (kbd "C-l C-o C-l") 'org-store-link)
+(define-key global-map (kbd "C-l C-o C-s") 'org-store-link)
+(define-key global-map (kbd "C-l C-o C-p") 'org-mobile-push)
 
 (define-key org-mode-map (kbd "C-TAB") 'org-force-cycle-archived)
 (define-key org-mode-map [(meta left)]  'org-metaleft)
@@ -108,5 +123,14 @@
 
 (define-key org-agenda-mode-map (kbd "C-i") 'org-agenda-clock-in)
 (define-key org-agenda-mode-map (kbd "C-o") 'org-agenda-clock-out)
+
+(require 'org-crypt)
+; Encrypt all entries before saving
+(org-crypt-use-before-save-magic)
+; Which tag is used to mark headings to be encrypted
+(setq org-tags-exclude-from-inheritance (quote ("CRYPT")))
+(customize-set-value 'org-crypt-tag-matcher "CRYPT")
+; GPG key to use for encryption
+(setq org-crypt-key "F0B66B40")
 
 (provide 'init-org)

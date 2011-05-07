@@ -21,13 +21,8 @@
    ((my-is-windows) (setq my-font-size-base 135))
    ((my-is-mac) (setq my-font-size-base 260)))
 
-  (when (and use-font-setting (my-is-windows)
-             (set-face-attribute 'default nil
-																 :family "VL ゴシック"
-																 :height my-font-size-base)))
-    
 	(when (>= emacs-major-version 23)
-		(when (and use-font-setting (my-is-mac))
+		(when use-font-setting
 			(set-face-attribute 'default nil
 													:family "Inconsolata"
 													:height my-font-size-base)
@@ -59,7 +54,7 @@
 						(".*monaco cy-bold-.*-mac-cyrillic" . 0.9)
 						(".*monaco-bold-.*-mac-roman" . 0.9)
 						("-cdac$" . 1.3)))
-	)
+		)
 
   (require 'yalinum)
   (customize-set-variable 'yalinum-line-number-length-min 0)
@@ -99,11 +94,28 @@
 	;; (set-face-foreground 'skk-tooltip-face default-font-color)
 	;; (set-face-background 'skk-tooltip-face dummy-region-color)
 
-	(require 'yalinum)
-  (set-face-foreground 'yalinum-face default-font-color)
-  (set-face-foreground 'yalinum-bar-face default-font-color)
-	(set-face-background 'yalinum-face default-background-color)
-	(set-face-background 'yalinum-bar-face dummy-region-color)
+	;; 色設定
+	(when (require 'bm nil t)
+		(customize-set-value 'bm-priority 1)
+		(set-face-foreground 'bm-face default-font-color)
+		(set-face-background 'bm-face "#f0e0c0")
+		(set-face-foreground 'bm-persistent-face default-font-color)
+		(set-face-background 'bm-persistent-face "#f0e0c0")
+		)
+
+	(when (require 'tabbar nil t)
+		(set-face-foreground 'tabbar-default-face default-font-color)
+		(set-face-background 'tabbar-default-face dummy-region-color)
+		(set-face-foreground 'tabbar-selected-face default-font-color)
+		(set-face-background 'tabbar-selected-face region-color)
+		)
+
+	(when (require 'yalinum nil t)
+		(set-face-foreground 'yalinum-face default-font-color)
+		(set-face-foreground 'yalinum-bar-face default-font-color)
+		(set-face-background 'yalinum-face default-background-color)
+		(set-face-background 'yalinum-bar-face dummy-region-color)
+		)
 
 	(require 'yafastnav)
 	(set-face-foreground 'yafastnav-shortcut-key-face-type highlight-font-color)
@@ -216,12 +228,12 @@
    '(show-paren-ring-bell-on-mismatch t)
    '(show-paren-style 'mixed)
    )
-		 
+	
 	;;
   (when (require 'highlight-parentheses nil t)
 		(highlight-parentheses-mode)
 		(custom-set-variables
-		 '(hl-paren-background-colors '(dummy-region-color))
+		 '(hl-paren-background-colors '("#eee0d0"))
 		 '(hl-paren-colors '("firebrick2" "IndianRed2" "IndianRed3" "IndianRed4"))
 		 ))
 	

@@ -148,4 +148,8 @@
 
 (setq my-initialized t)
 
+(when (require 'my-growl nil t)
+	(my-growl-notify
+	 (concat "\"Emacs Initialized." "\"")))
+
 (provide 'init)

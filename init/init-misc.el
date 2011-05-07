@@ -221,18 +221,6 @@
 ;; (define-key map "\C-c\C-u" 'graphviz-dot-uncomment-region)
 	)
 
-(defun my-bs-cycle (arg)
-  "バッファ進む、戻るの C-uによる選択用"
-  (interactive "P")
-  (cond
-   ((equal arg '(4)) (bs-cycle-next))
-   (t (bs-cycle-previous))))
-
-;; (global-set-key [?\C-,] 'bs-cycle-next)
-;; (global-set-key [?\C-.] 'bs-cycle-previous)
-;; (global-set-key "\C-q\C-b" 'bs-show)
-(global-set-key (kbd "C--") 'my-bs-cycle)
-
 (require 'zlc)
 (setq zlc-select-completion-immediately t)
 
@@ -287,28 +275,28 @@
 	 'my-frame-arrange-with-twitter-client-main
 	 '((top + 0) (left + 0) (height . 1080) (width . 121))))
 
-(define-key global-map (kbd "C-l C-o C-m")
+(define-key global-map (kbd "C-l C-w C-m")
   #'(lambda ()
       (interactive)
       (frange:restore-frame-position-parameter
        (selected-frame)
        'my-frame-arrange-with-twitter-client)))
 
-(define-key global-map (kbd "C-l C-o C-f")
+(define-key global-map (kbd "C-l C-w C-f")
   #'(lambda ()
       (interactive)
       (frange:restore-frame-position-parameter
        (selected-frame)
        'my-frame-arrange-full-screen)))
 
-(define-key global-map (kbd "C-l C-o C-d")
+(define-key global-map (kbd "C-l C-w C-d")
   #'(lambda ()
       (interactive)
       (frange:restore-frame-position-parameter
        (selected-frame)
        'my-frame-arrange-default)))
 
-(define-key global-map (kbd "C-l C-o C-s")
+(define-key global-map (kbd "C-l C-w C-s")
   #'(lambda ()
       (interactive)
       (frange:restore-frame-position-parameter
@@ -377,5 +365,49 @@
 
 ;; (auto-install-from-url "http://github.com/tomoya/hiwin-mode/raw/master/hiwin.el")
 ;; (install-elisp "http://github.com/tomoya/hiwin-mode/raw/master/hiwin.el")
+
+;; グループ化せずに*scratch*以外のタブを表示
+(require 'cl)
+ (when (require 'tabbar nil t)
+    (setq tabbar-buffer-groups-function
+					(lambda (b) (list "All Buffers")))
+    ;; (setq tabbar-buffer-list-function
+    ;;       (lambda ()
+    ;;         (remove-if
+    ;;          (lambda(buffer)
+    ;;            (find (aref (buffer-name buffer) 0) " *"))
+    ;;          (buffer-list))))
+    (tabbar-mode t))
+
+;; 左に表示されるボタンを無効化
+(setq tabbar-home-button-enabled "")
+(setq tabbar-home-button-disabled "")
+(setq tabbar-scroll-left-button-enabled "")
+(setq tabbar-scroll-right-button-enabled "")
+(setq tabbar-scroll-left-button-disabled "")
+(setq tabbar-scroll-right-button-disabled "")
+
+(prefix-arg-commands-defun prefix-arg-commands-bs-cycle
+                            (list
+																'bs-cycle-next
+																'bs-cycle-previous
+                              ))
+
+(prefix-arg-commands-defun prefix-arg-commands-buffer-cycle
+                            (list
+																'next-buffer
+																'previous-buffer
+                              ))
+
+(prefix-arg-commands-defun prefix-arg-commands-tabber-cycle
+                            (list
+																'tabbar-forward
+																'tabbar-backward
+                              ))
+
+
+;; (global-set-key (kbd "C--") 'prefix-arg-commands-bs-cycle)
+;; (global-set-key (kbd "C--") 'prefix-arg-commands-buffer-cycle)
+(global-set-key (kbd "C--") 'prefix-arg-commands-tabber-cycle)
 
 (provide 'init-misc)

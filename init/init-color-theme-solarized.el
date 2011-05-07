@@ -144,9 +144,10 @@ Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized."
  '(cursor-mode t) ; On for overwrite/read-only/input mode
  '(curchg-idle-cursor-type 'box)
  '(curchg-default-cursor-type 'box)
- '(curchg-overwrite/read-only-cursor-type 'hollow))
+ '(curchg-overwrite/read-only-cursor-type 'box))
 
-(toggle-cursor-type-when-idle t) ; On when idle
+; On when idle
+(toggle-cursor-type-when-idle t)
 
 (defun color-theme-solarized-dark ()
   (interactive)

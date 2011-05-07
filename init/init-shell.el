@@ -9,6 +9,7 @@
 
 ;;; Code:
 
+(require 'shell)
 (setq shell-command-switch "-lc") ;; デバッグ用
 
 ;; (setq shell-command-switch "--rcfile $HOME/.bashrc -c ")
@@ -25,7 +26,6 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;;; shell-mode コマンド履歴
-(require 'shell)
 (define-key shell-mode-map (kbd "C-S-p") 'comint-previous-input)
 (define-key shell-mode-map (kbd "C-S-n") 'comint-next-input)
 (define-key shell-mode-map (kbd "C-c C-j") 'compilation-mode)
@@ -35,8 +35,6 @@
 (setq comint-scroll-show-maximum-output t) 	;; できるだけ出力内容が見えるようにスクール
 (setq comint-scroll-to-bottom-on-input t) 		;; テキスト入力時に自動でスクロール
 (setq comint-input-ignoredups t)				;; 同じコマンド履歴は残さない
-
-;;tload -d グラフの更新間隔秒 -s 縦軸の目盛り数 [ tty]
 
 ;;;-------------------------------
 ;;; multi-shell
@@ -89,5 +87,26 @@
   ;; (setq explicit-shell-file-name "/bin/bash")
   ;; (setq multi-shell-command "/usr/local/bin/zsh")
   )
+
+(when (require 'my-growl nil t)
+	(require 'deferred)
+	(defun my-shell-command-growl-notify (&optional cmd args)
+		"shell-commandを実行し、終了したらgrowlでお知らせ。"
+		(interactive)
+		(lexical-let* ((cmd (if cmd cmd (read-string "shell command:")))
+									 (args (if args args (read-string "command args:")))
+									 (clsr (concat cmd ":" args)))
+			(deferred:$
+				(deferred:process-shell cmd args)
+				(deferred:nextc it
+					(lambda (x)
+						(my-growl-notify (concat "\"" "Finish! " clsr "\n" x "\""))
+						(when (stringp x)
+							(message x))))
+				(deferred:error it
+					(lambda (err)
+						(my-growl-notify (concat "\"" "Error! " clsr "\"")))))))
+
+	(global-set-key (kbd "C-l C-s C-n") 'my-shell-command-growl-notify))
 
 (provide 'init-shell)

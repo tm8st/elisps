@@ -9,6 +9,8 @@
 
 ;;; Code:
 
+(require 'scheme)
+
 ;; 実行環境
 (setq scheme-program-name "gosh")
 (setq scheme-info-name "/usr/local/info/gauche-refj.info.gz")
@@ -36,12 +38,17 @@
    (get-buffer-create "*info*"))
   (info scheme-info-name))
 
-(define-key global-map
-  (kbd "C-l C-") 'scheme-other-frame)
+(add-to-list 'ac-modes 'inferior-scheme-mode)
 
-(global-set-key (kbd "C-l C-@ C-w") 'scheme-other-window)
-(global-set-key (kbd "C-l C-@ C-f") 'scheme-other-frame)
-(global-set-key (kbd "C-l C-@ C-j") 'scheme-info)
+(define-key scheme-mode-map (kbd "C-c C-w") 'scheme-other-window)
+(define-key scheme-mode-map (kbd "C-c C-f") 'scheme-other-frame)
+(define-key scheme-mode-map (kbd "C-c C-i") 'scheme-info)
+
+(define-key inferior-scheme-mode-map (kbd "C-m") 'backward-word)
+(define-key inferior-scheme-mode-map (kbd "C-j") 'comint-send-input)
+(define-key inferior-scheme-mode-map (kbd "C-c C-w") 'scheme-other-window)
+(define-key inferior-scheme-mode-map (kbd "C-c C-f") 'scheme-other-frame)
+(define-key inferior-scheme-mode-map (kbd "C-c C-i") 'scheme-info)
 
 ;; (setq exe-path (cons (expand-file-name "/Applications/PLT Scheme v4.2.3/bin/") exec-path))
 ;; (setq scheme-program-name "MzScheme.exe")	  ;;スキーム処理系

@@ -180,10 +180,11 @@
 	(unless (eq buffer-file-name nil)
 		(let* ((current-dir (file-name-directory (buffer-file-name)))
 					 (cc-search-directories
-					 (append (list
-										(concat current-dir "../Inc")
-										(concat current-dir "../Src"))
-									 cc-search-directories)))
+					 	(append (list
+					 					 (concat current-dir "../Inc")
+					 					 (concat current-dir "../Src"))
+					 					cc-search-directories))
+					 (ff-ignore-include t))
 			(ff-find-other-file)))
 	(ff-find-other-file))
 

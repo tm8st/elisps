@@ -110,7 +110,7 @@
 (global-set-key (kbd "C-l C-3") 'split-window-horizontally)
 (global-set-key (kbd "C-l C-0") 'delete-window)
 
-(global-set-key (kbd "C-l C-w") 'my-copy-region-or-follow-word) ;;copy
+;; (global-set-key (kbd "C-l C-w") 'my-copy-region-or-follow-word) ;;copy
 (global-set-key (kbd "C-l C-k") 'kill-whole-line) ;;line kill
 (global-set-key (kbd "C-l C-d C-f") 'my-delete-forward-word)
 (global-set-key (kbd "C-l C-d C-b") 'my-delete-backward-word)
@@ -290,16 +290,52 @@
 (global-set-key (kbd "C-8 C-8") 'gro-mark-current-line)
 (global-set-key (kbd "C-8 C-n") 'gro-mark-next-line)
 (global-set-key (kbd "C-8 C-p") 'gro-mark-prev-line)
-(global-set-key (kbd "C-8 C-h") 'gro-mark-jaunte-prev)
+(global-set-key (kbd "C-8 C-h") 'mark-paragraph*)
 (global-set-key (kbd "C-8 C-d") 'gro-mark-defun*)
 
 ;; (global-set-key (kbd "C-|") 'goto-line)
 ;; 一行野郎バージョン
 (global-set-key (kbd "C-l C-l") '(lambda () (interactive) (recenter 5)))
-;; (global-set-key (kbd "C-l C-l") 'what-face-at-point)
+(defun my-face-at-point ()
+	(interactive)
+	(face-at-point))
+
+(global-set-key (kbd "C-l C-.") 'my-face-at-point)
 
 ;; エラー箇所へのジャンプ用
 (global-set-key (kbd "C-l C-;") 'compilation-minor-mode)
 (define-key compilation-minor-mode-map (kbd "C-c C-c") 'comint-interrupt-subjob)
+
+(require 'bm)
+(global-set-key (kbd "M-C-m") 'bm-toggle)
+(global-set-key (kbd "M-C-n") 'bm-next)
+(global-set-key (kbd "M-C-p") 'bm-previous)
+
+(global-set-key (kbd "C-l C-b C-m") 'bm-toggle)
+(global-set-key (kbd "C-l C-b C-n") 'bm-next)
+(global-set-key (kbd "C-l C-b C-p") 'bm-previous)
+
+;; save bookmarks
+(setq-default bm-buffer-persistence t)
+;; Filename to store persistent bookmarks
+(setq bm-repository-file "~/.emacs.d/.bm-repository")
+
+;; Loading the repository from file when on start up.
+(add-hook' after-init-hook 'bm-repository-load)
+
+;; Restoring bookmarks when on file find.
+(add-hook 'find-file-hooks 'bm-buffer-restore)
+ 
+;; Saving bookmark data on killing and saving a buffer
+(add-hook 'kill-buffer-hook 'bm-buffer-save)
+(add-hook 'auto-save-hook 'bm-buffer-save)
+(add-hook 'after-save-hook 'bm-buffer-save)
+ 
+;; Saving the repository to file when on exit.
+;; kill-buffer-hook is not called when emacs is killed, so we
+;; must save all bookmarks first.
+(add-hook 'kill-emacs-hook '(lambda nil
+                              (bm-buffer-save-all)
+                              (bm-repository-save)))
 
 (provide 'init-keybindings)
