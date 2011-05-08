@@ -11,17 +11,13 @@
 
 (require 'init-my-misc)
 
-;;;-------------------------------
-;;; delete, mark, kill some ranges.
-;;;-------------------------------
 (require 'generic-range-opt)
 (require 'prefix-arg-commands)
 
 ;;標準操作
 (global-set-key (kbd "C-f") 'prefix-arg-commands-forward-move-commands)
 (global-set-key (kbd "C-b") 'prefix-arg-commands-backward-move-commands)
-(global-set-key (kbd "C-t") 'my-forward-word)
-(global-set-key (kbd "C-m") 'my-backward-word)
+(global-set-key (kbd "C-m") 'backward-word)
 (global-set-key (kbd "C-a") 'prefix-arg-commands-back-to-indentation-move-commands)
 (global-set-key (kbd "C-e") 'prefix-arg-commands-end-of-line-move-commands)
 ;; (global-set-key (kbd "C-a") 'back-to-indentation)
@@ -91,8 +87,15 @@
 
 (global-set-key (kbd "C-.") 'my-just-one-space-toggle)
 
+(prefix-arg-commands-defun prefix-arg-commands-word-op
+													 (list
+														'gro-kill-follow-word
+														'gro-copy-follow-word))
+
+(global-set-key (kbd "C-w") 'prefix-arg-commands-word-op)
+
 ;; (global-set-key (kbd "C-w") 'kill-word*)
-(global-set-key (kbd "C-w") 'gro-kill-follow-word)
+;; (global-set-key (kbd "C-w") 'gro-kill-follow-word)
 ;; (global-set-key (kbd "C-S-w") 'my-delete-region-or-follow-kill-word)
 
 ;;;-------------------------------
@@ -204,10 +207,12 @@
 
 (global-set-key (kbd "C-q C-q") 'quoted-insert)       ;;元のコマンド
 (global-set-key (kbd "C-q C-@") 'yalinum-mode)        ;;行番号表示
-(global-set-key (kbd "C-q C-w") 'gro-copy-follow-word) ;;copy
-;; (global-set-key (kbd "C-q C-w") 'copy-region-as-kill) ;;copy
 (global-set-key (kbd "C-q C-h") 'help-for-help)       ;;ヘルプ
 (global-set-key (kbd "C-q C-;") 'view-mode)
+
+;; C-u C-w に変更
+;; (global-set-key (kbd "C-q C-w") 'gro-copy-follow-word) ;;copy
+;; (global-set-key (kbd "C-q C-w") 'copy-region-as-kill) ;;copy
 
 ;; text edit.
 (global-set-key (kbd "C-q C-c") 'comment-or-uncomment-region) ;;コメント付加、解除

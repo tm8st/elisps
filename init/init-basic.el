@@ -154,8 +154,8 @@
   (require 'recentf)
   (recentf-mode 1)
   (custom-set-variables
-   '(recentf-max-menu-items 1000)
-   '(recentf-max-saved-items 1000)
+   '(recentf-max-menu-items 500)
+   '(recentf-max-saved-items 500)
    )
 
   ;;別のdirectoryにある同一名のfileを開いた時に、

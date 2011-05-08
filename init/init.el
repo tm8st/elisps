@@ -94,39 +94,39 @@
   ;; init etc
   ;;----------------------------------------
   (setq init-load-elisp-list
-    (list
-     "init-keybindings.el"
+				(list
+				 "init-keybindings.el"
 
-     "init-basic.el"
-     "init-misc.el"
-     "init-my-misc.el"
+				 "init-basic.el"
+				 "init-misc.el"
+				 "init-my-misc.el"
 
-     "init-howm.el"
-     "init-dired.el"
+				 "init-howm.el"
+				 "init-dired.el"
 
-     ;; program lang
-    "init-elisp.el"
-    "init-c-mode.el"
-    "init-ruby.el"
+				 ;; program lang
+				 "init-elisp.el"
+				 "init-c-mode.el"
+				 "init-ruby.el"
 
-    ;; "init-lua.el"
-    ;; "init-go.el"
+				 ;; "init-lua.el"
+				 ;; "init-go.el"
 
-    "init-complete.el"
-    "init-yasnippet.el"
+				 "init-complete.el"
+				 "init-yasnippet.el"
 
-    "init-gtags.el"
-    "init-anything.el"
-    "init-popups.el"
-    "init-shell.el"
-    "init-skk.el"
-    "init-migemo.el"
+				 "init-gtags.el"
+				 "init-anything.el"
+				 "init-popups.el"
+				 "init-shell.el"
+				 "init-skk.el"
+				 "init-migemo.el"
+				 "init-theme.el"
+				 "init-org.el"
 
-     "init-theme.el"
-
-     ;; "init-window.el"
-     ;; "init-test.el"
-     ))
+				 ;; "init-window.el"
+				 ;; "init-test.el"
+				 ))
 
   ;; 環境によってOn/Offする設定ファイル
   (when my-use-shecme-mode
@@ -135,8 +135,7 @@
     (add-to-list 'init-load-elisp-list "init-scala.el"))
   (when my-use-haskell-mode
     (add-to-list 'init-load-elisp-list "init-haskell.el"))
-  (when my-use-org-mode
-    (add-to-list 'init-load-elisp-list "init-org.el"))
+ 
   (when my-use-twitter-mode
     (add-to-list 'init-load-elisp-list "init-twitter.el"))
 
@@ -148,6 +147,7 @@
 
 (setq my-initialized t)
 
+;; initialized notify by growl.
 (when (require 'my-growl nil t)
 	(my-growl-notify
 	 (concat "\"Emacs Initialized." "\"")))
