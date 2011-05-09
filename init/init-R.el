@@ -1,6 +1,6 @@
 ;;; init-R.el --- R setting
 
-;; Copyright (C) 2010 tm8st
+;; Copyright (C) 2010, 2011 tm8st
 
 ;; Author: tm8st <tm8st@hotmail.co.jp>
 ;; Keywords: init, R

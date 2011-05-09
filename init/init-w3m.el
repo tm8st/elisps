@@ -1,6 +1,6 @@
 ;;; init-w3m.el --- w3m inii
 
-;; Copyright (C) 2010 tm8st
+;; Copyright (C) 2010, 2011 tm8st
 
 ;; Author: tm8st <tm8st@hotmail.co.jp>
 ;; Keywords: init, w3m, browser

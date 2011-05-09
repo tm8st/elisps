@@ -1,6 +1,6 @@
 ;;; init-complete.el --- my complete setting.
 
-;; Copyright (C) 2010 tm8st
+;; Copyright (C) 2010, 2011 tm8st
 
 ;; Author: tm8st <tm8st@hotmail.co.jp>
 ;; Keywords: init, complete
@@ -9,6 +9,7 @@
 
 ;;; Code:
 
+(require 'init-compile-env)
 (require 'eshell)
 (require 'imenu)
 (require 'complete) ;; 強力な補完機能を使う

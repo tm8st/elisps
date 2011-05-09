@@ -1,6 +1,6 @@
 ;;; init-org.el --- org mode setting
 
-;; Copyright (C) 2010 tm8st
+;; Copyright (C) 2010, 2011 tm8st
 
 ;; Author: tm8st <tm8st@hotmail.co.jp>
 ;; Keywords: init, org
@@ -117,12 +117,28 @@
 
 (define-key global-map (kbd "C-l C-o C-z") 'my-org-agenda-open-buffer)
 
+(defun my-org-clock-in ()
+	(interactive)
+	(org-clock-in)
+	(tm8st-growl-timer "Org" nil (* 60 1000)))
+
 ;; timer start, stop.
-(define-key org-mode-map (kbd "C-c C-i") 'org-clock-in)
+(define-key org-mode-map (kbd "C-c C-i") 'my-org-clock-in)
 (define-key org-mode-map (kbd "C-c C-o") 'org-clock-out)
 
 (define-key org-agenda-mode-map (kbd "C-i") 'org-agenda-clock-in)
 (define-key org-agenda-mode-map (kbd "C-o") 'org-agenda-clock-out)
+
+(defun my-add-separate-char-on-newline ()
+	"ざっくりとレイアウト調整。"
+	(interactive)
+	(let ((s (point))
+				(e (mark)))
+		(replace-string "," ",\n" nil s e)
+		(replace-string "\. " ".\n" nil s e)
+		))
+
+(define-key org-mode-map (kbd "C-c C-k") 'my-add-separate-char-on-newline)
 
 (require 'org-crypt)
 ; Encrypt all entries before saving

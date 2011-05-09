@@ -1,6 +1,6 @@
 ;;; init-misc.el --- misc customize.
 
-;; Copyright (C) 2010 tm8st
+;; Copyright (C) 2010, 2011 tm8st
 
 ;; Author: tm8st <tm8st@hotmail.co.jp>
 ;; Keywords: init, customize
@@ -10,6 +10,16 @@
 ;;; Code:
 
 (require 'doc-view)
+
+;;;-------------------------------
+;;; text-mode
+;;;-------------------------------
+(add-hook
+ 'text-mode-hook
+ (lambda ()
+   (setq tab-width 4)
+   (customize-set-value 'standard-indent 4)
+   (setq indent-tabs-mode t)))
 
 ;;;-------------------------------
 ;;; popwin
@@ -404,7 +414,6 @@
 																'tabbar-forward
 																'tabbar-backward
                               ))
-
 
 ;; (global-set-key (kbd "C--") 'prefix-arg-commands-bs-cycle)
 ;; (global-set-key (kbd "C--") 'prefix-arg-commands-buffer-cycle)

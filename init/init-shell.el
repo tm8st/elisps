@@ -1,6 +1,6 @@
 ;;; init-shell.el --- shell setting
 
-;; Copyright (C) 2010 tm8st
+;; Copyright (C) 2010, 2011 tm8st
 
 ;; Author: tm8st <tm8st@hotmail.co.jp>
 ;; Keywords: init, shell
@@ -88,7 +88,7 @@
   ;; (setq multi-shell-command "/usr/local/bin/zsh")
   )
 
-(when (require 'my-growl nil t)
+(when (require 'tm8st-growl nil t)
 	(require 'deferred)
 	(defun my-shell-command-growl-notify (&optional cmd args)
 		"shell-commandを実行し、終了したらgrowlでお知らせ。"
@@ -100,12 +100,12 @@
 				(deferred:process-shell cmd args)
 				(deferred:nextc it
 					(lambda (x)
-						(my-growl-notify (concat "\"" "Finish! " clsr "\n" x "\""))
+						(tm8st-growl-notify (concat "\"" "Finish! " clsr "\n" x "\""))
 						(when (stringp x)
 							(message x))))
 				(deferred:error it
 					(lambda (err)
-						(my-growl-notify (concat "\"" "Error! " clsr "\"")))))))
+						(tm8st-growl-notify (concat "\"" "Error! " clsr "\"")))))))
 
 	(global-set-key (kbd "C-l C-s C-n") 'my-shell-command-growl-notify))
 

@@ -1,6 +1,6 @@
 ;;; init-howm.el --- howm setting
 
-;; Copyright (C) 2010 tm8st
+;; Copyright (C) 2010, 2011 tm8st
 
 ;; Author: tm8st <tm8st@hotmail.co.jp>
 ;; Keywords: init, howm
@@ -18,17 +18,6 @@
       (append
        '(("\\.howm$" . howm-mode))
        auto-mode-alist))
-
-;;;-------------------------------
-;;; text-mode
-;;;-------------------------------
-(add-hook
- 'text-mode-hook
- (lambda ()
-   (setq tab-stop-list '(2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 82 84 86 88 90 92 94 96 98 100 102 104 106 108 110 112 114 116 118 120))
-   (setq tab-width 4)
-   (customize-set-value 'standard-indent 4)
-   (setq indent-tabs-mode t)))
 
 ;; easy-imenu
 (require 'easy-imenu-index-generator-config)
@@ -327,10 +316,18 @@
   (my-howm-save-all-buffers)
   (kill-buffer "*Moccur*"))
 
+(defun my-moccur-all-save-and-kill-buffer ()
+  "編集終了後に全変更の適用してMoccurバッファを閉じる。"
+  (interactive)
+  (moccur-edit-finish-edit)
+  (my-save-all-buffers)
+  (kill-buffer "*Moccur*"))
+
 (global-set-key (kbd "C-l C-u C-,") 'my-howm-active-todo-moccur)
 
 (define-key moccur-edit-mode-map (kbd "C-c C-j") 'my-howm-currentline-todo-toggle)
-(define-key moccur-edit-mode-map (kbd "C-c C-e") 'my-howm-moccur-all-save-and-kill-buffer)
+(define-key moccur-edit-mode-map (kbd "C-c C-h") 'my-howm-moccur-all-save-and-kill-buffer)
+(define-key moccur-edit-mode-map (kbd "C-c C-e") 'my-moccur-all-save-and-kill-buffer)
 (define-key moccur-edit-mode-map (kbd "C-c C-m") 'moccur-grep-goto)
 (define-key moccur-edit-mode-map (kbd "C-c C-n") 'moccur-next)
 (define-key moccur-edit-mode-map (kbd "C-c C-p") 'moccur-prev)

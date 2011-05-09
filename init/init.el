@@ -1,6 +1,6 @@
 ;;; init.el --- init emacs
 
-;; Copyright (C) 2010 tm8st
+;; Copyright (C) 2010, 2011 tm8st
 
 ;; Author: tm8st <tm8st@hotmail.co.jp>
 ;; Keywords: init
@@ -55,7 +55,6 @@
 ;;; loadpath add all ~/elisps subdirs
 ;;;----------------------------------------
 (defvar my-default-load-path load-path)
-
 (let ((dir (expand-file-name my-elisp-path)))
   (if (member dir load-path) nil
     (setq load-path (cons dir load-path))
@@ -78,7 +77,6 @@
 ;; (if (member (expand-file-name d) my-default-load-path) nil
 ;;   (my-byte-recompile-directory d)))
 
-
 (add-to-list 'load-path "~/emacswiki.org" t)
 
 ;;;-------------------------------
@@ -86,9 +84,11 @@
 ;;;-------------------------------
 (when use-customize
 
-	(load "init-compile-env.el")
-	(load "init-private.el")
-	(load "private.el")
+  (load "init-compile-env.el")
+  (load "init-private.el")
+  (load "private.el")
+
+  (add-to-list 'load-path (concat my-dropbox-directory "Elisp"))
 
   ;;----------------------------------------
   ;; init etc
@@ -148,8 +148,8 @@
 (setq my-initialized t)
 
 ;; initialized notify by growl.
-(when (require 'my-growl nil t)
-	(my-growl-notify
+(when (require 'tm8st-growl nil t)
+	(tm8st-growl-notify
 	 (concat "\"Emacs Initialized." "\"")))
 
 (provide 'init)

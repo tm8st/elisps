@@ -1,6 +1,6 @@
 ;;; init-theme.el --- theme setting
 
-;; Copyright (C) 2010, 2011 tm8st
+;; Copyright (C) 2010, 2011, 2011 tm8st
 
 ;; Author: tm8st <tm8st@hotmail.co.jp>
 ;; Keywords: init, theme

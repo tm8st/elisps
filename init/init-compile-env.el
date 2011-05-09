@@ -1,6 +1,6 @@
 ;;; init-compile-env.el --- my elisp compile env setting.
 
-;; Copyright (C) 2010 tm8st
+;; Copyright (C) 2010, 2011 tm8st
 
 ;; Author: tm8st <tm8st@hotmail.co.jp>
 ;; Keywords: init, funcs, compile, env
@@ -50,6 +50,7 @@
 (unless my-initialized
   (add-to-list 'load-path my-elisp-path)
   (add-to-list 'load-path (concat my-elisp-path "/init"))
+  (add-to-list 'load-path "~/emacswiki.org" t)
   )
 
 (defvar init-load-elisp-list nil)
@@ -62,4 +63,5 @@
 
 (require 'init-private)
 (require 'private) ;; 値の設定(非公開ファイル)
+
 (provide 'init-compile-env)

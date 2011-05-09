@@ -1,6 +1,6 @@
 ;;; init-c-mode.el --- c, c++, objc mode setting
 
-;; Copyright (C) 2010 tm8st
+;; Copyright (C) 2010, 2011 tm8st
 
 ;; Author: tm8st <tm8st@hotmail.co.jp>
 ;; Keywords: init, c, c++, objc mode setting

@@ -1,6 +1,6 @@
 ;;; init-keybindings.el --- key binding
 
-;; Copyright (C) 2010 tm8st
+;; Copyright (C) 2010, 2011 tm8st
 
 ;; Author: tm8st <tm8st@hotmail.co.jp>
 ;; Keywords: init, keybinds
@@ -17,6 +17,7 @@
 ;;標準操作
 (global-set-key (kbd "C-f") 'prefix-arg-commands-forward-move-commands)
 (global-set-key (kbd "C-b") 'prefix-arg-commands-backward-move-commands)
+(global-set-key (kbd "C-t") 'forward-word)
 (global-set-key (kbd "C-m") 'backward-word)
 (global-set-key (kbd "C-a") 'prefix-arg-commands-back-to-indentation-move-commands)
 (global-set-key (kbd "C-e") 'prefix-arg-commands-end-of-line-move-commands)
@@ -93,6 +94,7 @@
 														'gro-copy-follow-word))
 
 (global-set-key (kbd "C-w") 'prefix-arg-commands-word-op)
+
 
 ;; (global-set-key (kbd "C-w") 'kill-word*)
 ;; (global-set-key (kbd "C-w") 'gro-kill-follow-word)
@@ -211,7 +213,7 @@
 (global-set-key (kbd "C-q C-;") 'view-mode)
 
 ;; C-u C-w に変更
-;; (global-set-key (kbd "C-q C-w") 'gro-copy-follow-word) ;;copy
+(global-set-key (kbd "C-q C-w") 'gro-copy-follow-word) ;;copy
 ;; (global-set-key (kbd "C-q C-w") 'copy-region-as-kill) ;;copy
 
 ;; text edit.
