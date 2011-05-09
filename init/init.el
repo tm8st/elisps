@@ -79,6 +79,12 @@
 
 (add-to-list 'load-path "~/emacswiki.org" t)
 
+;;----------------------------------------
+;; original key-binding-prefix
+;;----------------------------------------
+(global-unset-key (kbd "C-q"))
+(global-unset-key (kbd "C-l"))
+
 ;;;-------------------------------
 ;;; start customize
 ;;;-------------------------------

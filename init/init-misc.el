@@ -265,7 +265,7 @@
 
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-with-twitter-client-main
-	 '((top + 0) (left + 0) (height . 1080) (width . 121)))
+	 '((top + 0) (left + 0) (height . 1080) (width . 118)))
 	)
 
 (when (my-is-windows)
@@ -283,7 +283,7 @@
 
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-with-twitter-client-main
-	 '((top + 0) (left + 0) (height . 1080) (width . 121))))
+	 '((top + 0) (left + 0) (height . 1080) (width . 115))))
 
 (define-key global-map (kbd "C-l C-w C-m")
   #'(lambda ()

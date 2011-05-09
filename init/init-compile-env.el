@@ -55,12 +55,6 @@
 
 (defvar init-load-elisp-list nil)
 
-;;----------------------------------------
-;; original key-binding-prefix
-;;----------------------------------------
-(global-unset-key (kbd "C-q"))
-(global-unset-key (kbd "C-l"))
-
 (require 'init-private)
 (require 'private) ;; 値の設定(非公開ファイル)
 

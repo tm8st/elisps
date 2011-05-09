@@ -212,7 +212,6 @@
 (global-set-key (kbd "C-q C-h") 'help-for-help)       ;;ヘルプ
 (global-set-key (kbd "C-q C-;") 'view-mode)
 
-;; C-u C-w に変更
 (global-set-key (kbd "C-q C-w") 'gro-copy-follow-word) ;;copy
 ;; (global-set-key (kbd "C-q C-w") 'copy-region-as-kill) ;;copy
 

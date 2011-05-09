@@ -119,12 +119,17 @@
 
 (defun my-org-clock-in ()
 	(interactive)
-	(org-clock-in)
-	(tm8st-growl-timer "Org" nil (* 60 1000)))
+	(tm8st-growl-timer "Org" "Org" nil (* 60 1000))
+	(org-clock-in))
+
+(defun my-org-clock-out ()
+	(interactive)
+	(tm8st-growl-notify-delete-sticky "End." "Org")
+	(org-clock-out))
 
 ;; timer start, stop.
 (define-key org-mode-map (kbd "C-c C-i") 'my-org-clock-in)
-(define-key org-mode-map (kbd "C-c C-o") 'org-clock-out)
+(define-key org-mode-map (kbd "C-c C-o") 'my-org-clock-out)
 
 (define-key org-agenda-mode-map (kbd "C-i") 'org-agenda-clock-in)
 (define-key org-agenda-mode-map (kbd "C-o") 'org-agenda-clock-out)
@@ -136,6 +141,7 @@
 				(e (mark)))
 		(replace-string "," ",\n" nil s e)
 		(replace-string "\. " ".\n" nil s e)
+		(replace-string "!" "!\n" nil s e)
 		))
 
 (define-key org-mode-map (kbd "C-c C-k") 'my-add-separate-char-on-newline)
