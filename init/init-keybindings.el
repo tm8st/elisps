@@ -229,6 +229,10 @@
 
 (global-set-key (kbd "C-q C-k") 'my-delete-line-backward)
 
+(global-set-key (kbd "C-q C-2") '(lambda () (interactive) (insert-string "\"\"") (backward-char)))
+(global-set-key (kbd "C-q C-7") '(lambda () (interactive) (insert-string "''") (backward-char)))
+
+
 ;;;-------------------------------
 ;;; delete, mark, kill some ranges.
 ;;;-------------------------------

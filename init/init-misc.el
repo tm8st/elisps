@@ -38,6 +38,7 @@
 ;;;-------------------------------
 (require 'text-translator-vars)
 (require 'text-translator)
+(require 'init-my-misc)
 
 ;; 自動選択に使用する関数を設定
 (setq text-translator-auto-selection-func
@@ -390,14 +391,15 @@
 ;;     ;;          (buffer-list))))
 ;;     (tabbar-mode t))
 
-;; 左に表示されるボタンを無効化
-(setq tabbar-home-button-enabled "")
-(setq tabbar-home-button-disabled "")
-(setq tabbar-scroll-left-button-enabled "")
-(setq tabbar-scroll-right-button-enabled "")
-(setq tabbar-scroll-left-button-disabled "")
-(setq tabbar-scroll-right-button-disabled "")
+;; ;; 左に表示されるボタンを無効化
+;; (setq tabbar-home-button-enabled "")
+;; (setq tabbar-home-button-disabled "")
+;; (setq tabbar-scroll-left-button-enabled "")
+;; (setq tabbar-scroll-right-button-enabled "")
+;; (setq tabbar-scroll-left-button-disabled "")
+;; (setq tabbar-scroll-right-button-disabled "")
 
+(require 'prefix-arg-commands)
 (prefix-arg-commands-defun prefix-arg-commands-bs-cycle
                             (list
 																'bs-cycle-next

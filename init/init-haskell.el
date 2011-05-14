@@ -10,7 +10,8 @@
 (require 'haskell-mode)
 (require 'haskell-indentation)
 (require 'inf-haskell)
-
+(require 'prefix-arg-commands)
+			      
 (add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
 (add-to-list 'auto-mode-alist '("\\.hsc$" . haskell-mode))
 
@@ -40,8 +41,20 @@
 
 (define-key haskell-mode-map (kbd "C-m") 'backward-word)
 (define-key haskell-mode-map (kbd "C-c C-h") 'haskell-hoogle)
-(define-key haskell-mode-map (kbd "C-c C-l") '(lambda () (interactive) (insert-string "<- ")))
-(define-key haskell-mode-map (kbd "C-c C-r") '(lambda () (interactive) (insert-string "-> ")))
+
+(prefix-arg-commands-defun prefix-arg-commands-insert-haskell-right-arrow
+													 (list
+														 '(lambda () (interactive) (insert-string " -> "))
+														 '(lambda () (interactive) (insert-string " => "))))
+
+(define-key haskell-mode-map (kbd "C-c C-l") '(lambda () (interactive) (insert-string " <- ")))
+(define-key haskell-mode-map (kbd "C-c C-r") `prefix-arg-commands-insert-haskell-right-arrow)
+(define-key haskell-mode-map (kbd "C-c C-@") '(lambda () (interactive) (insert-string "``") (backward-char)))
+
+(define-key inferior-haskell-mode-map (kbd "C-c C-l") '(lambda () (interactive) (insert-string " <- ")))
+(define-key inferior-haskell-mode-map (kbd "C-c C-r") `prefix-arg-commands-insert-haskell-right-arrow)
+(define-key inferior-haskell-mode-map (kbd "C-c C-@") '(lambda () (interactive) (insert-string "``") (backward-char)))
+
 (define-key haskell-mode-map (kbd "C-c C-c") 'inferior-haskell-load-file)
 (define-key haskell-mode-map (kbd "C-c C-e") 'inferior-haskell-load-and-run)
 (define-key haskell-mode-map (kbd "C-c l") 'hs-lint)
@@ -69,7 +82,6 @@
     ;; (scion-flycheck-on-save nil) ; conflict with auto-buffer-save
     ;; (setq scion-completing-read-function 'ido-completing-read)
 		(ghc-init)
-		(setq default-tab-width 2)
     (setq tab-width 2)
 		(setq indent-tabs-mode nil)
   ))

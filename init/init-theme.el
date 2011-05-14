@@ -19,7 +19,7 @@
   (defvar my-font-size-base 100)
   (cond
    ((my-is-windows) (setq my-font-size-base 155))
-   ((my-is-mac) (setq my-font-size-base 260)))
+   ((my-is-mac) (setq my-font-size-base 250)))
 
 	(when (>= emacs-major-version 23)
 		(when use-font-setting

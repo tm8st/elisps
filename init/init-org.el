@@ -60,9 +60,11 @@
 (setq org-log-done 'time)
 
 (setq org-remember-templates
-      '(("TASK" ?t "** TASK \n  %i\n  %a\n  %U\n" nil "INBOX")
-        ("IDEA" ?i "** SOMEDAY \n  %i\n  %a\n  %U\n" nil "IDEAS")
+      '(
+				("TASK" ?t "** TASK \n  %i\n  %a\n  %U\n" nil "INBOX")
+				("IDEA" ?i "** SOMEDAY \n  %i\n  %a\n  %U\n" nil "IDEAS")
 				("MEMO" ?m "** \n  %i\n  %a\n  %U\n" nil "NOTES")
+				("LIFE-TASK" ?l "** TASK \n  %i\n  %a\n  %U\n" nil "LIFE")
 				("HABIT" ?h "** \n:PROPERTIES:\n:LOGGING: DONE(!) logrepeat\n:END:\n%i\n  %a\n  %U\n" nil "HABIT")
         ))
 
@@ -81,12 +83,8 @@
 (defun my-org-open-index ()
 	(interactive)
 	(find-file org-default-notes-file))
-(defun my-org-open-life ()
-	(interactive)
-	(find-file (concat org-directory "life.org")))
 
 (define-key global-map (kbd "C-l C-o C-o") 'my-org-open-index)
-(define-key global-map (kbd "C-l C-o C-l") 'my-org-open-life)
 (define-key global-map (kbd "C-l C-o C-s") 'org-store-link)
 (define-key global-map (kbd "C-l C-o C-p") 'org-mobile-push)
 
@@ -113,7 +111,7 @@
     (setq hl-line-face 'underline)))
 
 (define-key global-map (kbd "C-l C-o C-a") 'org-agenda)
-;; (define-key global-map (kbd "C-l C-o C-l") 'org-agenda-list)
+(define-key global-map (kbd "C-l C-o C-l") 'org-agenda-list)
 
 (require 'popwin)
 (setq display-buffer-function 'popwin:display-buffer)
