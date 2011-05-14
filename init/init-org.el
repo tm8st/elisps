@@ -41,6 +41,10 @@
 
 (customize-set-variable 'org-agenda-include-diary t)
 
+(require 'simple)
+(define-key org-mode-map (kbd "C-j") 'newline)
+(define-key org-mode-map (kbd "C-c C-j") 'org-return-indent)
+
 (if my-use-dropbox
 		(setq org-directory (concat my-dropbox-directory "Org/"))
 	(setq org-directory "~/.emacs.d/org/"))
@@ -77,8 +81,12 @@
 (defun my-org-open-index ()
 	(interactive)
 	(find-file org-default-notes-file))
+(defun my-org-open-life ()
+	(interactive)
+	(find-file (concat org-directory "life.org")))
 
 (define-key global-map (kbd "C-l C-o C-o") 'my-org-open-index)
+(define-key global-map (kbd "C-l C-o C-l") 'my-org-open-life)
 (define-key global-map (kbd "C-l C-o C-s") 'org-store-link)
 (define-key global-map (kbd "C-l C-o C-p") 'org-mobile-push)
 
@@ -105,7 +113,7 @@
     (setq hl-line-face 'underline)))
 
 (define-key global-map (kbd "C-l C-o C-a") 'org-agenda)
-(define-key global-map (kbd "C-l C-o C-l") 'org-agenda-list)
+;; (define-key global-map (kbd "C-l C-o C-l") 'org-agenda-list)
 
 (require 'popwin)
 (setq display-buffer-function 'popwin:display-buffer)
@@ -124,7 +132,7 @@
 
 (defun my-org-clock-out ()
 	(interactive)
-	(tm8st-growl-notify-delete-sticky "End." "Org")
+	(tm8st-growl-notify-delete-sticky "DONE!!" "Org")
 	(org-clock-out))
 
 ;; timer start, stop.

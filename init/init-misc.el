@@ -376,18 +376,19 @@
 ;; (auto-install-from-url "http://github.com/tomoya/hiwin-mode/raw/master/hiwin.el")
 ;; (install-elisp "http://github.com/tomoya/hiwin-mode/raw/master/hiwin.el")
 
+
 ;; グループ化せずに*scratch*以外のタブを表示
-(require 'cl)
- (when (require 'tabbar nil t)
-    (setq tabbar-buffer-groups-function
-					(lambda (b) (list "All Buffers")))
-    ;; (setq tabbar-buffer-list-function
-    ;;       (lambda ()
-    ;;         (remove-if
-    ;;          (lambda(buffer)
-    ;;            (find (aref (buffer-name buffer) 0) " *"))
-    ;;          (buffer-list))))
-    (tabbar-mode t))
+;; (require 'cl)
+;;  (when (require 'tabbar nil t)
+;;     (setq tabbar-buffer-groups-function
+;; 					(lambda (b) (list "All Buffers")))
+;;     ;; (setq tabbar-buffer-list-function
+;;     ;;       (lambda ()
+;;     ;;         (remove-if
+;;     ;;          (lambda(buffer)
+;;     ;;            (find (aref (buffer-name buffer) 0) " *"))
+;;     ;;          (buffer-list))))
+;;     (tabbar-mode t))
 
 ;; 左に表示されるボタンを無効化
 (setq tabbar-home-button-enabled "")
@@ -409,14 +410,14 @@
 																'previous-buffer
                               ))
 
-(prefix-arg-commands-defun prefix-arg-commands-tabber-cycle
-                            (list
-																'tabbar-forward
-																'tabbar-backward
-                              ))
+;; (prefix-arg-commands-defun prefix-arg-commands-tabber-cycle
+;;                             (list
+;; 																'tabbar-forward
+;; 																'tabbar-backward
+;;                               ))
 
 ;; (global-set-key (kbd "C--") 'prefix-arg-commands-bs-cycle)
-;; (global-set-key (kbd "C--") 'prefix-arg-commands-buffer-cycle)
-(global-set-key (kbd "C--") 'prefix-arg-commands-tabber-cycle)
+(global-set-key (kbd "C--") 'prefix-arg-commands-buffer-cycle)
+;; (global-set-key (kbd "C--") 'prefix-arg-commands-tabber-cycle)
 
 (provide 'init-misc)

@@ -18,43 +18,47 @@
   ;;-------------------------------
   (defvar my-font-size-base 100)
   (cond
-   ((my-is-windows) (setq my-font-size-base 135))
+   ((my-is-windows) (setq my-font-size-base 155))
    ((my-is-mac) (setq my-font-size-base 260)))
 
 	(when (>= emacs-major-version 23)
 		(when use-font-setting
-			(set-face-attribute 'default nil
-													:family "Inconsolata"
-													:height my-font-size-base)
+			(when (my-is-windows)
+				(set-face-attribute 'default nil
+											:family "Ricty"
+											:height my-font-size-base))
+			(when (my-is-mac)
+				(set-face-attribute 'default nil
+														:family "Inconsolata"
+														:height my-font-size-base)
 
-			(set-fontset-font
-			 (frame-parameter nil 'font)
-			 'japanese-jisx0208
-			 '("IPAGothic" . "iso10646-1"))
+				(set-fontset-font
+				 (frame-parameter nil 'font)
+				 'japanese-jisx0208
+				 '("IPAGothic" . "iso10646-1"))
 
-			(set-fontset-font
-			 (frame-parameter nil 'font)
-			 'japanese-jisx0212
-			 '("IPAGothic" . "iso10646-1"))
+				(set-fontset-font
+				 (frame-parameter nil 'font)
+				 'japanese-jisx0212
+				 '("IPAGothic" . "iso10646-1"))
 
-			(set-fontset-font
-			 (frame-parameter nil 'font)
-			 'mule-unicode-0100-24ff
-			 '("Inconsolata" . "iso10646-1"))
-			)
+				(set-fontset-font
+				 (frame-parameter nil 'font)
+				 'mule-unicode-0100-24ff
+				 '("Inconsolata" . "iso10646-1"))
+				)
 
-		(setq face-font-rescale-alist
-					'(("^-apple-hiragino.*" . 1.2)
-						(".*osaka-bold.*" . 0.82)
-						(".*osaka-medium.*" . 0.82)
-						(".*VL\ .*" . 0.8)
-						(".*IPAGothic.*" . 0.86)
-						("NfMotoya Birch Std" . 0.8)
-						(".*courier-bold-.*-mac-roman" . 1.0)
-						(".*monaco cy-bold-.*-mac-cyrillic" . 0.9)
-						(".*monaco-bold-.*-mac-roman" . 0.9)
-						("-cdac$" . 1.3)))
-		)
+			(setq face-font-rescale-alist
+						'(("^-apple-hiragino.*" . 1.2)
+							(".*osaka-bold.*" . 0.82)
+							(".*osaka-medium.*" . 0.82)
+							(".*VL\ .*" . 0.8)
+							(".*IPAGothic.*" . 0.86)
+							("NfMotoya Birch Std" . 0.8)
+							(".*courier-bold-.*-mac-roman" . 1.0)
+							(".*monaco cy-bold-.*-mac-cyrillic" . 0.9)
+							(".*monaco-bold-.*-mac-roman" . 0.9)
+							("-cdac$" . 1.3)))))
 
   (require 'yalinum)
   (customize-set-variable 'yalinum-line-number-length-min 0)
