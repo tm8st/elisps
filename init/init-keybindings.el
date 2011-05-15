@@ -208,7 +208,7 @@
 (global-set-key (kbd "C-q C-t C-t") 'toggle-case-fold-search)
 
 (global-set-key (kbd "C-q C-q") 'quoted-insert)       ;;元のコマンド
-(global-set-key (kbd "C-q C-@") 'yalinum-mode)        ;;行番号表示
+;; (global-set-key (kbd "C-q C-@") 'yalinum-mode)        ;;行番号表示のトグル。
 (global-set-key (kbd "C-q C-h") 'help-for-help)       ;;ヘルプ
 (global-set-key (kbd "C-q C-;") 'view-mode)
 
@@ -231,7 +231,7 @@
 
 (global-set-key (kbd "C-q C-2") '(lambda () (interactive) (insert-string "\"\"") (backward-char)))
 (global-set-key (kbd "C-q C-7") '(lambda () (interactive) (insert-string "''") (backward-char)))
-
+(global-set-key (kbd "C-q C-@") '(lambda () (interactive) (insert-string "``") (backward-char)))
 
 ;;;-------------------------------
 ;;; delete, mark, kill some ranges.
@@ -252,7 +252,7 @@
          ((eq key ?\^L) (gro-delete-goto-line))
          ((eq key ?\^ ) (gro-delete-between-jaunte))
          ((eq key ?\^C) (gro-delete-yafastnav-prev))))
-    (delete-char 1)))
+		(my-delete-region-or-delete-char)))
 
 (global-set-key (kbd "C-d") 'my-delete-char)
 

@@ -109,7 +109,7 @@
 
   (setq indent-tabs-mode nil) ;; インデントにtab を使うか
   (setq tab-width 2)  ;; tab 幅設定
-  (setq default-tab-width 2 )
+  ;; (setq default-tab-width 2 )
   (setq redisplay-dont-pause t)  ;; キーリピートにカーソルを追随させる
   (setq undo-outer-limit 10000);; undo の保存限界
   
@@ -198,8 +198,8 @@
   ;; 警告時に何もおこらなくする
   ;;----------------------------------------
   ;;visible-bell は目が痛いので消す
-  (setq ring-bell-function '(lambda ()))
   ;;beep音を消す
+  (setq ring-bell-function '(lambda ()))
   (setq visible-bell t)
 
   (setq undo-outer-limit 1000000)

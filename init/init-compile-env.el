@@ -58,4 +58,7 @@
 (require 'init-private)
 (require 'private) ;; 値の設定(非公開ファイル)
 
+(add-to-list 'load-path (concat my-dropbox-directory "Elisp"))
+
+
 (provide 'init-compile-env)

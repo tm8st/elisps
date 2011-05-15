@@ -19,7 +19,7 @@
   (defvar my-font-size-base 100)
   (cond
    ((my-is-windows) (setq my-font-size-base 155))
-   ((my-is-mac) (setq my-font-size-base 250)))
+   ((my-is-mac) (setq my-font-size-base 260)))
 
 	(when (>= emacs-major-version 23)
 		(when use-font-setting
@@ -122,8 +122,9 @@
 		)
 
 	(require 'yafastnav)
-	(set-face-foreground 'yafastnav-shortcut-key-face-type highlight-font-color)
-	(set-face-background 'yafastnav-shortcut-key-face-type highlight-background-color)
+	(set-face-foreground 'yafastnav-shortcut-key-face-type "pink2")
+	(set-face-background 'yafastnav-shortcut-key-face-type "#080304")
+	;; (set-face-background 'yafastnav-shortcut-key-face-type dummy-region-color)
 
   (require 'jaunte)
   (set-face-foreground 'jaunte-hint-face highlight-font-color-2)

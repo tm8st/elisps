@@ -94,8 +94,6 @@
   (load "init-private.el")
   (load "private.el")
 
-  (add-to-list 'load-path (concat my-dropbox-directory "Elisp"))
-
   ;;----------------------------------------
   ;; init etc
   ;;----------------------------------------

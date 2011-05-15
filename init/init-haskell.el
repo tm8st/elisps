@@ -50,10 +50,12 @@
 (define-key haskell-mode-map (kbd "C-c C-l") '(lambda () (interactive) (insert-string " <- ")))
 (define-key haskell-mode-map (kbd "C-c C-r") `prefix-arg-commands-insert-haskell-right-arrow)
 (define-key haskell-mode-map (kbd "C-c C-@") '(lambda () (interactive) (insert-string "``") (backward-char)))
+(define-key haskell-mode-map (kbd "C-c C-1") '(lambda () (interactive) (insert-string "!!") (backward-char)))
 
 (define-key inferior-haskell-mode-map (kbd "C-c C-l") '(lambda () (interactive) (insert-string " <- ")))
 (define-key inferior-haskell-mode-map (kbd "C-c C-r") `prefix-arg-commands-insert-haskell-right-arrow)
 (define-key inferior-haskell-mode-map (kbd "C-c C-@") '(lambda () (interactive) (insert-string "``") (backward-char)))
+(define-key inferior-haskell-mode-map (kbd "C-c C-1") '(lambda () (interactive) (insert-string "!!") (backward-char)))
 
 (define-key haskell-mode-map (kbd "C-c C-c") 'inferior-haskell-load-file)
 (define-key haskell-mode-map (kbd "C-c C-e") 'inferior-haskell-load-and-run)
@@ -93,5 +95,16 @@
 
 (add-hook 'haskell-mode-hook 'my-haskell-mode)
 (add-hook 'haskell-cabal-mode-hook 'my-haskell-cabal-mode)
+
+(require 'haskell-move-nested)
+(define-key haskell-mode-map (kbd "C-S-B")
+  (lambda ()
+    (interactive)
+    (haskell-move-nested -1)))
+
+(define-key haskell-mode-map (kbd "C-S-F")
+  (lambda ()
+    (interactive)
+    (haskell-move-nested 1)))
 
 (provide 'init-haskell)

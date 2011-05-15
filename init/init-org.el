@@ -86,7 +86,13 @@
 
 (define-key global-map (kbd "C-l C-o C-o") 'my-org-open-index)
 (define-key global-map (kbd "C-l C-o C-s") 'org-store-link)
+
+;; (defun my-org-mobile-sync ()
+;; 	(org-mobile-pull)
+;; 	(org-mobile-push))
+
 (define-key global-map (kbd "C-l C-o C-p") 'org-mobile-push)
+(define-key global-map (kbd "C-l C-o C-@") 'org-mobile-pull)
 
 (define-key org-mode-map (kbd "C-TAB") 'org-force-cycle-archived)
 (define-key org-mode-map [(meta left)]  'org-metaleft)
@@ -152,6 +158,19 @@
 
 (define-key org-mode-map (kbd "C-c C-k") 'my-add-separate-char-on-newline)
 
+;; 空行の削除
+(setq org-cycle-separator-lines 0)
+(setq org-blank-before-new-entry (quote ((heading)
+                                         (plain-list-item))))
+
+(setq org-show-following-heading t)
+(setq org-show-hierarchy-above t)
+(setq org-show-siblings nil)
+
+;; checklistのタスク完了時のリセット。
+;; :RESET_CHECK_BOXES: t
+(require 'org-checklist)
+(setq org-reverse-note-order nil)
 (require 'org-crypt)
 ; Encrypt all entries before saving
 (org-crypt-use-before-save-magic)
@@ -160,5 +179,13 @@
 (customize-set-value 'org-crypt-tag-matcher "CRYPT")
 ; GPG key to use for encryption
 (setq org-crypt-key "F0B66B40")
+
+;; おちる。。。
+;; (defun my-org-hide-other-subtree ()
+;;   (interactive)
+;;   (org-narrow-to-subtree)
+;;   ;; (org-show-todo-tree nil)
+;;   )
+;; (global-set-key (kbd "C-l C-o C-v") 'my-org-hide-other-subtree)
 
 (provide 'init-org)

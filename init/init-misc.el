@@ -422,4 +422,6 @@
 (global-set-key (kbd "C--") 'prefix-arg-commands-buffer-cycle)
 ;; (global-set-key (kbd "C--") 'prefix-arg-commands-tabber-cycle)
 
+(require 'type-se)
+
 (provide 'init-misc)
