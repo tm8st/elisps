@@ -75,6 +75,44 @@
 (global-set-key (kbd "C-q C-t C-u") 'my-text-translator-toggle-popup)
 (global-set-key (kbd "C-q C-t C-y") 'my-text-translator-insert)
 
+(defun my-alc (word)
+  (interactive "sTranslate: ")
+  (let* ((url (concat "http://eow.alc.co.jp/" (replace-regexp-in-string " " "+" word) "/UTF-8/"))
+	 (str (shell-command-to-string (concat "wget -q " url " -O -"))))
+    (string-match "検索結果本体 ▼\\(\\w\\|\\W\\)*▲ 検索結果本体 ▲" str)
+    (setq str (substring str (+ 22 (match-beginning 0)) (- (match-end 0) 23)))
+    (setq str (replace-regexp-in-string "<\\(span\\|font\\)\\(\\w\\|\\W\\)*?>" "" str))
+    (setq str (replace-regexp-in-string "</\\(span\\|font\\)>" "" str))
+    (setq str (replace-regexp-in-string "</div></li>\\|<ol>\\|</ol>\\|</li><li>" "\n" str))
+    (setq str (replace-regexp-in-string "<\\(\\w\\|\\W\\)*?>" "" str))
+    (setq str (replace-regexp-in-string "^M" "\n" str))
+    (setq str (my-delete-blank-lines str))
+    (prog1
+	(save-current-buffer
+	  (save-selected-window
+	    (with-current-buffer (get-buffer-create "*alc*"))
+	    (pop-to-buffer (get-buffer "*alc*"))
+	    (erase-buffer)
+	    (insert str)
+	    (goto-char (point-min))
+	    )))
+    ))
+
+;; 消えちゃう。のでpopup-winにしない。
+;; (add-to-list 'popwin:special-display-config '("*alc*"))
+(global-set-key (kbd "C-q C-t C-@") 'my-alc)
+
+(defun my-delete-blank-lines (str)
+  (with-temp-buffer 
+    (insert str)
+    (goto-char (point-min))
+    (re-search-forward "\\(^\\W*$\\|\\n\\)*")
+    (delete-region (point-min) (match-end 0))
+    (goto-char (point-max))
+    (re-search-backward "\\w")
+    (delete-region (+ 1 (point)) (point-max))
+    (buffer-string)))
+
 ;;;-------------------------------
 ;;; yafastnav, jaunte
 ;;;-------------------------------
@@ -335,7 +373,6 @@
 ;;; yalinum
 ;;;-------------------------------
 (require 'yalinum)
-(global-yalinum-mode t)
 (global-linum-mode -1)
 
   ;; (start-process-shell-command
@@ -422,5 +459,20 @@
 ;; (global-set-key (kbd "C--") 'prefix-arg-commands-tabber-cycle)
 
 (require 'type-se)
+
+(defun my-output-last-command ()
+  (interactive)
+  (message (concat "ThisCommand    : " (symbol-name this-command)))
+  (message (concat "LastCommand    : " (symbol-name last-command)))
+  (message (concat "RealLastCommand: " (symbol-name real-last-command))))
+
+(global-set-key (kbd "C-q C-3") 'my-output-last-command)
+
+(require 'widen-window)
+(global-widen-window-mode t)
+(require 'widen-window)
+(global-set-key (kbd "C-c C-w")
+                `(lambda ()
+                   (interactive) (global-widen-window-mode nil)))
 
 (provide 'init-misc)

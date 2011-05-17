@@ -76,8 +76,8 @@
 ;; (local-set-key "\C-c\C-x." 'scion-goto-definition)
 ;; (require 'hs-scan) ; google it 'Haskell style scanner'
 
-; indeed
-(defun my-haskell-mode ()
+;;
+(defun my-haskell-mode-hook ()
   (progn
     (auto-complete-mode t)
     ;; (scion-mode t)
@@ -86,6 +86,7 @@
 		(ghc-init)
     (setq tab-width 2)
 		(setq indent-tabs-mode nil)
+    (yalinum-mode t)
   ))
 
 (defun my-haskell-cabal-mode ()
@@ -93,7 +94,7 @@
     (setq tab-width 2 indent-tabs-mode nil)
   ))
 
-(add-hook 'haskell-mode-hook 'my-haskell-mode)
+(add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
 (add-hook 'haskell-cabal-mode-hook 'my-haskell-cabal-mode)
 
 (require 'haskell-move-nested)

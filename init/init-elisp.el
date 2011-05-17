@@ -16,6 +16,7 @@
 (defun my-emacs-lisp-mode-hook ()
   ;; (linum-mode t)
   (hl-line-mode t)
+  (yalinum-mode t)
   (when use-gui-setting
     (highlight-parentheses-mode)
     )

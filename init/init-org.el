@@ -65,7 +65,7 @@
 				("TASK" ?t "** TASK \n  %i\n  %a\n  %U\n" nil "INBOX")
 				("IDEA" ?i "** SOMEDAY \n  %i\n  %a\n  %U\n" nil "IDEAS")
 				("MEMO" ?m "** \n  %i\n  %a\n  %U\n" nil "NOTES")
-				("LIFE-TASK" ?l "** TASK \n  %i\n  %a\n  %U\n" nil "LIFE")
+				("LIFE-TASK" ?l "** TASK     \n  %i\n  %a\n  %U\n" nil "LIFE")
 				("HABIT" ?h "** \n:PROPERTIES:\n:LOGGING: DONE(!) logrepeat\n:END:\n%i\n  %a\n  %U\n" nil "HABIT")
         ))
 

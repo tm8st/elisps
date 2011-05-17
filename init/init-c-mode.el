@@ -137,6 +137,7 @@
   (hl-line-mode t)
   (highlight-parentheses-mode t)
   (setq tab-width 4)
+  (yalinum-mode t)
   (my-set-c-style)
   (modify-syntax-entry ?_ "w" c-mode-syntax-table)
   (modify-syntax-entry ?_ "w" c++-mode-syntax-table)
