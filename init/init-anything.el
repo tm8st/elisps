@@ -193,6 +193,10 @@
   ;; anything-c-source-colors
   ))
 
+(defun anything-current-dir ()
+  (interactive)
+  (anything '(anything-c-source-files-in-current-dir+)))
+
 ;; buffer検索
 (defun anything-for-buffers ()
   ""
@@ -228,6 +232,7 @@
 (global-set-key (kbd "C-q C-a C-r") 'anything-resume) ;; ひとつ前のanythingに復帰
 (global-set-key (kbd "C-q C-a C-j") 'anything-info-at-point)
 (global-set-key (kbd "C-q C-a C-k") 'anything-kyr)
+(global-set-key (kbd "C-q C-a C-.") 'anything-current-dir)
 ;; (global-set-key (kbd "C-q C-a C-n") 'anything-next-condidate) ;; ひとつ次の候補を実行
 
 ;; locate検索
@@ -473,5 +478,7 @@
           (candidate)
           (with-current-buffer anything-current-buffer
             (insert candidate))))))
+
+(anything-read-string-mode -1)
 
 (provide 'init-anything)

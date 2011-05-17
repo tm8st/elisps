@@ -266,7 +266,7 @@
 
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-with-twitter-client-main
-	 '((top + 0) (left + 0) (height . 1080) (width . 118)))
+	 '((top + 0) (left + 0) (height . 1080) (width . 116)))
 	)
 
 (when (my-is-windows)
@@ -376,7 +376,6 @@
 
 ;; (auto-install-from-url "http://github.com/tomoya/hiwin-mode/raw/master/hiwin.el")
 ;; (install-elisp "http://github.com/tomoya/hiwin-mode/raw/master/hiwin.el")
-
 
 ;; グループ化せずに*scratch*以外のタブを表示
 ;; (require 'cl)

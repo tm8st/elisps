@@ -43,9 +43,9 @@
 (define-key haskell-mode-map (kbd "C-c C-h") 'haskell-hoogle)
 
 (prefix-arg-commands-defun prefix-arg-commands-insert-haskell-right-arrow
-													 (list
-														 '(lambda () (interactive) (insert-string " -> "))
-														 '(lambda () (interactive) (insert-string " => "))))
+                           (list
+                            '(lambda () (interactive) (insert-string " -> "))
+                            '(lambda () (interactive) (insert-string " => "))))
 
 (define-key haskell-mode-map (kbd "C-c C-l") '(lambda () (interactive) (insert-string " <- ")))
 (define-key haskell-mode-map (kbd "C-c C-r") `prefix-arg-commands-insert-haskell-right-arrow)

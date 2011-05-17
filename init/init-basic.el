@@ -107,7 +107,8 @@
   (setq eol-mnemonic-unix "(LF)")
   (setq eol-mnemonic-undecided "(INVALID)")
 
-  (setq indent-tabs-mode nil) ;; インデントにtab を使うか
+	;;  インデントにtab を使うか
+	(setq-default indent-tabs-mode nil)
   (setq tab-width 2)  ;; tab 幅設定
   ;; (setq default-tab-width 2 )
   (setq redisplay-dont-pause t)  ;; キーリピートにカーソルを追随させる

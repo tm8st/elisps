@@ -11,6 +11,13 @@
 
 (eval-when-compile (require 'cl))
 
+(defun my-current-directory-name ()
+  (let ((current-directory-or-file
+         (or load-file-name buffer-file-name dired-directory "")))
+    (if (file-directory-p current-directory-or-file)
+				current-directory-or-file
+      (file-name-directory current-directory-or-file))))
+
 ;;;-------------------------------
 ;;; original-move-functions
 ;;;-------------------------------
@@ -479,7 +486,7 @@ default name is filename:current line string."
   (shell-command
    (concat "explorer "
 		   (my-unix-to-w32-pathname-transformer
-			(expand-file-name (file-name-directory (buffer-file-name (current-buffer))))))))
+			(expand-file-name (my-current-directory-name))))))
 
 (defun my-tsp-run-command-over-lines (command &optional n)
   "Run COMMAND over the following N lines.

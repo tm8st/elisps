@@ -11,6 +11,7 @@
 
 (require 'skk)
 
+(require 'sticky-shift-skk)
 (global-set-key (kbd "C-q C-o") 'skk-mode)
 (setq skk-tut-file "~/elisps/external/ddskk-20100704/etc/SKK.tut")
 

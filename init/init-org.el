@@ -23,11 +23,11 @@
 
 (add-hook 'org-mode-hook
    '(lambda ()
-			(turn-on-font-lock)
-			(setq indent-tabs-mode nil)
-			(setq tab-width 2)
-			(setq default-tab-width 2)
-			))
+      (turn-on-font-lock)
+      (setq indent-tabs-mode nil)
+      (setq tab-width 2)
+      (setq default-tab-width 2)
+      ))
 
 ;; (setq org-hide-leading-stars t) ;; 見出しの余分な*を消す
 (setq org-hide-leading-stars nil) ;; 見出しの余分な*を消さない
@@ -59,6 +59,7 @@
 ;; DONEの時刻を記録
 (setq org-log-done 'time)
 
+(require 'org-remember)
 (setq org-remember-templates
       '(
 				("TASK" ?t "** TASK \n  %i\n  %a\n  %U\n" nil "INBOX")
@@ -105,6 +106,8 @@
 (define-key org-mode-map (kbd "M-n") 'org-forward-same-level)
 (define-key org-mode-map (kbd "M-p") 'org-backward-same-level)
 (define-key org-mode-map (kbd "C-m") 'my-backward-word)
+(define-key org-mode-map (kbd "C-M-m") 'bm-toggle)
+(define-key org-mode-map (kbd "C-M-j") 'org-insert-heading)
 
 ;;;-------------------------------
 ;;; org-agenda setting.

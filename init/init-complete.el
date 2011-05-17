@@ -12,9 +12,9 @@
 (require 'init-compile-env)
 (require 'eshell)
 (require 'imenu)
-(require 'complete) ;; 強力な補完機能を使う
-(partial-completion-mode 1)
+;; (require 'complete) ;; 強力な補完機能を使う
 (icomplete-mode t) ;; 補完可能なものを随時表示
+(partial-completion-mode 1)
 
 ;;;-------------------------------------
 ;;;auto-complete setting
@@ -28,7 +28,7 @@
 (add-to-list 'ac-user-dictionary-files "~/elisps/resource/dict/globish.txt")
 
 (setq ac-auto-start 3)
-(customize-set-value 'ac-ignore-case 'smart)
+(customize-set-value 'ac-ignore-case nil)
 (customize-set-value 'ac-candidate-limit 1000)
 (customize-set-value 'ac-use-fuzzy 't)
 (customize-set-value 'ac-use-comphist 't)
