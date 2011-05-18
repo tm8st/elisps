@@ -203,8 +203,6 @@
                 (system-name)
                 (emacs-version)))
 
-  (display-time)
-  (setq display-time-day-and-date t)
   (which-function-mode 1)
   (column-number-mode t)
   (line-number-mode t)
@@ -286,5 +284,16 @@
 	(color-theme-solarized-light))
 
 (global-set-key (kbd "C-l C-o C-e") 'my-set-default-color-theme)
+
+(setq mode-line-remote "")
+(setq mode-line-mule-info "")
+(setq mode-line-client "")
+(setq mode-line-process "")
+(setq mode-line-position "")
+
+;; the current day and date are displayed as well.
+(setq display-time-format "%Y/%m/%d %a %R")
+(setq display-time-day-and-date t)
+(display-time)
 
 (provide 'init-theme)

@@ -145,5 +145,7 @@
 (when (require 'slime nil t)
   (slime-setup))
 
+(customize-set-variable 'eldoc-minor-mode-string (purecopy " ED"))
+
 (provide 'init-elisp)
 
