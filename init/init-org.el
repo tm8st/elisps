@@ -54,7 +54,7 @@
 
 ;; TODOの状態遷移
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "WAIT(w!)" "|" "DONE(d)" "SOMEDAY(s)")))
+      '((sequence "TODO(t)" "WAIT(w!)" "|" "DONE(d)" "SOMEDAY(s) " "CANCELD(c)")))
 
 ;; DONEの時刻を記録
 (setq org-log-done 'time)
@@ -190,5 +190,12 @@
 ;;   ;; (org-show-todo-tree nil)
 ;;   )
 ;; (global-set-key (kbd "C-l C-o C-v") 'my-org-hide-other-subtree)
+
+(when (my-is-windows)
+  (setq tm8st-growl-type 'windows-growlnotify))
+
+(when (my-is-mac)
+  (setq tm8st-growl-type 'mac-growlnotify))
+
 
 (provide 'init-org)

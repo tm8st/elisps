@@ -485,4 +485,8 @@
 
 (global-set-key (kbd "C-c C-u") 'browse-url-at-point)
 
+(global-set-key (kbd "C-l C-f C-n") 'make-frame-command)
+(global-set-key (kbd "C-l C-f C-d") 'delete-frame)
+(global-set-key (kbd "C-l C-f C-o") 'other-frame)
+
 (provide 'init-misc)

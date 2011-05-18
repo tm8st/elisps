@@ -93,6 +93,8 @@
   (setq savehist-mode 1)
   
   (setq kill-whole-line t) ;; C-kで行全体を削除
+  (setq kill-read-only-ok t)
+
   (setq inhibit-startup-message t) ;;起動画面を表示しない
   (setq enable-recursive-minibuffers t) ;;前のcommandが終了してなくても、新しいcommandを実行可能にする。
   (global-auto-revert-mode t) ;;file が他から変更されたら、自動的に読み込む。
@@ -229,7 +231,6 @@
     ;;cygwin風ディレクリ指定
     (require 'cygwin-mount)
     (cygwin-mount-activate)
-    )
-  )
+    ))
 
 (provide 'init-basic)
