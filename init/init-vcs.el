@@ -1,4 +1,4 @@
-;;; init-vc.el --- version control setting
+ ;;; init-vc.el --- version control setting
 
 ;; Copyright (C) 2010, 2011 tm8st
 
@@ -41,7 +41,9 @@
 (setq ediff-multiframe nil)
 (setq-default ediff-auto-refine-limit 10000)
 
+(load "vc-dir.el") ;; vc-dir-mode-mapがうまく設定できないので
 (define-key vc-dir-mode-map "e" 'vc-diff)
+(define-key vc-dir-mode-map "r" 'vc-revert)
 
 ;; (add-hook 'diff-mode-hook
 ;;           (lambda ()

@@ -57,16 +57,16 @@
   ;; filecache
   ;;--------------------------------
   (require 'filecache)
-  (file-cache-add-directory-list (list "~/"))
-  (file-cache-add-directory-list load-path)
-  (file-cache-add-directory-list exec-path)
+  (file-cache-add-directory-list (list (expand-file-name "~/")))
+  ;; (file-cache-add-directory-list load-path)
+  ;; (file-cache-add-directory-list exec-path)
 
-  (when file-cache-path
-    (file-cache-add-directory-list file-cache-path))
-  (when my-etc-path
-    (file-cache-add-directory-list my-etc-path))
-  (when my-develop-path
-    (file-cache-add-directory-list my-develop-path))
+  ;; (when file-cache-path
+  ;;   (file-cache-add-directory-list file-cache-path))
+  ;; (when my-etc-path
+  ;;   (file-cache-add-directory-list my-etc-path))
+  ;; (when my-develop-path
+  ;;   (file-cache-add-directory-list my-develop-path))
 
   (customize-set-value 'file-cache-ignore-case t)
 

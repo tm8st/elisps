@@ -468,12 +468,12 @@
 
 (global-set-key (kbd "C-q C-3") 'my-output-last-command)
 
-(require 'widen-window)
-(global-widen-window-mode t)
-(require 'widen-window)
-(global-set-key (kbd "C-c C-w")
-                `(lambda ()
-                   (interactive) (global-widen-window-mode nil)))
+;; (require 'widen-window)
+;; (global-widen-window-mode t)
+;; (require 'widen-window)
+;; (global-set-key (kbd "C-c C-w")
+;;                 `(lambda ()
+;;                    (interactive) (global-widen-window-mode nil)))
 
 (defun browse-url-at-point ()
   "カーソルのある位置のURLをブラウザで開く"

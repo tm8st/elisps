@@ -70,9 +70,10 @@
 ;; ac source setting. all mode use same setting.
 (setq ac-sources
       '(ac-source-pcomplete
-				;; ac-source-words-in-buffer
+				ac-source-words-in-buffer
 				;; ac-source-gtags
 				;; ya-gtags
+        ac-source-words-in-same-mode-buffers
 				ac-source-filename
 				ac-source-symbols
 				ac-source-dictionary))

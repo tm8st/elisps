@@ -18,7 +18,7 @@
 (require 'anything-auto-install)
 (require 'anything-grep)
 (require 'anything-gtags)
-(require 'anything-etags)
+;; (require 'anything-etags) obsoleteらしい
 (require 'anything-extension)
 (require 'anything-complete)
 (require 'anything-kyr)
@@ -262,11 +262,11 @@
 (global-set-key (kbd "C-q C-a C-p") 'anything-project)
 
 ;; c++ & scala & haskell 登録
-;; 同じ look-for設定で別のプロジェクトを登録するとバグるので。
+;; 同じ look-for設定で別のプロジェクトを登録するとバグるので一つのプロジェクトにまとめておく。
 (ap:add-project
  :name 'c++-scala
  :look-for '("GTAGS" ".*\\.sln") ; or
- :include-regexp '("\\.scala$" "\\.h$" "\\.sln$" "\\.cpp$" "\\.c$" "\\.h$" "\\.inl$" "\\.fx$" "\\.ini$" "\\.txt$" "\\.uc$" "\\.usf$" "\\.hs$" "\\.hls$") ;or
+ :include-regexp '("\\.scala$" "\\.h$" "\\.sln$" "\\.cpp$" "\\.c$" "\\.h$" "\\.inl$" "\\.fx$" "\\.ini$" "\\.txt$" "\\.uc$" "\\.usf$" "\\.hs$" "\\.hls$" "\\.cs$") ;or
  )
 
 ;; elisp 登録
@@ -373,7 +373,7 @@
 ;; favolite dir
 (defvar anything-c-source-favolite-directories
   '((name . "FavoliteDirectory")
-    (candidates . `(lambda () (directory-files "~/")))
+    (candidates . `(lambda () (directory-files (expand-file-name "~/"))))
     (type . file)))
 
 (defvar anything-c-source-locate

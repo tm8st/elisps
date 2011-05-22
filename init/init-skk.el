@@ -21,12 +21,11 @@
 ;; 対応する閉括弧を自動的に挿入する
 (setq skk-auto-insert-paren t)
 
-(when my-initialized
-  (add-hook 'find-file-hook
-	    '(lambda ()
-	       (skk-mode t)
-	       (skk-latin-mode-on)
-	       )))
+;; ファイルを開いたらSKKモード
+(add-hook 'find-file-hook
+          '(lambda ()
+             (skk-mode t)
+             (skk-latin-mode-on)))
 
 ;; C-\ でも SKK に切り替えられるように設定
 (setq default-input-method "japanese-skk")
@@ -47,7 +46,8 @@
 (setq skk-show-japanese-menu t)
 
 (customize-set-value 'skk-show-inline t)
-;; (customize-set-value 'skk-show-inline t) 
+;; (customize-set-value 'skk-show-inline t)
+;; (customize-set-value 'skk-show-inline t)
 (customize-set-value 'skk-show-inline 'vertical)
 
 ;;isearch-mode に入った際に自動的に skk-isearch を起動 
@@ -57,7 +57,7 @@
 ;; 変換候補一覧と注釈 (annotation) を GUI ぽく表示する
 (setq skk-show-tooltip t)
 ;; 変換時に注釈 (annotation) を表示する
-(setq skk-show-annotation t)
+(setq skk-show-annotation nil)
 ;; (set-face-foreground 'skk-treat-default "white") 
 ;; (set-face-background 'tooltip "white")
 
@@ -134,8 +134,8 @@
 (setq skk-dcomp-multiple-activate t)
 
 ;; ソースコードでは文字列、コメント以外で日本語をつかわない
-(require 'context-skk)
-(add-to-list 'context-skk-programming-mode 'scala-mode)
+;; (require 'context-skk)
+;; (add-to-list 'context-skk-programming-mode 'scala-mode)
 
 ;;;-------------------------------
 ;;; 変換動作の調整

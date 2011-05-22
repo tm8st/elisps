@@ -12,10 +12,10 @@
 (require 'twittering-mode)
 (setq twittering-use-wget t)
 (setq twittering-use-master-password t)
-(setq twittering-fill-column 50)
-(setq twittering-timer-interval 30)
+(setq twittering-fill-column 30)
+(setq twittering-timer-interval 15)
 (setq twittering-use-icon-storage t)
-(setq twittering-convert-fix-size 36)
+(setq twittering-convert-fix-size 40)
 (setq twittering-icon-storage-limit 1000)
 
 (defun my-twittering-mode-other-window-or-split ()

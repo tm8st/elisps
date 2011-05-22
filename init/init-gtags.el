@@ -40,7 +40,8 @@
 ;;; etags 
 ;;;-------------------------------
 (require 'etags)
-(require 'anything-etags)
+;; (require 'anything-etags) obsolete
+(require 'anything-config)
 (defvar my-etags-command "ctags -e --recurse")
 ;; (setq my-etags-command "find . -name \"*.*\" -a -type f -a -not -name \"*.svn*\" -a -not -name \"*.bin\" -a -not -name \"*.exe\" -exec etags -a {} +")
 

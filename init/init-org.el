@@ -56,6 +56,16 @@
 (setq org-todo-keywords
       '((sequence "TODO(t)" "WAIT(w!)" "|" "DONE(d)" "SOMEDAY(s) " "CANCELD(c)")))
 
+(customize-set-variable
+ 'org-tag-alist
+ '(("WORK" . ?w)
+   ("EMACS" . ?e)
+   ("LIFE" . ?l)
+   ("GAME" . ?g)
+   ("UE3" . ?u)
+   ("ANIME" . ?a)
+ ))
+
 ;; DONEの時刻を記録
 (setq org-log-done 'time)
 
@@ -95,6 +105,7 @@
 (define-key global-map (kbd "C-l C-o C-p") 'org-mobile-push)
 (define-key global-map (kbd "C-l C-o C-@") 'org-mobile-pull)
 
+(define-key org-mode-map (kbd "C-k") 'my-delete-line-forward)
 (define-key org-mode-map (kbd "C-TAB") 'org-force-cycle-archived)
 (define-key org-mode-map [(meta left)]  'org-metaleft)
 (define-key org-mode-map [(meta right)] 'org-metaright)
@@ -135,11 +146,13 @@
 (defun my-org-clock-in ()
 	(interactive)
 	(tm8st-growl-timer "Org" "Org" nil (* 60 1000))
+  (bm-toggle)
 	(org-clock-in))
 
 (defun my-org-clock-out ()
 	(interactive)
 	(tm8st-growl-notify-delete-sticky "DONE!!" "Org")
+  (bm-toggle)
 	(org-clock-out))
 
 ;; timer start, stop.
