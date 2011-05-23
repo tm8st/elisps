@@ -35,7 +35,8 @@
 (customize-set-value 'ac-use-quick-help 't)
 (customize-set-value 'ac-delay 0.2)
 
-(global-set-key (kbd "C-o") 'ac-start)
+(global-set-key (kbd "C-q C-i") 'ac-start)
+;; (global-set-key (kbd "C-o") 'ac-start)
 ;; (global-set-key (kbd "C-q C-c") 'auto-complete-mode)
 
 (define-key ac-complete-mode-map (kbd "C-i") 'ac-next)
@@ -48,20 +49,6 @@
 (define-key ac-complete-mode-map (kbd "C-@") 'ac-complete-with-anything)
 
 (require 'popup)
-
-(when use-gui-setting
-
-  (set-face-foreground 'ac-candidate-face "White")
-  (set-face-foreground 'ac-selection-face "Pink")
-  (set-face-background 'ac-candidate-face "gray30")
-  (set-face-background 'ac-selection-face "gray30")
-
-  (set-face-foreground 'popup-menu-face "White")
-  (set-face-background 'popup-menu-face "gray30")
-  (set-face-background 'popup-menu-selection-face "gray30")
-  (set-face-foreground 'popup-menu-selection-face "Pink")
-  (set-face-background 'popup-menu-selection-face "gray30")
-  )
 
 (require 'pcomplete)
 (ac-define-source pcomplete

@@ -7,11 +7,16 @@
 ;; creation time: [Sun Aug  1 18:12:46 2010]
 ;;; Commentary:
 
+;; (require 'hs)
+;; (add-to-list 'auto-mode-alist '("\\.hs$" . hs-mode))
+;; (add-to-list 'auto-mode-alist '("\\.hsc$" . hs-mode))
+
+(require 'yalinum)
 (require 'haskell-mode)
 (require 'haskell-indentation)
 (require 'inf-haskell)
 (require 'prefix-arg-commands)
-			      
+
 (add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
 (add-to-list 'auto-mode-alist '("\\.hsc$" . haskell-mode))
 
@@ -83,16 +88,16 @@
     ;; (scion-mode t)
     ;; (scion-flycheck-on-save nil) ; conflict with auto-buffer-save
     ;; (setq scion-completing-read-function 'ido-completing-read)
-		(ghc-init)
+    (ghc-init)
     (setq tab-width 2)
-		(setq indent-tabs-mode nil)
+    (setq indent-tabs-mode nil)
     (yalinum-mode t)
-  ))
+    ))
 
 (defun my-haskell-cabal-mode ()
   (progn
     (setq tab-width 2 indent-tabs-mode nil)
-  ))
+    ))
 
 (add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
 (add-hook 'haskell-cabal-mode-hook 'my-haskell-cabal-mode)

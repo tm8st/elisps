@@ -137,16 +137,6 @@
 
 (global-set-key (kbd "C-l C-f C-o") 'my-save-all-buffers)
 
-(defun my-string-rectangle-default ()
-  (interactive)
-  (when mark-active
-    (string-rectangle
-     (min (point) (mark))
-     (max (point) (mark))
-     "  ")))
-
-(define-key global-map (kbd "C-l C-j C-r") 'my-string-rectangle-default)
-
 (define-key global-map (kbd "C-l C-z") 'prefix-arg-commands-set-frame-alpha)
 
 ;; 重複行削除
@@ -398,5 +388,15 @@
               (with-current-buffer buf (insert str)))))))))
 
 (global-set-key (kbd "C-q C-a C-m") 'my-anything-bm-global)
+
+(defun my-string-rectangle-default ()
+  (interactive)
+  (when mark-active
+    (string-rectangle
+     (min (point) (mark))
+     (max (point) (mark))
+     "  ")))
+
+(define-key global-map (kbd "C-l C-j C-r") 'my-string-rectangle-default)
 
 (provide 'init-keybindings)

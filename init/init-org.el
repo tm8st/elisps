@@ -14,12 +14,14 @@
 (require 'org-agenda)
 (require 'org-mobile)
 (require 'org-habit)
+(require 'org-capture)
+
 
 (setq org-startup-truncated nil)
 (setq org-return-follows-link t)
 (setq org-log-done 'time) ;; DONEの時刻を記録
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-(org-remember-insinuate) ;; remember も使う
+;; (org-remember-insinuate) ;; remember も使う => captureへ
 
 (add-hook 'org-mode-hook
    '(lambda ()
@@ -69,15 +71,27 @@
 ;; DONEの時刻を記録
 (setq org-log-done 'time)
 
-(require 'org-remember)
-(setq org-remember-templates
-      '(
-				("TASK" ?t "** TASK \n  %i\n  %a\n  %U\n" nil "INBOX")
-				("IDEA" ?i "** SOMEDAY \n  %i\n  %a\n  %U\n" nil "IDEAS")
-				("MEMO" ?m "** \n  %i\n  %a\n  %U\n" nil "NOTES")
-				("LIFE-TASK" ?l "** TASK     \n  %i\n  %a\n  %U\n" nil "LIFE")
-				("HABIT" ?h "** \n:PROPERTIES:\n:LOGGING: DONE(!) logrepeat\n:END:\n%i\n  %a\n  %U\n" nil "HABIT")
-        ))
+;; (require 'org-remember)
+;; (setq org-remember-templates
+;;       '(
+;; 				("TASK" ?t "** TASK \n  %i\n  %a\n  %U\n" nil "INBOX")
+;; 				("IDEA" ?i "** SOMEDAY \n  %i\n  %a\n  %U\n" nil "IDEAS")
+;; 				("MEMO" ?m "** \n  %i\n  %a\n  %U\n" nil "NOTES")
+;; 				("LIFE-TASK" ?l "** TASK     \n  %i\n  %a\n  %U\n" nil "LIFE")
+;; 				("HABIT" ?h "** \n:PROPERTIES:\n:LOGGING: DONE(!) logrepeat\n:END:\n%i\n  %a\n  %U\n" nil "HABIT")
+;;         ))
+
+(setq org-capture-templates
+      '(("t" "TASK" entry (file+headline org-default-notes-file "INBOX")
+         "** TASK \n  %i\n  %a\n  %U\n")
+        ("i" "IDEA" entry (file+headline org-default-notes-file "IDEAS")
+         "** SOMEDAY \n  %i\n  %a\n  %U\n")
+        ("m" "MEMO" entry (file+headline org-default-notes-file "NOTES")
+         "** \n  %i\n  %a\n  %U\n")
+        ("l" "LIFE-TASK" entry (file+headline org-default-notes-file "LIFE")
+         "** TASK \n  %i\n  %a\n  %U\n")
+        ("h" "HABIT" entry (file+headline org-default-notes-file "HABIT")
+         "** \n  :PROPERTIES:\n  :LOGGING: DONE(!) logrepeat\n  :END:\n	%i\n  %a\n  %U\n")))
 
 (setq org-mobile-inbox-for-pull (concat org-directory "pulled.org"))
 ;; Dropbox直下のMobileOrgフォルダへのパスを設定
@@ -88,7 +102,7 @@
 (customize-set-variable 'org-calendar-holidays t)
 
 ;; キーバインドの設定
-(define-key global-map (kbd "C-l C-o C-r") 'org-remember)
+(define-key global-map (kbd "C-l C-o C-r") 'org-capture)
 
 ;; index fileを開く
 (defun my-org-open-index ()
@@ -209,6 +223,5 @@
 
 (when (my-is-mac)
   (setq tm8st-growl-type 'mac-growlnotify))
-
 
 (provide 'init-org)

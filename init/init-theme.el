@@ -121,6 +121,18 @@
 		(set-face-background 'yalinum-bar-face dummy-region-color)
 		)
 
+  
+  (when (require 'popup nil t)
+    (set-face-foreground 'ac-candidate-face default-font-color)
+    (set-face-foreground 'ac-selection-face "pink3")
+    (set-face-background 'ac-candidate-face dummy-region-color)
+    (set-face-background 'ac-selection-face dummy-region-color)
+
+    (set-face-foreground 'popup-menu-face default-font-color)
+    (set-face-background 'popup-menu-face dummy-region-color)
+    (set-face-foreground 'popup-menu-selection-face "pink3")
+    (set-face-background 'popup-menu-selection-face dummy-region-color))
+
 	(require 'yafastnav)
 	(set-face-foreground 'yafastnav-shortcut-key-face-type "pink2")
 	(set-face-background 'yafastnav-shortcut-key-face-type "#080304")
