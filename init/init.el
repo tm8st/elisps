@@ -127,7 +127,8 @@
 				 "init-migemo.el"
 				 "init-theme.el"
 				 "init-org.el"
-
+         "init-vcs.el"
+		
 				 ;; "init-window.el"
 				 ;; "init-test.el"
 				 ))

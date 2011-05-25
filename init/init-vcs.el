@@ -41,7 +41,6 @@
 (setq ediff-multiframe nil)
 (setq-default ediff-auto-refine-limit 10000)
 
-(load "vc-dir.el") ;; vc-dir-mode-mapがうまく設定できないので
 (define-key vc-dir-mode-map "e" 'vc-diff)
 (define-key vc-dir-mode-map "r" 'vc-revert)
 

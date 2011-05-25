@@ -13,8 +13,8 @@
 (require 'eshell)
 (require 'imenu)
 ;; (require 'complete) ;; 強力な補完機能を使う
+;; (partial-completion-mode 1)
 (icomplete-mode t) ;; 補完可能なものを随時表示
-(partial-completion-mode 1)
 
 ;;;-------------------------------------
 ;;;auto-complete setting
@@ -35,8 +35,7 @@
 (customize-set-value 'ac-use-quick-help 't)
 (customize-set-value 'ac-delay 0.2)
 
-(global-set-key (kbd "C-q C-i") 'ac-start)
-;; (global-set-key (kbd "C-o") 'ac-start)
+(global-set-key (kbd "C-o") 'ac-start)
 ;; (global-set-key (kbd "C-q C-c") 'auto-complete-mode)
 
 (define-key ac-complete-mode-map (kbd "C-i") 'ac-next)

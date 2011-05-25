@@ -52,6 +52,9 @@
 	(setq org-directory "~/.emacs.d/org/"))
 
 (setq org-default-notes-file (concat org-directory "main.org"))
+(setq org-life-notes-file (concat org-directory "life.org"))
+(setq org-inbox-notes-file (concat org-directory "inbox.org"))
+
 (setq org-agenda-files (list org-directory))
 
 ;; TODOの状態遷移
@@ -82,15 +85,31 @@
 ;;         ))
 
 (setq org-capture-templates
-      '(("t" "TASK" entry (file+headline org-default-notes-file "INBOX")
+      '(
+        ("wt" "TASK" entry (file+headline org-default-notes-file "TASKS")
          "** TASK \n  %i\n  %a\n  %U\n")
-        ("i" "IDEA" entry (file+headline org-default-notes-file "IDEAS")
+        ("wi" "IDEA" entry (file+headline org-default-notes-file "IDEAS")
          "** SOMEDAY \n  %i\n  %a\n  %U\n")
-        ("m" "MEMO" entry (file+headline org-default-notes-file "NOTES")
+        ("wm" "MEMO" entry (file+headline org-default-notes-file "NOTES")
          "** \n  %i\n  %a\n  %U\n")
-        ("l" "LIFE-TASK" entry (file+headline org-default-notes-file "LIFE")
+
+        ("lt" "LIFE-TASK" entry (file+headline org-life-notes-file "LIFE")
          "** TASK \n  %i\n  %a\n  %U\n")
-        ("h" "HABIT" entry (file+headline org-default-notes-file "HABIT")
+        ("li" "IDEA" entry (file+headline org-life-notes-file "IDEAS")
+         "** SOMEDAY \n  %i\n  %a\n  %U\n")
+        ("lm" "MEMO" entry (file+headline org-life-notes-file "NOTES")
+         "** \n  %i\n  %a\n  %U\n")
+
+        ("i" "IDEA" entry (file+headline org-inbox-notes-file "IDEAS")
+         "** SOMEDAY \n  %i\n  %a\n  %U\n")
+
+        ("m" "MEMO" entry (file+headline org-inbox-notes-file "NOTES")
+         "** \n  %i\n  %a\n  %U\n")
+
+        ("r" "REVIEW" entry (file+headline org-inbox-notes-file "REVIEW")
+         "** \n  %i\n  %a\n  %U\n")
+
+        ("h" "HABIT" entry (file+headline org-life-notes-file "HABIT")
          "** \n  :PROPERTIES:\n  :LOGGING: DONE(!) logrepeat\n  :END:\n	%i\n  %a\n  %U\n")))
 
 (setq org-mobile-inbox-for-pull (concat org-directory "pulled.org"))
@@ -108,8 +127,16 @@
 (defun my-org-open-index ()
 	(interactive)
 	(find-file org-default-notes-file))
+(defun my-org-open-life ()
+	(interactive)
+	(find-file org-life-notes-file))
+(defun my-org-open-inbox ()
+	(interactive)
+	(find-file org-inbox-notes-file))
 
 (define-key global-map (kbd "C-l C-o C-o") 'my-org-open-index)
+(define-key global-map (kbd "C-l C-o C-l") 'my-org-open-life)
+(define-key global-map (kbd "C-l C-o C-i") 'my-org-open-inbox)
 (define-key global-map (kbd "C-l C-o C-s") 'org-store-link)
 
 ;; (defun my-org-mobile-sync ()
@@ -145,12 +172,13 @@
     (setq hl-line-face 'underline)))
 
 (define-key global-map (kbd "C-l C-o C-a") 'org-agenda)
-(define-key global-map (kbd "C-l C-o C-l") 'org-agenda-list)
+;; (define-key global-map (kbd "C-l C-o C-l") 'org-agenda-list)
 
 (require 'popwin)
 (setq display-buffer-function 'popwin:display-buffer)
 (add-to-list 'popwin:special-display-config '("*Org Agenda*" :height 0.5))
 
+(require 'tm8st-growl)
 (defun my-org-agenda-open-buffer ()
 	(interactive)
 	(display-buffer "*Org Agenda*"))
