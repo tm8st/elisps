@@ -357,7 +357,7 @@
 ;;; Rakefile
 ;;;-------------------------------
 (add-to-list 'auto-mode-alist '("\\Rakefile$\\'" . ruby-mode))
-(define-key global-map (kbd "C-l C-o C-c")
+(define-key global-map (kbd "C-l C-o C-b")
   #'(lambda ()
       (interactive)
 			(async-shell-command "rake -t" (get-buffer-create "*Rake*"))))

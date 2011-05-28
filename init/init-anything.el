@@ -481,4 +481,7 @@
 
 (anything-read-string-mode -1)
 
+(require 'anything-org-mode)
+(global-set-key (kbd "C-q C-a C-h") 'anything-org-agenda)
+
 (provide 'init-anything)

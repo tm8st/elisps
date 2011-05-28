@@ -130,7 +130,7 @@ well."
   (when quit
     (browse-kill-ring-quit)))
 
-(global-set-key (kbd "C-l k") 'browse-kill-ring)
+(global-set-key (kbd "C-c k") 'browse-kill-ring)
 (define-key browse-kill-ring-mode-map (kbd "i") '(lambda () (interactive) browse-kill-ring-insert-and-option-insert(nil, "\n")))
 
 ;; kill-ring を一行で表示
@@ -158,7 +158,7 @@ well."
 	))
 
 (defun my-open-dired-dir-os ()
-  "diredで開いているdirectorをosの標準機能で開く"
+  "diredで開いているdirectoryをosの標準機能で開く"
   (interactive)
   (when (my-is-mac)
     (shell-command "open ."))
@@ -166,14 +166,14 @@ well."
     (shell-command (concat "explorer " (dired-current-directory))))
   )
 
-(define-key dired-mode-map (kbd "C-c C-f") 'add-dired-file-name-to-killring)
-(global-set-key (kbd "C-c C-o") 'my-open-dired-dir-os)
+(defun my-play-dired-file ()
+  "diredでカーソルがあっている音声ファイルを再生する"
+  (interactive)
+  (se-play (dired-file-name-at-point)))
 
-;; ^		dired-up-directory
-;; +		dired-create-directory
-;; <		dired-prev-dirline
-;; =		dired-diff
-;; >		dired-next-dirline
+(define-key dired-mode-map (kbd "C-c C-f") 'add-dired-file-name-to-killring)
+(define-key dired-mode-map (kbd "C-c p") 'my-play-dired-file)
+(global-set-key (kbd "C-c C-o") 'my-open-dired-dir-os)
 
 (require `dired)
 (require `dired-aux)

@@ -16,20 +16,18 @@
 (require 'org-habit)
 (require 'org-capture)
 
-
 (setq org-startup-truncated nil)
 (setq org-return-follows-link t)
 (setq org-log-done 'time) ;; DONEの時刻を記録
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-;; (org-remember-insinuate) ;; remember も使う => captureへ
 
 (add-hook 'org-mode-hook
-   '(lambda ()
-      (turn-on-font-lock)
-      (setq indent-tabs-mode nil)
-      (setq tab-width 2)
-      (setq default-tab-width 2)
-      ))
+          '(lambda ()
+             (turn-on-font-lock)
+             (setq indent-tabs-mode nil)
+             (setq tab-width 2)
+             (setq default-tab-width 2)
+             ))
 
 ;; (setq org-hide-leading-stars t) ;; 見出しの余分な*を消す
 (setq org-hide-leading-stars nil) ;; 見出しの余分な*を消さない
@@ -48,8 +46,8 @@
 (define-key org-mode-map (kbd "C-c C-j") 'org-return-indent)
 
 (if my-use-dropbox
-		(setq org-directory (concat my-dropbox-directory "Org/"))
-	(setq org-directory "~/.emacs.d/org/"))
+    (setq org-directory (concat my-dropbox-directory "Org/"))
+  (setq org-directory "~/.emacs.d/org/"))
 
 (setq org-default-notes-file (concat org-directory "main.org"))
 (setq org-life-notes-file (concat org-directory "life.org"))
@@ -69,48 +67,48 @@
    ("GAME" . ?g)
    ("UE3" . ?u)
    ("ANIME" . ?a)
- ))
+   ))
 
 ;; DONEの時刻を記録
 (setq org-log-done 'time)
 
 ;; (require 'org-remember)
+;; (org-remember-insinuate) ;; remember も使う => captureへ
 ;; (setq org-remember-templates
 ;;       '(
-;; 				("TASK" ?t "** TASK \n  %i\n  %a\n  %U\n" nil "INBOX")
-;; 				("IDEA" ?i "** SOMEDAY \n  %i\n  %a\n  %U\n" nil "IDEAS")
-;; 				("MEMO" ?m "** \n  %i\n  %a\n  %U\n" nil "NOTES")
-;; 				("LIFE-TASK" ?l "** TASK     \n  %i\n  %a\n  %U\n" nil "LIFE")
-;; 				("HABIT" ?h "** \n:PROPERTIES:\n:LOGGING: DONE(!) logrepeat\n:END:\n%i\n  %a\n  %U\n" nil "HABIT")
+;;         ("TASK" ?t "** TASK \n  %i\n  %a\n  %U\n" nil "INBOX")
+;;         ("IDEA" ?i "** SOMEDAY \n  %i\n  %a\n  %U\n" nil "IDEAS")
+;;         ("MEMO" ?m "** \n  %i\n  %a\n  %U\n" nil "NOTES")
+;;         ("LIFE-TASK" ?l "** TASK     \n  %i\n  %a\n  %U\n" nil "LIFE")
+;;         ("HABIT" ?h "** \n:PROPERTIES:\n:LOGGING: DONE(!) logrepeat\n:END:\n%i\n  %a\n  %U\n" nil "HABIT")
 ;;         ))
 
 (setq org-capture-templates
       '(
-        ("wt" "TASK" entry (file+headline org-default-notes-file "TASKS")
+        ("t" "TASK" entry (file+headline org-default-notes-file "TASKS")
          "** TASK \n  %i\n  %a\n  %U\n")
-        ("wi" "IDEA" entry (file+headline org-default-notes-file "IDEAS")
+        ("i" "IDEA" entry (file+headline org-default-notes-file "IDEAS")
          "** SOMEDAY \n  %i\n  %a\n  %U\n")
-        ("wm" "MEMO" entry (file+headline org-default-notes-file "NOTES")
+        ("m" "MEMO" entry (file+headline org-default-notes-file "NOTES")
          "** \n  %i\n  %a\n  %U\n")
 
-        ("lt" "LIFE-TASK" entry (file+headline org-life-notes-file "LIFE")
+        ("l" "LIFE-TASK" entry (file+headline org-life-notes-file "LIFE")
          "** TASK \n  %i\n  %a\n  %U\n")
-        ("li" "IDEA" entry (file+headline org-life-notes-file "IDEAS")
+        (";" "LIFE-IDEA" entry (file+headline org-life-notes-file "IDEAS")
          "** SOMEDAY \n  %i\n  %a\n  %U\n")
-        ("lm" "MEMO" entry (file+headline org-life-notes-file "NOTES")
+        (":" "LIFE-MEMO" entry (file+headline org-life-notes-file "NOTES")
          "** \n  %i\n  %a\n  %U\n")
+        ("h" "LIFE-HABIT" entry (file+headline org-life-notes-file "HABIT")
+         "** \n  :PROPERTIES:\n  :LOGGING: DONE(!) logrepeat\n  :END:\n	%i\n  %a\n  %U\n")
 
-        ("i" "IDEA" entry (file+headline org-inbox-notes-file "IDEAS")
+        ("d" "INBOX-IDEA" entry (file+headline org-inbox-notes-file "IDEAS")
          "** SOMEDAY \n  %i\n  %a\n  %U\n")
 
-        ("m" "MEMO" entry (file+headline org-inbox-notes-file "NOTES")
+        ("f" "INBOX-MEMO" entry (file+headline org-inbox-notes-file "NOTES")
          "** \n  %i\n  %a\n  %U\n")
 
         ("r" "REVIEW" entry (file+headline org-inbox-notes-file "REVIEW")
-         "** \n  %i\n  %a\n  %U\n")
-
-        ("h" "HABIT" entry (file+headline org-life-notes-file "HABIT")
-         "** \n  :PROPERTIES:\n  :LOGGING: DONE(!) logrepeat\n  :END:\n	%i\n  %a\n  %U\n")))
+         "** \n  %i\n  %a\n  %U\n")))
 
 (setq org-mobile-inbox-for-pull (concat org-directory "pulled.org"))
 ;; Dropbox直下のMobileOrgフォルダへのパスを設定
@@ -125,14 +123,14 @@
 
 ;; index fileを開く
 (defun my-org-open-index ()
-	(interactive)
-	(find-file org-default-notes-file))
+  (interactive)
+  (find-file org-default-notes-file))
 (defun my-org-open-life ()
-	(interactive)
-	(find-file org-life-notes-file))
+  (interactive)
+  (find-file org-life-notes-file))
 (defun my-org-open-inbox ()
-	(interactive)
-	(find-file org-inbox-notes-file))
+  (interactive)
+  (find-file org-inbox-notes-file))
 
 (define-key global-map (kbd "C-l C-o C-o") 'my-org-open-index)
 (define-key global-map (kbd "C-l C-o C-l") 'my-org-open-life)
@@ -167,9 +165,9 @@
 (require 'org-agenda)
 
 (add-hook 'org-agenda-mode-hook
-   '(lambda ()
-    (hl-line-mode 1)
-    (setq hl-line-face 'underline)))
+          '(lambda ()
+             (hl-line-mode 1)
+             (setq hl-line-face 'underline)))
 
 (define-key global-map (kbd "C-l C-o C-a") 'org-agenda)
 ;; (define-key global-map (kbd "C-l C-o C-l") 'org-agenda-list)
@@ -180,39 +178,48 @@
 
 (require 'tm8st-growl)
 (defun my-org-agenda-open-buffer ()
-	(interactive)
-	(display-buffer "*Org Agenda*"))
+  (interactive)
+  (display-buffer "*Org Agenda*"))
 
 (define-key global-map (kbd "C-l C-o C-z") 'my-org-agenda-open-buffer)
 
 (defun my-org-clock-in ()
-	(interactive)
-	(tm8st-growl-timer "Org" "Org" nil (* 60 1000))
+  (interactive)
+  (tm8st-growl-timer "Org" "Org" nil (* 60 1000))
   (bm-toggle)
-	(org-clock-in))
+  (org-clock-in))
 
 (defun my-org-clock-out ()
-	(interactive)
-	(tm8st-growl-notify-delete-sticky "DONE!!" "Org")
+  (interactive)
+  (tm8st-growl-notify-delete-sticky "DONE!!" "Org")
   (bm-toggle)
-	(org-clock-out))
+  (se-play (concat my-dropbox-directory "Emacs/SE/amivoice/otsukaresama.wav"))
+  (org-clock-out))
+
+(defun my-org-clock-cancel ()
+  (interactive)
+  (tm8st-growl-timer-channel)
+  (org-clock-out))
 
 ;; timer start, stop.
 (define-key org-mode-map (kbd "C-c C-i") 'my-org-clock-in)
 (define-key org-mode-map (kbd "C-c C-o") 'my-org-clock-out)
+(global-set-key (kbd "C-l C-o C-c") 'my-org-clock-cancel)
 
 (define-key org-agenda-mode-map (kbd "C-i") 'org-agenda-clock-in)
 (define-key org-agenda-mode-map (kbd "C-o") 'org-agenda-clock-out)
 
 (defun my-add-separate-char-on-newline ()
-	"ざっくりとレイアウト調整。"
-	(interactive)
-	(let ((s (point))
-				(e (mark)))
-		(replace-string "," ",\n" nil s e)
-		(replace-string "\. " ".\n" nil s e)
-		(replace-string "!" "!\n" nil s e)
-		))
+  "ざっくりとレイアウト調整。"
+  (interactive)
+  (let ((s (point))
+        (e (mark)))
+    (replace-string "," ",\n" nil s e)
+    (replace-string "\." ".\n" nil s e)
+    (replace-string "!" "!\n" nil s e)
+    (replace-string "、" "、\n" nil s e)
+    (replace-string "。" "。\n" nil s e)
+    ))
 
 (define-key org-mode-map (kbd "C-c C-k") 'my-add-separate-char-on-newline)
 
@@ -230,12 +237,12 @@
 (require 'org-checklist)
 (setq org-reverse-note-order nil)
 (require 'org-crypt)
-; Encrypt all entries before saving
+                                        ; Encrypt all entries before saving
 (org-crypt-use-before-save-magic)
-; Which tag is used to mark headings to be encrypted
+                                        ; Which tag is used to mark headings to be encrypted
 (setq org-tags-exclude-from-inheritance (quote ("CRYPT")))
 (customize-set-value 'org-crypt-tag-matcher "CRYPT")
-; GPG key to use for encryption
+                                        ; GPG key to use for encryption
 (setq org-crypt-key "F0B66B40")
 
 ;; おちる。。。
