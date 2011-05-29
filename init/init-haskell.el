@@ -18,6 +18,7 @@
 (require 'prefix-arg-commands)
 
 (add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
+(add-to-list 'auto-mode-alist '("\\.lhs$" . haskell-mode))
 (add-to-list 'auto-mode-alist '("\\.hsc$" . haskell-mode))
 
 (require 'auto-complete)

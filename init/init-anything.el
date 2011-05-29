@@ -415,7 +415,7 @@
 ;; (setq abks:mkcover-cmd '("convert" "-resize" size pdf jpeg))
 (global-set-key (kbd "C-q C-a C-d") 'anything-books-command) ; キーバインド
 
-;; doc-view で開く 重たかったので外部で開く
+;; doc-view で開く設定 重たかったので外部で開く
 ;; (defadvice abks:open-file (around my-abks:open-file activate)
 ;;   (if (require 'doc-view  nil t)
 ;;       (find-file (ad-get-arg 0))

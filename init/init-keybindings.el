@@ -208,7 +208,6 @@
 (global-set-key (kbd "C-q C-q") 'quoted-insert)       ;;元のコマンド
 ;; (global-set-key (kbd "C-q C-@") 'yalinum-mode)        ;;行番号表示のトグル。
 (global-set-key (kbd "C-q C-h") 'help-for-help)       ;;ヘルプ
-(global-set-key (kbd "C-q C-;") 'view-mode)
 
 (global-set-key (kbd "C-q C-w") 'gro-copy-follow-word) ;;copy
 ;; (global-set-key (kbd "C-q C-w") 'copy-region-as-kill) ;;copy

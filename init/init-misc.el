@@ -483,7 +483,7 @@
       (browse-url (buffer-substring-no-properties (car url-region)
 						  (cdr url-region))))))
 
-(global-set-key (kbd "C-c C-u") 'browse-url-at-point)
+(global-set-key (kbd "C-c C-f") 'browse-url-at-point)
 
 (global-set-key (kbd "C-l C-f C-n") 'make-frame-command)
 (global-set-key (kbd "C-l C-f C-d") 'delete-frame)
