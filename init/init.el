@@ -128,6 +128,7 @@
 				 "init-theme.el"
 				 "init-org.el"
          "init-vcs.el"
+         "init-view-mode.el"
 		
 				 ;; "init-window.el"
 				 ;; "init-test.el"
@@ -154,7 +155,7 @@
 
 ;; initialized notify by growl.
 (when (require 'tm8st-growl nil t)
-	(tm8st-growl-notify
-	 (concat "\"Emacs Initialized." "\"")))
+  (add-hook 'emacs-startup-hook
+            (lambda () (tm8st-growl-notify (concat "\"Emacs Initialized." "\"")))))
 
 (provide 'init)

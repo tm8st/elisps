@@ -480,13 +480,17 @@ default name is filename:current line string."
 	  (concat "" (replace-regexp-in-string "/" "\\\\\\\\" args))
 	args))
 
-(defun my-open-directory-by-explorer ()
+(defun my-open-directory-by-external-filer ()
   ""
   (interactive)
   (shell-command
-   (concat "explorer "
-		   (my-unix-to-w32-pathname-transformer
-			(expand-file-name (my-current-directory-name))))))
+   (cond 
+    ((my-is-windows) 
+     (concat "explorer "
+             (my-unix-to-w32-pathname-transformer
+              (expand-file-name (my-current-directory-name)))))
+    ((my-is-mac) 
+     (concat "open .")))))
 
 (defun my-tsp-run-command-over-lines (command &optional n)
   "Run COMMAND over the following N lines.

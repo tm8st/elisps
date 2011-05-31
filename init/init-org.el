@@ -191,14 +191,14 @@
 
 (defun my-org-clock-out ()
   (interactive)
-  (tm8st-growl-notify-delete-sticky "DONE!!" "Org")
   (bm-toggle)
-  (se-play (concat my-dropbox-directory "Emacs/SE/amivoice/otsukaresama.wav"))
+  (se-play (concat my-dropbox-directory "Emacs/SE/amivoice/otsukaresamaN.mp3"))
+  (tm8st-growl-notify-delete-sticky "DONE!!" "Org")
   (org-clock-out))
 
 (defun my-org-clock-cancel ()
   (interactive)
-  (tm8st-growl-timer-channel)
+  (tm8st-growl-timer-cancel)
   (org-clock-out))
 
 ;; timer start, stop.

@@ -16,10 +16,11 @@
 (migemo-init)
 ;; ;; 基本設定
 (setq migemo-command "cmigemo")
-(setq migemo-options '("-q" "--emacs"))
+(setq migemo-options '("-q" "--emacs" "-i" "\a"))
+;; (setq migemo-options '("-q" "--emacs"))
 ;; migemo-dict のパスを指定(setq migemo-dictionary "/usr/local/share/migemo/euc-jp/migemo-dict")
-(setq migemo-user-dictionary nil)
-(setq migemo-regex-dictionary nil)
+(setq migemo-dictionary "/usr/local/share/migemo/euc-jp/migemo-dict")
+;; (setq migemo-regex-dictionary nil)
 
 ;; (load-library "migemo")
 ;; (setq migemo-directory "~/elip/migemo")
