@@ -357,17 +357,15 @@
 ;;; Rakefile
 ;;;-------------------------------
 (add-to-list 'auto-mode-alist '("\\Rakefile$\\'" . ruby-mode))
-(define-key global-map (kbd "C-l C-o C-b")
-  #'(lambda ()
-      (interactive)
-			(async-shell-command "rake -t" (get-buffer-create "*Rake*"))))
+(defvar rake-task-alist '(("run") ("clean") ("clobber") ("test") ("profile") ("hpc")))
+(defun my-run-rakefile ()
+  (interactive)
+  (async-shell-command (concat "rake -t "
+                               (completing-read "task?: "
+                                                rake-task-alist nil t))
+                       (get-buffer-create "*Rake*")))
 
-(define-key global-map (kbd "C-l C-o C-t")
-  #'(lambda ()
-      (interactive)
-			(async-shell-command "rake -t test" (get-buffer-create "*Rake*"))))
-
-(add-to-list 'auto-mode-alist '("RAKEFILE$" . ruby-mode))
+(define-key global-map (kbd "C-l C-o C-b") 'my-run-rakefile)
 
 ;;;-------------------------------
 ;;; yalinum
@@ -488,5 +486,6 @@
 (global-set-key (kbd "C-l C-f C-n") 'make-frame-command)
 (global-set-key (kbd "C-l C-f C-d") 'delete-frame)
 (global-set-key (kbd "C-l C-f C-o") 'other-frame)
+
 
 (provide 'init-misc)

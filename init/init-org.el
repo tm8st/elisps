@@ -193,7 +193,7 @@
   (interactive)
   (bm-toggle)
   (se-play (concat my-dropbox-directory "Emacs/SE/amivoice/otsukaresamaN.mp3"))
-  (tm8st-growl-notify-delete-sticky "DONE!!" "Org")
+  (tm8st-growl-notify-delete-sticky "DONE!" "Org")
   (org-clock-out))
 
 (defun my-org-clock-cancel ()
@@ -237,13 +237,10 @@
 (require 'org-checklist)
 (setq org-reverse-note-order nil)
 (require 'org-crypt)
-                                        ; Encrypt all entries before saving
-(org-crypt-use-before-save-magic)
-                                        ; Which tag is used to mark headings to be encrypted
-(setq org-tags-exclude-from-inheritance (quote ("CRYPT")))
+(org-crypt-use-before-save-magic); Encrypt all entries before saving
+(setq org-tags-exclude-from-inheritance (quote ("CRYPT"))); Which tag is used to mark headings to be encrypted
 (customize-set-value 'org-crypt-tag-matcher "CRYPT")
-                                        ; GPG key to use for encryption
-(setq org-crypt-key "F0B66B40")
+(setq org-crypt-key "F0B66B40"); GPG key to use for encryption
 
 ;; おちる。。。
 ;; (defun my-org-hide-other-subtree ()

@@ -22,10 +22,10 @@
 (setq skk-auto-insert-paren t)
 
 ;; ファイルを開いたらSKKモード
-(add-hook 'find-file-hook
-          '(lambda ()
-             (skk-mode t)
-             (skk-latin-mode-on)))
+;; (add-hook 'find-file-hook
+;;           '(lambda ()
+;;              (skk-mode t)
+;;              (skk-latin-mode-on)))
 
 ;; C-\ でも SKK に切り替えられるように設定
 (setq default-input-method "japanese-skk")

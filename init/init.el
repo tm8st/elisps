@@ -153,6 +153,10 @@
 
 (setq my-initialized t)
 
+;; pre cache.
+(when (fboundp my-ap:pre-cache-project-files)
+  (my-ap:pre-cache-project-files))
+
 ;; initialized notify by growl.
 (when (require 'tm8st-growl nil t)
   (add-hook 'emacs-startup-hook

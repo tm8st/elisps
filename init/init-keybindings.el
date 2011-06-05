@@ -124,6 +124,7 @@
 (global-set-key (kbd "C-l C-e") 'my-eval-buffer-or-region)
 
 (global-set-key (kbd "C-l C-g")  'goto-line) ;;指定した行へ。
+(global-set-key (kbd "C-q C-d C-e")  'ediff-buffers)
 
 ;; 外部のfiler で 開く
 (global-set-key (kbd "C-l C-f C-e") 'my-open-directory-by-external-filer)
