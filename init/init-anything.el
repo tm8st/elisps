@@ -484,16 +484,16 @@
 (require 'anything-org-mode)
 (global-set-key (kbd "C-q C-a C-h") 'anything-org-agenda)
 
-(setq my-ap:pre-cache-project-files
-  '(
-   (concat my-dropbox-directory "/Program/Haskell/HGI/src/RAKEFILE")
-   ))
+(defvar my-ap:pre-cache-project-root-files '())
 
 (defun my-ap:pre-cache-project-files ()
   (interactive)
   (mapcar '(lambda (f)
              (find-file f)
              (ap:get-project-files))
-          my-ap:pre-cache-project-files))
+          my-ap:pre-cache-project-root-files))
+
+;; pre cache.
+(add-hook 'emacs-startup-hook 'my-ap:pre-cache-project-files)
 
 (provide 'init-anything)

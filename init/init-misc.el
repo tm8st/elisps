@@ -197,7 +197,6 @@
 ;;;-------------------------------
 (require 'thing-opt)
 (define-thing-commands)
-(global-unset-key (kbd "C-l C-j"))
 (global-set-key (kbd "C-l C-j C-w") 'mark-word*)
 (global-set-key (kbd "C-l C-j C-e") 'mark-sexp*)
 (global-set-key (kbd "C-l C-j C-s") 'mark-string)

@@ -152,14 +152,12 @@
   )
 
 (setq my-initialized t)
-
-;; pre cache.
-(when (fboundp my-ap:pre-cache-project-files)
-  (my-ap:pre-cache-project-files))
-
+  
 ;; initialized notify by growl.
 (when (require 'tm8st-growl nil t)
   (add-hook 'emacs-startup-hook
             (lambda () (tm8st-growl-notify (concat "\"Emacs Initialized." "\"")))))
+
+(add-hook 'emacs-startup-hook 'my-set-default-color-theme)
 
 (provide 'init)

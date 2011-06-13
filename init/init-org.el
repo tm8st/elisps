@@ -256,4 +256,7 @@
 (when (my-is-mac)
   (setq tm8st-growl-type 'mac-growlnotify))
 
+;; (require 'org-export-hatena)
+;; (require 'simple-hatena-mode)
+
 (provide 'init-org)

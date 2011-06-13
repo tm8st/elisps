@@ -290,8 +290,7 @@
   )
 
 (defun my-set-default-color-theme ()
-	"初期化のタイミングでうまく設定できないので初期化後に設定するために
-コマンド化しておく"
+	"初期化のタイミングでうまく設定できないので初期化後に設定するためにコマンド化しておく"
 	(interactive)
 	(color-theme-solarized-light))
 

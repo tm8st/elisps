@@ -32,11 +32,17 @@
    (get-buffer-create "*scheme*"))
   (run-scheme scheme-program-name))
 
-(defun sheme-info ()
+(defun scheme-info ()
   (interactive)
   (switch-to-buffer-other-frame
    (get-buffer-create "*info*"))
   (info scheme-info-name))
+
+(defun my-scheme-mode-hook ()
+  (yalinum-mode t)
+  )
+
+(add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
 
 (add-to-list 'ac-modes 'inferior-scheme-mode)
 
