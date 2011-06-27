@@ -484,16 +484,15 @@
 (require 'anything-org-mode)
 (global-set-key (kbd "C-q C-a C-h") 'anything-org-agenda)
 
-(defvar my-ap:pre-cache-project-root-files '())
-
-(defun my-ap:pre-cache-project-files ()
+(require 'anything-project)
+(defvar my-ap:pre-cache-project-files nil)
+(defun my-ap:pre-cache-project ()
   (interactive)
   (mapcar '(lambda (f)
              (find-file f)
              (ap:get-project-files))
           my-ap:pre-cache-project-root-files))
 
-;; pre cache.
-(add-hook 'emacs-startup-hook 'my-ap:pre-cache-project-files)
+(add-hook 'emacs-startup-hook 'my-ap:pre-cache-project)
 
 (provide 'init-anything)

@@ -45,11 +45,11 @@
 (define-key org-mode-map (kbd "C-j") 'newline)
 (define-key org-mode-map (kbd "C-c C-j") 'org-return-indent)
 
-(if my-use-dropbox
-    (setq org-directory (concat my-dropbox-directory "Org/"))
-  (setq org-directory "~/.emacs.d/org/"))
+;; (setq org-directory "~/org/")
+(setq org-directory (concat my-dropbox-directory "Org/"))
+(setq org-private-directory "~/Org/")
 
-(setq org-default-notes-file (concat org-directory "main.org"))
+(setq org-default-notes-file (concat org-private-directory "main.org"))
 (setq org-life-notes-file (concat org-directory "life.org"))
 (setq org-inbox-notes-file (concat org-directory "inbox.org"))
 

@@ -486,5 +486,4 @@
 (global-set-key (kbd "C-l C-f C-d") 'delete-frame)
 (global-set-key (kbd "C-l C-f C-o") 'other-frame)
 
-
 (provide 'init-misc)

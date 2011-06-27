@@ -132,7 +132,7 @@
     (dolist (p (process-list))
       (set-process-query-on-exit-flag p nil))))
 
-  (setq require-final-newline t) ; file の最後は 必ず newline で終わる様にする。
+  (setq require-final-newline nil) ; file の最後は 必ず newline で終わる様にするか
   (setq line-number-display-limit 10000)   ;;表示される最大行数を大きくする。
 
   ;;ホイールマウス

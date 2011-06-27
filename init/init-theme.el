@@ -19,7 +19,7 @@
   (defvar my-font-size-base 100)
   (cond
    ((my-is-windows) (setq my-font-size-base 155))
-   ((my-is-mac) (setq my-font-size-base 260)))
+   ((my-is-mac) (setq my-font-size-base 265)))
 
 	(when (>= emacs-major-version 23)
 		(when use-font-setting
@@ -95,6 +95,9 @@
 		;; (setq skk-inline-show-face )
 		(setq skk-inline-show-background-color dummy-region-color))
 
+  (customize-set-variable 'skk-cursor-hiragana-color "#a0a0a0")
+  (customize-set-variable 'skk-cursor-katakana-color "#80d0a0")
+
 	;; (set-face-foreground 'skk-tooltip-face default-font-color)
 	;; (set-face-background 'skk-tooltip-face dummy-region-color)
 
@@ -120,7 +123,6 @@
 		(set-face-background 'yalinum-face default-background-color)
 		(set-face-background 'yalinum-bar-face dummy-region-color)
 		)
-
   
   (when (require 'popup nil t)
     (set-face-foreground 'ac-candidate-face default-font-color)
@@ -181,7 +183,7 @@
     (list
 		 '(foreground-color . "black")
      '(background-color . "white")
-     '(cursor-color . "orange")
+     '(cursor-color . "pink")
      '(cursor-type . box)
      '(cursor-height . 4)
      '(mouse-color . "white")
@@ -306,5 +308,16 @@
 (setq display-time-format "%Y/%m/%d %a %R")
 (setq display-time-day-and-date t)
 (display-time)
+
+;; (require 'cursor-chg)
+;; (custom-set-variables
+;;  '(curchg-change-cursor-on-overwrite/read-only-flag t)
+;;  '(curchg-change-cursor-on-input-method-flag t)
+;;  '(cursor-mode t) ; On for overwrite/read-only/input mode
+;;  '(curchg-idle-cursor-type 'box)
+;;  '(curchg-default-cursor-type 'box)
+;;  '(curchg-overwrite/read-only-cursor-type 'box))
+;; ; On when idle
+;; (toggle-cursor-type-when-idle t)
 
 (provide 'init-theme)

@@ -598,17 +598,16 @@ default name is filename:current line string."
     (interactive
      (save-excursion
        (let*
-	   ((filename (if (eq filename nil)
-			  (find-file-read-args "Find file: "
-					       (confirm-nonexistent-file-or-buffer))
-			filename
-			))
-	    (value (find-file-noselect (car filename) nil nil nil)))
-	 (if (listp value)
-	     (mapcar 'switch-to-buffer (nreverse value))
-	   (switch-to-buffer value)
-	   (my-buffer-cygstart-exe)
-	   (kill-buffer (current-buffer))))))))
+           ((filename (if (eq filename nil)
+                          (find-file-read-args "Find file: "
+                                               (confirm-nonexistent-file-or-buffer))
+                        filename))
+            (value (find-file-noselect (car filename) nil nil nil)))
+         (if (listp value)
+             (mapcar 'switch-to-buffer (nreverse value))
+           (switch-to-buffer value)
+           (my-buffer-cygstart-exe)
+           (kill-buffer (current-buffer))))))))
 
 (when (my-is-mac)
   (defun my-open-file-os ()

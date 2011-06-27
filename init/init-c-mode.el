@@ -9,6 +9,8 @@
 
 ;;; Code:
 
+(require 'cc-mode)
+
 ;;c-mode key-binding
 ;; C-c C-a			c-toggle-auto-newline
 ;; C-c C-b			c-submit-bug-report
@@ -194,6 +196,9 @@
 (add-hook 'c-mode-hook 'my-c-mode-hook)
 (add-hook 'c++-mode-hook 'my-c-mode-hook)
 (add-hook 'objc-mode-hook 'my-c-mode-hook)
+
+(define-key c-mode-base-map (kbd "C-c C-r") '(lambda () (interactive) (insert-string "->")))
+(define-key c-mode-base-map (kbd "C-c C--") '(lambda () (interactive) (insert-string "=")))
 
 ;;;-------------------------------
 ;; google-c-style

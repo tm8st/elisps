@@ -57,11 +57,13 @@
 (define-key haskell-mode-map (kbd "C-c C-r") `prefix-arg-commands-insert-haskell-right-arrow)
 (define-key haskell-mode-map (kbd "C-c C-@") '(lambda () (interactive) (insert-string " `` ") (backward-char 2)))
 (define-key haskell-mode-map (kbd "C-c C-1") '(lambda () (interactive) (insert-string " !! ") (backward-char 2)))
+(define-key haskell-mode-map (kbd "C-c C--") '(lambda () (interactive) (insert-string " = ")))
 
 (define-key inferior-haskell-mode-map (kbd "C-c C-l") '(lambda () (interactive) (insert-string " <- ")))
 (define-key inferior-haskell-mode-map (kbd "C-c C-r") `prefix-arg-commands-insert-haskell-right-arrow)
 (define-key inferior-haskell-mode-map (kbd "C-c C-@") '(lambda () (interactive) (insert-string " `` ") (backward-char 2)))
 (define-key inferior-haskell-mode-map (kbd "C-c C-1") '(lambda () (interactive) (insert-string " !! ") (backward-char 2)))
+(define-key inferior-haskell-mode-map (kbd "C-c C--") '(lambda () (interactive) (insert-string " = ")))
 
 (define-key haskell-mode-map (kbd "C-c C-c") 'inferior-haskell-load-file)
 (define-key haskell-mode-map (kbd "C-c C-e") 'inferior-haskell-load-and-run)

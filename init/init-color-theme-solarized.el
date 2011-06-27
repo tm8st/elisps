@@ -63,7 +63,7 @@ Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized."
         (background-color . ,base03)
         (background-mode . ,mode)
         ;; (cursor-color . ,base0))
-			  (cursor-color . ,orange))
+			  (cursor-color . pink))
        ;; basic
        (default ((t (:foreground ,base0))))
        (cursor ((t (:foreground ,base0 :background ,base03 :inverse-video t))))
@@ -136,18 +136,6 @@ Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized."
        (show-paren-mismatch-face ((t (:background ,red))))
 			 ;; (show-paren-mismatch-face ((t (:background ,red :foreground ,base3))))
 			 ))))
-
-(require 'cursor-chg)
-(custom-set-variables
- '(curchg-change-cursor-on-overwrite/read-only-flag t)
- '(curchg-change-cursor-on-input-method-flag t)
- '(cursor-mode t) ; On for overwrite/read-only/input mode
- '(curchg-idle-cursor-type 'box)
- '(curchg-default-cursor-type 'box)
- '(curchg-overwrite/read-only-cursor-type 'box))
-
-; On when idle
-(toggle-cursor-type-when-idle t)
 
 (defun color-theme-solarized-dark ()
   (interactive)
