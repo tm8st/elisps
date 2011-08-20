@@ -56,11 +56,6 @@
 (global-set-key (kbd "C-x k") 'kill-buffer)
 (global-set-key (kbd "C-x C-k") 'kill-buffer)
 
-(global-set-key (kbd "C-^") 'my-other-window-or-split)
-;; (global-set-key [C-tab] 'other-window) ;; window 切り替え
-;; (global-set-key (kbd "C-x o") 'other-window)
-;; (global-set-key (kbd "C-x p") '(lambda (arg) (interactive "p") (other-window (- arg))))
-
 (global-set-key (kbd "C-:") 'execute-extended-command)
 ;; (global-set-key (kbd "C-,") `my-replace-string)
 (global-set-key (kbd "C-,") '(lambda () (interactive) (insert "_")))
@@ -122,6 +117,7 @@
 (global-set-key (kbd "C-l C-q") 'my-match-paren)
 (global-set-key (kbd "C-l C-c") 'calculator)
 (global-set-key (kbd "C-l C-e") 'my-eval-buffer-or-region)
+(global-set-key (kbd "C-c C-e") 'my-eval-buffer-or-region)
 
 (global-set-key (kbd "C-l C-g")  'goto-line) ;;指定した行へ。
 (global-set-key (kbd "C-q C-d C-e")  'ediff-buffers)

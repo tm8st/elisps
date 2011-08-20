@@ -246,8 +246,8 @@
 
 (defun my-graphbiz-execute ()
   (interactive)
-	(compile (concat "dot -Tpng " buffer-file-name " > " (my-get-file-name-non-extension buffer-file-name) ".png"))
-	;; (graphviz-dot-preview)
+	(compile (concat "dot -Tpic " buffer-file-name " > " (my-get-file-name-non-extension buffer-file-name) ".png"))
+	(graphviz-dot-preview)
   )
 
 (let ((map graphviz-dot-mode-map))
@@ -256,6 +256,8 @@
 	(define-key map (kbd "C-c C-e")    'my-graphbiz-execute)
 	(define-key map (kbd "C-c C-v")    'graphviz-dot-view)
 	(define-key map (kbd "C-m")  	     'my-backward-word)
+  (define-key map (kbd "C-c C-r") '(lambda () (interactive) (insert-string " -> ")))
+  (define-key map (kbd "C-c C-l") '(lambda () (interactive) (insert-string " <- ")))
 ;; (define-key map "\r"       'electric-graphviz-dot-terminate-line)
 ;; (define-key map "{"        'electric-graphviz-dot-open-brace)
 ;; (define-key map "}"        'electric-graphviz-dot-close-brace)
@@ -291,7 +293,7 @@
 (when (my-is-mac)
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-with-twitter-client
-	 '((top + -0) (left + -1700) (height . 720) (width . 113)))
+	 '((top + -0) (left + -1700) (height . 720) (width . 100)))
 
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-full-screen
@@ -303,13 +305,12 @@
 
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-with-twitter-client-main
-	 '((top + 0) (left + 0) (height . 1080) (width . 116)))
-	)
+	 '((top + 0) (left + 0) (height . 1080) (width . 105))))
 
 (when (my-is-windows)
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-with-twitter-client
-	 '((top + -0) (left + 0) (height . 720) (width . 110)))
+	 '((top + -0) (left + 0) (height . 720) (width . 100)))
 
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-full-screen
@@ -321,7 +322,7 @@
 
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-with-twitter-client-main
-	 '((top + 0) (left + 0) (height . 1080) (width . 115))))
+	 '((top + 0) (left + 0) (height . 1080) (width . 110))))
 
 (define-key global-map (kbd "C-l C-w C-m")
   #'(lambda ()
@@ -452,7 +453,11 @@
 ;;                               ))
 
 ;; (global-set-key (kbd "C--") 'prefix-arg-commands-bs-cycle)
-(global-set-key (kbd "C--") 'prefix-arg-commands-buffer-cycle)
+(global-set-key (kbd "C-^") 'prefix-arg-commands-buffer-cycle)
+(global-set-key (kbd "C--") 'my-other-window-or-split)
+;; (global-set-key [C-tab] 'other-window) ;; window 切り替え
+;; (global-set-key (kbd "C-x o") 'other-window)
+;; (global-set-key (kbd "C-x p") '(lambda (arg) (interactive "p") (other-window (- arg))))
 ;; (global-set-key (kbd "C--") 'prefix-arg-commands-tabber-cycle)
 
 (require 'type-se)
@@ -485,5 +490,20 @@
 (global-set-key (kbd "C-l C-f C-n") 'make-frame-command)
 (global-set-key (kbd "C-l C-f C-d") 'delete-frame)
 (global-set-key (kbd "C-l C-f C-o") 'other-frame)
+
+;;;-------------------------------
+;;; hs-minor-mode
+;;;-------------------------------
+(require 'hideshow)
+(defun my-hs-minor-mode-on () (hs-minor-mode 1))
+(add-hook 'c-mode-hook 'my-hs-minor-mode-on)
+(add-hook 'c++-mode-hook 'my-hs-minor-mode-on)
+(add-hook 'haskell-mode-hook 'my-hs-minor-mode-on)
+(add-hook 'emacs-lisp-mode-hook 'my-hs-minor-mode-on)
+(add-hook 'ruby-mode-hook 'my-hs-minor-mode-on)
+
+(define-key hs-minor-mode-map (kbd "C-q C--") 'hs-toggle-hiding)
+(define-key hs-minor-mode-map (kbd "C-q C-^") 'hs-show-all)
+(define-key hs-minor-mode-map (kbd "C-q C-¥") 'hs-hide-all)
 
 (provide 'init-misc)

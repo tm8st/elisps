@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-;; garbage collectionの頻度を減らして、速度向上 デフォルトは400000
+;; garbage collectionの頻度を減らして、速度向上
 (setq gc-cons-threshold (* gc-cons-threshold 10))
 
 ;; turnoff mouse interface.
@@ -17,22 +17,33 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
+;; set elisps directory path.
 (setq my-elisps-directory (getenv "ELISPDIR"))
-(message (concat "init elisp dir is " my-elisps-directory "."))
-(setq my-elisps-directory "~/elisps")
+(if (eq my-elisps-directory nil)
+    (progn
+      (setq my-elisps-directory "~/elisps")
+      (message (concat "init elisp dir is nil, set default " my-elisps-directory ".")))
+  (message (concat "init elisp dir is " my-elisps-directory ".")))
 
 ;; "void variable" エラー対策
 (defvar warning-suppress-types nil)
 
 ;; Windows環境で定義されていないとエラーがでるので定義しておく
-(defun string-to-char-list (str)
-  (string-to-list str))
+(unless (fboundp 'string-to-char-list)
+  (defun string-to-char-list (str)
+    (string-to-list str)))
 
-;; コンパイル用環境の設定 パスを変える場合はここと下のファイルの中の変数の値を変える必要がある
-(load (concat my-elisps-directory "/init/init-compile-env.el"))
+(defun my-load-elisp (path)
+  "safety and more infomation load function."
+  (load path t)
+  )
+
+;; コンパイル用環境の設定elispのパス
+;; パスを変える場合はこことinit-compile-envの中の変数の値を変える必要がある
+(my-load-elisp (concat my-elisps-directory "/init/init-compile-env.el"))
 
 ;;;-------------------------------
-;;; path add
+;;; add path to exec path.
 ;;;-------------------------------
 (defvar exec-path-list
   (list
@@ -40,7 +51,7 @@
    "/usr/bin" "/usr/sbin" "/sbin" "/sw/bin" "/sw/sbin"
    "/usr/local/bin"
    "/opt/local/bin" "/opt/local/sbin"
-         ))
+   ))
 
 (defun add-to-exec-path (dir)
   ""
@@ -52,7 +63,7 @@
 (mapc 'add-to-exec-path exec-path-list)
 
 ;;;----------------------------------------
-;;; loadpath add all ~/elisps subdirs
+;;; add loadpath all ~/elisps subdirs.
 ;;;----------------------------------------
 (defvar my-default-load-path load-path)
 (let ((dir (expand-file-name my-elisp-path)))
@@ -73,29 +84,25 @@
     (if (member (expand-file-name d) my-default-load-path) nil
       (my-byte-recompile-directory d))))
 
-;; (dolist (d load-path)
-;; (if (member (expand-file-name d) my-default-load-path) nil
-;;   (my-byte-recompile-directory d)))
-
 (add-to-list 'load-path "~/emacswiki.org" t)
 
 ;;----------------------------------------
-;; original key-binding-prefix
+;; unset key bindings for key-binding-prefix.
 ;;----------------------------------------
 (global-unset-key (kbd "C-q"))
 (global-unset-key (kbd "C-l"))
 
 ;;;-------------------------------
-;;; start customize
+;;; load some init elisps.
 ;;;-------------------------------
 (when use-customize
 
-  (load "init-compile-env.el")
-  (load "init-private.el")
-  (load "private.el")
+  (my-load-elisp "init-compile-env.el")
+  (my-load-elisp "init-private.el")
+  (my-load-elisp "private.el")
 
   ;;----------------------------------------
-  ;; init etc
+  ;; init elisp list.
   ;;----------------------------------------
   (setq init-load-elisp-list
 				(list
@@ -141,14 +148,10 @@
     (add-to-list 'init-load-elisp-list "init-scala.el"))
   (when my-use-haskell-mode
     (add-to-list 'init-load-elisp-list "init-haskell.el"))
- 
   (when my-use-twitter-mode
     (add-to-list 'init-load-elisp-list "init-twitter.el"))
 
-  (defun my-init-load-elisp (file) ""
-    (load file t nil))
-
-  (mapc 'my-init-load-elisp init-load-elisp-list)
+  (mapc 'my-load-elisp init-load-elisp-list)
   )
 
 (setq my-initialized t)

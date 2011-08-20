@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(require 'howm-mode)
+(require 'howm)
 
 (setq howm-menu-lang 'ja)
 (setq howm-directory "~/.emacs.d/howm/")

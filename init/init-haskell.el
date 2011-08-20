@@ -53,11 +53,26 @@
                             '(lambda () (interactive) (insert-string " -> "))
                             '(lambda () (interactive) (insert-string " => "))))
 
+(defun my-hs-if-previous-line-function-define-put-func-name ()
+  (interactive)
+  (let ((limitPos (point))
+        (funcName nil))
+    (save-excursion
+      (previous-line)
+      (beginning-of-line)
+      (unless (eq (search-forward "::" limitPos 1) nil)
+        (progn
+          (back-to-indentation)
+          (setq funcName (thing-at-point 'word)))))
+    (unless (eq funcName nil)
+      (insert-string funcName))))
+
 (define-key haskell-mode-map (kbd "C-c C-l") '(lambda () (interactive) (insert-string " <- ")))
 (define-key haskell-mode-map (kbd "C-c C-r") `prefix-arg-commands-insert-haskell-right-arrow)
 (define-key haskell-mode-map (kbd "C-c C-@") '(lambda () (interactive) (insert-string " `` ") (backward-char 2)))
 (define-key haskell-mode-map (kbd "C-c C-1") '(lambda () (interactive) (insert-string " !! ") (backward-char 2)))
 (define-key haskell-mode-map (kbd "C-c C--") '(lambda () (interactive) (insert-string " = ")))
+(define-key haskell-mode-map (kbd "C-c C-j") 'my-hs-if-previous-line-function-define-put-func-name)
 
 (define-key inferior-haskell-mode-map (kbd "C-c C-l") '(lambda () (interactive) (insert-string " <- ")))
 (define-key inferior-haskell-mode-map (kbd "C-c C-r") `prefix-arg-commands-insert-haskell-right-arrow)

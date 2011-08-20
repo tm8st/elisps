@@ -211,8 +211,8 @@
 ;; grep-find用コマンドの設定/ windowsでfindコマンドを別名にしているため。
 (defvar my-anything-grep-find-command nil)
 (if (my-is-windows)
-    (setq my-anything-grep-find-command "gnufind . -name \"*.*\" -a -type f -a -not -name \"*.svn*\" -a -not -name \"*.bin\" -a -not -name \"*.exe\" -exec grep -ni -e \"%s\" {} +")
-  (setq my-anything-grep-find-command "find . -name \"*.*\" -a -type f -a -not -name \"*.svn*\" -a -not -name \"*.bin\" -a -not -name \"*.exe\" -exec grep -ni -e \"%s\" {} +")
+    (setq my-anything-grep-find-command "gnufind . -name \"*.*\" -a -type f -a -not -name \"*.svn*\" -a -not -name \"*.bin\" -a -not -name \"*.exe\" -a -not -name \"*.o\" -a -not -name \"*.hi\" -a -not -name \"*.a\" -a -not -name \"*.inplace\" -exec grep -ni -e \"%s\" {} +")
+  (setq my-anything-grep-find-command "find . -name \"*.*\" -a -type f -a -not -name \"*.svn*\" -a -not -name \"*.bin\" -a -not -name \"*.exe\" -a -not -name \"*.o\" -a -not -name \"*.hi\" -a -not -name \"*.a\" -a -not -name \"*.inplace\" -exec grep -ni -e \"%s\" {} +")
   )
 
 (defun my-anything-grep-find ()
@@ -264,9 +264,9 @@
 ;; c++ & scala & haskell 登録
 ;; 同じ look-for設定で別のプロジェクトを登録するとバグるので一つのプロジェクトにまとめておく。
 (ap:add-project
- :name 'c++-scala
+ :name 'c++-scala-haskell
  :look-for '("GTAGS" ".*\\.sln") ; or
- :include-regexp '("\\.scala$" "\\.h$" "\\.sln$" "\\.cpp$" "\\.c$" "\\.h$" "\\.inl$" "\\.fx$" "\\.ini$" "\\.txt$" "\\.uc$" "\\.usf$" "\\.hs$" "\\.hls$" "\\.cs$") ;or
+ :include-regexp '("\\.scala$" "\\.h$" "\\.sln$" "\\.cpp$" "\\.c$" "\\.h$" "\\.inl$" "\\.fx$" "\\.ini$" "\\.txt$" "\\.uc$" "\\.usf$" "\\.hs$" "\\.hls$" "\\.cs$" "\\.hamlet" "\\models" "\\routes" "\\.julius" "\\.cassius") ;or
  )
 
 ;; elisp 登録
@@ -494,5 +494,12 @@
           my-ap:pre-cache-project-root-files))
 
 (add-hook 'emacs-startup-hook 'my-ap:pre-cache-project)
+
+;;;-------------------------------
+;;; woman
+;;;-------------------------------
+(setq woman-manpath '("/usr/share/man"))
+(setq woman-use-own-frame nil)
+(global-set-key (kbd "C-q C-a C-m") 'anything-man-woman)
 
 (provide 'init-anything)

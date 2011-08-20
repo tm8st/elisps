@@ -217,5 +217,19 @@
 ;; (add-hook 'c-mode-common-hook
 ;;			 '(lambda () (c-toggle-hungry-state 1)))
 
+(defun my-run-c++ ()
+  (interactive)
+  (shell-command
+   (concat "g++ *.cpp -o temp"))
+   ;; (concat "g++ " (buffer-file-name (current-buffer)) "-o temp"))
+  (shell-command
+   (concat "./temp")))
+
+;; c++ run.
+(define-key c++-mode-map (kbd "C-c C-c")
+  `my-run-c++)
+
+(require 'lua-mode)
+
 (provide 'init-c-mode)
 

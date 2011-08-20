@@ -63,7 +63,7 @@ Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized."
         (background-color . ,base03)
         (background-mode . ,mode)
         ;; (cursor-color . ,base0))
-			  (cursor-color . pink))
+			  (cursor-color . "pink2"))
        ;; basic
        (default ((t (:foreground ,base0))))
        (cursor ((t (:foreground ,base0 :background ,base03 :inverse-video t))))

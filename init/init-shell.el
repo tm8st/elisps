@@ -109,4 +109,15 @@
 
 	(global-set-key (kbd "C-l C-s C-n") 'my-shell-command-growl-notify))
 
+(customize-set-value 'ansi-color-names-vector
+      [unspecified "black" "black" "black" "black"
+                   "black" "black" "black" "black"])
+
+(setq multi-shell-use-ansi-color t)
+(customize-set-value 'ansi-color-for-comint-mode t)
+
+;; (setq ansi-term-color-vector
+;;       [unspecified "black" "red1" "lime green" "yellow2"
+;;                    "DeepSkyBlue3" "magenta2" "cyan2" "white"])
+
 (provide 'init-shell)

@@ -33,7 +33,7 @@
 
 (defvar use-customize t)
 (defvar use-gui-setting (and t use-customize))
-(defvar use-font-setting t)
+(defvar use-font-setting (and t use-customize))
 (defvar use-misc-setting (and t use-customize))
 (defvar my-force-recompile-elisps nil)
 (defvar file-cache-path nil)
