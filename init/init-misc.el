@@ -11,9 +11,7 @@
 
 (require 'doc-view)
 
-;;;-------------------------------
 ;;; text-mode
-;;;-------------------------------
 (add-hook
  'text-mode-hook
  (lambda ()
@@ -21,21 +19,16 @@
    (customize-set-value 'standard-indent 4)
    (setq indent-tabs-mode t)))
 
-;;;-------------------------------
 ;;; popwin
-;;;-------------------------------
 (require 'popwin)
 (setq display-buffer-function 'popwin:display-buffer)
-;; (setq special-display-function 'popwin:special-display-popup-window)
 (add-to-list 'popwin:special-display-config '("*Compile-Log*"))
 (add-to-list 'popwin:special-display-config '("*Dired log*"))
 (add-to-list 'popwin:special-display-config '("*Rake*"))
 
 (define-key global-map (kbd "C-l p") 'popwin:display-last-buffer)
 
-;;;-------------------------------
 ;;; text-translator
-;;;-------------------------------
 (require 'text-translator-vars)
 (require 'text-translator)
 (require 'init-my-misc)

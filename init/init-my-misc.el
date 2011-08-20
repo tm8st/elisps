@@ -246,10 +246,10 @@
   (interactive)
   (if (and transient-mark-mode mark-active)
       (delete-region (mark)(point))
-	(if (eq (line-end-position) (point))
-		(delete-char 1)
-		(delete-region (line-end-position)(point)))
-	))
+            (delete-char 1)
+      ;; +1は改行文字
+      (delete-region (+ 1 (line-end-position)) (point)))
+    ))
 
 (defun my-delete-line ()
   "delete char line."

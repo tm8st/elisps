@@ -35,9 +35,7 @@
 (global-set-key (kbd "C-h") 'delete-backward-char)
 ;; killではなくてdeleteに削除コマンドを変更
 (global-set-key (kbd "C-k") 'my-delete-line-forward)
-
 ;; (global-set-key (kbd "C-l C-z") 'toggle-input-method) SKKへ
-
 
 (global-set-key (kbd "C-z") 'undo)
 (require 'redo)

@@ -11,6 +11,7 @@
 
 ;; garbage collectionの頻度を減らして、速度向上
 (setq gc-cons-threshold (* gc-cons-threshold 10))
+(random 1000000) ;; Seed the random-number generator
 
 ;; turnoff mouse interface.
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
