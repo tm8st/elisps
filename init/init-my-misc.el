@@ -248,8 +248,7 @@
       (delete-region (mark)(point))
             (delete-char 1)
       ;; +1は改行文字
-      (delete-region (+ 1 (line-end-position)) (point)))
-    ))
+      (delete-region (+ 1 (line-end-position)) (point))))
 
 (defun my-delete-line ()
   "delete char line."

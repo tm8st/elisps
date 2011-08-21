@@ -72,17 +72,6 @@
 ;; DONEの時刻を記録
 (setq org-log-done 'time)
 
-;; (require 'org-remember)
-;; (org-remember-insinuate) ;; remember も使う => captureへ
-;; (setq org-remember-templates
-;;       '(
-;;         ("TASK" ?t "** TASK \n  %i\n  %a\n  %U\n" nil "INBOX")
-;;         ("IDEA" ?i "** SOMEDAY \n  %i\n  %a\n  %U\n" nil "IDEAS")
-;;         ("MEMO" ?m "** \n  %i\n  %a\n  %U\n" nil "NOTES")
-;;         ("LIFE-TASK" ?l "** TASK     \n  %i\n  %a\n  %U\n" nil "LIFE")
-;;         ("HABIT" ?h "** \n:PROPERTIES:\n:LOGGING: DONE(!) logrepeat\n:END:\n%i\n  %a\n  %U\n" nil "HABIT")
-;;         ))
-
 (setq org-capture-templates
       '(
         ("t" "TASK" entry (file+headline org-default-notes-file "TASKS")
@@ -110,10 +99,11 @@
         ("r" "REVIEW" entry (file+headline org-inbox-notes-file "REVIEW")
          "** \n  %i\n  %a\n  %U\n")))
 
+;; MobileOrg
 (setq org-mobile-inbox-for-pull (concat org-directory "pulled.org"))
 ;; Dropbox直下のMobileOrgフォルダへのパスを設定
 (setq org-mobile-directory (concat my-dropbox-directory "MobileOrg"))
-(setq org-mobile-force-id-on-agenda-items nil)
+(setq org-mobile-force-id-on-agenda-items t)
 
 ;; 標準の祝日を利用する
 (customize-set-variable 'org-calendar-holidays t)

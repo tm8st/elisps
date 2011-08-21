@@ -25,6 +25,7 @@
 (add-to-list 'popwin:special-display-config '("*Compile-Log*"))
 (add-to-list 'popwin:special-display-config '("*Dired log*"))
 (add-to-list 'popwin:special-display-config '("*Rake*"))
+(add-to-list 'popwin:special-display-config '("*Backtrace*" :height 0.5))
 
 (define-key global-map (kbd "C-l p") 'popwin:display-last-buffer)
 
@@ -33,12 +34,12 @@
 (require 'text-translator)
 (require 'init-my-misc)
 
+(require 'popup)
+(setq text-translator-display-popup t)
+
 ;; 自動選択に使用する関数を設定
 (setq text-translator-auto-selection-func
       'text-translator-translate-by-auto-selection-enja)
-
-(require 'popup)
-(setq text-translator-display-popup t)
 
 (defun my-text-translator-toggle-popup ()
 	"toggle display setting."
@@ -53,12 +54,12 @@
 	  (insert text-translator-last-translated-text)))
 
 (defun my-text-translator-jaen ()
-	"insert last translated text."
+	"taranslate ja -> en."
 	(interactive)
 	(text-translator nil nil "google.com_jaen"))
 
 (defun my-text-translator-enja ()
-	"insert last translated text."
+	"taranslate en -> ja."
 	(interactive)
 	(text-translator nil nil "google.com_enja"))
 
@@ -106,9 +107,7 @@
     (delete-region (+ 1 (point)) (point-max))
     (buffer-string)))
 
-;;;-------------------------------
 ;;; yafastnav, jaunte
-;;;-------------------------------
 (require 'yafastnav)
 (require 'jaunte)
 
@@ -120,10 +119,10 @@
 ;; smartchr
 ;;-------------------------------
 (require 'smartchr)
-
 ;; substitute `!!' with cursor
-(global-set-key (kbd "{") (smartchr '("{`!!'}" "{")))
-;; (global-set-key (kbd "}") (smartchr '("}" "{`!!'}" "}")))
+
+(global-set-key (kbd "{") (smartchr '("{`!!'}" "{`!!'")))
+;; (global-set-key (kbd "}") (smartchr '("}`!!'" "{`!!'}" "`!!'}")))
 (global-set-key (kbd "\"") (smartchr '("\"`!!'\"" "\"")))
 (global-set-key (kbd "\'") (smartchr '("\'" "\'`!!'\'")))
 (global-set-key (kbd "`") (smartchr `("`" "``!!'`")))
@@ -135,23 +134,19 @@
 (global-set-key (kbd "[") (smartchr '("[`!!']" "[" "]")))
 ;; (global-set-key (kbd "]") (smartchr '("]" "[`!!']" "[]")))
 
-;;;-------------------------------
 ;;; sequential-command-config
-;;;-------------------------------
 (require 'sequential-command)
+(require 'sequential-command-config)
 (define-sequential-command beginning-of-anything-seq
   back-to-indentation beginning-of-line seq-return)
 
 (define-sequential-command end-of-anything-seq
   end-of-line seq-return)
 
-(require 'sequential-command-config)
 (global-set-key (kbd "C-a") 'beginning-of-anything-seq)
 (global-set-key (kbd "C-e") 'end-of-anything-seq)
 
-;;;-------------------------------
 ;;; emacsから一発で検索
-;;;-------------------------------
 (require 'search-web)
 
 (defun my-search-web (engine)
@@ -167,27 +162,21 @@
 (define-key global-map (kbd "C-l C-s C-e") (lambda () (interactive) (my-search-web "eow")))
 ;; AMAZON
 (define-key global-map (kbd "C-l C-s C-a") (lambda () (interactive) (my-search-web "zj")))
-;; udn
+;; UDN
 (define-key global-map (kbd "C-l C-s C-u") (lambda () (interactive) (my-search-web "udn")))
 
-;;;-------------------------------
 ;;; Profile
-;;;-------------------------------
 (require `elp)
 
 (global-set-key (kbd "C-l C-a C-s") `elp-instrument-package)
 (global-set-key (kbd "C-l C-a C-r") `elp-results)
 (global-set-key (kbd "C-l C-a C-e") `elp-reset-all)
 
-;;;-------------------------------
-;;; windowナンバリング
-;;;-------------------------------
+;;; Windowナンバリング
 (require 'window-numbering)
 (window-numbering-mode t) ;; M-numberで移動
 
-;;;-------------------------------
 ;;; region selectinon
-;;;-------------------------------
 (require 'thing-opt)
 (define-thing-commands)
 (global-set-key (kbd "C-l C-j C-w") 'mark-word*)
@@ -195,28 +184,7 @@
 (global-set-key (kbd "C-l C-j C-s") 'mark-string)
 (global-set-key (kbd "C-l C-j C-f") 'mark-defun*)
 
-;;;-------------------------------
 ;; keyboard-macro
-;;;-------------------------------
-;; C-x (
-;; キーボードマクロの定義を開始する （start-kbd-macro）。
-;; C-x )
-;; キーボードマクロの定義を終了する （end-kbd-macro）。
-;; C-x e
-;; もっとも最近のキーボードマクロを実行する （call-last-kbd-macro）。
-;; C-u C-x (
-;; もっとも最近のキーボードマクロを再実行したうえで、 その定義にキーを追加する。
-;; C-x q
-;; キーボードマクロの実行中にこの場所に到達したら、 実行の確認を求める （kbd-macro-query）。
-;; M-x name-last-kbd-macro
-;; もっとも最近に定義したキーボードマクロに（現在のEmacsセッションだけで有効な） コマンド名を与える。
-;; M-x insert-kbd-macro
-;; キーボードマクロの定義をLispコードとしてバッファに挿入する。
-;; C-x C-k
-;; まえに定義したキーボードマクロを編集する （edit-kbd-macro）。
-;; M-x apply-macro-to-region-lines
-;; リージョン内の各行に対して、最後に定義したキーボードマクロを実行する。
-;;;-------------------------------
 (defun my-last-kbd-macro-name-and-insert ()
   (interactive)
   (let ((name (read-string "Macro Name is:")))
@@ -228,11 +196,8 @@
 (global-set-key (kbd "C-q C-9") 'end-kbd-macro)
 (global-set-key (kbd "C-q C-0") 'my-last-kbd-macro-name-and-insert)
 
-;;;-------------------------------
 ;;; graphviz mode
-;;;-------------------------------
 (require 'graphviz-dot-mode)
-
 (add-to-list 'auto-mode-alist '("\\.dot$" . graphviz-dot-mode))
 (customize-set-variable 'graphviz-dot-indent-width 2)
 (add-hook 'graphviz-dot-mode-hook (setq tab-width 2))
@@ -275,13 +240,7 @@
 (customize-set-value 'ahs-idle-interval 0.5)
 (add-to-list 'ahs-modes 'haskell-mode)
 
-(require 'popwin)
-(setq display-buffer-function 'popwin:display-buffer)
-(add-to-list 'popwin:special-display-config '("*Backtrace*" :height 0.5))
-
-;;;-------------------------------
 ;;; frame-arrange
-;;;-------------------------------
 (require 'frame-arrange)
 (when (my-is-mac)
 	(frange:regist-frame-position-parameter
@@ -345,124 +304,63 @@
        (selected-frame)
        'my-frame-arrange-with-twitter-client-main)))
 
-
-;;;-------------------------------
-;;; Rakefile
-;;;-------------------------------
-(add-to-list 'auto-mode-alist '("\\Rakefile$\\'" . ruby-mode))
+;;; Rakefile for Haskell.
+(add-to-list 'auto-mode-alist '("\\RAKEFILE$\\'" . ruby-mode))
 (defvar rake-task-alist '(("run") ("clean") ("clobber") ("test") ("profile") ("hpc")))
 (defun my-run-rakefile ()
   (interactive)
-  (async-shell-command (concat "rake -t "
-                               (completing-read "task?: "
-                                                rake-task-alist nil t))
-                       (get-buffer-create "*Rake*")))
+  (async-shell-command
+   (concat "rake -t "
+           (completing-read "task?: " rake-task-alist nil t))
+   (get-buffer-create "*Rake*")))
 
 (define-key global-map (kbd "C-l C-o C-b") 'my-run-rakefile)
 
-;;;-------------------------------
 ;;; yalinum
-;;;-------------------------------
 (require 'yalinum)
+;; disable linum mode.
 (global-linum-mode -1)
+(global-yalinum-mode t)
 
-  ;; (start-process-shell-command
-  ;;  "gtags-update"
-  ;;  "*my-gtags-update*"
-  ;;  (concat "cd " (gtags-get-rootpath) " && gtags -v"))
-
-;;;-------------------------------
-;;; vc keybind
-;;;-------------------------------
-;; C-x v v vc-next-action          次の動作 (commit)
-;; C-x v d vc-directory            登録されたファイルを表示
-;; C-x v = vc-diff                 diff表示
-;; C-x v u vc-revert-buffer        checkinしたものに戻す
-;; C-x v ~ vc-version-other-window 所定のrevを別のwindowへ
-;; C-x v l vc-print-log            log表示
-;; C-x v i vc-register             add
-;; C-x v h vc-insert-headers       version headerを挿入
-;; C-x v r vc-retrieve-snapshot    tag指定checkout
-;; C-x v s vc-create-snapshot      tagをつける
-;; C-x v c vc-cancel-version       保存されたrevを捨てる。
-;; C-x v a vc-update-change-log    GNUスタイルでchangeLogを更新
-
-;;;-------------------------------
-;;; hiwin
-;;;-------------------------------
-;; (require 'hiwin)
-;; (setq hiwin-color "gray30")
-;; (setq hiwin-color "darkslategreen")
-;; (hiwin-mode t) ; 起動時から有効にしたい場合
-
-;; (require 'detect-block)
-;; (detect-block t)
-
-;; (auto-install-from-url "http://github.com/fukamachi/dont-type-twice-el/raw/master/dont-type-twice.el")
-;; (require 'dont-type-twice)
-;; (global-dont-type-twice t)
-
-;; (auto-install-from-url "http://github.com/tomoya/hiwin-mode/raw/master/hiwin.el")
-;; (install-elisp "http://github.com/tomoya/hiwin-mode/raw/master/hiwin.el")
-
-;; グループ化せずに*scratch*以外のタブを表示
-;; (require 'cl)
-;;  (when (require 'tabbar nil t)
-;;     (setq tabbar-buffer-groups-function
-;; 					(lambda (b) (list "All Buffers")))
-;;     ;; (setq tabbar-buffer-list-function
-;;     ;;       (lambda ()
-;;     ;;         (remove-if
-;;     ;;          (lambda(buffer)
-;;     ;;            (find (aref (buffer-name buffer) 0) " *"))
-;;     ;;          (buffer-list))))
-;;     (tabbar-mode t))
-
-;; ;; 左に表示されるボタンを無効化
-;; (setq tabbar-home-button-enabled "")
-;; (setq tabbar-home-button-disabled "")
-;; (setq tabbar-scroll-left-button-enabled "")
-;; (setq tabbar-scroll-right-button-enabled "")
-;; (setq tabbar-scroll-left-button-disabled "")
-;; (setq tabbar-scroll-right-button-disabled "")
-
+;; buffer cycle move.
 (require 'prefix-arg-commands)
-(prefix-arg-commands-defun prefix-arg-commands-bs-cycle
-                            (list
-																'bs-cycle-next
-																'bs-cycle-previous
-                              ))
+(prefix-arg-commands-defun
+ prefix-arg-commands-bs-cycle
+ (list
+  'bs-cycle-next
+  'bs-cycle-previous
+  ))
 
-(prefix-arg-commands-defun prefix-arg-commands-buffer-cycle
-                            (list
-																'next-buffer
-																'previous-buffer
-                              ))
+(prefix-arg-commands-defun
+ prefix-arg-commands-buffer-cycle
+ (list
+  'next-buffer
+  'previous-buffer
+  ))
 
+(global-set-key (kbd "C-^") 'prefix-arg-commands-buffer-cycle)
+(global-set-key (kbd "C--") 'my-other-window-or-split)
 ;; (prefix-arg-commands-defun prefix-arg-commands-tabber-cycle
 ;;                             (list
 ;; 																'tabbar-forward
 ;; 																'tabbar-backward
 ;;                               ))
-
 ;; (global-set-key (kbd "C--") 'prefix-arg-commands-bs-cycle)
-(global-set-key (kbd "C-^") 'prefix-arg-commands-buffer-cycle)
-(global-set-key (kbd "C--") 'my-other-window-or-split)
 ;; (global-set-key [C-tab] 'other-window) ;; window 切り替え
 ;; (global-set-key (kbd "C-x o") 'other-window)
 ;; (global-set-key (kbd "C-x p") '(lambda (arg) (interactive "p") (other-window (- arg))))
 ;; (global-set-key (kbd "C--") 'prefix-arg-commands-tabber-cycle)
 
 (require 'type-se)
-
 (defun my-output-last-command ()
   (interactive)
-  (message (concat "ThisCommand    : " (symbol-name this-command)))
-  (message (concat "LastCommand    : " (symbol-name last-command)))
-  (message (concat "RealLastCommand: " (symbol-name real-last-command))))
+  (message (concat "ThisCommand    : " (symbol-name this-command)
+                   "\nLastCommand    : " (symbol-name last-command)
+                   "\nRealLastCommand: " (symbol-name real-last-command))))
 
 (global-set-key (kbd "C-q C-3") 'my-output-last-command)
 
+;; widen-window
 ;; (require 'widen-window)
 ;; (global-widen-window-mode t)
 ;; (require 'widen-window)
@@ -480,13 +378,12 @@
 
 (global-set-key (kbd "C-c C-f") 'browse-url-at-point)
 
+;; frame operations.
 (global-set-key (kbd "C-l C-f C-n") 'make-frame-command)
 (global-set-key (kbd "C-l C-f C-d") 'delete-frame)
 (global-set-key (kbd "C-l C-f C-o") 'other-frame)
 
-;;;-------------------------------
 ;;; hs-minor-mode
-;;;-------------------------------
 (require 'hideshow)
 (defun my-hs-minor-mode-on () (hs-minor-mode 1))
 (add-hook 'c-mode-hook 'my-hs-minor-mode-on)
