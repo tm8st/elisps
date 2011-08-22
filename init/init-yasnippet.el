@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(require 'yasnippet)
+(my-require 'yasnippet)
 
 (defun my-update-yasnippet-files ()
   "ファイル更新時用に読み込み直し"
@@ -35,7 +35,7 @@
                              (get-char-property (point) 'face))
                     (string= "font-lock-string-face"
                              (get-char-property (point) 'face))))
-           '(require-snippet-condition . force-in-comment)))
+           '(my-require-snippet-condition . force-in-comment)))
 
 (add-hook 'emacs-lisp-mode-hook
           '(lambda () (yas/minor-mode-on)))

@@ -7,32 +7,32 @@
 ;; creation time: [Sun Aug  1 18:12:46 2010]
 ;;; Commentary:
 
-;; (require 'hs)
+;; (my-require 'hs)
 ;; (add-to-list 'auto-mode-alist '("\\.hs$" . hs-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.hsc$" . hs-mode))
 
-(require 'yalinum)
-(require 'haskell-mode)
-(require 'haskell-indentation)
-(require 'inf-haskell)
-(require 'prefix-arg-commands)
+(my-require 'yalinum)
+(my-require 'haskell-mode)
+(my-require 'haskell-indentation)
+(my-require 'inf-haskell)
+(my-require 'prefix-arg-commands)
 
 (add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
 (add-to-list 'auto-mode-alist '("\\.lhs$" . haskell-mode))
 (add-to-list 'auto-mode-alist '("\\.hsc$" . haskell-mode))
 
-(require 'auto-complete)
+(my-require 'auto-complete)
 (add-to-list 'ac-modes 'haskell-mode)
 (add-to-list 'ac-modes 'inferior-haskell-mode)
 
-(require 'popwin)
+(my-require 'popwin)
 (setq display-buffer-function 'popwin:display-buffer)
 (add-to-list 'popwin:special-display-config '("*GHC Errors*" :height 0.3))
 ;; (add-to-list 'popwin:special-display-config '("*haskell*" :height 0.2 :noselect))  ;; 勝手に閉じてしまう. popwin.el 0.2
 ;; (add-to-list 'popwin:special-display-config '("*hs-lint*")) ;; 勝手に閉じてしまう. popwin.el 0.2
 ;; (setq popwin:special-display-config '(("*haskell*" :height 0.4 :noselect)))
 
-(require 'ghc)
+(my-require 'ghc)
 
 (define-key haskell-mode-map (kbd "C-c C-o") 'ghc-complete)
 (define-key haskell-mode-map (kbd "C-c C-i") 'ghc-show-info)
@@ -93,11 +93,11 @@
 (define-key inferior-haskell-mode-map (kbd "C-j") 'comint-send-input)
 (define-key inferior-haskell-mode-map (kbd "C-c C-h") 'haskell-hoogle)
 
-(require 'hs-lint) ; Hackage hlint
+(my-require 'hs-lint) ; Hackage hlint
 
-;; (require 'scion)   ; Emacs wiki "scion"
+;; (my-require 'scion)   ; Emacs wiki "scion"
 ;; (local-set-key "\C-c\C-x." 'scion-goto-definition)
-;; (require 'hs-scan) ; google it 'Haskell style scanner'
+;; (my-require 'hs-scan) ; google it 'Haskell style scanner'
 
 ;;
 (defun my-haskell-mode-hook ()
@@ -120,7 +120,7 @@
 (add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
 (add-hook 'haskell-cabal-mode-hook 'my-haskell-cabal-mode)
 
-(require 'haskell-move-nested)
+(my-require 'haskell-move-nested)
 (define-key haskell-mode-map (kbd "C-S-B")
   (lambda ()
     (interactive)

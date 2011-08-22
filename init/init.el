@@ -158,7 +158,7 @@
 (setq my-initialized t)
   
 ;; initialized notify by growl.
-(when (require 'tm8st-growl nil t)
+(when (my-require 'tm8st-growl)
   (add-hook 'emacs-startup-hook
             (lambda () (tm8st-growl-notify (concat "\"Emacs Initialized." "\"")))))
 

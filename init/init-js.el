@@ -9,9 +9,7 @@
 
 ;;; Code:
 
-(require 'js2)
-
-(when (require 'js2 nil t)
+(when (my-require 'js2)
   (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
   (setq js2-cleanup-whitespace nil
         js2-mirror-mode nil

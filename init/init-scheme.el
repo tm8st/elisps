@@ -9,14 +9,14 @@
 
 ;;; Code:
 
-(require 'scheme)
+(my-require 'scheme)
 
 ;; 実行環境
 (setq scheme-program-name "gosh")
 (setq scheme-info-name "/usr/local/info/gauche-refj.info.gz")
 (autoload 'scheme-mode "cmuscheme" "Major mode for Scheme." t)
 (autoload 'run-scheme "cmuscheme" "Run an inferior Scheme process." t)
-(require 'cmuscheme)
+(my-require 'cmuscheme)
 
 (defun scheme-other-frame ()
   "Run scheme on other frame"

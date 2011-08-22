@@ -12,7 +12,7 @@
   ;;; This file is not (YET) part of GNU Emacs.
   
 (eval-when-compile
-  (require 'color-theme))
+  (my-require 'color-theme))
 
 ;; 
 (defvar default-font-color "#344050")

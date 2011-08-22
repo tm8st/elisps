@@ -10,7 +10,7 @@
 ;;; Code:
 
 ;;GNU GLOBAL(gtags)
-(require 'gtags)
+(my-require 'gtags)
 (gtags-mode t)
 (gtags-make-complete-list)
 (customize-set-value 'gtags-path-style 'relative)
@@ -39,9 +39,9 @@
 ;;;-------------------------------
 ;;; etags 
 ;;;-------------------------------
-(require 'etags)
-;; (require 'anything-etags) obsolete
-(require 'anything-config)
+(my-require 'etags)
+;; (my-require 'anything-etags) obsolete
+(my-require 'anything-config)
 (defvar my-etags-command "ctags -e --recurse")
 ;; (setq my-etags-command "find . -name \"*.*\" -a -type f -a -not -name \"*.svn*\" -a -not -name \"*.bin\" -a -not -name \"*.exe\" -exec etags -a {} +")
 
@@ -59,7 +59,7 @@
 ;; (global-set-key (kbd "C-q C-a C-m") 'anything-etags-select)
 ;; (global-set-key (kbd "C-l C-j C-u") 'my-etags-update)
 
-;; (require 'virtual-tags)
+;; (my-require 'virtual-tags)
 ;; (global-set-key (kbd "C-q C-e") 'virtual-tags-update-tags)
 ;; (global-set-key (kbd "C-q C-@") 'virtual-tags-init-tags)
 ;; (global-set-key (kbd "C-q C-j") 'virtual-tags-find-tags-from-here)

@@ -54,7 +54,7 @@
   ;;--------------------------------
   ;; filecache
   ;;--------------------------------
-  (require 'filecache)
+  (my-require 'filecache)
   (file-cache-add-directory-list (list (expand-file-name "~/")))
   (file-cache-add-directory-list load-path)
   ;; (file-cache-add-directory-list exec-path)
@@ -74,17 +74,17 @@
 
   (setq file-name-shadow-mode t) ;;ファイル名入力時に不用になった部分を暗くする
 
-  (require 'saveplace)  ;;以前編集していた位置を開く
+  (my-require 'saveplace)  ;;以前編集していた位置を開く
   (setq-default save-place t)
   (auto-compression-mode t);; 圧縮ファイルを透過的に開く
   
-  (require 'auto-install)
+  (my-require 'auto-install)
   (custom-set-variables
    '(auto-install-directory (concat my-elisp-directory "/new/"))
    '(install-elisp-repository-directory (concat my-elisp-directory "/rep/"))
    '(auto-install-update-emacswiki-package-name t))
 
-  (require 'savehist) ;; mini buffer 入力履歴
+  (my-require 'savehist) ;; mini buffer 入力履歴
   (setq savehist-mode t)
 
   (setq kill-whole-line t) ;; C-kで行全体を削除
@@ -152,7 +152,7 @@
   (setq-default line-spacing 1)
 
   ;; 最近使った file を記憶させる。
-  (require 'recentf)
+  (my-require 'recentf)
   (recentf-mode 1)
   (custom-set-variables
    '(recentf-max-menu-items 300)
@@ -161,7 +161,7 @@
 
   ;;別のdirectoryにある同一名のfileを開いた時に、
   ;;numberingではなく、directorynameを表示して区別出来る様にする。
-  (require 'uniquify)
+  (my-require 'uniquify)
   (custom-set-variables
    ;; '(uniquify-buffer-name-style 'post-forward-angle-brackets)
    '(uniquify-buffer-name-style 'forward)
@@ -169,7 +169,7 @@
    )
 
   ;;ファイル名がカーソルの下にある場合にfind-fileで開く
-  (require 'ffap)
+  (my-require 'ffap)
 
   ;; backup files.
   (setq make-backup-files t)
@@ -178,7 +178,7 @@
               backup-directory-alist))
 
   ;; auto save.
-  (require 'auto-save-buffers)
+  (my-require 'auto-save-buffers)
   ;; (setq auto-save-default t)
   ;; (setq auto-save-interval 256)
   ;; (setq auto-save-timeout 120)
@@ -215,7 +215,7 @@
     (setq w32-hide-mouse-on-key t)
 
     ;;cygwin風ディレクリ指定
-    (require 'cygwin-mount)
+    (my-require 'cygwin-mount)
     (cygwin-mount-activate)
     ))
 

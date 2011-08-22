@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(eval-when-compile (require 'cl))
+(eval-when-compile (my-require 'cl))
 
 (when use-font-setting
 
@@ -19,14 +19,14 @@
   (defvar my-font-size-base 100)
   (cond
    ((my-is-windows) (setq my-font-size-base 155))
-   ((my-is-mac) (setq my-font-size-base 265)))
+   ((my-is-mac) (setq my-font-size-base 300)))
 
 	(when (>= emacs-major-version 23)
 		(when use-font-setting
 			(when (my-is-windows)
 				(set-face-attribute 'default nil
-											:family "Ricty"
-											:height my-font-size-base))
+                            :family "Ricty"
+                            :height my-font-size-base))
 			(when (my-is-mac)
 				(set-face-attribute 'default nil
 														:family "Inconsolata"
@@ -60,7 +60,7 @@
 							(".*monaco-bold-.*-mac-roman" . 0.9)
 							("-cdac$" . 1.3)))))
 
-  (require 'yalinum)
+  (my-require 'yalinum)
   (customize-set-variable 'yalinum-line-number-length-min 0)
   (customize-set-variable 'yalinum-eager nil)
 	
@@ -80,11 +80,11 @@
 
 	(load "init-color-theme-solarized.el")
 
-	(require 'anything)
+	(my-require 'anything)
 	(set-face-foreground 'anything-header default-font-color)
 	(set-face-background 'anything-header dummy-region-color)
 
-	(require 'skk-vars)
+	(my-require 'skk-vars)
 	(skk-make-face 'default-font-color/dummy-region-color)
 	(setq skk-henkan-face 'default-font-color/dummy-region-color)
 	(customize-set-variable 'skk-use-face nil)
@@ -102,7 +102,7 @@
 	;; (set-face-background 'skk-tooltip-face dummy-region-color)
 
 	;; 色設定
-	(when (require 'bm nil t)
+	(when (my-require 'bm)
 		(customize-set-value 'bm-priority 1)
 		(set-face-foreground 'bm-face default-font-color)
 		(set-face-background 'bm-face "#f0e0c0")
@@ -110,21 +110,21 @@
 		(set-face-background 'bm-persistent-face "#f0e0c0")
 		)
 
-	(when (require 'tabbar nil t)
+	(when (my-require 'tabbar)
 		(set-face-foreground 'tabbar-default-face default-font-color)
 		(set-face-background 'tabbar-default-face dummy-region-color)
 		(set-face-foreground 'tabbar-selected-face default-font-color)
 		(set-face-background 'tabbar-selected-face region-color)
 		)
 
-	(when (require 'yalinum nil t)
+	(when (my-require 'yalinum)
 		(set-face-foreground 'yalinum-face default-font-color)
 		(set-face-foreground 'yalinum-bar-face default-font-color)
 		(set-face-background 'yalinum-face default-background-color)
 		(set-face-background 'yalinum-bar-face dummy-region-color)
 		)
   
-  (when (require 'popup nil t)
+  (when (my-require 'popup)
     (set-face-foreground 'ac-candidate-face default-font-color)
     (set-face-foreground 'ac-selection-face "pink3")
     (set-face-background 'ac-candidate-face dummy-region-color)
@@ -135,14 +135,15 @@
     (set-face-foreground 'popup-menu-selection-face "pink3")
     (set-face-background 'popup-menu-selection-face dummy-region-color))
 
-	(require 'yafastnav)
-	(set-face-foreground 'yafastnav-shortcut-key-face-type "pink2")
-	(set-face-background 'yafastnav-shortcut-key-face-type "#080304")
-	;; (set-face-background 'yafastnav-shortcut-key-face-type dummy-region-color)
+	(when (my-require 'yafastnav)
+    (set-face-foreground 'yafastnav-shortcut-key-face-type "pink2")
+    (set-face-background 'yafastnav-shortcut-key-face-type "#080304")
+    ;; (set-face-background 'yafastnav-shortcut-key-face-type dummy-region-color)
+    )
 
-  (require 'jaunte)
-  (set-face-foreground 'jaunte-hint-face highlight-font-color-2)
-  (set-face-background 'jaunte-hint-face highlight-background-color)
+  (when (my-require 'jaunte)
+    (set-face-foreground 'jaunte-hint-face highlight-font-color-2)
+    (set-face-background 'jaunte-hint-face highlight-background-color))
 
 	(setq my-popup-cadidate-color default-font-color)
 	(setq my-popup-selection-color highlight-font-color)
@@ -236,10 +237,10 @@
     (setq-default mw32-ime-mode-line-state-indicator "[--]")
     )
 
-  (when (require 'hl-line nil t)
+  (when (my-require 'hl-line)
     (global-hl-line-mode t))
 
-  (require 'paren)
+  (my-require 'paren)
   (show-paren-mode t)
   (custom-set-variables
    '(show-paren-ring-bell-on-mismatch t)
@@ -247,7 +248,7 @@
    )
 	
 	;;
-  (when (require 'highlight-parentheses nil t)
+  (when (my-require 'highlight-parentheses)
 		(highlight-parentheses-mode)
 		(custom-set-variables
 		 '(hl-paren-background-colors '("#eee0d0"))
@@ -287,14 +288,20 @@
     (ad-activate 'font-lock-mode)
     )
 
+  ;; 正規表現を読みやすくする。
   (set-face-foreground 'font-lock-regexp-grouping-backslash "#999")
   (set-face-foreground 'font-lock-regexp-grouping-construct "#999")
+  
   )
 
 (defun my-set-default-color-theme ()
 	"初期化のタイミングでうまく設定できないので初期化後に設定するためにコマンド化しておく"
 	(interactive)
-	(color-theme-solarized-light))
+	(color-theme-solarized-light)
+  ;; 
+  (set-face-foreground 'header-line "black")
+  (set-face-background 'header-line "pink1")
+  )
 
 (global-set-key (kbd "C-l C-o C-e") 'my-set-default-color-theme)
 
@@ -309,7 +316,7 @@
 (setq display-time-day-and-date t)
 (display-time)
 
-;; (require 'cursor-chg)
+;; (my-require 'cursor-chg)
 ;; (custom-set-variables
 ;;  '(curchg-change-cursor-on-overwrite/read-only-flag t)
 ;;  '(curchg-change-cursor-on-input-method-flag t)

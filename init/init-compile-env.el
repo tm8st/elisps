@@ -9,7 +9,20 @@
 
 ;;; Code:
 
-;; check os-type function
+;;; Profile
+(defvar my-required-package-list nil)
+(defun my-require (package_name)
+  (condition-case err
+      ((lambda ()
+         (require package_name)
+         (message "my-require ok: %s" package_name)
+         (add-to-list 'my-required-package-list package_name)
+         ))
+    (error
+     (message "my-require ng: %s" (error-message-string err))
+     )))
+
+;; check os-type function.
 (defun my-is-mac () "check run emacs on mac."
   (not
    (eq
@@ -55,8 +68,8 @@
 
 (defvar init-load-elisp-list nil)
 
-(require 'init-private)
-(require 'private) ;; 値の設定(非公開ファイル)
+(my-require 'init-private)
+(my-require 'private) ;; 値の設定(非公開ファイル)
 
 (add-to-list 'load-path (concat my-dropbox-directory "Elisp"))
 

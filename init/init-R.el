@@ -9,13 +9,13 @@
 
 ;;; Code:
 
-(require 'ess)
-(require 'ess-comp)
-(require 'ess-r-d)
+(my-require 'ess)
+(my-require 'ess-comp)
+(my-require 'ess-r-d)
 (setq auto-mode-alist
      (cons (cons "\\.r$" 'R-mode) auto-mode-alist))
 
-(require 'auto-complete-acr)
+(my-require 'auto-complete-acr)
 (add-to-list 'ac-modes 'R-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -89,7 +89,7 @@
 	(volatile)))
 
 ;; anything.elの設定
-(require 'anything-config)
+(my-require 'anything-config)
 (define-key global-map (kbd "C-x b") 'anything)
 
 (setq anything-sources

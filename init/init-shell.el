@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(require 'shell)
+(my-require 'shell)
 (setq shell-command-switch "-lc") ;; デバッグ用
 
 ;; (setq shell-command-switch "--rcfile $HOME/.bashrc -c ")
@@ -21,7 +21,7 @@
 ;; (setq shell-command-switch "-xc") ;; 設定ファイルを読むためにログインにする？ デバッグ用
 
 ;; shell-mode 色設定
-(require 'comint)
+(my-require 'comint)
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" "Set `ansi-color-for-comint-mode' to t." t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
@@ -39,7 +39,7 @@
 ;;;-------------------------------
 ;;; multi-shell
 ;;;-------------------------------
-(require 'multi-shell)
+(my-require 'multi-shell)
 (setq multi-shell-use-ansi-color t)
 (setq multi-shell-revert-window-after-complete nil)
 
@@ -55,7 +55,7 @@
 ;;;-------------------------------
 ;;; shell-pop 
 ;;;-------------------------------
-(require 'shell-pop)
+(my-require 'shell-pop)
 ;; (shell-pop-set-internal-mode "ansi-term")
 ;; (shell-pop-set-internal-mode-shell "/bin/zsh")
 ;; (defvar ansi-term-after-hook nil)
@@ -88,8 +88,8 @@
   ;; (setq multi-shell-command "/usr/local/bin/zsh")
   )
 
-(when (require 'tm8st-growl nil t)
-	(require 'deferred)
+(when (my-require 'tm8st-growl)
+	(my-require 'deferred)
 	(defun my-shell-command-growl-notify (&optional cmd args)
 		"shell-commandを実行し、終了したらgrowlでお知らせ。"
 		(interactive)

@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(eval-when-compile (require 'cl))
+(eval-when-compile (my-require 'cl))
 
 (defun my-current-directory-name ()
   (let ((current-directory-or-file
@@ -240,15 +240,14 @@
 	  (my-delete-line-backward-private))
       (delete-char -1))))
 
-
 (defun my-delete-line-forward ()
   "delete char forward line."
   (interactive)
   (if (and transient-mark-mode mark-active)
       (delete-region (mark)(point))
-            (delete-char 1)
-      ;; +1は改行文字
-      (delete-region (+ 1 (line-end-position)) (point))))
+    (if (eq (eolp) t)
+        (delete-char 1)
+      (delete-region (line-end-position) (point)))))
 
 (defun my-delete-line ()
   "delete char line."
@@ -263,8 +262,8 @@
   (interactive)
   (if (and transient-mark-mode mark-active)
       (delete-region (mark) (point))
-	(let ((start-pos (point)))
-	  (forward-word)
+    (let ((start-pos (point)))
+      (forward-word)
       (delete-region start-pos (point)))))
 
 (defun my-delete-backward-word ()

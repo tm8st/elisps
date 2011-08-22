@@ -12,7 +12,7 @@
 ;;;-------------------------------
 ;;; migemo ローマ字で日本語検索
 ;;;-------------------------------
-(require 'migemo)
+(my-require 'migemo)
 (migemo-init)
 ;; ;; 基本設定
 (setq migemo-command "cmigemo")

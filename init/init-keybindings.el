@@ -9,10 +9,10 @@
 
 ;;; Code:
 
-(require 'init-my-misc)
+(my-require 'init-my-misc)
 
-(require 'generic-range-opt)
-(require 'prefix-arg-commands)
+(my-require 'generic-range-opt)
+(my-require 'prefix-arg-commands)
 
 ;;標準操作
 (global-set-key (kbd "C-f") 'prefix-arg-commands-forward-move-commands)
@@ -38,11 +38,11 @@
 ;; (global-set-key (kbd "C-l C-z") 'toggle-input-method) SKKへ
 
 (global-set-key (kbd "C-z") 'undo)
-(require 'redo)
+(my-require 'redo)
 (global-set-key (kbd "C-/") 'redo)
 (global-set-key (kbd "C-S-z") 'redo)
 
-(require 'ibuffer)
+(my-require 'ibuffer)
 (global-set-key (kbd "C-x b") 'ibuffer-list-buffers) ;;バッファウィンドウを別ウィンドウに出してフォーカスを写す
 (global-set-key (kbd "C-x C-b") 'ibuffer) ;;バッファウィンドウを現在ウィンドウに出す
 ;; (global-set-key (kbd "C-x b") 'buffer-menu-other-window) ;;バッファウィンドウを別ウィンドウに出してフォーカスを写す
@@ -135,7 +135,7 @@
 (define-key global-map (kbd "C-l C-z") 'prefix-arg-commands-set-frame-alpha)
 
 ;; 重複行削除
-;; (require 'uniq)
+;; (my-require 'uniq)
 (define-key global-map (kbd "C-l C-t C-d") 'uniq-remove-dup-lines)
 
 ;;大文字小文字変換
@@ -145,7 +145,7 @@
 ;;;-------------------------------
 ;;; mocccur 置換用
 ;;;-------------------------------
-(require 'color-moccur)
+(my-require 'color-moccur)
 (global-set-key (kbd "C-q C-l C-s") 'occur-by-moccur) ;;現在バッファを検索
 (global-set-key (kbd "C-q C-l C-g") 'moccur-grep)
 (global-set-key (kbd "C-q C-l C-f") 'moccur-grep-find)
@@ -169,7 +169,7 @@
 ;;; undo-tree
 ;;; redo bug??
 ;;;-------------------------------
-;; (require 'undo-tree)
+;; (my-require 'undo-tree)
 ;; (global-undo-tree-mode)
 ;; (global-set-key (kbd "C-l C-u C-t") `undo-tree-visualize)
 ;; (define-key undo-tree-visualizer-map (kbd "C-g") `undo-tree-visualizer-quit)
@@ -228,7 +228,7 @@
 ;;;-------------------------------
 ;;; delete, mark, kill some ranges.
 ;;;-------------------------------
-(require 'generic-range-opt)
+(my-require 'generic-range-opt)
 
 (defun my-delete-char (arg)
   (interactive "P")
@@ -308,7 +308,7 @@
 (global-set-key (kbd "C-l C-;") 'compilation-minor-mode)
 (define-key compilation-minor-mode-map (kbd "C-c C-c") 'comint-interrupt-subjob)
 
-(require 'bm)
+(my-require 'bm)
 (global-set-key (kbd "M-C-m") 'bm-toggle)
 (global-set-key (kbd "M-C-n") 'bm-next)
 (global-set-key (kbd "M-C-p") 'bm-previous)
@@ -344,7 +344,7 @@
   (unless (bm-bookmark-at (point))
     (push-mark)))
 
-(require 'anything)
+(my-require 'anything)
 (defvar anything-c-source-bm-global-use-candidates-in-buffer
   '((name . "Global Bookmarks")
     (init . anything-c-bm-global-init)
@@ -359,7 +359,7 @@
 	(anything 'anything-c-source-bm-global))
 (defun anything-c-bm-global-init ()
   "Init function for `anything-c-source-bm-global'."
-  (when (require 'bm nil t)
+  (when (my-require 'bm)
     (with-no-warnings
       (let ((files bm-repository)
             (buf (anything-candidate-buffer 'global)))

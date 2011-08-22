@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(require 'cc-mode)
+(my-require 'cc-mode)
 
 ;;c-mode key-binding
 ;; C-c C-a			c-toggle-auto-newline
@@ -35,7 +35,7 @@
 ;; C-c <C-deletechar>			c-hungry-delete-forward
 ;; C-c <deletechar>				c-hungry-delete-forward
 
-(require 'init-compile-env)
+(my-require 'init-compile-env)
 
 ;;;-------------------------------
 ;;; c-mode-style
@@ -121,7 +121,7 @@
 ;;; ソース<->ヘッダの移動用コマンドの拡張子の関連付け追加
 ;;; objective-c 用に追加
 ;;;-------------------------------
-(require 'find-file)
+(my-require 'find-file)
 
 (unless my-initialized
   (add-to-list 'cc-other-file-alist '("\\.h\\'"  (".m" ".mm" ".c" ".cpp" ".inl")))
@@ -132,8 +132,8 @@
 ;;;----------------------------------------
 ;;;c-mode, c++-mode
 ;;;----------------------------------------
-(require 'highlight-parentheses)
-(require 'easy-imenu-index-generator-config)
+(my-require 'highlight-parentheses)
+(my-require 'easy-imenu-index-generator-config)
 
 (defun my-c-mode-hook ()
   (hl-line-mode t)
@@ -203,7 +203,7 @@
 ;;;-------------------------------
 ;; google-c-style
 ;;;-------------------------------
-;; (require 'google-c-style)
+;; (my-require 'google-c-style)
 ;; (add-hook 'c-mode-common-hook 'google-set-c-style)
 ;; (add-hook 'c-mode-common-hook 'google-make-newline-indent)
 
@@ -229,7 +229,7 @@
 (define-key c++-mode-map (kbd "C-c C-c")
   `my-run-c++)
 
-(require 'lua-mode)
+(my-require 'lua-mode)
 
 (provide 'init-c-mode)
 

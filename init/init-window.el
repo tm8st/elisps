@@ -12,7 +12,7 @@
 ;; (auto-install-from-url "http://github.com/kiwanami/emacs-window-layout/raw/master/window-layout.el")
 ;; (auto-install-from-url "http://github.com/kiwanami/emacs-window-manager/raw/master/e2wm.el")
 
-(require 'e2wm)
+(my-require 'e2wm)
 
 ;; ;; レイアウト
 ;; (setq e2wm:c-code-recipe

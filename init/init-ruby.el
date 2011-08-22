@@ -9,10 +9,10 @@
 
 ;;; Code:
 
-(require 'ruby-mode)
-;; (require 'inf-ruby)
-;; (require 'ruby-block)
-(require 'ruby-electric)
+(my-require 'ruby-mode)
+;; (my-require 'inf-ruby)
+;; (my-require 'ruby-block)
+(my-require 'ruby-electric)
 ;;(autoload 'ruby-mode "ruby-mode"
 ;;  "Mode for editing ruby source files" t)
 (setq auto-mode-alist
@@ -45,7 +45,7 @@
 ;;; rsense
 ;;;-------------------------------
 ;; (add-to-list 'load-path (concat my-rsense-home "/etc"))
-;; (require 'rsense nil t)
+;; (my-require 'rsense)
 ;; (customize-set-value 'rsense-home my-rsense-home)
 
 ;; ;; $RSENSE_HOMEはRSenseをインストールしたディレクトリのフルパスに置き換えてください

@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(require 'sorter)
+(my-require 'sorter)
 
 ;; dired + sorter 時に ls の -h オプションを付加する
 (defadvice dired-sort-other
@@ -42,16 +42,16 @@
 ;; フック
 (add-hook 'dired-load-hook
           '(lambda ()
-             (require 'ls-lisp)
+             (my-require 'ls-lisp)
 	     (setq ls-lisp-dirs-first t)
              (setq dired-listing-switches "-oXaF") ;; 
              ;; (setq find-ls-option '("-exec ls -AFGl {} \\;" . "-AFGl"))
              ;; (setq grep-find-command "find . -type f -print0 | xargs -0 -e grep -ns ")
-             (require 'wdired)
+             (my-require 'wdired)
              ))
 
 ;; 色づけ
-(require 'dired)
+(my-require 'dired)
 (defvar *original-dired-font-lock-keywords* dired-font-lock-keywords)
 (defun dired-highlight-by-extensions (highlight-list)
   "highlight-list accept list of (regexp [regexp] ... face)."
@@ -73,7 +73,7 @@
     (append my-doc-file-extention-list (list font-lock-doc-face))
     ))
 
-(require 'init-misc)
+(my-require 'init-misc)
 (defun my-dired-find-file-os ()
   "dired で選択中のファイルをOSの関連付けで開く"
   (interactive)
@@ -100,11 +100,11 @@
 			 (setq dired-listing-switches "-AFl")
 			 (setq find-ls-option '("-exec ls -AFGl {} ＼＼;" . "-AFGl"))
 			 (setq grep-find-command "find . -type f -print0 | xargs -0 -e grep -ns ")
-			 (require 'wdired)
+			 (my-require 'wdired)
 			 ))
 
 ;;; wdired
-(require 'wdired)
+(my-require 'wdired)
 (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
 
 ;; key binds
@@ -117,7 +117,7 @@
 (define-key dired-mode-map (kbd "C-c C-d") 'dired-do-delete)
 (define-key dired-mode-map (kbd "C-c C-i") 'dired-mark-files-regexp)
 
-(require 'browse-kill-ring)
+(my-require 'browse-kill-ring)
 
 (defun browse-kill-ring-insert-and-option-insert (&optional quit opt-str)
   "Insert the kill ring item at point into the last selected buffer.
@@ -175,8 +175,8 @@ well."
 (define-key dired-mode-map (kbd "C-c p") 'my-play-dired-file)
 (global-set-key (kbd "C-c C-o") 'my-open-dired-dir-os)
 
-(require `dired)
-(require `dired-aux)
+(my-require `dired)
+(my-require `dired-aux)
 
 (unless my-initialized
 (add-to-list 'dired-compress-file-suffixes

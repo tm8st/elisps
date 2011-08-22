@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(require 'doc-view)
+(my-require 'doc-view)
 
 ;;; text-mode
 (add-hook
@@ -20,7 +20,7 @@
    (setq indent-tabs-mode t)))
 
 ;;; popwin
-(require 'popwin)
+(my-require 'popwin)
 (setq display-buffer-function 'popwin:display-buffer)
 (add-to-list 'popwin:special-display-config '("*Compile-Log*"))
 (add-to-list 'popwin:special-display-config '("*Dired log*"))
@@ -30,11 +30,11 @@
 (define-key global-map (kbd "C-l p") 'popwin:display-last-buffer)
 
 ;;; text-translator
-(require 'text-translator-vars)
-(require 'text-translator)
-(require 'init-my-misc)
+(my-require 'text-translator-vars)
+(my-require 'text-translator)
+(my-require 'init-my-misc)
 
-(require 'popup)
+(my-require 'popup)
 (setq text-translator-display-popup t)
 
 ;; 自動選択に使用する関数を設定
@@ -108,8 +108,8 @@
     (buffer-string)))
 
 ;;; yafastnav, jaunte
-(require 'yafastnav)
-(require 'jaunte)
+(my-require 'yafastnav)
+(my-require 'jaunte)
 
 (global-set-key (kbd "C-l C-h") 'jaunte)
 (global-set-key (kbd "C-l C-r") 'yafastnav-jump-to-backward)
@@ -118,7 +118,7 @@
 ;;-------------------------------
 ;; smartchr
 ;;-------------------------------
-(require 'smartchr)
+(my-require 'smartchr)
 ;; substitute `!!' with cursor
 
 (global-set-key (kbd "{") (smartchr '("{`!!'}" "{`!!'")))
@@ -135,8 +135,8 @@
 ;; (global-set-key (kbd "]") (smartchr '("]" "[`!!']" "[]")))
 
 ;;; sequential-command-config
-(require 'sequential-command)
-(require 'sequential-command-config)
+(my-require 'sequential-command)
+(my-require 'sequential-command-config)
 (define-sequential-command beginning-of-anything-seq
   back-to-indentation beginning-of-line seq-return)
 
@@ -147,7 +147,7 @@
 (global-set-key (kbd "C-e") 'end-of-anything-seq)
 
 ;;; emacsから一発で検索
-(require 'search-web)
+(my-require 'search-web)
 
 (defun my-search-web (engine)
   (interactive)
@@ -165,19 +165,12 @@
 ;; UDN
 (define-key global-map (kbd "C-l C-s C-u") (lambda () (interactive) (my-search-web "udn")))
 
-;;; Profile
-(require `elp)
-
-(global-set-key (kbd "C-l C-a C-s") `elp-instrument-package)
-(global-set-key (kbd "C-l C-a C-r") `elp-results)
-(global-set-key (kbd "C-l C-a C-e") `elp-reset-all)
-
 ;;; Windowナンバリング
-(require 'window-numbering)
+(my-require 'window-numbering)
 (window-numbering-mode t) ;; M-numberで移動
 
 ;;; region selectinon
-(require 'thing-opt)
+(my-require 'thing-opt)
 (define-thing-commands)
 (global-set-key (kbd "C-l C-j C-w") 'mark-word*)
 (global-set-key (kbd "C-l C-j C-e") 'mark-sexp*)
@@ -197,7 +190,7 @@
 (global-set-key (kbd "C-q C-0") 'my-last-kbd-macro-name-and-insert)
 
 ;;; graphviz mode
-(require 'graphviz-dot-mode)
+(my-require 'graphviz-dot-mode)
 (add-to-list 'auto-mode-alist '("\\.dot$" . graphviz-dot-mode))
 (customize-set-variable 'graphviz-dot-indent-width 2)
 (add-hook 'graphviz-dot-mode-hook (setq tab-width 2))
@@ -229,11 +222,11 @@
 ;; (define-key map "\C-c\C-u" 'graphviz-dot-uncomment-region)
 	)
 
-(require 'zlc)
+(my-require 'zlc)
 (setq zlc-select-completion-immediately t)
 
 ;; auto-highlight-symbol
-(require 'auto-highlight-symbol)
+(my-require 'auto-highlight-symbol)
 (global-auto-highlight-symbol-mode t)
 (set-face-background ahs-face "gray30")
 (set-face-foreground ahs-face "pink")
@@ -241,7 +234,7 @@
 (add-to-list 'ahs-modes 'haskell-mode)
 
 ;;; frame-arrange
-(require 'frame-arrange)
+(my-require 'frame-arrange)
 (when (my-is-mac)
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-with-twitter-client
@@ -317,13 +310,13 @@
 (define-key global-map (kbd "C-l C-o C-b") 'my-run-rakefile)
 
 ;;; yalinum
-(require 'yalinum)
+(my-require 'yalinum)
 ;; disable linum mode.
 (global-linum-mode -1)
 (global-yalinum-mode t)
 
 ;; buffer cycle move.
-(require 'prefix-arg-commands)
+(my-require 'prefix-arg-commands)
 (prefix-arg-commands-defun
  prefix-arg-commands-bs-cycle
  (list
@@ -351,7 +344,8 @@
 ;; (global-set-key (kbd "C-x p") '(lambda (arg) (interactive "p") (other-window (- arg))))
 ;; (global-set-key (kbd "C--") 'prefix-arg-commands-tabber-cycle)
 
-(require 'type-se)
+;; (my-require 'type-se)
+
 (defun my-output-last-command ()
   (interactive)
   (message (concat "ThisCommand    : " (symbol-name this-command)
@@ -361,9 +355,9 @@
 (global-set-key (kbd "C-q C-3") 'my-output-last-command)
 
 ;; widen-window
-;; (require 'widen-window)
+;; (my-require 'widen-window)
 ;; (global-widen-window-mode t)
-;; (require 'widen-window)
+;; (my-require 'widen-window)
 ;; (global-set-key (kbd "C-c C-w")
 ;;                 `(lambda ()
 ;;                    (interactive) (global-widen-window-mode nil)))
@@ -384,7 +378,7 @@
 (global-set-key (kbd "C-l C-f C-o") 'other-frame)
 
 ;;; hs-minor-mode
-(require 'hideshow)
+(my-require 'hideshow)
 (defun my-hs-minor-mode-on () (hs-minor-mode 1))
 (add-hook 'c-mode-hook 'my-hs-minor-mode-on)
 (add-hook 'c++-mode-hook 'my-hs-minor-mode-on)
@@ -395,5 +389,17 @@
 (define-key hs-minor-mode-map (kbd "C-q C--") 'hs-toggle-hiding)
 (define-key hs-minor-mode-map (kbd "C-q C-^") 'hs-show-all)
 (define-key hs-minor-mode-map (kbd "C-q C-¥") 'hs-hide-all)
+
+;;; Profile
+(my-require 'elp)
+
+(global-set-key (kbd "C-l C-a C-s") `elp-instrument-package)
+(global-set-key (kbd "C-l C-a C-r") `elp-results)
+(global-set-key (kbd "C-l C-a C-e") `elp-reset-all)
+
+(defun my-elp-add-my-required-packges ()
+  (interactive) 
+  (dolist (p my-required-package-list)
+    (elp-instrument-package (symbol-name p))))
 
 (provide 'init-misc)

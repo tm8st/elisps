@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(require 'go-mode)
+(my-require 'go-mode)
 (load "go-mode-load.el")
 
 (defun my-go-build-and-run ()

@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(require 'howm)
+(my-require 'howm)
 
 (setq howm-menu-lang 'ja)
 (setq howm-directory "~/.emacs.d/howm/")
@@ -20,7 +20,7 @@
        auto-mode-alist))
 
 ;; easy-imenu
-(require 'easy-imenu-index-generator-config)
+(my-require 'easy-imenu-index-generator-config)
 (add-hook
  'howm-mode-hook
  (lambda ()
@@ -117,7 +117,7 @@
      (define-key howm-mode-map (kbd "C-c C-d") 'my-howm-add-todo)
      ))
 
-(require 'calendar)
+(my-require 'calendar)
 ;; (setq calendar-setup 'one-frame)
 (setq calendar-setup nil)
 
@@ -128,7 +128,7 @@
 
 ;; 祝日をマークする
 (setq calendar-mark-holidays-flag t)
-(require 'japanese-holidays)
+(my-require 'japanese-holidays)
 (setq calendar-holidays
       (append japanese-holidays holiday-local-holidays holiday-other-holidays))
 
@@ -267,9 +267,9 @@
 ;;;-------------------------------
 ;;; howmのTODOリストをmoccur-editで編集
 ;;;-------------------------------
-(require 'howm-mode)
-(require 'color-moccur)
-(require 'moccur-edit)
+(my-require 'howm-mode)
+(my-require 'color-moccur)
+(my-require 'moccur-edit)
 
 (defvar my-howm-active-todo-regexp (concat "\\[" howm-date-regexp "\\]\\([-~!@\+]\\)")
   "howmのtodoの正規表現")

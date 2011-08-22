@@ -9,10 +9,36 @@
 
 ;;; Code:
 
-(require 'vc)
-(require 'vc-dir)
-(require 'diff)
-(require 'ediff)
+;; toggle VC.
+;; from: http://d.hatena.ne.jp/syohex/20101208/1291820116
+(setq vc-handled-backends nil)
+(setq my-toggle-vc-list '(RCS CVS SVN SCCS Bzr Git Hg Mtn Arch))
+
+(defun my-toggle-vc-mode ()
+  "toggle vc-mode"
+  (interactive)
+  (if (intersection vc-handled-backends my-toggle-vc-list)
+      (progn
+        (message "vc-mode Off.")
+        (setq vc-handled-backends (set-difference vc-handled-backends my-toggle-vc-list)))
+    (progn
+      (setq vc-handled-backends (union vc-handled-backends my-toggle-vc-list))
+      (message "vc-mode On."))))
+
+(defun my-revert-buffer ()
+  "automatic save and revert."
+  (interactive)
+  (save-buffer)
+  (revert-buffer t t))
+
+(global-set-key (kbd "C-x v ;") 'my-toggle-vc-mode)
+(global-set-key (kbd "C-q C-r") 'my-revert-buffer)
+
+
+(my-require 'vc)
+(my-require 'vc-dir)
+(my-require 'diff)
+(my-require 'ediff)
 
 ;;;-------------------------------
 ;;; vc

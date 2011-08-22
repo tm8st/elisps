@@ -9,12 +9,12 @@
 
 ;;; Code:
 
-(require 'org)
-(require 'org-install)
-(require 'org-agenda)
-(require 'org-mobile)
-(require 'org-habit)
-(require 'org-capture)
+(my-require 'org)
+(my-require 'org-install)
+(my-require 'org-agenda)
+(my-require 'org-mobile)
+(my-require 'org-habit)
+(my-require 'org-capture)
 
 (setq org-startup-truncated nil)
 (setq org-return-follows-link t)
@@ -36,12 +36,12 @@
 (setq org-tags-column -100)
 (setq org-fast-tag-selection-single-key t)
 
-(require 'auto-complete)
+(my-require 'auto-complete)
 (add-to-list 'ac-modes 'org-mode)
 
 (customize-set-variable 'org-agenda-include-diary t)
 
-(require 'simple)
+(my-require 'simple)
 (define-key org-mode-map (kbd "C-j") 'newline)
 (define-key org-mode-map (kbd "C-c C-j") 'org-return-indent)
 
@@ -135,6 +135,7 @@
 (define-key global-map (kbd "C-l C-o C-@") 'org-mobile-pull)
 
 (define-key org-mode-map (kbd "C-k") 'my-delete-line-forward)
+(define-key org-mode-map (kbd "C-m") 'backward-word)
 (define-key org-mode-map (kbd "C-TAB") 'org-force-cycle-archived)
 (define-key org-mode-map [(meta left)]  'org-metaleft)
 (define-key org-mode-map [(meta right)] 'org-metaright)
@@ -152,7 +153,7 @@
 ;;;-------------------------------
 ;;; org-agenda setting.
 ;;;-------------------------------
-(require 'org-agenda)
+(my-require 'org-agenda)
 
 (add-hook 'org-agenda-mode-hook
           '(lambda ()
@@ -162,11 +163,11 @@
 (define-key global-map (kbd "C-l C-o C-a") 'org-agenda)
 ;; (define-key global-map (kbd "C-l C-o C-l") 'org-agenda-list)
 
-(require 'popwin)
+(my-require 'popwin)
 (setq display-buffer-function 'popwin:display-buffer)
 (add-to-list 'popwin:special-display-config '("*Org Agenda*" :height 0.5))
 
-(require 'tm8st-growl)
+(my-require 'tm8st-growl)
 (defun my-org-agenda-open-buffer ()
   (interactive)
   (display-buffer "*Org Agenda*"))
@@ -224,9 +225,9 @@
 
 ;; checklistのタスク完了時のリセット。
 ;; :RESET_CHECK_BOXES: t
-(require 'org-checklist)
+(my-require 'org-checklist)
 (setq org-reverse-note-order nil)
-(require 'org-crypt)
+(my-require 'org-crypt)
 (org-crypt-use-before-save-magic); Encrypt all entries before saving
 (setq org-tags-exclude-from-inheritance (quote ("CRYPT"))); Which tag is used to mark headings to be encrypted
 (customize-set-value 'org-crypt-tag-matcher "CRYPT")
@@ -246,7 +247,7 @@
 (when (my-is-mac)
   (setq tm8st-growl-type 'mac-growlnotify))
 
-;; (require 'org-export-hatena)
-;; (require 'simple-hatena-mode)
+;; (my-require 'org-export-hatena)
+;; (my-require 'simple-hatena-mode)
 
 (provide 'init-org)

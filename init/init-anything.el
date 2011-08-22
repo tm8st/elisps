@@ -13,27 +13,27 @@
 ;;; libs
 ;;;-------------------------------
 
-(require 'anything)
-(require 'anything-config)
-(require 'anything-auto-install)
-(require 'anything-grep)
-(require 'anything-gtags)
-;; (require 'anything-etags) obsoleteらしい
-(require 'anything-extension)
-(require 'anything-complete)
-(require 'anything-kyr)
-(require 'imenu)
-;; (require 'imenu+)
-(require 'anything-migemo)
+(my-require 'anything)
+(my-require 'anything-config)
+(my-require 'anything-auto-install)
+(my-require 'anything-grep)
+(my-require 'anything-gtags)
+;; (my-require 'anything-etags) obsoleteらしい
+(my-require 'anything-extension)
+(my-require 'anything-complete)
+(my-require 'anything-kyr)
+(my-require 'imenu)
+;; (my-require 'imenu+)
+(my-require 'anything-migemo)
 
-;; (require 'anything-show-completion)
-;; (require 'anything-dabbrev-expand)
-;; (require 'anything-startup)
-;; (require 'anything-kyr)
-;; (require 'anything-kyr-config)
-;; (require 'anything-adaptive)
-;; (require 'anything-c-shell-history)
-;; (require 'anything-include)
+;; (my-require 'anything-show-completion)
+;; (my-require 'anything-dabbrev-expand)
+;; (my-require 'anything-startup)
+;; (my-require 'anything-kyr)
+;; (my-require 'anything-kyr-config)
+;; (my-require 'anything-adaptive)
+;; (my-require 'anything-c-shell-history)
+;; (my-require 'anything-include)
 
 ;;;-------------------------------
 ;;; basic
@@ -74,18 +74,18 @@
 ;;;-------------------------------
 
 ;;; color-moccur.elの設定
-(require 'color-moccur)
+(my-require 'color-moccur)
 ;; 複数の検索語や、特定のフェイスのみマッチ等の機能を有効にする
 ;; 詳細は http://www.bookshelf.jp/soft/meadow_50.html#SEC751
 (setq moccur-split-word t)
 ;; (setq moccur-split-word nil)
 
-;; migemoがrequireできる環境ならmigemoを使う
-;; (when (require 'migemo nil t) ;第三引数がnon-nilだとloadできなかった場合にエラーではなくnilを返す
+;; migemoがmy-requireできる環境ならmigemoを使う
+;; (when (my-require 'migemo) ;第三引数がnon-nilだとloadできなかった場合にエラーではなくnilを返す
 ;;  (setq moccur-use-migemo t))
 
 ;;; anything-c-moccurの設定
-(require 'anything-c-moccur)
+(my-require 'anything-c-moccur)
 ;; カスタマイズ可能変数の設定(M-x customize-group anything-c-moccur でも設定可能)
 (setq anything-c-moccur-anything-idle-delay 0.2 ;`anything-idle-delay'
       anything-c-moccur-higligt-info-line-flag t ; `anything-c-moccur-dmoccur'などのコマンドでバッファの情報をハイライトする
@@ -258,7 +258,7 @@
 ;;;-------------------------------
 ;;; project
 ;;;-------------------------------
-(require 'anything-project)
+(my-require 'anything-project)
 (global-set-key (kbd "C-q C-a C-p") 'anything-project)
 
 ;; c++ & scala & haskell 登録
@@ -300,7 +300,7 @@
 ;;;-------------------------------
 ;;; split-setting 
 ;;;-------------------------------
-(require 'split-root)
+(my-require 'split-root)
 (defvar anything-compilation-window-height-percent 50.0)
 
 (defun anything-compilation-window-root (buf)
@@ -315,7 +315,7 @@
 ;;;-------------------------------
 ;;; howm
 ;;;-------------------------------
-(require 'anything-howm)
+(my-require 'anything-howm)
 (global-set-key (kbd "C-q C-a C-,") 'anything-howm-search)
 
 ;;;-------------------------------
@@ -383,17 +383,17 @@
                            (append anything-c-locate-options
                                    (list anything-pattern)))))
     (type . file)
-    (requires-pattern . 3)
+    (my-requires-pattern . 3)
     (delayed))
   "Source for retrieving files matching the current input pattern with locate.")
 
 (global-set-key (kbd "C-q C-a C-s") 'anything-call-source)
 
-(require 'anything-netscape-bookmark)
+(my-require 'anything-netscape-bookmark)
 (global-set-key (kbd "C-q C-a C-b") 'anything-netscape-bookmark)
 (global-set-key (kbd "C-q C-a C-v") 'anything-netscape-bookmark-get-dump)
 
-(require 'anything-books)
+(my-require 'anything-books)
 (setq abks:books-dir (expand-file-name "~/Downloads/")) ; PDFファイルのあるディレクトリ（★必須）
 (when (my-is-mac)
   (setq abks:open-command "/Applications/Adobe Reader.app/Contents/MacOS/AdobeReader") ; Mac用AdobeReaderを使う (default)
@@ -417,7 +417,7 @@
 
 ;; doc-view で開く設定 重たかったので外部で開く
 ;; (defadvice abks:open-file (around my-abks:open-file activate)
-;;   (if (require 'doc-view  nil t)
+;;   (if (my-require 'doc-view)
 ;;       (find-file (ad-get-arg 0))
 ;;     ad-do-it))
 
@@ -428,7 +428,7 @@
 ;;               (define-key view-mode-map "n" nil)
 ;;               (define-key view-mode-map "p" nil))))
 
-;; (require 'anything-gist)
+;; (my-require 'anything-gist)
 ;; (defun my-anything-gist ()
 ;;   (interactive)
 ;;   (anything anything-c-source-gist)
@@ -440,7 +440,7 @@
 ;;;-------------------------------
 ;;; anything-font-families 
 ;;;-------------------------------
-(require 'cl)  ; loop, delete-duplicates
+(my-require 'cl)  ; loop, delete-duplicates
 
 (defun anything-font-families ()
   "Preconfigured `anything' for font family."
@@ -481,10 +481,10 @@
 
 (anything-read-string-mode -1)
 
-(require 'anything-org-mode)
+(my-require 'anything-org-mode)
 (global-set-key (kbd "C-q C-a C-h") 'anything-org-agenda)
 
-(require 'anything-project)
+(my-require 'anything-project)
 (defvar my-ap:pre-cache-project-files nil)
 (defun my-ap:pre-cache-project ()
   (interactive)

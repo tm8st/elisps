@@ -14,10 +14,10 @@
 ;; # パスワードは設定されていません．単に Enter/Return キーを押して下さい．
 ;; % cvs -d :pserver:anonymous@cvs.namazu.org:/storage/cvsroot co emacs-w3m
 
-(require 'w3m)
+(my-require 'w3m)
 
-;; (require 'ldr)
-;; (require 'ldr-w3m)
+;; (my-require 'ldr)
+;; (my-require 'ldr-w3m)
 ;; (setq ldr-html-render-function 'ldr-html-w3m-render)
 ;; (setq ldr-html-image-display-function 'ldr-html-w3m-display-image)
 

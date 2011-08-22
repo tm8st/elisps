@@ -9,9 +9,9 @@
 
 ;;; Code:
 
-(require 'skk)
+(my-require 'skk)
 
-(require 'sticky-shift-skk)
+(my-require 'sticky-shift-skk)
 (global-set-key (kbd "C-q C-o") 'skk-mode)
 (setq skk-tut-file "~/elisps/external/ddskk-20100704/etc/SKK.tut")
 
@@ -134,7 +134,7 @@
 (setq skk-dcomp-multiple-activate t)
 
 ;; ソースコードでは文字列、コメント以外で日本語をつかわない
-;; (require 'context-skk)
+;; (my-require 'context-skk)
 ;; (add-to-list 'context-skk-programming-mode 'scala-mode)
 
 ;;;-------------------------------
@@ -145,7 +145,7 @@
 ;; 辞書登録のとき、余計な送り仮名を送らないようにする
 (setq skk-check-okurigana-on-touroku 'auto)
 ;; 変換の学習
-(require 'skk-study)
+(my-require 'skk-study)
 ;;単漢字検索のキーを!にする
 (setq skk-tankan-search-key ?!)
 
@@ -250,7 +250,7 @@
           ((and (<= ?０ c) (>= ?９ c)) "，")
           (t "、"))))
 
-;; (require 'sekka) 
+;; (my-require 'sekka) 
 ;; (setq sekka-sticky-shift t)  ;; sticky-shiftを使用する場合、この行を有効にする
 ;; (global-sekka-mode 1)
 

@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(require 'twittering-mode)
+(my-require 'twittering-mode)
 (setq twittering-use-wget t)
 (setq twittering-use-master-password t)
 (setq twittering-fill-column 30)
@@ -109,6 +109,6 @@
 ;; 109:M-TAB           twittering-goto-previous-thing
 ;; 110:M-v             twittering-scroll-down
 
-(require 'init-private)
+(my-require 'init-private)
 
 (provide 'init-twitter)

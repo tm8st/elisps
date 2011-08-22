@@ -11,7 +11,7 @@
 
 ;;; Code:
 
-(require 'view)
+(my-require 'view)
 (global-set-key (kbd "C-q C-;") 'view-mode)
 (define-key view-mode-map "q" 'view-mode)
 (define-key view-mode-map "h" 'backward-char)

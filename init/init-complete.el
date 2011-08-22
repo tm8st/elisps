@@ -9,18 +9,18 @@
 
 ;;; Code:
 
-(require 'init-compile-env)
-(require 'eshell)
-(require 'imenu)
-;; (require 'complete) ;; 強力な補完機能を使う
+(my-require 'init-compile-env)
+(my-require 'eshell)
+(my-require 'imenu)
+;; (my-require 'complete) ;; 強力な補完機能を使う
 ;; (partial-completion-mode 1)
 (icomplete-mode t) ;; 補完可能なものを随時表示
 
 ;;;-------------------------------------
 ;;;auto-complete setting
 ;;;-------------------------------------
-(require 'auto-complete)
-(require 'auto-complete-config)
+(my-require 'auto-complete)
+(my-require 'auto-complete-config)
 (ac-config-default)
 
 (global-auto-complete-mode t)
@@ -44,12 +44,12 @@
 (define-key ac-complete-mode-map (kbd "C-i") 'ac-next)
 (define-key ac-complete-mode-map (kbd "C-j") 'ac-complete)
 
-(require 'ac-anything)
+(my-require 'ac-anything)
 (define-key ac-complete-mode-map (kbd "C-@") 'ac-complete-with-anything)
 
-(require 'popup)
+(my-require 'popup)
 
-(require 'pcomplete)
+(my-require 'pcomplete)
 (ac-define-source pcomplete
   '((candidates . pcomplete-completions)))
 
@@ -103,7 +103,7 @@
 ;;;-------------------------------
 ;;;
 ;;;-------------------------------
-;; (require 'complete)
+;; (my-require 'complete)
 ;; (define-key minibuffer-local-completion-map "C-j" 'PC-complete-and-exit)
 ;; (define-key minibuffer-local-completion-map "C-m" 'backward-word)
 ;; (define-key minibuffer-local-completion-map "RET" 'backward-word)

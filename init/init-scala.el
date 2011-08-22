@@ -9,16 +9,16 @@
 
 ;;; Code:
 
-(require 'auto-complete)
-(require 'highlight-parentheses)
+(my-require 'auto-complete)
+(my-require 'highlight-parentheses)
 
 ;; scala-mode
 (unless my-initialized
   ;; (add-to-list 'load-path "~/Softwares/scala-2.8.0.RC3/misc/scala-tool-support/emacs")
   (add-to-list 'auto-mode-alist '("\\.scala\\'" . scala-mode))
   )
-(require 'scala-mode nil t)
-(require 'scala-mode-auto nil t)
+(my-require 'scala-mode)
+(my-require 'scala-mode-auto)
 (modify-coding-system-alist 'file "\\.scala$" 'utf-8)
 
 (add-to-list 'auto-mode-alist '("\\.scala$" . scala-mode))
@@ -30,7 +30,7 @@
 ;;;-------------------------------
 ;; (add-to-list 'load-path "ENSIME_ROOT/elisp/")
 ;; (add-to-list 'load-path "/Users/mys/elisps/external/ensime/src/main/elisp/")
-;; (require 'ensime)
+;; (my-require 'ensime)
 ;; (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 ;; (customize-set-value 'ensime-default-server-cmd "/Users/mys/elisps/external/ensime/etc/scripts/server.sh")
 
@@ -39,7 +39,7 @@
   (async-shell-command
    (concat "scala " (buffer-file-name (current-buffer)))))
 
-(require 'easy-imenu-index-generator-config)
+(my-require 'easy-imenu-index-generator-config)
 
 (defun my-scala-mode-hook ()
   ;; (auto-complete-mode t)
@@ -50,7 +50,7 @@
   (setq indent-tabs-mode nil)
   )
 
-;; (require 'sbt)
+;; (my-require 'sbt)
 
 (add-hook 'scala-mode-hook 'my-scala-mode-hook)
 
@@ -62,12 +62,12 @@
   `my-forward-word)
 
 (when (my-is-mac)
-  ;; (require 'ensime)
+  ;; (my-require 'ensime)
   ;; (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
   ;; MINI HOWTO: open .scala file. Ensure bin/server.sh is executable. M-x ensime
 
-  ;; (require 'ensime)
+  ;; (my-require 'ensime)
   ;; (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
   ;; TAB - Start completing a method/variable.

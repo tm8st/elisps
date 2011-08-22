@@ -9,9 +9,9 @@
 
 ;;; Code:
 
-(require 'init-compile-env)
-(require 'auto-install)
-(require 'highlight-parentheses)
+(my-require 'init-compile-env)
+(my-require 'auto-install)
+(my-require 'highlight-parentheses)
 
 (defun my-emacs-lisp-mode-hook ()
   ;; (linum-mode t)
@@ -37,9 +37,9 @@
 ;;;-------------------------------
 ;;; eldoc lisp
 ;;;-------------------------------
-(require 'eldoc)
+(my-require 'eldoc)
 ;; (install-elisp-from-emacswiki "eldoc-extension.el")
-;; (require 'eldoc-extension)
+;; (my-require 'eldoc-extension)
 (setq eldoc-idle-delay 0.15)
 (setq eldoc-echo-area-use-multiline-p t)
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
@@ -52,10 +52,10 @@
 (defvar my-auto-install-requires-list nil)
 
 (defun my-auto-install-from-requires ()
-  "Batch install many packages form elisp requires."
+  "Batch install many packages form elisp my-requires."
   (interactive)
-  (setq my-auto-install-requires-list nil)
-   (dolist (req (split-string (shell-command-to-string "grep 'require ' *.el") "\n"))
+  (setq my-auto-install-my-requires-list nil)
+   (dolist (req (split-string (shell-command-to-string "grep 'my-require ' *.el") "\n"))
      (when (eq (string-match ":+\\( \t\\)*;" req) nil)
        (progn
 	 (let ((begin (string-match "'" req)))
@@ -67,8 +67,8 @@
 		     ;; (setq name (concat "http://www.emacswiki.org/emacs/download/" name ".el"))
 		     (unless (member (concat name ".el") init-load-elisp-list)
 		       (progn
-			 (unless (member name my-auto-install-requires-list)
-			   (add-to-list 'my-auto-install-requires-list name)
+			 (unless (member name my-auto-install-my-requires-list)
+			   (add-to-list 'my-auto-install-my-requires-list name)
 			   )
 			 ;; (sleep-for 5)
 			 ;;   ;; (auto-install-from-emacswiki name)
@@ -77,7 +77,7 @@
 			 )
 		     )))))))))
      )
-   (message "requires:")
+   (message "my-requires:")
    (dolist (i my-auto-install-requires-list)
      (message i))
    )
@@ -142,7 +142,7 @@
 (setq inferior-lisp-program "clisp")    ;; clisp用
 ;; (setq inferior-lisp-program "sbcl")  ;; sbcl用
 
-(when (require 'slime nil t)
+(when (my-require 'slime)
   (slime-setup))
 
 (customize-set-variable 'eldoc-minor-mode-string (purecopy " ED"))
