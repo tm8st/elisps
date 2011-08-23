@@ -228,6 +228,8 @@
   (menu-bar-mode -1)
   (tooltip-mode -1)
 	(setq frame-alpha-lower-limit 0.01)
+  (size-indication-mode 1)
+  (setq-default indicate-buffer-boundaries (quote left))
 
   (when (my-is-windows)
     (add-hook 'mw32-ime-on-hook

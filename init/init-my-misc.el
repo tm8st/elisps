@@ -534,14 +534,26 @@ default name is filename:current line string."
 	  ((not (file-exists-p file))
 	   (error "ファイルが存在しません")))))
 
+;; (defun my-match-paren (arg)
+;;   "Go to the matching paren if on a paren; otherwise insert %."
+;;   (interactive "p")
+;;   (cond
+;;    ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
+;;    ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
+;; 	 ((looking-back "\\s\)") (forward-char 1) (backward-list 1))
+;;    (t (self-insert-command (or arg 1)))))
+
+;; from http://github.com/meteor1113/dotemacs
 (defun my-match-paren (arg)
-  "Go to the matching paren if on a paren; otherwise insert %."
+  "Go to the matching  if on (){}[], similar to vi style of % "
   (interactive "p")
-  (cond
-   ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
-   ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
-	 ((looking-back "\\s\)") (forward-char 1) (backward-list 1))
-   (t (self-insert-command (or arg 1)))))
+  ;; first, check for "outside of bracket" positions expected by forward-sexp, etc.
+  (cond ((looking-at "[\[\(\{\]") (forward-sexp))
+        ((looking-back "[\]\)\}]" 1) (backward-sexp))
+        ;; now, try to succeed from inside of a bracket
+        ((looking-at "[\]\)\}]") (forward-char) (backward-sexp))
+        ((looking-back "[\[\(\{]" 1) (backward-char) (forward-sexp))
+        (t nil)))
 
 (defun my-get-buffer-point (buffer)
   (let ((cb (current-buffer)))
@@ -640,5 +652,29 @@ default name is filename:current line string."
   (async-shell-command (concat "git commit -a -m " "\""(read-string "commit log:") "\"") "*git commit*")
   (async-shell-command "git push origin master" "*git push*")
   )
+
+(defun my-move-line-up (p)
+  "Move current line up, copy from crazycool@smth"
+  (interactive "*p")
+  (let ((c (current-column)))
+    (beginning-of-line)
+    (kill-line 1)
+    (previous-line p)
+    (beginning-of-line)
+    (yank)
+    (previous-line 1)
+    (move-to-column c)))
+
+(defun my-move-line-down (p)
+  "Move current line down, copy from crazycool@smth"
+  (interactive "*p")
+  (let ((c (current-column)))
+    (beginning-of-line)
+    (kill-line 1)
+    (next-line p)
+    (beginning-of-line)
+    (yank)
+    (previous-line 1)
+    (move-to-column c)))
 
 (provide 'init-my-misc)

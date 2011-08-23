@@ -308,6 +308,9 @@
 (global-set-key (kbd "C-l C-;") 'compilation-minor-mode)
 (define-key compilation-minor-mode-map (kbd "C-c C-c") 'comint-interrupt-subjob)
 
+(global-set-key (kbd "M-n") 'my-move-line-down)
+(global-set-key (kbd "M-p") 'my-move-line-up)
+
 (my-require 'bm)
 (global-set-key (kbd "M-C-m") 'bm-toggle)
 (global-set-key (kbd "M-C-n") 'bm-next)

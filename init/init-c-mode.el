@@ -220,10 +220,13 @@
 (defun my-run-c++ ()
   (interactive)
   (shell-command
-   (concat "g++ *.cpp -o temp"))
-   ;; (concat "g++ " (buffer-file-name (current-buffer)) "-o temp"))
-  (shell-command
-   (concat "./temp")))
+   ;; (concat "g++ *.cpp -o temp")
+   (concat "g++ " (buffer-file-name (current-buffer)) " -o temp")
+   "* C++ Build *")
+  ;; (shell-command
+  ;;  (concat "./temp")
+  ;;  "* C++ Run *")
+  )
 
 ;; c++ run.
 (define-key c++-mode-map (kbd "C-c C-c")

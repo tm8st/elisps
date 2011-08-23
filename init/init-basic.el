@@ -131,6 +131,9 @@
       (dolist (p (process-list))
         (set-process-query-on-exit-flag p nil))))
 
+  (setq generic-define-mswindows-modes t)
+  (setq generic-define-unix-modes t)
+
   ;; ホイールマウス
   (mouse-wheel-mode t)
   (setq mouse-wheel-follow-mouse t)
