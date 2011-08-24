@@ -184,7 +184,7 @@
   anything-c-source-favolite-directories       
   anything-c-source-recentf
   anything-c-source-buffers+
-  anything-c-source-files-in-current-dir+
+  ;; anything-c-source-files-in-current-dir+
   ;; anything-c-source-file-name-history
   ;; anything-c-source-bookmarks
   ;; anything-c-source-extended-command-history

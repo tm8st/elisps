@@ -250,7 +250,7 @@
 
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-with-twitter-client-main
-	 '((top + 0) (left + 0) (height . 1080) (width . 105))))
+	 '((top + 0) (left + 0) (height . 1080) (width . 97))))
 
 (when (my-is-windows)
 	(frange:regist-frame-position-parameter
@@ -267,7 +267,7 @@
 
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-with-twitter-client-main
-	 '((top + 0) (left + 0) (height . 1080) (width . 110))))
+	 '((top + 0) (left + 0) (height . 1080) (width . 100))))
 
 (define-key global-map (kbd "C-l C-w C-m")
   #'(lambda ()
@@ -313,7 +313,7 @@
 (my-require 'yalinum)
 ;; disable linum mode.
 (global-linum-mode -1)
-(global-yalinum-mode t)
+;; (global-yalinum-mode t)
 
 ;; buffer cycle move.
 (my-require 'prefix-arg-commands)
@@ -415,5 +415,7 @@
    mode
    '(("\\<\\(FIXME\\|TODO\\|Todo\\)\\>" 1 font-lock-warning-face prepend)
      ("\\<\\(FIXME\\|TODO\\|Todo\\):" 1 font-lock-warning-face prepend))))
+
+(require 'proof-site)
 
 (provide 'init-misc)

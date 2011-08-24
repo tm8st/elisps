@@ -55,8 +55,8 @@
   ;; filecache
   ;;--------------------------------
   (my-require 'filecache)
-  (file-cache-add-directory-list (list (expand-file-name "~/")))
-  (file-cache-add-directory-list load-path)
+  ;; (file-cache-add-directory-list (list (expand-file-name "~/")))
+  ;; (file-cache-add-directory-list load-path)
   ;; (file-cache-add-directory-list exec-path)
 
   ;; (when file-cache-path
@@ -158,8 +158,8 @@
   (my-require 'recentf)
   (recentf-mode 1)
   (custom-set-variables
-   '(recentf-max-menu-items 300)
-   '(recentf-max-saved-items 300)
+   '(recentf-max-menu-items 200)
+   '(recentf-max-saved-items 200)
    )
 
   ;;別のdirectoryにある同一名のfileを開いた時に、

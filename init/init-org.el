@@ -250,4 +250,12 @@
 ;; (my-require 'org-export-hatena)
 ;; (my-require 'simple-hatena-mode)
 
+(defun my-org-mode-hook ()
+  ;; (yalinum-mode -1)
+  (yalinum-mode nil)
+  (message "org hook!")
+  )
+
+(add-hook 'org-mode-hook 'my-org-mode-hook)
+
 (provide 'init-org)

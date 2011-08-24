@@ -135,7 +135,7 @@
 (define-key global-map (kbd "C-l C-z") 'prefix-arg-commands-set-frame-alpha)
 
 ;; 重複行削除
-;; (my-require 'uniq)
+(my-require 'uniq)
 (define-key global-map (kbd "C-l C-t C-d") 'uniq-remove-dup-lines)
 
 ;;大文字小文字変換

@@ -19,8 +19,8 @@
   (interactive)
   (if (intersection vc-handled-backends my-toggle-vc-list)
       (progn
-        (message "vc-mode Off.")
-        (setq vc-handled-backends (set-difference vc-handled-backends my-toggle-vc-list)))
+        (setq vc-handled-backends (set-difference vc-handled-backends my-toggle-vc-list))
+        (message "vc-mode Off."))
     (progn
       (setq vc-handled-backends (union vc-handled-backends my-toggle-vc-list))
       (message "vc-mode On."))))
@@ -31,9 +31,15 @@
   (save-buffer)
   (revert-buffer t t))
 
+(defun my-vc-toggle-and-revert-buffer ()
+  "automatic save and revert."
+  (interactive)
+  (my-toggle-vc-mode)
+  (my-revert-buffer))
+
 (global-set-key (kbd "C-x v ;") 'my-toggle-vc-mode)
 (global-set-key (kbd "C-q C-r") 'my-revert-buffer)
-
+(global-set-key (kbd "C-q C-v C-r") 'my-vc-toggle-and-revert-buffer)
 
 (my-require 'vc)
 (my-require 'vc-dir)

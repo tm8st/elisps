@@ -17,9 +17,10 @@
          (require package_name)
          (message "my-require ok: %s" package_name)
          (add-to-list 'my-required-package-list package_name)
-         ))
+         t))
     (error
      (message "my-require ng: %s" (error-message-string err))
+     nil
      )))
 
 ;; check os-type function.

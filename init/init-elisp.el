@@ -148,4 +148,3 @@
 (customize-set-variable 'eldoc-minor-mode-string (purecopy " ED"))
 
 (provide 'init-elisp)
-
