@@ -337,4 +337,20 @@
 ;; ; On when idle
 ;; (toggle-cursor-type-when-idle t)
 
+;; add TODO font-lock keyword to mode.
+(dolist (mode '(c-mode c++-mode objc-mode java-mode jde-mode
+                       perl-mode cperl-mode python-mode ruby-mode
+                       lisp-mode emacs-lisp-mode
+                       lisp-interaction-mode sh-mode sgml-mode
+                       haskell-mode))
+  (font-lock-add-keywords
+   mode
+   '(("\\<\\(FIXME\\|TODO\\|Todo\\)\\>" 1 font-lock-warning-face prepend)
+     ("\\<\\(FIXME\\|TODO\\|Todo\\):" 1 font-lock-warning-face prepend))))
+
+;; add my-require to  font lock keywords.
+(font-lock-add-keywords 
+ 'emacs-lisp-mode
+ '(("\\<\\(my-require\\)\\>" 1 font-lock-keyword-face t)))
+
 (provide 'init-theme)

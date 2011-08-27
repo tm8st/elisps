@@ -405,17 +405,6 @@
 (setq compilation-auto-jump-to-first-error t)
 (setq compilation-scroll-output t)
 
-;; add font-lock keyword to mode.
-(dolist (mode '(c-mode c++-mode objc-mode java-mode jde-mode
-                       perl-mode cperl-mode python-mode ruby-mode
-                       lisp-mode emacs-lisp-mode
-                       lisp-interaction-mode sh-mode sgml-mode
-                       haskell-mode))
-  (font-lock-add-keywords
-   mode
-   '(("\\<\\(FIXME\\|TODO\\|Todo\\)\\>" 1 font-lock-warning-face prepend)
-     ("\\<\\(FIXME\\|TODO\\|Todo\\):" 1 font-lock-warning-face prepend))))
-
 (my-require 'proof-site)
 
 (provide 'init-misc)

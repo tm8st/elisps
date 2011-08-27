@@ -10,27 +10,33 @@
 ;;; Code:
 
 (my-require 'init-my-misc)
-
 (my-require 'generic-range-opt)
 (my-require 'prefix-arg-commands)
 
-;;標準操作
+;; 基本操作
 (global-set-key (kbd "C-f") 'prefix-arg-commands-forward-move-commands)
 (global-set-key (kbd "C-b") 'prefix-arg-commands-backward-move-commands)
-(global-set-key (kbd "C-t") 'forward-word)
-(global-set-key (kbd "C-m") 'backward-word)
+(global-set-key (kbd "C-t") 'prefix-arg-commands-forward-long-move-commands)
+(global-set-key (kbd "C-m") 'prefix-arg-commands-backward-long-move-commands)
 (global-set-key (kbd "C-a") 'prefix-arg-commands-back-to-indentation-move-commands)
 (global-set-key (kbd "C-e") 'prefix-arg-commands-end-of-line-move-commands)
-;; (global-set-key (kbd "C-a") 'back-to-indentation)
-;; (global-set-key (kbd "C-e") 'prefix-arg-commands-back-to-indentation-move-commands)
 (global-set-key (kbd "C-;") 'my-scroll-down)
 (global-set-key (kbd "C-v") 'my-scroll-up)
 (global-set-key (kbd "C-S-t") 'forward-sexp)
 (global-set-key (kbd "C-S-m") 'backward-sexp)
 (global-set-key (kbd "C-x C-[") 'beginning-of-buffer)
 (global-set-key (kbd "C-x C-]") 'end-of-buffer)
-;; (global-set-key (kbd "C-j") 'newline-and-indent)
 (global-set-key (kbd "C-j") 'newline)
+(global-set-key (kbd "C-q C-e") 'my-eval-buffer-or-region)
+;; (global-set-key (kbd "C-c C-e") 'my-eval-buffer-or-region)
+;; (global-set-key (kbd "C-l C-e") 'my-eval-buffer-or-region)
+(global-set-key (kbd "C-l C-l") '(lambda () (interactive) (recenter 3)))
+
+;; forward-sentenceで行の最後ではなく、次の行まですすめる。
+(defadvice forward-sentence
+  (after forward-sentence-forward-one activate)
+  (forward-char)
+  ad-do-it)
 
 (global-set-key (kbd "C-h") 'delete-backward-char)
 ;; killではなくてdeleteに削除コマンドを変更
@@ -38,6 +44,7 @@
 ;; (global-set-key (kbd "C-l C-z") 'toggle-input-method) SKKへ
 
 (global-set-key (kbd "C-z") 'undo)
+
 (my-require 'redo)
 (global-set-key (kbd "C-/") 'redo)
 (global-set-key (kbd "C-S-z") 'redo)
@@ -45,8 +52,6 @@
 (my-require 'ibuffer)
 (global-set-key (kbd "C-x b") 'ibuffer-list-buffers) ;;バッファウィンドウを別ウィンドウに出してフォーカスを写す
 (global-set-key (kbd "C-x C-b") 'ibuffer) ;;バッファウィンドウを現在ウィンドウに出す
-;; (global-set-key (kbd "C-x b") 'buffer-menu-other-window) ;;バッファウィンドウを別ウィンドウに出してフォーカスを写す
-;; (global-set-key (kbd "C-x C-b") 'buffer-menu) ;;バッファウィンドウを現在ウィンドウに出す
 
 (global-set-key (kbd "C-x d") 'dired-other-window)
 (global-set-key (kbd "C-x C-d") 'dired)
@@ -54,14 +59,17 @@
 (global-set-key (kbd "C-x k") 'kill-buffer)
 (global-set-key (kbd "C-x C-k") 'kill-buffer)
 
+(global-set-key (kbd "C-x :") 'execute-extended-command)
 (global-set-key (kbd "C-:") 'execute-extended-command)
 ;; (global-set-key (kbd "C-,") `my-replace-string)
 (global-set-key (kbd "C-,") '(lambda () (interactive) (insert "_")))
+(global-set-key (kbd "C-.") 'my-just-one-space-toggle)
 
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "C-S-s") 'isearch-forward)
 (global-set-key (kbd "C-S-r") 'isearch-backward)
+(global-set-key (kbd "C-q C-t C-t") 'toggle-case-fold-search)
 
 ;;; インクリメンタルサーチ中にバックスペースが使えるように
 (define-key isearch-mode-map "\C-h" 'isearch-del-char)
@@ -70,6 +78,7 @@
   (interactive)
   (isearch-exit)
   (backward-sexp))
+
 (defun my-isearch-exit-and-move-mark-string-begin ()
   "インクリメンタルサーチを終了させて現在マークしている文字列の先頭へ"
   (interactive)
@@ -79,24 +88,12 @@
 (define-key isearch-mode-map (kbd "C-j") 'my-isearch-exit-and-move-backward-sexp)
 (define-key isearch-mode-map (kbd "C-u") 'my-isearch-exit-and-move-mark-string-begin)
 
-(global-set-key (kbd "C-.") 'my-just-one-space-toggle)
-
 (prefix-arg-commands-defun prefix-arg-commands-word-op
 													 (list
 														'gro-kill-follow-word
 														'gro-copy-follow-word))
 
 (global-set-key (kbd "C-w") 'prefix-arg-commands-word-op)
-
-
-;; (global-set-key (kbd "C-w") 'kill-word*)
-;; (global-set-key (kbd "C-w") 'gro-kill-follow-word)
-;; (global-set-key (kbd "C-S-w") 'my-delete-region-or-follow-kill-word)
-
-;;;-------------------------------
-;;; 標準操作
-;;;-------------------------------
-;; (global-set-key (kbd "C-l C-x") 'execute-extended-command)
 
 ;; window 切り替え
 (global-set-key (kbd "C-l C-n") 'other-window)
@@ -114,11 +111,9 @@
 (global-set-key (kbd "C-l C-d C-b") 'my-delete-backward-word)
 (global-set-key (kbd "C-l C-q") 'my-match-paren)
 (global-set-key (kbd "C-l C-c") 'calculator)
-(global-set-key (kbd "C-l C-e") 'my-eval-buffer-or-region)
-(global-set-key (kbd "C-c C-e") 'my-eval-buffer-or-region)
 
-(global-set-key (kbd "C-l C-g")  'goto-line) ;;指定した行へ。
-(global-set-key (kbd "C-q C-d C-e")  'ediff-buffers)
+(global-set-key (kbd "C-l C-g") 'goto-line) ;;指定した行へ。
+(global-set-key (kbd "C-q C-d C-e") 'ediff-buffers)
 
 (global-set-key (kbd "C-l C-f C-b") 'browse-url)
 (global-set-key (kbd "C-l C-f C-d") 'find-function)
@@ -131,6 +126,7 @@
 
 ;;ソースとヘッダファイルの移動用
 (global-set-key (kbd "C-l C-f C-s") 'ff-find-other-file)
+
 (global-set-key (kbd "C-l C-f C-o") 'my-save-all-buffers)
 
 (define-key global-map (kbd "C-l C-z") 'prefix-arg-commands-set-frame-alpha)
@@ -141,7 +137,6 @@
 
 ;;大文字小文字変換
 (global-set-key (kbd "C-q C-u") 'my-changecase-word)
-(global-set-key (kbd "C-q C-e") 'eval-buffer)
 
 ;;;-------------------------------
 ;;; mocccur 置換用
@@ -168,38 +163,15 @@
 
 ;;;-------------------------------
 ;;; undo-tree
-;;; redo bug??
 ;;;-------------------------------
-;; (my-require 'undo-tree)
+ (my-require 'undo-tree)
 ;; (global-undo-tree-mode)
-;; (global-set-key (kbd "C-l C-u C-t") `undo-tree-visualize)
-;; (define-key undo-tree-visualizer-map (kbd "C-g") `undo-tree-visualizer-quit)
-
-;; Key bindings (describe-bindings)
-;; C-b          undo-tree-visualize-switch-branch-left
-;; C-f          undo-tree-visualize-switch-branch-right
-;; C-n          undo-tree-visualize-redo
-;; C-p          undo-tree-visualize-undo
-;; C-q          undo-tree-visualizer-quit
-;; ,            undo-tree-visualizer-scroll-left
-;; .            undo-tree-visualizer-scroll-right
-;; <            undo-tree-visualizer-scroll-left
-;; >            undo-tree-visualizer-scroll-right
-;; b            undo-tree-visualize-switch-branch-left
-;; f            undo-tree-visualize-switch-branch-right
-;; n            undo-tree-visualize-redo
-;; p            undo-tree-visualize-undo
-;; q            undo-tree-visualizer-quit
-;; t            undo-tree-visualizer-toggle-timestamps
-;; <down>       undo-tree-visualize-redo
-;; <left>       undo-tree-visualize-switch-branch-left
-;; <mouse-1>    undo-tree-visualizer-set
+(global-set-key (kbd "C-l C-u C-t") `undo-tree-visualize)
+(define-key undo-tree-visualizer-map (kbd "C-g") `undo-tree-visualizer-quit)
 
 ;; ブックマーク設定
 (global-set-key (kbd "C-q C-b C-m") 'bookmark-set)
 (global-set-key (kbd "C-q C-b C-j") 'bookmark-jump)
-
-(global-set-key (kbd "C-q C-t C-t") 'toggle-case-fold-search)
 
 (global-set-key (kbd "C-q C-q") 'quoted-insert)       ;;元のコマンド
 ;; (global-set-key (kbd "C-q C-@") 'yalinum-mode)        ;;行番号表示のトグル。
@@ -296,9 +268,6 @@
 (global-set-key (kbd "C-8 C-h") 'mark-paragraph*)
 (global-set-key (kbd "C-8 C-d") 'gro-mark-defun*)
 
-;; (global-set-key (kbd "C-|") 'goto-line)
-;; 一行野郎バージョン
-(global-set-key (kbd "C-l C-l") '(lambda () (interactive) (recenter 5)))
 (defun my-face-at-point ()
 	(interactive)
 	(face-at-point))
@@ -356,11 +325,13 @@
     (type . file-line))
   "show global bookmarks list. Global means All bookmarks exist in `bm-repository'.
 	 Needs bm.el. http://www.nongnu.org/bm/")
-;; (anything 'anything-c-source-bm-global-use-candidates-in-buffer)
+
 (defvaralias 'anything-c-source-bm-global 'anything-c-source-bm-global-use-candidates-in-buffer)
+
 (defun my-anything-bm-global ()
 	(interactive)
 	(anything 'anything-c-source-bm-global))
+
 (defun anything-c-bm-global-init ()
   "Init function for `anything-c-source-bm-global'."
   (when (my-require 'bm)
@@ -387,14 +358,14 @@
 
 (global-set-key (kbd "C-q C-a C-m") 'my-anything-bm-global)
 
-(defun my-string-rectangle-default ()
+(defun my-insert-space-rectangle ()
   (interactive)
   (when mark-active
     (string-rectangle
      (min (point) (mark))
      (max (point) (mark))
-     "  ")))
+     (make-string tab-width ? ))))
 
-(define-key global-map (kbd "C-l C-j C-r") 'my-string-rectangle-default)
+(define-key global-map (kbd "C-l C-j C-r") 'my-insert-space-rectangle)
 
 (provide 'init-keybindings)
