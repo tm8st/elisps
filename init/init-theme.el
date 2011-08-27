@@ -293,7 +293,15 @@
   ;; 正規表現を読みやすくする。
   (set-face-foreground 'font-lock-regexp-grouping-backslash "#999")
   (set-face-foreground 'font-lock-regexp-grouping-construct "#999")
-  
+
+  ;; ;; sprites
+  ;; (my-require 'stripes)
+  ;; ;; theme setting.
+  ;; (set-face-background 'stripes-face "#f6f1e0")
+  ;; (defun my-stripes-mode-hook ()
+  ;;   (interactive)
+  ;;   (stripes-mode t))
+  ;; (add-hook 'find-file-hook 'my-stripes-mode-hook)
   )
 
 (defun my-set-default-color-theme ()

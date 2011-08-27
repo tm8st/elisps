@@ -416,6 +416,6 @@
    '(("\\<\\(FIXME\\|TODO\\|Todo\\)\\>" 1 font-lock-warning-face prepend)
      ("\\<\\(FIXME\\|TODO\\|Todo\\):" 1 font-lock-warning-face prepend))))
 
-(require 'proof-site)
+(my-require 'proof-site)
 
 (provide 'init-misc)

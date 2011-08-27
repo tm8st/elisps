@@ -120,16 +120,17 @@
 (global-set-key (kbd "C-l C-g")  'goto-line) ;;指定した行へ。
 (global-set-key (kbd "C-q C-d C-e")  'ediff-buffers)
 
+(global-set-key (kbd "C-l C-f C-b") 'browse-url)
+(global-set-key (kbd "C-l C-f C-d") 'find-function)
+(global-set-key (kbd "C-l C-f C-j") 'ffap)
+
 ;; 外部のfiler で 開く
 (global-set-key (kbd "C-l C-f C-e") 'my-open-directory-by-external-filer)
 ;; osの関連付けで開く
-(global-set-key (kbd "C-l C-f C-w") 'my-open-file-os)
-;; osの関連付けでopen-file
 (global-set-key (kbd "C-l C-f C-f") 'my-open-file-os)
 
 ;;ソースとヘッダファイルの移動用
 (global-set-key (kbd "C-l C-f C-s") 'ff-find-other-file)
-
 (global-set-key (kbd "C-l C-f C-o") 'my-save-all-buffers)
 
 (define-key global-map (kbd "C-l C-z") 'prefix-arg-commands-set-frame-alpha)

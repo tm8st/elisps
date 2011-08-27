@@ -25,13 +25,12 @@
 
 ;; check os-type function.
 (defun my-is-mac () "check run emacs on mac."
-  (not
-   (eq
-    (string-match "apple" (emacs-version))
-    nil)))
+  (eq system-type 'darwin))
 
 (defun my-is-windows () "check run emacs on windows."
-  (not (my-is-mac)))
+  (or
+   (eq system-type 'windows-nt)
+   (eq system-type 'ms-dos)))
 
 (defun my-not-windows () "check run emacs on not windows."
   (not (my-is-windows)))
