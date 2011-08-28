@@ -11,6 +11,9 @@
 
 (my-require 'sorter)
 
+(setq dired-recursive-copies 'always)
+(setq dired-recursive-deletes 'always)
+
 ;; dired + sorter 時に ls の -h オプションを付加する
 (defadvice dired-sort-other
   (around dired-sort-other-h activate)

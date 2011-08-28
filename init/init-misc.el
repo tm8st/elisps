@@ -26,6 +26,8 @@
 (add-to-list 'popwin:special-display-config '("*Dired log*"))
 (add-to-list 'popwin:special-display-config '("*Rake*"))
 (add-to-list 'popwin:special-display-config '("*Backtrace*" :height 0.5))
+(add-to-list 'popwin:special-display-config '("*git push*"))
+(add-to-list 'popwin:special-display-config '("*git commit*"))
 
 (define-key global-map (kbd "C-l p") 'popwin:display-last-buffer)
 
@@ -133,18 +135,6 @@
 ;; (global-set-key (kbd "-") (smartchr '("-" "--" "---")))
 (global-set-key (kbd "[") (smartchr '("[`!!']" "[" "]")))
 ;; (global-set-key (kbd "]") (smartchr '("]" "[`!!']" "[]")))
-
-;;; sequential-command-config
-(my-require 'sequential-command)
-(my-require 'sequential-command-config)
-(define-sequential-command beginning-of-anything-seq
-  back-to-indentation beginning-of-line seq-return)
-
-(define-sequential-command end-of-anything-seq
-  end-of-line seq-return)
-
-(global-set-key (kbd "C-a") 'beginning-of-anything-seq)
-(global-set-key (kbd "C-e") 'end-of-anything-seq)
 
 ;;; emacsから一発で検索
 (my-require 'search-web)
@@ -406,5 +396,23 @@
 (setq compilation-scroll-output t)
 
 (my-require 'proof-site)
+
+(my-require 'ibuffer)
+(setq ibuffer-expert t)
+(setq ibuffer-maybe-show-regexps nil)
+(setq ibuffer-shrink-to-minimum-size t)
+(setq ibuffer-use-other-window t)
+
+(my-require 'per-window-point)
+(pwp-mode t)
+
+;;; disabled commands
+(put 'downcase-region  'disabled nil)   ; Let upcasing work
+(put 'erase-buffer     'disabled nil)
+(put 'eval-expression  'disabled nil)   ; Let ESC-ESC work
+(put 'narrow-to-page   'disabled nil)   ; Let narrowing work
+(put 'narrow-to-region 'disabled nil)   ; Let narrowing work
+(put 'set-goal-column  'disabled nil)
+(put 'upcase-region    'disabled nil)   ; Let downcasing work
 
 (provide 'init-misc)

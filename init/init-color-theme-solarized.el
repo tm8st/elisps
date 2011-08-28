@@ -10,7 +10,7 @@
   ;;; Author: Ethan Schoonover, Solarized; Greg Pfeil, Emacs adaptation
   ;;; URL: http://ethanschoonover.com/solarized
   ;;; This file is not (YET) part of GNU Emacs.
-  
+
 (eval-when-compile
   (my-require 'color-theme))
 
@@ -51,6 +51,7 @@ Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized."
         (violet  "#6c71c4")
         (blue    "#268bd2")
         (cyan    "#2aa198")
+        (pink2   "pink2")
         (green   "#859900"))
     (when (eq 'light mode)
       (rotatef base03 base3)
@@ -69,7 +70,7 @@ Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized."
        (cursor ((t (:foreground ,base0 :background ,base03 :inverse-video t))))
        (escape-glyph-face ((t (:foreground ,red))))
        (fringe ((t (:foreground ,base01 :background ,base02))))
-       (header-line ((t (:foreground ,base0 :background ,base2))))
+       (header-line ((t (:foreground ,base0 :background ,pink2))))
        (highlight ((t (:background ,base02))))
        (isearch ((t (:foreground ,yellow :inverse-video t))))
        (menu ((t (:foreground ,base0 :background ,base02))))

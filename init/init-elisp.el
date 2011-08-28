@@ -35,52 +35,34 @@
 (define-key emacs-lisp-mode-map (kbd "C-l C-e") 'my-eval-buffer-or-region)
 
 ;;;-------------------------------
-;;; eldoc lisp
-;;;-------------------------------
-(my-require 'eldoc)
-;; (install-elisp-from-emacswiki "eldoc-extension.el")
-;; (my-require 'eldoc-extension)
-(setq eldoc-idle-delay 0.15)
-(setq eldoc-echo-area-use-multiline-p t)
-(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
-
-;;;-------------------------------
 ;;; auto-install misc
 ;;;-------------------------------
-(defvar my-auto-install-requires-list nil)
+(defvar my-auto-install-requires-list nil
+  "auto install elisps.")
 
 (defun my-auto-install-from-requires ()
   "Batch install many packages form elisp my-requires."
   (interactive)
-  (setq my-auto-install-my-requires-list nil)
-   (dolist (req (split-string (shell-command-to-string "grep 'my-require ' *.el") "\n"))
-     (when (eq (string-match ":+\\( \t\\)*;" req) nil)
-       (progn
-	 (let ((begin (string-match "'" req)))
-	   (if (eq begin nil) nil
-	     (let ((end (string-match "\\()\\| \\|\n\\|\t\\)" req begin)))
-	       (if (eq end nil) nil
-		 (progn
-		   (let ((name (substring req (+ 1 begin) end)))
-		     ;; (setq name (concat "http://www.emacswiki.org/emacs/download/" name ".el"))
-		     (unless (member (concat name ".el") init-load-elisp-list)
-		       (progn
-			 (unless (member name my-auto-install-my-requires-list)
-			   (add-to-list 'my-auto-install-my-requires-list name)
-			   )
-			 ;; (sleep-for 5)
-			 ;;   ;; (auto-install-from-emacswiki name)
-			 ;;   (auto-install-from-url name)
-			 ;;   )
-			 )
-		     )))))))))
-     )
-   (message "my-requires:")
-   (dolist (i my-auto-install-requires-list)
-     (message i))
-   )
+  (setq my-auto-install-requires-list nil)
+  (dolist (req (split-string (shell-command-to-string "grep 'my-require ' *.el") "\n"))
+    (when (eq (string-match ":+\\( \t\\)*;" req) nil)
+      (progn
+        (let ((begin (string-match "'" req)))
+          (if (eq begin nil) nil
+            (let ((end (string-match "\\()\\| \\|\n\\|\t\\)" req begin)))
+              (if (eq end nil) nil
+                (progn
+                  (let ((name (substring req (+ 1 begin) end)))
+                    ;; (setq name (concat "http://www.emacswiki.org/emacs/download/" name ".el"))
+                    (unless (member
+                             (concat name ".el")
+                             init-load-elisp-list)
+                      (progn
+                        (unless (member name my-auto-install-requires-list)
+                          (add-to-list 'my-auto-install-requires-list name))
+                        (sleep-for 5)
+                        ;; (auto-install-from-emacswiki name)
+                        (auto-install-from-url name)))))))))))))
 
 (defvar my-auto-update-elisp-list
   (list
@@ -136,6 +118,18 @@
 ;; "window-numbering"
 ;; http://nschum.de/src/emacs/window-numbering-mode/window-numbering.el
 
+;;;-------------------------------
+;;; eldoc lisp
+;;;-------------------------------
+(my-require 'eldoc)
+;; (install-elisp-from-emacswiki "eldoc-extension.el")
+;; (my-require 'eldoc-extension)
+(setq eldoc-idle-delay 0.15)
+(setq eldoc-echo-area-use-multiline-p t)
+(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
+
 ;; Lisp用にSLIMEの設定
 
 ;; lisp-mode
@@ -146,5 +140,29 @@
   (slime-setup))
 
 (customize-set-variable 'eldoc-minor-mode-string (purecopy " ED"))
+
+(defun my-scratch ()
+  (interactive)
+  (switch-to-buffer-other-window
+   (get-buffer-create "*scratch*"))
+  (lisp-interaction-mode)
+  (goto-char (point-min))
+  (when (looking-at ";")
+    (forward-line 4)
+    (delete-region (point-min) (point)))
+  (goto-char (point-max)))
+
+;; From sean @ http://emacsblog.org/2007/10/07/declaring-emacs-bankruptcy/
+(add-hook 'after-save-hook 'my-recompile-el)
+(setq byte-compile-verbose t)
+
+(defun my-recompile-el ()
+  (interactive)
+  (save-excursion
+    (when (and buffer-file-name
+               (string-match "/.*\\.el$"  buffer-file-name)
+               (file-newer-than-file-p buffer-file-name
+                                       (concat buffer-file-name "c")))
+      (byte-compile-file buffer-file-name nil))))
 
 (provide 'init-elisp)

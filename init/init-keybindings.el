@@ -13,13 +13,33 @@
 (my-require 'generic-range-opt)
 (my-require 'prefix-arg-commands)
 
+;;; sequential-command-config
+(my-require 'sequential-command)
+(my-require 'sequential-command-config)
+(define-sequential-command beginning-of-anything-seq
+  back-to-indentation beginning-of-line seq-return)
+
+(define-sequential-command end-of-anything-seq
+  end-of-line seq-return)
+
+(prefix-arg-commands-defun prefix-arg-commands-forward-long-move-commands
+			   '(forward-word forward-sentence forward-paragraph))
+(prefix-arg-commands-defun prefix-arg-commands-backward-long-move-commands
+			   '(backward-word backward-sentence backward-paragraph))
+
 ;; 基本操作
 (global-set-key (kbd "C-f") 'prefix-arg-commands-forward-move-commands)
 (global-set-key (kbd "C-b") 'prefix-arg-commands-backward-move-commands)
 (global-set-key (kbd "C-t") 'prefix-arg-commands-forward-long-move-commands)
 (global-set-key (kbd "C-m") 'prefix-arg-commands-backward-long-move-commands)
-(global-set-key (kbd "C-a") 'prefix-arg-commands-back-to-indentation-move-commands)
-(global-set-key (kbd "C-e") 'prefix-arg-commands-end-of-line-move-commands)
+;; (global-set-key (kbd "C-a") 'prefix-arg-commands-back-to-indentation-move-commands)
+;; (global-set-key (kbd "C-e") 'prefix-arg-commands-end-of-line-move-commands)
+
+(global-set-key (kbd "C-a") 'beginning-of-anything-seq)
+(global-set-key (kbd "C-e") 'end-of-anything-seq)
+
+(global-set-key (kbd "C-a") 'beginning-of-anything-seq)
+(global-set-key (kbd "C-e") 'end-of-anything-seq)
 (global-set-key (kbd "C-;") 'my-scroll-down)
 (global-set-key (kbd "C-v") 'my-scroll-up)
 (global-set-key (kbd "C-S-t") 'forward-sexp)
@@ -31,6 +51,14 @@
 ;; (global-set-key (kbd "C-c C-e") 'my-eval-buffer-or-region)
 ;; (global-set-key (kbd "C-l C-e") 'my-eval-buffer-or-region)
 (global-set-key (kbd "C-l C-l") '(lambda () (interactive) (recenter 3)))
+(global-set-key (kbd "C-l C-o C-e") 'my-scratch)
+(global-set-key (kbd "C-l C-o C-c") 'elint-current-buffer)
+(global-set-key (kbd "C-l C-o C-w") 'my-which)
+
+(defun my-which (name)
+  (interactive "sCommand name: ")
+  (message
+   (substring (shell-command-to-string (format "which %s" name)) 0 -1)))
 
 ;; forward-sentenceで行の最後ではなく、次の行まですすめる。
 (defadvice forward-sentence

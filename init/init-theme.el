@@ -243,8 +243,9 @@
     (global-hl-line-mode t))
 
   (my-require 'paren)
-  (show-paren-mode t)
   (custom-set-variables
+   '(show-paren-mode t)
+   '(show-paren-delay 0)
    '(show-paren-ring-bell-on-mismatch t)
    '(show-paren-style 'mixed)
    )
@@ -313,7 +314,9 @@
   (set-face-background 'header-line "pink1")
   )
 
-(global-set-key (kbd "C-l C-o C-e") 'my-set-default-color-theme)
+(add-hook 'after-init-hook 'my-set-default-color-theme)
+
+(global-set-key (kbd "C-l C-t C-e") 'my-set-default-color-theme)
 
 (setq mode-line-remote "")
 (setq mode-line-mule-info "")

@@ -9,6 +9,8 @@
 
 ;;; Code:
 
+(setq default-major-mode 'text-mode)
+
 ;;;----------------------------------------
 ;;; 文字コード
 ;;;----------------------------------------
@@ -19,10 +21,8 @@
   )
 
 (when (my-is-mac)
-  (set-default-coding-systems 'utf-8)
   (prefer-coding-system 'utf-8)
-  (set-terminal-coding-system 'utf-8)
-  )
+ )
 
 ;; terminalで日本語表示がおかしくなったためやめておく。
 ;; (prefer-coding-system 'sjis)
@@ -91,6 +91,7 @@
   (setq kill-read-only-ok t)
 
   (setq inhibit-startup-message t) ;;起動画面を表示しない
+  (setq inhibit-startup-echo-area-message "tm8st")
   (setq enable-recursive-minibuffers t) ;;前のcommandが終了してなくても、新しいcommandを実行可能にする。
   (global-auto-revert-mode t) ;;file が他から変更されたら、自動的に読み込む。
   (delete-selection-mode t) ;; マーク選択中の編集コマンドの挙動変更/範囲削除
@@ -157,6 +158,7 @@
   ;; 最近使った file を記憶させる。
   (my-require 'recentf)
   (recentf-mode 1)
+  (setq recentf-auto-cleanup 'never)
   (custom-set-variables
    '(recentf-max-menu-items 200)
    '(recentf-max-saved-items 200)

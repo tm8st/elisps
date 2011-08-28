@@ -33,7 +33,6 @@
 ;; (setq popwin:special-display-config '(("*haskell*" :height 0.4 :noselect)))
 
 (my-require 'ghc)
-
 (define-key haskell-mode-map (kbd "C-c C-o") 'ghc-complete)
 (define-key haskell-mode-map (kbd "C-c C-i") 'ghc-show-info)
 (define-key haskell-mode-map (kbd "C-c C-d") 'ghc-browse-document)
