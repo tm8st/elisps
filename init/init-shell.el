@@ -20,12 +20,8 @@
 ;; (setq shell-command-switch "-lc") ;; デバッグ用
 ;; (setq shell-command-switch "-xc") ;; 設定ファイルを読むためにログインにする？ デバッグ用
 
-;; shell-mode 色設定
-(my-require 'comint)
-(autoload 'ansi-color-for-comint-mode-on "ansi-color" "Set `ansi-color-for-comint-mode' to t." t)
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-
 ;;; shell-mode コマンド履歴
+(my-require 'comint)
 (define-key shell-mode-map (kbd "C-S-p") 'comint-previous-input)
 (define-key shell-mode-map (kbd "C-S-n") 'comint-next-input)
 (define-key shell-mode-map (kbd "C-c C-j") 'compilation-mode)
@@ -109,15 +105,27 @@
 
 	(global-set-key (kbd "C-l C-s C-n") 'my-shell-command-growl-notify))
 
-(customize-set-value 'ansi-color-names-vector
-      [unspecified "black" "black" "black" "black"
-                   "black" "black" "black" "black"])
+;; shell-mode 色設定
+;; (my-require 'comint)
+;; (customize-set-value 'ansi-color-for-comint-mode nil)
+(autoload 'ansi-color-for-comint-mode-on "ansi-color"
+  "Set `ansi-color-for-comint-mode' to t." t)
 
-(setq multi-shell-use-ansi-color t)
-(customize-set-value 'ansi-color-for-comint-mode t)
+(setq ansi-color-names-vector
+      ["#000000"           ; black
+       "#ff6565"           ; red
+       "#93d44f"           ; green
+       "#eab93d"           ; yellow
+       "#204a87"           ; blue
+       "#ce5c00"           ; magenta
+       "#89b6e2"           ; cyan
+       "#ffffff"]          ; white
+      )
+(ansi-color-for-comint-mode-on)
 
-;; (setq ansi-term-color-vector
-;;       [unspecified "black" "red1" "lime green" "yellow2"
-;;                    "DeepSkyBlue3" "magenta2" "cyan2" "white"])
+(setq comint-scroll-to-bottom-on-input t)
+(setq comint-scroll-show-maximum-output t)
+
+;; (my-require 'multi-term)
 
 (provide 'init-shell)

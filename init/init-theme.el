@@ -83,6 +83,7 @@
 	(my-require 'anything)
 	(set-face-foreground 'anything-header default-font-color)
 	(set-face-background 'anything-header dummy-region-color)
+  (set-face-foreground 'anything-w3m-bookmarks-face "blue1")
 
 	(my-require 'skk-vars)
 	(skk-make-face 'default-font-color/dummy-region-color)
