@@ -620,10 +620,12 @@ default name is filename:current line string."
            (kill-buffer (current-buffer))))))))
 
 (when (my-is-mac)
-  (defun my-open-file-os ()
+  (defun my-open-file-os (&optional filename)
     "osの関連付けを利用してファイルを開く mac 用"
     (interactive)
-    (shell-command (concat "open " (buffer-file-name)))))
+    (if (eq filename nil)
+        (shell-command (concat "open " (buffer-file-name)))
+      (shell-command (concat "open " filename)))))
 
 (defun my-open-dir-os (path)
   "osの関連付けを利用してファイルを開く mac 用"

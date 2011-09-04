@@ -103,7 +103,7 @@
 					(lambda (err)
 						(tm8st-growl-notify (concat "\"" "Error! " clsr "\"")))))))
 
-	(global-set-key (kbd "C-l C-s C-n") 'my-shell-command-growl-notify))
+	(global-set-key (kbd "C-l C-s C-t") 'my-shell-command-growl-notify))
 
 ;; shell-mode 色設定
 ;; (my-require 'comint)

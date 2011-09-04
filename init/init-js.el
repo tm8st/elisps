@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(when (my-require 'js2)
+(when (my-require 'js2-mode)
   (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
   (setq js2-cleanup-whitespace nil
         js2-mirror-mode nil
@@ -28,6 +28,12 @@
   (define-key js2-mode-map "\C-m" nil)
   (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
   )
+
+(add-hook 'js2-mode-hook
+	  (lambda () 
+	    (my-require 'flymake-jsl)
+	    (setq flymake-check-was-interrupted t)
+      (yalinum-mode 1)))
 
 (provide 'init-js)
 

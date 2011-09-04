@@ -33,7 +33,7 @@
 (customize-set-value 'ac-use-fuzzy 't)
 (customize-set-value 'ac-use-comphist 't)
 (customize-set-value 'ac-use-quick-help 't)
-(customize-set-value 'ac-delay 0.2)
+(customize-set-value 'ac-delay 0.1)
 
 (global-set-key (kbd "C-o") 'ac-start)
 ;; (global-set-key (kbd "C-q C-c") 'auto-complete-mode)

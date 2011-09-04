@@ -21,6 +21,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;anything-c-source-R-helpの設定
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(my-require 'anything-R)
 
 (setq anything-c-source-R-help
       '((name . "R objects / help")
@@ -87,6 +88,7 @@
 	 ("dput" . (lambda(obj-name)
 		     (ess-execute (concat "dput(" obj-name ")\n") nil (concat "R dput: " obj-name)))))
 	(volatile)))
+
 
 ;; anything.elの設定
 ;; (my-require 'anything-config)

@@ -9,7 +9,9 @@
 
 ;;; Code:
 
-(setq default-major-mode 'text-mode)
+(setq major-mode 'text-mode)
+(setq max-specpdl-size 50000)
+(setq max-lisp-eval-depth 50000)
 
 ;;;----------------------------------------
 ;;; 文字コード
@@ -28,7 +30,6 @@
 ;; terminalで日本語表示がおかしくなったためやめておく。
 ;; (prefer-coding-system 'sjis)
 ;; (set-terminal-coding-system 'sjis)
-
 ;; (prefer-coding-system 'euc-jp)
 ;; (set-default-coding-systems 'euc-jp)
 ;; (set-buffer-file-coding-system 'euc-jp)
@@ -55,10 +56,14 @@
   ;;--------------------------------
   ;; filecache
   ;;--------------------------------
-  (my-require 'filecache)
-  ;; (file-cache-add-directory-list (list (expand-file-name "~/")))
-  ;; (file-cache-add-directory-list load-path)
-  ;; (file-cache-add-directory-list exec-path)
+  (defvar my-filecache-initialized nil)
+  (unless my-filecache-initialized
+    (my-require 'filecache)
+    (file-cache-add-directory-list (list (expand-file-name "~/")))
+    (file-cache-add-directory-list load-path)
+    (file-cache-add-directory-list exec-path)
+    (setq my-filecache-initialized t)
+    )
 
   ;; (when file-cache-path
   ;;   (file-cache-add-directory-list file-cache-path))
@@ -118,7 +123,7 @@
   (setq-default tab-width 2)
   (setq redisplay-dont-pause t)  ;; キーリピートにカーソルを追随させる
   ;; (setq redisplay-dont-pause nil)  ;; キーリピートにカーソルを追随させる
-  (setq undo-outer-limit 10000) ;; undo の保存限界
+  (setq undo-outer-limit 50000) ;; undo の保存限界
   
   ;;mini buffer での質問に yes/no を入力するのは面倒なのでSPC で yes とする。
   (defalias 'yes-or-no-p 'y-or-n-p)

@@ -163,6 +163,8 @@
                (string-match "/.*\\.el$"  buffer-file-name)
                (file-newer-than-file-p buffer-file-name
                                        (concat buffer-file-name "c")))
+      ;; (let ((byte-compile-warnings '()))
+      ;; (let ((byte-compile-warnings '(not free-vars)))
       (byte-compile-file buffer-file-name nil))))
 
 (provide 'init-elisp)
