@@ -16,6 +16,7 @@
 (my-require 'haskell-indentation)
 (my-require 'inf-haskell)
 (my-require 'prefix-arg-commands)
+(my-require 'init-keybindings)
 
 (add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
 (add-to-list 'auto-mode-alist '("\\.lhs$" . haskell-mode))
@@ -44,7 +45,7 @@
 (add-hook 'haskell-mode-hook 'font-lock-mode)
 (add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
 
-(define-key haskell-mode-map (kbd "C-m") 'backward-word)
+(define-key haskell-mode-map (kbd "C-m") my-backward-word-command)
 (define-key haskell-mode-map (kbd "C-c C-h") 'haskell-hoogle)
 
 (prefix-arg-commands-defun prefix-arg-commands-insert-haskell-right-arrow
@@ -86,9 +87,9 @@
 (define-key haskell-mode-map (kbd "C-o") 'auto-complete)
 
 (define-key haskell-indentation-mode-map (kbd "C-j") 'haskell-newline-and-indent)
-(define-key haskell-indentation-mode-map (kbd "C-m") 'backward-word)
+(define-key haskell-indentation-mode-map (kbd "C-m") my-backward-word-command)
 
-(define-key inferior-haskell-mode-map (kbd "C-m") 'backward-word)
+(define-key inferior-haskell-mode-map (kbd "C-m") my-backward-word-command)
 (define-key inferior-haskell-mode-map (kbd "C-j") 'comint-send-input)
 (define-key inferior-haskell-mode-map (kbd "C-c C-h") 'haskell-hoogle)
 

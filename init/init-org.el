@@ -15,6 +15,7 @@
 (my-require 'org-mobile)
 (my-require 'org-habit)
 (my-require 'org-capture)
+(my-require 'init-keybindings)
 
 (setq org-startup-truncated nil)
 (setq org-return-follows-link t)
@@ -135,7 +136,7 @@
 (define-key global-map (kbd "C-l C-o C-@") 'org-mobile-pull)
 
 (define-key org-mode-map (kbd "C-k") 'my-delete-line-forward)
-(define-key org-mode-map (kbd "C-m") 'backward-word)
+(define-key org-mode-map (kbd "C-m") my-backward-word-command)
 (define-key org-mode-map (kbd "C-TAB") 'org-force-cycle-archived)
 (define-key org-mode-map [(meta left)]  'org-metaleft)
 (define-key org-mode-map [(meta right)] 'org-metaright)
@@ -146,7 +147,7 @@
 (define-key org-mode-map (kbd "M-P") 'org-metaup)
 (define-key org-mode-map (kbd "M-n") 'org-forward-same-level)
 (define-key org-mode-map (kbd "M-p") 'org-backward-same-level)
-(define-key org-mode-map (kbd "C-m") 'my-backward-word)
+(define-key org-mode-map (kbd "C-m") my-backward-word-command)
 (define-key org-mode-map (kbd "C-M-m") 'bm-toggle)
 (define-key org-mode-map (kbd "C-M-j") 'org-insert-heading)
 

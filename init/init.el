@@ -36,6 +36,7 @@
 
 (defun my-load-elisp (path)
   "safety and more infomation load function."
+  (message (concat "start load: " path))
   (load path t)
   )
 

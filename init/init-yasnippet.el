@@ -51,3 +51,4 @@
           '(lambda () (yas/minor-mode-on)))
 
 (provide 'init-yasnippet)
+

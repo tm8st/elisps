@@ -10,6 +10,7 @@
 ;;; Code:
 
 (my-require 'doc-view)
+(my-require 'init-keybindings)
 
 ;;; text-mode
 (add-hook
@@ -196,7 +197,7 @@
 	(define-key map (kbd "C-c C-c")    'compile)
 	(define-key map (kbd "C-c C-e")    'my-graphbiz-execute)
 	(define-key map (kbd "C-c C-v")    'graphviz-dot-view)
-	(define-key map (kbd "C-m")  	     'my-backward-word)
+	(define-key map (kbd "C-m")  	      my-backward-word-command)
   (define-key map (kbd "C-c C-r") '(lambda () (interactive) (insert-string " -> ")))
   (define-key map (kbd "C-c C-l") '(lambda () (interactive) (insert-string " <- ")))
 ;; (define-key map "\r"       'electric-graphviz-dot-terminate-line)
@@ -352,13 +353,13 @@
 ;;                 `(lambda ()
 ;;                    (interactive) (global-widen-window-mode nil)))
 
-(defun browse-url-at-point ()
-  "カーソルのある位置のURLをブラウザで開く"
-  (interactive)
-  (let ((url-region (bounds-of-thing-at-point 'url)))
-    (when url-region
-      (browse-url (buffer-substring-no-properties (car url-region)
-						  (cdr url-region))))))
+;; (defun browse-url-at-point ()
+;;   "カーソルのある位置のURLをブラウザで開く"
+;;   (interactive)
+;;   (let ((url-region (bounds-of-thing-at-point 'url)))
+;;     (when url-region
+;;       (browse-url (buffer-substring-no-properties (car url-region)
+;; 						  (cdr url-region))))))
 
 (global-set-key (kbd "C-c C-f") 'browse-url-at-point)
 

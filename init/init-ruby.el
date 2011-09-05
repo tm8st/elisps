@@ -13,6 +13,8 @@
 ;; (my-require 'inf-ruby)
 ;; (my-require 'ruby-block)
 (my-require 'ruby-electric)
+(my-require 'init-keybindings)
+
 ;;(autoload 'ruby-mode "ruby-mode"
 ;;  "Mode for editing ruby source files" t)
 (setq auto-mode-alist
@@ -28,8 +30,7 @@
 (add-hook 'ruby-mode-hook
 		  '(lambda () (inf-ruby-keys)))
 
-(define-key ruby-mode-map (kbd "C-m") 'my-backward-word)
-
+(define-key ruby-mode-map (kbd "C-m") my-backward-word-command)
 
 (defun my-run-ruby-buffer ()
   (interactive)

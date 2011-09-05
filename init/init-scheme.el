@@ -9,6 +9,7 @@
 
 ;;; Code:
 
+(my-require 'init-keybindings)
 (my-require 'scheme)
 
 ;; 実行環境
@@ -50,7 +51,7 @@
 (define-key scheme-mode-map (kbd "C-c C-f") 'scheme-other-frame)
 (define-key scheme-mode-map (kbd "C-c C-i") 'scheme-info)
 
-(define-key inferior-scheme-mode-map (kbd "C-m") 'backward-word)
+(define-key inferior-scheme-mode-map (kbd "C-m") my-backward-word-command)
 (define-key inferior-scheme-mode-map (kbd "C-j") 'comint-send-input)
 (define-key inferior-scheme-mode-map (kbd "C-c C-w") 'scheme-other-window)
 (define-key inferior-scheme-mode-map (kbd "C-c C-f") 'scheme-other-frame)

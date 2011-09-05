@@ -11,6 +11,7 @@
 
 (my-require 'auto-complete)
 (my-require 'highlight-parentheses)
+(my-require 'init-keybindings)
 
 ;; scala-mode
 (unless my-initialized

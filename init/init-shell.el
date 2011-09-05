@@ -9,6 +9,7 @@
 
 ;;; Code:
 
+(my-require 'init-keybindings)
 (my-require 'shell)
 (setq shell-command-switch "-lc") ;; デバッグ用
 
@@ -25,7 +26,7 @@
 (define-key shell-mode-map (kbd "C-S-p") 'comint-previous-input)
 (define-key shell-mode-map (kbd "C-S-n") 'comint-next-input)
 (define-key shell-mode-map (kbd "C-c C-j") 'compilation-mode)
-(define-key shell-mode-map (kbd "C-m") 'backward-word)
+(define-key shell-mode-map (kbd "C-m") my-backward-word-command)
 (define-key shell-mode-map (kbd "C-j") 'comint-send-input)
 
 (setq comint-scroll-show-maximum-output t) 	;; できるだけ出力内容が見えるようにスクール

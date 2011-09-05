@@ -27,11 +27,14 @@
 (prefix-arg-commands-defun prefix-arg-commands-backward-long-move-commands
 			   '(backward-word backward-sentence backward-paragraph))
 
+(defvar my-forward-word-command 'prefix-arg-commands-forward-long-move-commands)
+(defvar my-backward-word-command 'prefix-arg-commands-backward-long-move-commands)
+
 ;; 基本操作
 (global-set-key (kbd "C-f") 'prefix-arg-commands-forward-move-commands)
 (global-set-key (kbd "C-b") 'prefix-arg-commands-backward-move-commands)
-(global-set-key (kbd "C-t") 'prefix-arg-commands-forward-long-move-commands)
-(global-set-key (kbd "C-m") 'prefix-arg-commands-backward-long-move-commands)
+(global-set-key (kbd "C-t") my-forward-word-command)
+(global-set-key (kbd "C-m") my-backward-word-command)
 ;; (global-set-key (kbd "C-a") 'prefix-arg-commands-back-to-indentation-move-commands)
 ;; (global-set-key (kbd "C-e") 'prefix-arg-commands-end-of-line-move-commands)
 
@@ -48,7 +51,7 @@
 (global-set-key (kbd "C-x C-]") 'end-of-buffer)
 (global-set-key (kbd "C-j") 'newline)
 (global-set-key (kbd "C-l C-e") 'my-eval-buffer-or-region)
-;; (global-set-key (kbd "C-q C-e") 'my-eval-buffer-or-region)
+(global-set-key (kbd "C-q C-e") 'my-eval-buffer-or-region)
 ;; (global-set-key (kbd "C-c C-e") 'my-eval-buffer-or-region)
 (global-set-key (kbd "C-l C-l") '(lambda () (interactive) (recenter 3)))
 (global-set-key (kbd "C-l C-o C-e") 'my-scratch)
