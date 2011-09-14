@@ -19,7 +19,7 @@
   (defvar my-font-size-base 100)
   (cond
    ((my-is-windows) (setq my-font-size-base 155))
-   ((my-is-mac) (setq my-font-size-base 300)))
+   ((my-is-mac) (setq my-font-size-base 280)))
 
 	(when (>= emacs-major-version 23)
 		(when use-font-setting
@@ -27,8 +27,10 @@
 				(set-face-attribute 'default nil
                             :family "Ricty"
                             :height my-font-size-base))
+
 			(when (my-is-mac)
 				(set-face-attribute 'default nil
+														;; :family "Ricty"
 														:family "Inconsolata"
 														:height my-font-size-base)
 
@@ -45,8 +47,7 @@
 				(set-fontset-font
 				 (frame-parameter nil 'font)
 				 'mule-unicode-0100-24ff
-				 '("Inconsolata" . "iso10646-1"))
-				)
+				 '("Inconsolata" . "iso10646-1")))
 
 			(setq face-font-rescale-alist
 						'(("^-apple-hiragino.*" . 1.2)

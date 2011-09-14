@@ -138,6 +138,7 @@
 				 "init-org.el"
          "init-vcs.el"
          "init-view-mode.el"
+         "init-calfw.el"
 		
 				 ;; "init-window.el"
 				 ;; "init-test.el"

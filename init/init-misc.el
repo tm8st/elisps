@@ -241,7 +241,10 @@
 
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-with-twitter-client-main
-	 '((top + 0) (left + 0) (height . 1080) (width . 97))))
+	 '((top + 0) (left + 0) (height . 1080) (width . 97)))
+	(frange:regist-frame-position-parameter
+	 'my-frame-arrange-mini
+	 '((top + 0) (left + 0) (height . 128) (width . 65))))
 
 (when (my-is-windows)
 	(frange:regist-frame-position-parameter
@@ -258,9 +261,12 @@
 
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-with-twitter-client-main
-	 '((top + 0) (left + 0) (height . 1080) (width . 100))))
+	 '((top + 0) (left + 0) (height . 1080) (width . 100)))
+	(frange:regist-frame-position-parameter
+	 'my-frame-arrange-mini
+	 '((top + 0) (left + 0) (height . 1080) (width . 64))))
 
-(define-key global-map (kbd "C-l C-w C-m")
+(define-key global-map (kbd "C-l C-w C-t")
   #'(lambda ()
       (interactive)
       (frange:restore-frame-position-parameter
@@ -288,9 +294,16 @@
        (selected-frame)
        'my-frame-arrange-with-twitter-client-main)))
 
+(define-key global-map (kbd "C-l C-w C-m")
+  #'(lambda ()
+      (interactive)
+      (frange:restore-frame-position-parameter
+       (selected-frame)
+       'my-frame-arrange-mini)))
+
 ;;; Rakefile for Haskell.
 (add-to-list 'auto-mode-alist '("\\RAKEFILE$\\'" . ruby-mode))
-(defvar rake-task-alist '(("run") ("clean") ("clobber") ("test") ("profile") ("hpc")))
+(defvar rake-task-alist '(("run") ("build") ("debug") ("clean") ("clobber") ("test") ("profile") ("hpc")))
 (defun my-run-rakefile ()
   (interactive)
   (async-shell-command
@@ -416,4 +429,24 @@
 (put 'set-goal-column  'disabled nil)
 (put 'upcase-region    'disabled nil)   ; Let downcasing work
 
+;; font size zoom
+(if (and (>= emacs-major-version 23) (window-system))
+    (progn
+      (global-set-key
+       (vector (list 'control mouse-wheel-down-event))
+       'text-scale-increase)
+      (global-set-key
+       (vector (list 'control mouse-wheel-up-event))
+       'text-scale-decrease)))
+
+(if (and (>= emacs-major-version 23) (window-system))
+    (progn
+      (global-set-key
+       (kbd "M-+")
+       'text-scale-increase)
+      (global-set-key
+       (kbd "M-=")
+       'text-scale-decrease)))
+
 (provide 'init-misc)
+

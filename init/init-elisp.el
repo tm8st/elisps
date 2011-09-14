@@ -167,4 +167,14 @@
       ;; (let ((byte-compile-warnings '(not free-vars)))
       (byte-compile-file buffer-file-name nil))))
 
+;; http://sheephead.homelinux.org/2011/06/17/6724/
+(require 'package)
+
+;;リポジトリにMarmaladeを追加
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+;;インストールするディレクトリを指定
+(setq package-user-dir (concat user-emacs-directory "vendor/elpa"))
+;;インストールしたパッケージにロードパスを通してロードする
+(package-initialize)
+
 (provide 'init-elisp)

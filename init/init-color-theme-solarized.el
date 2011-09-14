@@ -22,7 +22,6 @@
 (defvar region-color "#e0e0b0")
 ;; (defvar region-color "#e0e0d0")
 (defvar dummy-region-color "#eee0d0")
-;; (defvar dummy-region-color "#afeaae")
 (defvar comment-face-color "#af8050")
 (defvar highlight-font-color "orange2")
 (defvar highlight-font-color-2 "orange4")

@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2010, 2011 tm8st
 
-;; Author: tm8st <tm8st@hotmail.co.jp>
+;; Author: tm8st <tm8st@hotmail.co.jp>g
 ;; Keywords: init, org
 ;; creation time: Wed Apr 28 00:53:29 2010
 ;;; Commentary:
@@ -46,11 +46,11 @@
 (define-key org-mode-map (kbd "C-j") 'newline)
 (define-key org-mode-map (kbd "C-c C-j") 'org-return-indent)
 
-;; (setq org-directory "~/org/")
 (setq org-directory (concat my-dropbox-directory "Org/"))
 (setq org-private-directory "~/Org/")
 
-(setq org-default-notes-file (concat org-private-directory "main.org"))
+(setq org-default-notes-file (concat org-directory "life.org"))
+(setq org-index-notes-file (concat org-private-directory "main.org"))
 (setq org-life-notes-file (concat org-directory "life.org"))
 (setq org-inbox-notes-file (concat org-directory "inbox.org"))
 
@@ -115,7 +115,7 @@
 ;; index fileを開く
 (defun my-org-open-index ()
   (interactive)
-  (find-file org-default-notes-file))
+  (find-file org-index-notes-file))
 (defun my-org-open-life ()
   (interactive)
   (find-file org-life-notes-file))
