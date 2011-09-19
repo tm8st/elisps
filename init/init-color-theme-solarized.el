@@ -130,6 +130,7 @@ Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized."
        (org-hide ((t (:foreground ,base03))))
        (org-todo ((t (:foreground ,red :bold t))))
        (org-done ((t (:foreground ,green :bold t))))
+       (org-clock-overlay ((t (:foreground ,highlight-font-color-2  :background ,dummy-region-color))))
        ;; show-paren
 			 (show-paren-match-face ((t (:background ,green))))
        ;; (show-paren-match-face ((t (:background ,dummy-region-color :foreground ,base3))))

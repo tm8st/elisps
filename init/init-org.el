@@ -15,6 +15,7 @@
 (my-require 'org-mobile)
 (my-require 'org-habit)
 (my-require 'org-capture)
+(my-require 'org-clock)
 (my-require 'init-keybindings)
 
 (setq org-startup-truncated nil)
@@ -53,8 +54,13 @@
 (setq org-index-notes-file (concat org-private-directory "main.org"))
 (setq org-life-notes-file (concat org-directory "life.org"))
 (setq org-inbox-notes-file (concat org-directory "inbox.org"))
+(setq org-code-notes-file (concat org-directory "code.org"))
 
-(setq org-agenda-files (list org-directory))
+(setq org-agenda-files
+      (list org-index-notes-file
+            org-life-notes-file
+            org-inbox-notes-file
+            org-code-notes-file))
 
 ;; TODOの状態遷移
 (setq org-todo-keywords
@@ -68,6 +74,7 @@
    ("GAME" . ?g)
    ("UE3" . ?u)
    ("ANIME" . ?a)
+   ("MEMO" . ?m)
    ))
 
 ;; DONEの時刻を記録
@@ -75,11 +82,11 @@
 
 (setq org-capture-templates
       '(
-        ("t" "TASK" entry (file+headline org-default-notes-file "TASKS")
+        ("t" "TASK" entry (file+headline org-index-notes-file "TASKS")
          "** TASK \n  %i\n  %a\n  %U\n")
-        ("i" "IDEA" entry (file+headline org-default-notes-file "IDEAS")
+        ("i" "IDEA" entry (file+headline org-index-notes-file "IDEAS")
          "** SOMEDAY \n  %i\n  %a\n  %U\n")
-        ("m" "MEMO" entry (file+headline org-default-notes-file "NOTES")
+        ("m" "MEMO" entry (file+headline org-index-notes-file "NOTES")
          "** \n  %i\n  %a\n  %U\n")
 
         ("l" "LIFE-TASK" entry (file+headline org-life-notes-file "LIFE")
@@ -98,7 +105,11 @@
          "** \n  %i\n  %a\n  %U\n")
 
         ("r" "REVIEW" entry (file+headline org-inbox-notes-file "REVIEW")
-         "** \n  %i\n  %a\n  %U\n")))
+         "** \n  %i\n  %a\n  %U\n")
+
+        ("c" "CODE" entry (file+headline org-code-notes-file "CODE")
+         "** \n  %i\n  %a\n  %U\n")
+        ))
 
 ;; MobileOrg
 (setq org-mobile-inbox-for-pull (concat org-directory "pulled.org"))
@@ -155,13 +166,25 @@
 ;;; org-agenda setting.
 ;;;-------------------------------
 (my-require 'org-agenda)
-
 (add-hook 'org-agenda-mode-hook
           '(lambda ()
              (hl-line-mode 1)
              (setq hl-line-face 'underline)))
 
+(setq org-stuck-projects
+      '("+LEVEL=2/-DONE"
+        ("TASK" "CANCELD")
+        ("MEMO") ""))
+
+(setq org-agenda-prefix-format
+  '((agenda  . " %i %-8:c%?-8t% s")
+    (timeline  . "  % s")
+    (todo  . " %i %-8:c")
+    (tags  . " %i %-8:c")
+    (search . " %i %-8:c")))
+
 (define-key global-map (kbd "C-l C-o C-a") 'org-agenda)
+
 ;; (define-key global-map (kbd "C-l C-o C-l") 'org-agenda-list)
 
 (my-require 'popwin)
@@ -196,6 +219,9 @@
 ;; timer start, stop.
 (define-key org-mode-map (kbd "C-c C-i") 'my-org-clock-in)
 (define-key org-mode-map (kbd "C-c C-o") 'my-org-clock-out)
+(define-key org-mode-map (kbd "C-c C-q") 'org-clock-display)
+(define-key org-mode-map (kbd "C-c C-r") 'org-clock-report)
+
 (global-set-key (kbd "C-l C-o C-c") 'my-org-clock-cancel)
 
 (define-key org-agenda-mode-map (kbd "C-i") 'org-agenda-clock-in)

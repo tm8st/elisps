@@ -32,7 +32,7 @@
 ;; 
 (custom-set-faces
  '(cfw:face-title ((t (:foreground "#380f2f" :weight bold :height 2.5 :inherit variable-pitch))))
- '(cfw:face-header ((t (:foreground "#f0ef8f" :weight bold))))
+ '(cfw:face-header ((t (:foreground "#d08d8d" :weight bold))))
  '(cfw:face-sunday ((t :foreground "#cc9393" :background "#fee0d0" :weight bold)))
  '(cfw:face-saturday ((t :foreground "#8cd0d3" :background "#eee0d0" :weight bold)))
  '(cfw:face-holiday ((t :foreground "#8c5353" :background "#eee0d0" :weight bold)))
