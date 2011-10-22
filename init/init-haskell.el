@@ -131,4 +131,11 @@
     (interactive)
     (haskell-move-nested 1)))
 
+(defadvice haskell-indent-indentation-info (after haskell-indent-reverse-indentation-info)
+  (when (>= (length ad-return-value) 2)
+    (let ((second (nth 1 ad-return-value)))
+      (setq ad-return-value (cons second (delete second ad-return-value))))))
+
+(ad-activate 'haskell-indent-indentation-info)
+
 (provide 'init-haskell)

@@ -48,7 +48,7 @@
 (define-key twittering-mode-map (kbd "C-c C-v") 'twittering-view-user-page)
 
 (defun toggle-truncate-lines ()
-  "折り返し表示をトグル動作します."
+  "折り返し表示をトグル動作します."
   (interactive)
   (if truncate-lines
       (setq truncate-lines nil)
@@ -63,6 +63,44 @@
   )
 
 (add-hook 'twittering-mode-hook 'my-twittering-mode-hook)
+
+;;;-------------------------------
+;;; twinstall
+;;;-------------------------------
+(require 'auto-install)
+(defvar twinstall-curl-program (executable-find "curl"))
+
+(defun twinstall-tweet (url)
+  (let* ((name (file-name-nondirectory url))
+	 (text (format "%sをインストールしました。 #emacsjp #twinstall %s"
+		       name url)))
+    (twittering-call-api
+     'update-status
+     `((status . ,text)))))
+
+(defadvice auto-install-from-url (after twinstall-tweet-url activate)
+  (twinstall-tweet auto-install-last-url))
+
+(defun twinstall-from-tweet ()
+  (interactive)
+  (let ((text (get-text-property (point) 'text)))
+    (when (string-match " #emacsjp #twinstall \\(http://t\\.co/.*\\)$" text)
+      (twinstall-from-tco (match-string 1 text)))))
+
+(defun twinstall-tco (tco-url)
+  (when (string-match "\\`http://t\\.co/" tco-url)
+    (let ((url (twinstall-expand-url tco-url)))
+      (auto-install-from-url url))))
+
+(defun twinstall-expand-url (url)
+  (with-temp-buffer
+    (call-process twinstall-curl-program nil t nil "-v" url)
+    (goto-char (point-min))
+    (if (re-search-forward "^< Location: \\(.*\\)\r$" nil t)
+	(match-string 1)
+      url)))
+
+(define-key twittering-mode-map (kbd "C-C C-i") 'twinstall-from-tweet)
 
 ;; 112:C-c C-d         twittering-direct-messages-timeline
 ;; 113:C-c C-e         twittering-erase-old-statuses
