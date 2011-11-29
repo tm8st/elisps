@@ -484,9 +484,10 @@ default name is filename:current line string."
   (shell-command
    (cond 
     ((my-is-windows) 
-     (concat "explorer "
+     (concat "explorer \""
              (my-unix-to-w32-pathname-transformer
-              (expand-file-name (my-current-directory-name)))))
+              (expand-file-name (my-current-directory-name)))
+             "\""))
     ((my-is-mac) 
      (concat "open .")))))
 

@@ -302,12 +302,14 @@
        'my-frame-arrange-mini)))
 
 ;;; Rakefile for Haskell.
-(add-to-list 'auto-mode-alist '("\\RAKEFILE$\\'" . ruby-mode))
 (defvar rake-task-alist '(("run") ("build") ("debug") ("clean") ("clobber") ("test") ("profile") ("hpc")))
 (defun my-run-rakefile ()
   (interactive)
   (async-shell-command
-   (concat "rake -t "
+   (concat (if (my-is-mac)
+               "rake"
+             "rake.bat")
+           " -t "
            (completing-read "task?: " rake-task-alist nil t))
    (get-buffer-create "*Rake*")))
 
@@ -415,7 +417,7 @@
 (setq ibuffer-expert t)
 (setq ibuffer-maybe-show-regexps nil)
 (setq ibuffer-shrink-to-minimum-size t)
-(setq ibuffer-use-other-window t)
+(setq ibuffer-use-other-window nil)
 
 (my-require 'per-window-point)
 (pwp-mode t)
@@ -447,6 +449,9 @@
       (global-set-key
        (kbd "M-=")
        'text-scale-decrease)))
+
+(require 'hahhah)
+(hahhah-mode t)
 
 (provide 'init-misc)
 

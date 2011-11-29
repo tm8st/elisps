@@ -160,6 +160,7 @@
   (interactive)
   (save-excursion
     (when (and buffer-file-name
+               (unless (string-match "/junk/"  buffer-file-name) 0)
                (string-match "/.*\\.el$"  buffer-file-name)
                (file-newer-than-file-p buffer-file-name
                                        (concat buffer-file-name "c")))
@@ -176,5 +177,18 @@
 (setq package-user-dir (concat user-emacs-directory "vendor/elpa"))
 ;;インストールしたパッケージにロードパスを通してロードする
 (package-initialize)
+
+(my-require 'open-junk-file)
+(my-require 'lispxmp)
+(global-set-key (kbd "C-x C-z") 'open-junk-file)
+(define-key emacs-lisp-mode-map (kbd "C-c C-d") 'lispxmp)
+
+(require 'paredit)
+(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
+(add-hook 'lisp-mode-hook 'enable-paredit-mode)
+(add-hook 'ielm-mode-hook 'enable-paredit-mode)
+
+(add-hook 'lisp-mode-hook 'enable-paredit-mode)
 
 (provide 'init-elisp)

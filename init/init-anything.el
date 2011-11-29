@@ -18,7 +18,7 @@
 (my-require 'anything-auto-install)
 (my-require 'anything-grep)
 (my-require 'anything-gtags)
-;; (my-require 'anything-etags) obsoleteらしい
+;; (my-require 'anything-etags)
 (my-require 'anything-extension)
 (my-require 'anything-complete)
 (my-require 'anything-kyr)

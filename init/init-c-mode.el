@@ -232,6 +232,13 @@
 (define-key c++-mode-map (kbd "C-c C-c")
   `my-run-c++)
 
+(defun my-build-and-run-c++ ()
+  (interactive)
+  (async-shell-command "run.sh" "*C++ Build and Run*"))
+
+;; c++ run.
+(define-key c++-mode-map (kbd "C-c C-v") `my-build-and-run-c++)
+
 (my-require 'lua-mode)
 
 (provide 'init-c-mode)

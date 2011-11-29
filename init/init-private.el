@@ -90,6 +90,7 @@
 (defvar my-use-scala-mode nil)
 (defvar my-use-haskell-mode nil)
 (defvar my-use-org-mode nil)
+(defvar my-org-private-directory "~/")
 (defvar my-use-twitter-mode nil)
 
 (provide 'init-private)

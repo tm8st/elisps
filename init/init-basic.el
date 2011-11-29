@@ -10,21 +10,26 @@
 ;;; Code:
 
 (setq major-mode 'text-mode)
-(setq max-specpdl-size 50000)
-(setq max-lisp-eval-depth 50000)
+(setq max-specpdl-size 500000)
+(setq max-lisp-eval-depth 500000)
 
 ;;;----------------------------------------
 ;;; 文字コード
 ;;;----------------------------------------
 (when (my-is-windows)
   (set-language-environment 'Japanese)
-  (prefer-coding-system 'japanese-shift-jis-dos)
-  (set-terminal-coding-system 'japanese-shift-jis-dos)
+  (prefer-coding-system 'utf-8)
+  (set-terminal-coding-system 'utf-8)
+  ;; (set-language-environment 'Japanese)
+  ;; (prefer-coding-system 'japanese-shift-jis-dos)
+  ;; (set-terminal-coding-system 'japanese-shift-jis-dos)
   )
 
 (when (my-is-mac)
-  (require 'ucs-normalize)
-  (prefer-coding-system 'utf-8-hfs)
+  (set-language-environment 'Japanese)
+  (prefer-coding-system 'utf-8)
+  (set-terminal-coding-system 'utf-8)
+  ;; (set-default-coding-systems 'utf-8-hfs)
   )
 
 ;; terminalで日本語表示がおかしくなったためやめておく。
@@ -123,7 +128,7 @@
   (setq-default tab-width 2)
   (setq redisplay-dont-pause t)  ;; キーリピートにカーソルを追随させる
   ;; (setq redisplay-dont-pause nil)  ;; キーリピートにカーソルを追随させる
-  (setq undo-outer-limit 50000) ;; undo の保存限界
+  (setq undo-outer-limit 5000000) ;; undo の保存限界
   
   ;;mini buffer での質問に yes/no を入力するのは面倒なのでSPC で yes とする。
   (defalias 'yes-or-no-p 'y-or-n-p)

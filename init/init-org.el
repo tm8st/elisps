@@ -48,10 +48,8 @@
 (define-key org-mode-map (kbd "C-c C-j") 'org-return-indent)
 
 (setq org-directory (concat my-dropbox-directory "Org/"))
-(setq org-private-directory "~/Org/")
-
 (setq org-default-notes-file (concat org-directory "life.org"))
-(setq org-index-notes-file (concat org-private-directory "main.org"))
+(setq org-index-notes-file (concat my-org-private-directory "main.org"))
 (setq org-life-notes-file (concat org-directory "life.org"))
 (setq org-inbox-notes-file (concat org-directory "inbox.org"))
 (setq org-code-notes-file (concat org-directory "code.org"))
@@ -113,14 +111,14 @@
 
 ;; MobileOrg
 (setq org-mobile-inbox-for-pull (concat org-directory "pulled.org"))
-;; Dropbox直下のMobileOrgフォルダへのパスを設定
+;; Dropbox直下のMobileOrgフォルダへのパスを設定
 (setq org-mobile-directory (concat my-dropbox-directory "MobileOrg"))
 (setq org-mobile-force-id-on-agenda-items t)
 
 ;; 標準の祝日を利用する
 (customize-set-variable 'org-calendar-holidays t)
 
-;; キーバインドの設定
+;; キーバインドの設定
 (define-key global-map (kbd "C-l C-o C-r") 'org-capture)
 
 ;; index fileを開く
@@ -228,7 +226,7 @@
 (define-key org-agenda-mode-map (kbd "C-o") 'org-agenda-clock-out)
 
 (defun my-add-separate-char-on-newline ()
-  "ざっくりとレイアウト調整。"
+  "ざっくりとレイアウト調整。"
   (interactive)
   (let ((s (point))
         (e (mark)))

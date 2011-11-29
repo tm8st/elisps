@@ -114,10 +114,12 @@
 				 "init-misc.el"
 				 "init-my-misc.el"
 
-				 "init-howm.el"
 				 "init-dired.el"
 
-				 ;; program lang
+				 "init-howm.el"
+				 "init-org.el"
+
+				 ;; ;; program lang
 				 "init-elisp.el"
 				 "init-c-mode.el"
 				 "init-ruby.el"
@@ -128,20 +130,21 @@
 				 "init-complete.el"
 				 "init-yasnippet.el"
 
-				 "init-gtags.el"
-				 "init-anything.el"
-				 "init-popups.el"
 				 "init-shell.el"
+
+				 "init-anything.el"
+				 "init-gtags.el"
+				 "init-popups.el"
 				 "init-skk.el"
-				 "init-migemo.el"
 				 "init-theme.el"
-				 "init-org.el"
          "init-vcs.el"
-         "init-view-mode.el"
-         "init-calfw.el"
+
+				 ;; ;; "init-migemo.el"
+         ;; "init-view-mode.el"
+         ;; "init-calfw.el"
 		
-				 ;; "init-window.el"
-				 ;; "init-test.el"
+				 ;; ;; "init-window.el"
+				 ;; ;; "init-test.el"
 				 ))
 
   ;; 環境によってOn/Offする設定ファイル

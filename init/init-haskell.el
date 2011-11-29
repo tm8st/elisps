@@ -29,8 +29,8 @@
 (my-require 'popwin)
 (setq display-buffer-function 'popwin:display-buffer)
 (add-to-list 'popwin:special-display-config '("*GHC Errors*" :height 0.3))
-;; (add-to-list 'popwin:special-display-config '("*haskell*" :height 0.2 :noselect))  ;; 勝手に閉じてしまう. popwin.el 0.2
-;; (add-to-list 'popwin:special-display-config '("*hs-lint*")) ;; 勝手に閉じてしまう. popwin.el 0.2
+;; (add-to-list 'popwin:special-display-config '("*haskell*" :height 0.2 :noselect))  ;; 勝手に閉じてしまう. popwin.el 0.2
+;; (add-to-list 'popwin:special-display-config '("*hs-lint*")) ;; 勝手に閉じてしまう. popwin.el 0.2
 ;; (setq popwin:special-display-config '(("*haskell*" :height 0.4 :noselect)))
 
 (my-require 'ghc)
@@ -53,6 +53,12 @@
                             '(lambda () (interactive) (insert " -> "))
                             '(lambda () (interactive) (insert " => "))))
 
+(prefix-arg-commands-defun prefix-arg-commands-insert-haskell-minus
+                           (list
+                            '(lambda () (interactive) (insert " = "))
+                            '(lambda () (interactive) (insert " >>= "))
+                            '(lambda () (interactive) (insert " >> "))))
+
 (defun my-hs-if-previous-line-function-define-put-func-name ()
   (interactive)
   (let ((limitPos (point))
@@ -71,8 +77,8 @@
 (define-key haskell-mode-map (kbd "C-c C-r") `prefix-arg-commands-insert-haskell-right-arrow)
 (define-key haskell-mode-map (kbd "C-c C-@") '(lambda () (interactive) (insert " `` ") (backward-char 2)))
 (define-key haskell-mode-map (kbd "C-c C-1") '(lambda () (interactive) (insert " !! ") (backward-char 2)))
-(define-key haskell-mode-map (kbd "C-c C--") '(lambda () (interactive) (insert " = ")))
 (define-key haskell-mode-map (kbd "C-c C-j") 'my-hs-if-previous-line-function-define-put-func-name)
+(define-key haskell-mode-map (kbd "C-c C--") 'prefix-arg-commands-insert-haskell-minus)
 
 (define-key inferior-haskell-mode-map (kbd "C-c C-l") '(lambda () (interactive) (insert " <- ")))
 (define-key inferior-haskell-mode-map (kbd "C-c C-r") `prefix-arg-commands-insert-haskell-right-arrow)

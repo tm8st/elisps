@@ -17,9 +17,8 @@
 
 ;;(autoload 'ruby-mode "ruby-mode"
 ;;  "Mode for editing ruby source files" t)
-(setq auto-mode-alist
-	  (append '(("\\.rb$" . ruby-mode))
-			  auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("RAKEFILE$" . ruby-mode))
 
 ;; (autoload 'ruby-mode "ruby-mode" "Mode for editing ruby source files" t)
 
