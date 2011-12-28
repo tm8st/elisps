@@ -93,4 +93,6 @@
 (defvar my-org-private-directory "~/")
 (defvar my-use-twitter-mode nil)
 
+(defvar my-ue3-gamenames '())
+
 (provide 'init-private)

@@ -1,4 +1,3 @@
-
 ;;; init-uesript.el --- unreal script setting
 
 ;; Copyright (C) 2010, 2011 tm8st
@@ -10,39 +9,56 @@
 
 ;;; Code:
 
-;; (defvar uescript-symbol-regex "native?[ \t]function ")
-;; (defvar uescript-varialbe-symbol-regex "^var")
+(defun my-ue3-read-gamename ()
+  (completing-read "Game Name:" my-ue3-gamenames nil t))
 
-;; (defun uescript-imenu-create-index ()
-;;   (let (index)
-;;     (goto-char (point-min))
-;;     (while (re-search-forward uescript-symbol-regex (point-max) t)
-;;       (push (cons (match-string 1) (match-beginning 1)) index))
-;;     (nreverse index)))
-;; (setq imenu-create-index-function 'uescript-imenu-create-index)
-;; (add-hook 'html-mode (lambda () (setq imenu-create-index-function 'html-imenu-create-index)))
-;; (setq which-func-modes (append which-func-modes '(html-mode)))
+(defun my-ue3-make-script ()
+ ""
+  (interactive)
+  (message (concat (gtags-get-rootpath) " make."))
+  (async-shell-command
+   (concat (gtags-get-rootpath) "../../Binaries/Win32/" (my-ue3-read-gamename) "Game.com make")
+   "*ue3 make script*"))
 
+(defun my-ue3-full-make-script ()
+ ""
+  (interactive)
+  (message (concat (gtags-get-rootpath) " full make."))
+  (async-shell-command
+   (concat (gtags-get-rootpath) "../../Binaries/Win32/" (my-ue3-read-gamename) "Game.com make -full")
+   "*ue3 full make script*"))
 
-(defvar identifier-regexp "[a-zA-Z0-9.$_]+")
-(defvar function-regex (concat "native?[ \t]function " identifier-regexp))
-(defvar varialbe-symbol-regex "^var")
+(defun my-ue3-full-make-script-64 ()
+ ""
+  (interactive)
+  (message (concat (gtags-get-rootpath) " full make."))
+  (async-shell-command
+   (concat (gtags-get-rootpath)
+           "../../Binaries/Win64/" (my-ue3-read-gamename) "Game.com make -full")
+   "*ue3 full make script*"))
 
-;; var() bool bDelayFullOn; // Delay then go full-on. 
-;; var actor Trigger;
- 
-;; function BeginPlay();
-;; native function BeginPlay()
+(defun my-ue3-launch-editor ()
+ ""
+  (interactive)
+  (start-process-shell-command
+   "*UE3 Launch Editor*"
+   "*UE3 Launch Editor*"
+   (concat (gtags-get-rootpath)
+           "../../Binaries/Win32/" (my-ue3-read-gamename) "Game.exe Editor")))
 
-;; (defun uescript-imenu-create-index ()
-;;   (save-excursion)
-;;   (let (index)
-;;     (goto-char (point-min))
-;;     (while (re-search-forward "^function" (point-max) t)
-;;       (push (cons (match-string 1) (match-beginning 1)) index)
-;;       (message (match-string 1))
-;;       )
-;;     (nreverse index)))
-;; (setq imenu-create-index-function 'uescript-imenu-create-index)
+(defun my-ue3-launch ()
+ ""
+  (interactive)
+  (start-process-shell-command
+   "*UE3 Launch*"
+   "*UE3 Launch*"
+   (concat (gtags-get-rootpath)
+           "../../Binaries/Win32/" (my-ue3-read-gamename) "Game.exe")))
+
+(global-set-key (kbd "C-l C-u C-m") `my-ue3-make-script)
+(global-set-key (kbd "C-l C-u C-f") `my-ue3-full-make-script)
+(global-set-key (kbd "C-l C-u C-d") `my-ue3-full-make-script-64)
+(global-set-key (kbd "C-l C-u C-l") `my-ue3-launch)
+(global-set-key (kbd "C-l C-u C-l") `my-ue3-launch-editor)
 
 (provide 'init-uescript)
