@@ -14,8 +14,8 @@
 (my-require 'highlight-parentheses)
 
 (defun my-emacs-lisp-mode-hook ()
-  ;; (linum-mode t)
   (hl-line-mode t)
+  ;; (linum-mode t)
   (yalinum-mode t)
   (when use-gui-setting
     (highlight-parentheses-mode)
@@ -23,12 +23,7 @@
   (easy-imenu-index-generator-set-for-current-buffer easy-imenu-index-generator-setting-elisp-sample)
   )
 
-(setq auto-mode-alist
-	  (append
-	   '(("\\.el$" . emacs-lisp-mode)
-		 )
-	   auto-mode-alist))
-
+(add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
 (add-hook 'emacs-lisp-mode-hook 'my-emacs-lisp-mode-hook)
 
 (define-key emacs-lisp-mode-map (kbd "C-q C-e") 'eval-buffer)
@@ -123,8 +118,8 @@
 ;;;-------------------------------
 (my-require 'eldoc)
 ;; (install-elisp-from-emacswiki "eldoc-extension.el")
-;; (my-require 'eldoc-extension)
-(setq eldoc-idle-delay 0.15)
+(my-require 'eldoc-extension)
+(setq eldoc-idle-delay 1.0)
 (setq eldoc-echo-area-use-multiline-p t)
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
@@ -142,6 +137,7 @@
 (customize-set-variable 'eldoc-minor-mode-string (purecopy " ED"))
 
 (defun my-scratch ()
+  "open scratch buffer, if that not exist, create and open it."
   (interactive)
   (switch-to-buffer-other-window
    (get-buffer-create "*scratch*"))
@@ -153,10 +149,9 @@
   (goto-char (point-max)))
 
 ;; From sean @ http://emacsblog.org/2007/10/07/declaring-emacs-bankruptcy/
-(add-hook 'after-save-hook 'my-recompile-el)
-(setq byte-compile-verbose t)
-
-(defun my-recompile-el ()
+;; automatic compile el.
+(defun my-compile-el ()
+  "compile elisp file."
   (interactive)
   (save-excursion
     (when (and buffer-file-name
@@ -165,8 +160,11 @@
                (file-newer-than-file-p buffer-file-name
                                        (concat buffer-file-name "c")))
       ;; (let ((byte-compile-warnings '()))
-      ;; (let ((byte-compile-warnings '(not free-vars)))
-      (byte-compile-file buffer-file-name nil))))
+      (let ((byte-compile-warnings '(not free-vars)))
+            (byte-compile-file buffer-file-name nil)))))
+
+(add-hook 'after-save-hook 'my-compile-el)
+(setq byte-compile-verbose t)
 
 ;; http://sheephead.homelinux.org/2011/06/17/6724/
 (require 'package)
@@ -179,16 +177,20 @@
 (package-initialize)
 
 (my-require 'open-junk-file)
+(setq open-junk-file-format (concat my-dropbox-directory "/Elisp/junk/%Y/%m/%d-%H%M%S."))
 (my-require 'lispxmp)
+
 (global-set-key (kbd "C-x C-z") 'open-junk-file)
-(define-key emacs-lisp-mode-map (kbd "C-c C-d") 'lispxmp)
+(define-key emacs-lisp-mode-map (kbd "C-c C-c") 'lispxmp)
+(define-key emacs-lisp-mode-map (kbd "C-c C-p") 'paredit-wrap-round)
+(define-key emacs-lisp-mode-map (kbd "C-c C-m") 'paredit-splice-sexp)
 
-(require 'paredit)
-(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
-(add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
-(add-hook 'lisp-mode-hook 'enable-paredit-mode)
-(add-hook 'ielm-mode-hook 'enable-paredit-mode)
-
-(add-hook 'lisp-mode-hook 'enable-paredit-mode)
+;; 合わなかったので無効
+;; (require 'paredit)
+;; (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+;; (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
+;; (add-hook 'lisp-mode-hook 'enable-paredit-mode)
+;; (add-hook 'ielm-mode-hook 'enable-paredit-mode)
+;; (add-hook 'lisp-mode-hook 'enable-paredit-mode)
 
 (provide 'init-elisp)

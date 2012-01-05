@@ -25,15 +25,14 @@
 (my-require 'imenu)
 ;; (my-require 'imenu+)
 (my-require 'anything-migemo)
-
+;; (my-require 'anything-c-shell-history)
+;; (my-require 'anything-include)
 ;; (my-require 'anything-show-completion)
 ;; (my-require 'anything-dabbrev-expand)
 ;; (my-require 'anything-startup)
 ;; (my-require 'anything-kyr)
 ;; (my-require 'anything-kyr-config)
 ;; (my-require 'anything-adaptive)
-;; (my-require 'anything-c-shell-history)
-;; (my-require 'anything-include)
 
 ;;;-------------------------------
 ;;; basic
@@ -266,7 +265,7 @@
 ;; 同じ look-for設定で別のプロジェクトを登録するとバグるので一つのプロジェクトにまとめておく。
 (ap:add-project
  :name 'c++-scala-haskell
- :look-for '("GTAGS" ".*\\.sln") ; or
+ :look-for '("GTAGS" "TAGS" ".*\\.sln") ; or
  :include-regexp '("\\.scala$" "\\.h$" "\\.sln$" "\\.cpp$" "\\.c$" "\\.h$" "\\.inl$" "\\.fx$" "\\.ini$" "\\.txt$" "\\.uc$" "\\.usf$" "\\.hs$" "\\.hls$" "\\.cs$" "\\.hamlet" "\\models" "\\routes" "\\.julius" "\\.cassius") ;or
  )
 
@@ -295,7 +294,7 @@
 (ap:add-project
  :name 'ruby-haskell
  :look-for '("RAKEFILE" ".rake") ; or
- :include-regexp '("\\.rb$" "\\.hs$" "\\.lhs") ;or
+ :include-regexp '("\\.rb$") ;or
  )
 
 ;;;-------------------------------

@@ -24,19 +24,19 @@
 (ac-config-default)
 
 (global-auto-complete-mode t)
-(customize-set-value 'ac-dictionary-directories (list "~/elisps/external/complete/m2ym-auto-complete/dict"))
-(add-to-list 'ac-user-dictionary-files "~/elisps/resource/dict/globish.txt")
+(customize-set-value 'ac-dictionary-directories
+                     (list "~/elisps/external/complete/m2ym-auto-complete/dict"
+                           (concat my-dropbox-directory "/Emacs/resource/dict")))
 
-(setq ac-auto-start 3)
+(setq ac-auto-start 2)
 (customize-set-value 'ac-ignore-case nil)
-(customize-set-value 'ac-candidate-limit 1000)
+(customize-set-value 'ac-candidate-limit 500)
 (customize-set-value 'ac-use-fuzzy 't)
 (customize-set-value 'ac-use-comphist 't)
 (customize-set-value 'ac-use-quick-help 't)
 (customize-set-value 'ac-delay 0.1)
 
 (global-set-key (kbd "C-o") 'ac-start)
-;; (global-set-key (kbd "C-q C-c") 'auto-complete-mode)
 
 (define-key ac-complete-mode-map (kbd "C-i") 'ac-next)
 (define-key ac-complete-mode-map (kbd "C-o") 'ac-previous)
@@ -48,7 +48,6 @@
 (define-key ac-complete-mode-map (kbd "C-@") 'ac-complete-with-anything)
 
 (my-require 'popup)
-
 (my-require 'pcomplete)
 (ac-define-source pcomplete
   '((candidates . pcomplete-completions)))
@@ -57,7 +56,7 @@
 (setq ac-sources
       '(ac-source-pcomplete
 				ac-source-words-in-buffer
-				;; ac-source-gtags
+				ac-source-gtags
 				;; ya-gtags
         ac-source-words-in-same-mode-buffers
 				ac-source-filename
@@ -107,5 +106,13 @@
 ;; (define-key minibuffer-local-completion-map "C-j" 'PC-complete-and-exit)
 ;; (define-key minibuffer-local-completion-map "C-m" 'backward-word)
 ;; (define-key minibuffer-local-completion-map "RET" 'backward-word)
+
+;; (my-require 'skeleton)
+;; (global-set-key (kbd "(") 'skeleton-pair-insert-maybe)
+;; (global-set-key (kbd "{") 'skeleton-pair-insert-maybe)
+;; (global-set-key (kbd "[") 'skeleton-pair-insert-maybe)
+;; (global-set-key (kbd "\"") 'skeleton-pair-insert-maybe)
+;; (global-set-key (kbd "'") 'skeleton-pair-insert-maybe)
+;; (setq skeleton-pair 2)
 
 (provide 'init-complete)

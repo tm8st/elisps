@@ -302,7 +302,7 @@
        'my-frame-arrange-mini)))
 
 ;;; Rakefile for Haskell.
-(defvar rake-task-alist '(("run") ("build") ("debug") ("clean") ("clobber") ("test") ("profile") ("hpc")))
+(defvar rake-task-alist '(("run") ("build") ("debug") ("clean") ("clobber") ("test") ("profile") ("hpc") ("tags")))
 (defun my-run-rakefile ()
   (interactive)
   (async-shell-command

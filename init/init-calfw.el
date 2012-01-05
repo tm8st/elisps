@@ -16,6 +16,10 @@
 (setq cfw:details-window-size 80)
 
 (global-set-key (kbd "C-l C-o C-d") 'cfw:open-org-calendar)
+(define-key cfw:calendar-mode-map (kbd "d") 'cfw:change-view-day)
+(define-key cfw:calendar-mode-map (kbd "m") 'cfw:change-view-month)
+(define-key cfw:calendar-mode-map (kbd "t") 'cfw:change-view-two-weeks)
+(define-key cfw:calendar-mode-map (kbd "w") 'cfw:change-view-week)
 
 ;; ;; 月
 ;; (setq calendar-month-name-array

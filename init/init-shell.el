@@ -12,6 +12,7 @@
 (my-require 'init-keybindings)
 (my-require 'shell)
 (setq shell-command-switch "-lc") ;; デバッグ用
+(my-require 'shell-history)
 
 ;; (setq shell-command-switch "--rcfile $HOME/.bashrc -c ")
 ;; (setq shell-command-switch " -x -c ")
@@ -25,9 +26,18 @@
 (my-require 'comint)
 (define-key shell-mode-map (kbd "C-S-p") 'comint-previous-input)
 (define-key shell-mode-map (kbd "C-S-n") 'comint-next-input)
-(define-key shell-mode-map (kbd "C-c C-j") 'compilation-mode)
 (define-key shell-mode-map (kbd "C-m") my-backward-word-command)
 (define-key shell-mode-map (kbd "C-j") 'comint-send-input)
+(define-key shell-mode-map (kbd "C-i") 'comint-dynamic-complete)
+(define-key shell-mode-map (kbd "C-c C-a") 'comint-show-output)
+(define-key shell-mode-map (kbd "C-c C-e") 'comint-show-maximum-output)
+(define-key shell-mode-map (kbd "C-c C-n") 'comint-next-prompt)
+(define-key shell-mode-map (kbd "C-c C-p") 'comint-previous-prompt)
+(define-key shell-mode-map (kbd "C-c C-/") 'comint-quit-subjob)
+
+;; toggle shell <-> compilation
+(define-key shell-mode-map (kbd "C-c C-j") 'compilation-mode)
+(define-key compilation-mode-map (kbd "C-c C-j") 'shell-mode)
 
 (setq comint-scroll-show-maximum-output t) 	;; できるだけ出力内容が見えるようにスクール
 (setq comint-scroll-to-bottom-on-input t) 		;; テキスト入力時に自動でスクロール
@@ -43,9 +53,9 @@
 ;; (setq multi-shell-bottom-window-height 12)
 ;; (setq multi-shell-buffer-name "*multi-shell*")
 
-;; 
+;; key bind
 (global-set-key (kbd "C-l C-s C-n") 'multi-shell-new)
-(global-set-key (kbd "C-l C-s C-d") 'multi-shell-current-directory) ;; 現在ディレクトリでshell開始
+(global-set-key (kbd "C-l C-s C-d") 'multi-shell-current-directory)
 (global-set-key (kbd "C-l C-s C-f") 'multi-shell-next)
 (global-set-key (kbd "C-l C-s C-b") 'multi-shell-prev)
 
@@ -104,7 +114,7 @@
 					(lambda (err)
 						(tm8st-growl-notify (concat "\"" "Error! " clsr "\"")))))))
 
-	(global-set-key (kbd "C-l C-s C-t") 'my-shell-command-growl-notify))
+(global-set-key (kbd "C-l C-s C-t") 'my-shell-command-growl-notify))
 
 ;; shell-mode 色設定
 ;; (my-require 'comint)

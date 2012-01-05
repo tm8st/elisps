@@ -391,4 +391,7 @@
  'emacs-lisp-mode
  '(("\\<\\(my-require\\)\\>" 1 font-lock-keyword-face t)))
 
+;; setting pixel between lines
+(setq-default line-spacing 2)
+
 (provide 'init-theme)

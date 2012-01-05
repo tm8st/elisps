@@ -21,6 +21,9 @@
 (add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
 (add-to-list 'auto-mode-alist '("\\.lhs$" . haskell-mode))
 (add-to-list 'auto-mode-alist '("\\.hsc$" . haskell-mode))
+(add-to-list 'auto-mode-alist '("\\.cabal\\'" . haskell-cabal-mode))
+(add-to-list 'interpreter-mode-alist '("runghc" . haskell-mode))     ;#!/usr/bin/env runghc 用
+(add-to-list 'interpreter-mode-alist '("runhaskell" . haskell-mode)) ;#!/usr/bin/env runhaskell 用
 
 (my-require 'auto-complete)
 (add-to-list 'ac-modes 'haskell-mode)
@@ -34,70 +37,11 @@
 ;; (setq popwin:special-display-config '(("*haskell*" :height 0.4 :noselect)))
 
 (my-require 'ghc)
-(define-key haskell-mode-map (kbd "C-c C-o") 'ghc-complete)
-(define-key haskell-mode-map (kbd "C-c C-i") 'ghc-show-info)
-(define-key haskell-mode-map (kbd "C-c C-d") 'ghc-browse-document)
-(define-key haskell-mode-map (kbd "C-c C-t") 'ghc-show-type)
-(define-key haskell-mode-map (kbd "C-c C-s") 'ghc-save-buffer)
 
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'font-lock-mode)
 (add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
-
-(define-key haskell-mode-map (kbd "C-m") my-backward-word-command)
-(define-key haskell-mode-map (kbd "C-c C-h") 'haskell-hoogle)
-
-(prefix-arg-commands-defun prefix-arg-commands-insert-haskell-right-arrow
-                           (list
-                            '(lambda () (interactive) (insert " -> "))
-                            '(lambda () (interactive) (insert " => "))))
-
-(prefix-arg-commands-defun prefix-arg-commands-insert-haskell-minus
-                           (list
-                            '(lambda () (interactive) (insert " = "))
-                            '(lambda () (interactive) (insert " >>= "))
-                            '(lambda () (interactive) (insert " >> "))))
-
-(defun my-hs-if-previous-line-function-define-put-func-name ()
-  (interactive)
-  (let ((limitPos (point))
-        (funcName nil))
-    (save-excursion
-      (line-move -1)
-      (beginning-of-line)
-      (unless (eq (search-forward "::" limitPos 1) nil)
-        (progn
-          (back-to-indentation)
-          (setq funcName (thing-at-point 'word)))))
-    (unless (eq funcName nil)
-      (insert funcName))))
-
-(define-key haskell-mode-map (kbd "C-c C-l") '(lambda () (interactive) (insert " <- ")))
-(define-key haskell-mode-map (kbd "C-c C-r") `prefix-arg-commands-insert-haskell-right-arrow)
-(define-key haskell-mode-map (kbd "C-c C-@") '(lambda () (interactive) (insert " `` ") (backward-char 2)))
-(define-key haskell-mode-map (kbd "C-c C-1") '(lambda () (interactive) (insert " !! ") (backward-char 2)))
-(define-key haskell-mode-map (kbd "C-c C-j") 'my-hs-if-previous-line-function-define-put-func-name)
-(define-key haskell-mode-map (kbd "C-c C--") 'prefix-arg-commands-insert-haskell-minus)
-
-(define-key inferior-haskell-mode-map (kbd "C-c C-l") '(lambda () (interactive) (insert " <- ")))
-(define-key inferior-haskell-mode-map (kbd "C-c C-r") `prefix-arg-commands-insert-haskell-right-arrow)
-(define-key inferior-haskell-mode-map (kbd "C-c C-@") '(lambda () (interactive) (insert " `` ") (backward-char 2)))
-(define-key inferior-haskell-mode-map (kbd "C-c C-1") '(lambda () (interactive) (insert " !! ") (backward-char 2)))
-(define-key inferior-haskell-mode-map (kbd "C-c C--") '(lambda () (interactive) (insert " = ")))
-
-(define-key haskell-mode-map (kbd "C-c C-c") 'inferior-haskell-load-file)
-(define-key haskell-mode-map (kbd "C-c C-e") 'inferior-haskell-load-and-run)
-(define-key haskell-mode-map (kbd "C-c l") 'hs-lint)
-(define-key haskell-mode-map (kbd "C-c s") 'hs-scan)
-(define-key haskell-mode-map (kbd "C-o") 'auto-complete)
-
-(define-key haskell-indentation-mode-map (kbd "C-j") 'haskell-newline-and-indent)
-(define-key haskell-indentation-mode-map (kbd "C-m") my-backward-word-command)
-
-(define-key inferior-haskell-mode-map (kbd "C-m") my-backward-word-command)
-(define-key inferior-haskell-mode-map (kbd "C-j") 'comint-send-input)
-(define-key inferior-haskell-mode-map (kbd "C-c C-h") 'haskell-hoogle)
 
 (my-require 'hs-lint) ; Hackage hlint
 
@@ -143,5 +87,163 @@
       (setq ad-return-value (cons second (delete second ad-return-value))))))
 
 (ad-activate 'haskell-indent-indentation-info)
+
+;;;-------------------------------
+;;; wakaran-san
+;;;-------------------------------
+(require 'anything)
+(require 'anything-config)
+(require 'anything-match-plugin)
+
+(defvar anything-c-source-ghc-mod
+  '((name . "ghc-browse-document")
+    (init . anything-c-source-ghc-mod)
+    (candidates-in-buffer)
+    (candidate-number-limit . 9999999)
+    (action ("Open" . anything-c-source-ghc-mod-action))))
+
+(defun anything-c-source-ghc-mod ()
+  (unless (executable-find "ghc-mod")
+    (error "ghc-mod を利用できません。ターミナルで which したり、*scratch* で exec-path を確認したりしましょう"))
+  (let ((buffer (anything-candidate-buffer 'global)))
+    (with-current-buffer buffer
+      (call-process "ghc-mod" nil t t "list"))))
+
+(defun anything-c-source-ghc-mod-action (candidate)
+  (interactive "P")
+  (let* ((pkg (ghc-resolve-package-name candidate)))
+    (if (and pkg candidate)
+        (ghc-display-document pkg "ghc-mod" nil)
+      (message "No document found"))))
+
+(defun anything-ghc-browse-document ()
+  (interactive)
+  (anything anything-c-source-ghc-mod))
+
+(prefix-arg-commands-defun prefix-arg-commands-insert-haskell-right-arrow
+                           (list
+                            '(lambda () (interactive) (insert " -> "))
+                            '(lambda () (interactive) (insert " => "))))
+
+(prefix-arg-commands-defun prefix-arg-commands-insert-haskell-minus
+                           (list
+                            '(lambda () (interactive) (insert " = "))
+                            '(lambda () (interactive) (insert " >>= "))
+                            '(lambda () (interactive) (insert " >> "))))
+
+(defun my-hs-if-previous-line-function-define-put-func-name ()
+  (interactive)
+  (let ((limitPos (point))
+        (funcName nil))
+    (save-excursion
+      (line-move -1)
+      (beginning-of-line)
+      (unless (eq (search-forward "::" limitPos 1) nil)
+          (back-to-indentation)
+          (setq funcName (thing-at-point 'word))))
+    (unless (eq funcName nil)
+      (insert funcName))))
+
+(ac-define-source ghc-mod
+  '((depends ghc)
+    (candidates . (ghc-select-completion-symbol))
+    (symbol . "s")
+    (cache)))
+
+(defun my-ac-haskell-mode ()
+  (setq ac-sources '(ac-source-words-in-same-mode-buffers ac-source-dictionary ac-source-ghc-mod)))
+(add-hook 'haskell-mode-hook 'my-ac-haskell-mode)
+
+(defun my-haskell-ac-init ()
+  (when (member (file-name-extension buffer-file-name) '("hs" "lhs"))
+    (auto-complete-mode t)
+    (setq ac-sources '(ac-source-words-in-same-mode-buffers ac-source-dictionary ac-source-ghc-mod))))
+
+(add-hook 'haskell-mode-hook 'my-haskell-ac-init)
+
+(define-key haskell-mode-map (kbd "C-S-F")
+  (lambda ()
+    (interactive)
+    (haskell-move-nested 1)))
+
+(defadvice haskell-indent-indentation-info (after haskell-indent-reverse-indentation-info)
+  (when (>= (length ad-return-value) 2)
+    (let ((second (nth 1 ad-return-value)))
+      (setq ad-return-value (cons second (delete second ad-return-value))))))
+
+(ad-activate 'haskell-indent-indentation-info)
+
+(require 'anything)
+(require 'anything-hasktags)
+;; make tags command.
+;; alias hasktags-r="find . -type f -name \*.\*hs -print0 | xargs -0 hasktags -c"
+
+(define-key haskell-mode-map (kbd "C-q C-j") 'anything-hasktags-select)
+
+(defun my-update-haskell-tags ()
+  (interactive)
+  (async-shell-command
+   (concat "cd \"" (file-name-directory (buffer-file-name))
+           "\" && find . -type f -name \*.\*hs -print0 | xargs -0 hasktags -c") "*Update Hasktags*" nil))
+
+(defun my-launch-client ()
+  (interactive)
+  (async-shell-command
+   (concat "cd \"" (file-name-directory (buffer-file-name))
+           "\" && runhaskell aclient") "*AClient*" nil))
+
+(defun my-launch-server ()
+  (interactive)
+  (async-shell-command
+   (concat "cd " (file-name-directory (buffer-file-name))
+           " && runhaskell server") "*Server*" nil))
+
+(define-key haskell-mode-map (kbd "C-c C-o") 'ghc-complete)
+(define-key haskell-mode-map (kbd "C-c C-i") 'ghc-show-info)
+(define-key haskell-mode-map (kbd "C-c C-d") 'ghc-browse-document)
+(define-key haskell-mode-map (kbd "C-c C-t") 'ghc-show-type)
+(define-key haskell-mode-map (kbd "C-c C-s") 'ghc-save-buffer)
+
+(define-key haskell-mode-map (kbd "C-c C-o") 'ghc-complete)
+(define-key haskell-mode-map (kbd "C-c C-i") 'ghc-show-info)
+(define-key haskell-mode-map (kbd "C-c C-d") 'anything-ghc-browse-document)
+(define-key haskell-mode-map (kbd "C-c C-t") 'ghc-show-type)
+(define-key haskell-mode-map (kbd "C-c C-s") 'ghc-save-buffer)
+
+(define-key haskell-mode-map (kbd "C-c C-a") '(lambda () (interactive) (insert " <*> ")))
+(define-key haskell-mode-map (kbd "C-c C-f") '(lambda () (interactive) (insert " <$> ")))
+(define-key haskell-mode-map (kbd "C-c C-l") '(lambda () (interactive) (insert " <- ")))
+(define-key haskell-mode-map (kbd "C-c C-r") `prefix-arg-commands-insert-haskell-right-arrow)
+(define-key haskell-mode-map (kbd "C-c C-@") '(lambda () (interactive) (insert " `` ") (backward-char 2)))
+(define-key haskell-mode-map (kbd "C-c C-1") '(lambda () (interactive) (insert " !! ") (backward-char 2)))
+(define-key haskell-mode-map (kbd "C-c C-j") 'my-hs-if-previous-line-function-define-put-func-name)
+(define-key haskell-mode-map (kbd "C-c C--") 'prefix-arg-commands-insert-haskell-minus)
+
+(define-key inferior-haskell-mode-map (kbd "C-c C-a") '(lambda () (interactive) (insert " <*> ")))
+(define-key inferior-haskell-mode-map (kbd "C-c C-f") '(lambda () (interactive) (insert " <$> ")))
+(define-key inferior-haskell-mode-map (kbd "C-c C-l") '(lambda () (interactive) (insert " <- ")))
+(define-key inferior-haskell-mode-map (kbd "C-c C-r") `prefix-arg-commands-insert-haskell-right-arrow)
+(define-key inferior-haskell-mode-map (kbd "C-c C-@") '(lambda () (interactive) (insert " `` ") (backward-char 2)))
+(define-key inferior-haskell-mode-map (kbd "C-c C-1") '(lambda () (interactive) (insert " !! ") (backward-char 2)))
+(define-key inferior-haskell-mode-map (kbd "C-c C--") '(lambda () (interactive) (insert " = ")))
+
+(define-key haskell-mode-map (kbd "C-c C-c") 'inferior-haskell-load-file)
+(define-key haskell-mode-map (kbd "C-c C-e") 'inferior-haskell-load-and-run)
+(define-key haskell-mode-map (kbd "C-c l") 'hs-lint)
+(define-key haskell-mode-map (kbd "C-c s") 'hs-scan)
+(define-key haskell-mode-map (kbd "C-o") 'auto-complete)
+
+(define-key haskell-indentation-mode-map (kbd "C-j") 'haskell-newline-and-indent)
+(define-key haskell-indentation-mode-map (kbd "C-m") my-backward-word-command)
+
+(define-key inferior-haskell-mode-map (kbd "C-m") my-backward-word-command)
+(define-key inferior-haskell-mode-map (kbd "C-j") 'comint-send-input)
+(define-key inferior-haskell-mode-map (kbd "C-c C-h") 'haskell-hoogle)
+
+(define-key haskell-mode-map (kbd "C-c C-e") 'my-launch-client)
+(define-key haskell-mode-map (kbd "C-c C-s") 'my-launch-server)
+
+(define-key haskell-mode-map (kbd "C-m") my-backward-word-command)
+(define-key haskell-mode-map (kbd "C-c C-h") 'haskell-hoogle)
 
 (provide 'init-haskell)

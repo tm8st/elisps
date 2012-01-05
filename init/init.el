@@ -9,11 +9,13 @@
 
 ;;; Code:
 
+;; Seed the random-number generator
+(random 1000000)
+
 ;; garbage collectionの頻度を減らして、速度向上
 (setq gc-cons-threshold (* gc-cons-threshold 10))
-(random 1000000) ;; Seed the random-number generator
 
-;; turnoff mouse interface.
+;; turn off mouse interface.
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
@@ -22,6 +24,7 @@
 (setq my-elisps-directory (getenv "ELISPDIR"))
 (if (eq my-elisps-directory nil)
     (progn
+      ;; not found ELISPDIR envvar set default elisps path.
       (setq my-elisps-directory "~/elisps")
       (message (concat "init elisp dir is nil, set default " my-elisps-directory ".")))
   (message (concat "init elisp dir is " my-elisps-directory ".")))
@@ -138,11 +141,11 @@
 				 "init-skk.el"
 				 "init-theme.el"
          "init-vcs.el"
-
+         "init-calfw.el"
+	
 				 ;; ;; "init-migemo.el"
          ;; "init-view-mode.el"
-         ;; "init-calfw.el"
-		
+  	
 				 ;; ;; "init-window.el"
 				 ;; ;; "init-test.el"
 				 ))
@@ -168,5 +171,11 @@
             (lambda () (tm8st-growl-notify (concat "\"Emacs Initialized." "\"")))))
 
 (add-hook 'emacs-startup-hook 'my-set-default-color-theme)
+
+(add-hook 'after-init-hook
+          (lambda ()
+            (message "init time: %d msec"
+                     (+ (* (- (nth 1 after-init-time) (nth 1 before-init-time)) 1000)
+                        (/ (- (nth 2 after-init-time) (nth 2 before-init-time)) 1000)))))
 
 (provide 'init)
