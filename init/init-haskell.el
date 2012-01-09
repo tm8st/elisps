@@ -17,6 +17,7 @@
 (my-require 'inf-haskell)
 (my-require 'prefix-arg-commands)
 (my-require 'init-keybindings)
+(my-require 'auto-complete)
 
 (add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
 (add-to-list 'auto-mode-alist '("\\.lhs$" . haskell-mode))
@@ -145,21 +146,18 @@
       (insert funcName))))
 
 (ac-define-source ghc-mod
-  '((depends ghc)
-    (candidates . (ghc-select-completion-symbol))
-    (symbol . "s")
-    (cache)))
+ '((depends ghc)
+   (candidates . (ghc-select-completion-symbol))
+   (symbol . "g")
+   (cache)))
 
 (defun my-ac-haskell-mode ()
-  (setq ac-sources '(ac-source-words-in-same-mode-buffers ac-source-dictionary ac-source-ghc-mod)))
+  ;; (push 'ac-source-ghc-mod ac-sources)
+  (setq ac-sources '(ac-source-ghc-mod
+                     ac-source-words-in-same-mode-buffers
+                     )))
+
 (add-hook 'haskell-mode-hook 'my-ac-haskell-mode)
-
-(defun my-haskell-ac-init ()
-  (when (member (file-name-extension buffer-file-name) '("hs" "lhs"))
-    (auto-complete-mode t)
-    (setq ac-sources '(ac-source-words-in-same-mode-buffers ac-source-dictionary ac-source-ghc-mod))))
-
-(add-hook 'haskell-mode-hook 'my-haskell-ac-init)
 
 (define-key haskell-mode-map (kbd "C-S-F")
   (lambda ()
@@ -173,8 +171,8 @@
 
 (ad-activate 'haskell-indent-indentation-info)
 
-(require 'anything)
-(require 'anything-hasktags)
+(my-require 'anything)
+(my-require 'anything-hasktags)
 ;; make tags command.
 ;; alias hasktags-r="find . -type f -name \*.\*hs -print0 | xargs -0 hasktags -c"
 
@@ -213,6 +211,8 @@
 (define-key haskell-mode-map (kbd "C-c C-a") '(lambda () (interactive) (insert " <*> ")))
 (define-key haskell-mode-map (kbd "C-c C-f") '(lambda () (interactive) (insert " <$> ")))
 (define-key haskell-mode-map (kbd "C-c C-l") '(lambda () (interactive) (insert " <- ")))
+(define-key haskell-mode-map (kbd "C-c C-6") '(lambda () (interactive) (insert " .&. ")))
+(define-key haskell-mode-map (kbd "C-c C-\\") '(lambda () (interactive) (insert " .|. ")))
 (define-key haskell-mode-map (kbd "C-c C-r") `prefix-arg-commands-insert-haskell-right-arrow)
 (define-key haskell-mode-map (kbd "C-c C-@") '(lambda () (interactive) (insert " `` ") (backward-char 2)))
 (define-key haskell-mode-map (kbd "C-c C-1") '(lambda () (interactive) (insert " !! ") (backward-char 2)))
@@ -227,7 +227,21 @@
 (define-key inferior-haskell-mode-map (kbd "C-c C-1") '(lambda () (interactive) (insert " !! ") (backward-char 2)))
 (define-key inferior-haskell-mode-map (kbd "C-c C--") '(lambda () (interactive) (insert " = ")))
 
-(define-key haskell-mode-map (kbd "C-c C-c") 'inferior-haskell-load-file)
+(defun my-shell-command-on-current-directory (cmd)
+  ""
+  (concat "cd \"" (my-get-buffer-directory)
+          "\" && " cmd))
+
+(defun my-iferior-haskell-load-file ()
+  "load hs and hlint."
+  (interactive)
+  (sf:async-shell-command
+   (my-shell-command-on-current-directory
+    (concat "hlint " (buffer-file-name))) "*hs-lint*")
+  (inferior-haskell-load-file)
+  )
+
+(define-key haskell-mode-map (kbd "C-c C-c") 'my-iferior-haskell-load-file)
 (define-key haskell-mode-map (kbd "C-c C-e") 'inferior-haskell-load-and-run)
 (define-key haskell-mode-map (kbd "C-c l") 'hs-lint)
 (define-key haskell-mode-map (kbd "C-c s") 'hs-scan)

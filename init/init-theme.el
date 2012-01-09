@@ -392,6 +392,6 @@
  '(("\\<\\(my-require\\)\\>" 1 font-lock-keyword-face t)))
 
 ;; setting pixel between lines
-(setq-default line-spacing 2)
+(setq-default line-spacing 0)
 
 (provide 'init-theme)

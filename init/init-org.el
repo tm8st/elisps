@@ -219,6 +219,9 @@
 (define-key org-mode-map (kbd "C-c C-o") 'my-org-clock-out)
 (define-key org-mode-map (kbd "C-c C-q") 'org-clock-display)
 (define-key org-mode-map (kbd "C-c C-r") 'org-clock-report)
+(define-key org-mode-map (kbd "C-c C-u") 'pcomplete)
+(define-key org-mode-map (kbd "C-c C-p") 'outline-up-heading)
+(define-key org-mode-map (kbd "C-c C-n") 'outline-down-heading)
 
 (global-set-key (kbd "C-l C-o C-c") 'my-org-clock-cancel)
 
@@ -280,5 +283,8 @@
   )
 
 (add-hook 'org-mode-hook 'my-org-mode-hook)
+
+(my-require 'anything-org-mode)
+(global-set-key (kbd "C-l C-o C-j") 'anything-org-agenda)
 
 (provide 'init-org)

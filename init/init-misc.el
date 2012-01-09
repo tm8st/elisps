@@ -301,18 +301,29 @@
        (selected-frame)
        'my-frame-arrange-mini)))
 
-;;; Rakefile for Haskell.
-(defvar rake-task-alist '(("run") ("build") ("debug") ("clean") ("clobber") ("test") ("profile") ("hpc") ("tags")))
+;;;-------------------------------
+;;; Rakefile.
+;;;-------------------------------
+(my-require 'sub-frame)
+(defvar rake-task-list '(("run") ("build") ("debug") ("clean") ("clobber") ("test") ("profile") ("hpc") ("tags") ("lint")))
+(defun my-get-buffer-directory ()
+  (let* ((dir (buffer-file-name))
+         (dir (and dir (file-name-directory dir)))
+         (dir (or dir dired-directory)))
+    dir
+    ))
+
 (defun my-run-rakefile ()
   (interactive)
-  (async-shell-command
+  (sf:async-shell-command
    (concat (if (my-is-mac)
                "rake"
-             "rake.bat")
+             (concat "cd \"" (my-get-buffer-directory) "\" && rake.bat"))
            " -t "
-           (completing-read "task?: " rake-task-alist nil t))
-   (get-buffer-create "*Rake*")))
+           (completing-read "task?: " rake-task-list nil t))
+   (get-buffer-create "*RakeTask*")))
 
+;; (add-to-list 'popwin:special-display-config '("*RakeTask*"))
 (define-key global-map (kbd "C-l C-o C-b") 'my-run-rakefile)
 
 ;;; yalinum
@@ -450,8 +461,11 @@
        (kbd "M-=")
        'text-scale-decrease)))
 
-(require 'hahhah)
+(my-require 'hahhah)
 (hahhah-mode t)
+
+;; (my-require 'nyan-mode)
+;; (setq mode-line-format (nyan-create))
 
 (provide 'init-misc)
 

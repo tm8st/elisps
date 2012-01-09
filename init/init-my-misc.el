@@ -606,19 +606,19 @@ default name is filename:current line string."
 (when (my-is-windows)
   (defun my-open-file-os (&optional filename)
     "osの関連付けを利用してファイルを開く"
-    (interactive
+    (interactive)
      (save-excursion
        (let*
-           ((filename (if (eq filename nil)
+           ((filename2 (if (eq filename nil)
                           (find-file-read-args "Find file: "
                                                (confirm-nonexistent-file-or-buffer))
                         filename))
-            (value (find-file-noselect (car filename) nil nil nil)))
+            (value (find-file-noselect (car filename2) nil nil nil)))
          (if (listp value)
              (mapcar 'switch-to-buffer (nreverse value))
            (switch-to-buffer value)
            (my-buffer-cygstart-exe)
-           (kill-buffer (current-buffer))))))))
+           (kill-buffer (current-buffer)))))))
 
 (when (my-is-mac)
   (defun my-open-file-os (&optional filename)
@@ -652,8 +652,14 @@ default name is filename:current line string."
 (defun my-git-commit-and-push ()
   "git commit and push command"
   (interactive)
-  (async-shell-command (concat "git commit -a -m " "\""(read-string "commit log:") "\"") "*git commit*")
+  (my-git-commit)
   (async-shell-command "git push origin master" "*git push*")
+  )
+
+(defun my-git-commit ()
+  "git commit and push command"
+  (interactive)
+  (async-shell-command (concat "git commit -a -m " "\""(read-string "commit log:") "\"") "*git commit*")
   )
 
 (defun my-move-line-up (p)

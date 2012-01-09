@@ -21,7 +21,7 @@
 ;;;-------------------------------------
 (my-require 'auto-complete)
 (my-require 'auto-complete-config)
-(ac-config-default)
+;; (ac-config-default)
 
 (global-auto-complete-mode t)
 (customize-set-value 'ac-dictionary-directories
@@ -29,6 +29,7 @@
                            (concat my-dropbox-directory "/Emacs/resource/dict")))
 
 (setq ac-auto-start 2)
+(setq ac-dwim 1)
 (customize-set-value 'ac-ignore-case nil)
 (customize-set-value 'ac-candidate-limit 500)
 (customize-set-value 'ac-use-fuzzy 't)
@@ -49,19 +50,22 @@
 
 (my-require 'popup)
 (my-require 'pcomplete)
+
 (ac-define-source pcomplete
   '((candidates . pcomplete-completions)))
 
-;; ac source setting. all mode use same setting.
-(setq ac-sources
-      '(ac-source-pcomplete
-				ac-source-words-in-buffer
-				ac-source-gtags
-				;; ya-gtags
-        ac-source-words-in-same-mode-buffers
-				ac-source-filename
-				ac-source-symbols
-				ac-source-dictionary))
+;; ac source setting.
+(setq-default ac-sources
+              '(ac-source-words-in-buffer
+                ac-source-words-in-same-mode-buffers
+                ac-source-dictionary
+                ac-source-yasnippet
+                ;; ac-source-pcomplete
+                ;; ac-source-gtags
+                ;; ac-source-imenu
+                ;; ac-source-filename
+                ;; ac-source-symbols
+                ))
 
 ;; use ac modes.
 (add-to-list 'ac-modes 'shell-mode)

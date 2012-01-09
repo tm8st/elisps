@@ -227,6 +227,14 @@
     ;;cygwin風ディレクリ指定
     (my-require 'cygwin-mount)
     (cygwin-mount-activate)
+
+    (setenv "PATH"
+            (format "%s;%s;%s;%s"
+                    (getenv "PATH")
+                    "c:/MinGW/lib"
+                    "c:/MinGW/bin"
+                    "c:/MinGW/include"
+                    ))
     ))
 
 (provide 'init-basic)

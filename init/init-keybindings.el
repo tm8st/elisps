@@ -399,4 +399,10 @@
 
 (define-key global-map (kbd "C-l C-j C-r") 'my-insert-space-rectangle)
 
+(my-require 'sub-frame)
+(global-set-key (kbd "C-l C-s C-[") 'sf:jump-to-buffer-top)
+(global-set-key (kbd "C-l C-s C-]") 'sf:jump-to-buffer-bottom)
+(global-set-key (kbd "C-l C-s C-;") 'sf:scroll-down)
+(global-set-key (kbd "C-l C-s C-v") 'sf:scroll-up)
+
 (provide 'init-keybindings)
