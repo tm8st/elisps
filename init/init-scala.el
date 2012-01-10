@@ -99,6 +99,6 @@
 		 "&t=0"))
       (error "no word at point"))))
 
-(global-set-key (kbd "C-l C-s C-g") 'android-search)
+;; (global-set-key (kbd "C-l C-s C-g") 'android-search)
 
 (provide 'init-scala)

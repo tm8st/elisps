@@ -180,19 +180,19 @@
 
 (defun my-update-haskell-tags ()
   (interactive)
-  (async-shell-command
+  (sf:async-shell-command
    (concat "cd \"" (file-name-directory (buffer-file-name))
            "\" && find . -type f -name \*.\*hs -print0 | xargs -0 hasktags -c") "*Update Hasktags*" nil))
 
 (defun my-launch-client ()
   (interactive)
-  (async-shell-command
+  (sf:async-shell-command
    (concat "cd \"" (file-name-directory (buffer-file-name))
            "\" && runhaskell aclient") "*AClient*" nil))
 
 (defun my-launch-server ()
   (interactive)
-  (async-shell-command
+  (sf:async-shell-command
    (concat "cd " (file-name-directory (buffer-file-name))
            " && runhaskell server") "*Server*" nil))
 

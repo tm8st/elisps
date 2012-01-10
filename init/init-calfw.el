@@ -9,7 +9,9 @@
 
 ;;; Code:
 
+;; git clone git://github.com/kiwanami/emacs-calfw.git
 ;; (auto-install-from-url "https://github.com/kiwanami/emacs-calfw/raw/master/calfw.el")
+;; (auto-install-from-url "https://github.com/kiwanami/emacs-calfw/raw/master/calfw-org.el")
 
 (require 'calfw)
 (require 'calfw-org)
