@@ -19,7 +19,7 @@
   (defvar my-font-size-base 100)
 
   (cond
-   ((my-is-windows) (setq my-font-size-base 200))
+   ((my-is-windows) (setq my-font-size-base 220))
    ((my-is-mac) (setq my-font-size-base 280)))
 
   (when use-font-setting

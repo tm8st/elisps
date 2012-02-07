@@ -194,8 +194,16 @@
   (interactive)
   (sf:async-shell-command
    (concat "cd " (file-name-directory (buffer-file-name))
-           " && runhaskell server") "*Server*" nil))
+           " && runhaskell server.hs") "*Server*" nil))
 
+(defun my-run-haskell-buffer-file ()
+  (interactive)
+  (sf:async-shell-command
+   (concat "cd " (file-name-directory (buffer-file-name))
+           " && runhaskell " (file-name-nondirectory (buffer-file-name)))
+   (concat "*RunHaskell "(file-name-nondirectory (buffer-file-name)) "*") nil))
+
+(define-key haskell-mode-map (kbd "C-c C-5") 'my-run-haskell-buffer-file)
 (define-key haskell-mode-map (kbd "C-c C-o") 'ghc-complete)
 (define-key haskell-mode-map (kbd "C-c C-i") 'ghc-show-info)
 (define-key haskell-mode-map (kbd "C-c C-d") 'ghc-browse-document)
@@ -241,11 +249,27 @@
   (inferior-haskell-load-file)
   )
 
+(defun my-haskell-wall ()
+  "wall build"
+  (interactive)
+  (sf:async-shell-command
+   (my-shell-command-on-current-directory
+    (concat "ghc -Wall " (buffer-file-name))) "*hs-wall*"))
+
+(defun my-hs-save-buffer ()
+  "wall build"
+  (interactive)
+  (save-buffer)
+  (sf:async-shell-command
+   (my-shell-command-on-current-directory
+    (concat "ghc -Wall " (buffer-file-name))) "*hs-wall*"))
+
 (define-key haskell-mode-map (kbd "C-c C-c") 'my-iferior-haskell-load-file)
 (define-key haskell-mode-map (kbd "C-c C-e") 'inferior-haskell-load-and-run)
 (define-key haskell-mode-map (kbd "C-c l") 'hs-lint)
 (define-key haskell-mode-map (kbd "C-c s") 'hs-scan)
 (define-key haskell-mode-map (kbd "C-o") 'auto-complete)
+(define-key haskell-mode-map (kbd "C-x C-s") 'my-hs-save-buffer)
 
 (define-key haskell-indentation-mode-map (kbd "C-j") 'haskell-newline-and-indent)
 (define-key haskell-indentation-mode-map (kbd "C-m") my-backward-word-command)
@@ -256,6 +280,7 @@
 
 (define-key haskell-mode-map (kbd "C-c C-e") 'my-launch-client)
 (define-key haskell-mode-map (kbd "C-c C-s") 'my-launch-server)
+(define-key haskell-mode-map (kbd "C-c C-SPC") 'my-haskell-wall)
 
 (define-key haskell-mode-map (kbd "C-m") my-backward-word-command)
 (define-key haskell-mode-map (kbd "C-c C-h") 'haskell-hoogle)
