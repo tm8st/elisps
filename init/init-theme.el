@@ -258,7 +258,14 @@
      '(hl-paren-background-colors '("#eee0d0"))
      '(hl-paren-colors '("firebrick2" "IndianRed2" "IndianRed3" "IndianRed4"))
      ))
-  
+
+  (when (my-require 'highlight-indentation)
+    ;; (highlight-indentation-mode t)
+    ;; (highlight-indentation-current-column-mode t)
+    (set-face-background 'highlight-indentation-face "#f0f0e0")
+    (set-face-background 'highlight-indentation-current-column-face "#e3c3c3")
+    )
+
   ;;-------------------------------
   ;; disable truncate-line in text file.
   ;;-------------------------------

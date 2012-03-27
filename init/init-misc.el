@@ -249,7 +249,7 @@
 (when (my-is-windows)
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-with-twitter-client
-	 '((top + -0) (left + 0) (height . 720) (width . 100)))
+	 '((top + -0) (left + 0) (height . 34) (width . 83)))
 
 	(frange:regist-frame-position-parameter
 	 'my-frame-arrange-full-screen
@@ -305,7 +305,7 @@
 ;;; Rakefile.
 ;;;-------------------------------
 (my-require 'sub-frame)
-(defvar rake-task-list '(("run") ("build") ("debug") ("clean") ("clobber") ("test") ("profile") ("hpc") ("tags") ("lint")))
+(defvar rake-task-list '(("run") ("build") ("debug") ("clean") ("clobber") ("test") ("profile") ("aprofile") ("hpc") ("tags") ("lint") ("wc")))
 (defun my-get-buffer-directory ()
   (let* ((dir (buffer-file-name))
          (dir (and dir (file-name-directory dir)))
@@ -315,13 +315,14 @@
 
 (defun my-run-rakefile (&optional task)
   (interactive)
-  (sf:async-shell-command
-   (concat (if (my-is-mac)
-               "rake"
-             (concat "cd \"" (my-get-buffer-directory) "\" && rake.bat"))
-           " -t "
-           (or task (completing-read "task?: " rake-task-list nil t)))
-   (get-buffer-create "*RakeTask*")))
+  (let ((task (or task (completing-read "task?: " rake-task-list nil t))))
+    (sf:async-shell-command
+     (concat (if (my-is-mac)
+                 "rake"
+               (concat "cd \"" (my-get-buffer-directory) "\" && rake.bat"))
+             " -t "
+             task)
+     (get-buffer-create (concat "*RakeTask " task "*")))))
 
 ;; (add-to-list 'popwin:special-display-config '("*RakeTask*"))
 (define-key global-map (kbd "C-l C-o C-b") 'my-run-rakefile)

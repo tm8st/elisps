@@ -406,7 +406,7 @@
 (global-set-key (kbd "C-l C-s C-v") 'sf:scroll-up)
 (global-set-key (kbd "C-l C-s C-c") 'sf:current-buffer)
 (global-set-key (kbd "C-l C-s C-h") 'sf:toggle-hidden)
-(global-set-key (kbd "C-l C-s C-/") 'sf:toggle-hidden)
+(global-set-key (kbd "C-l C-s C-r") 'sf:set-frame-parameters)
 (global-set-key (kbd "C-l C-s C-:") 'sf:async-shell-command)
 
 (provide 'init-keybindings)

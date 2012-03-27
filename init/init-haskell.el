@@ -18,6 +18,8 @@
 (my-require 'prefix-arg-commands)
 (my-require 'init-keybindings)
 (my-require 'auto-complete)
+(my-require 'sub-frame)
+(my-require 'sub-frame-config)
 
 (add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
 (add-to-list 'auto-mode-alist '("\\.lhs$" . haskell-mode))
@@ -60,6 +62,8 @@
     (ghc-init)
     (setq tab-width 2)
     (setq indent-tabs-mode nil)
+    (highlight-indentation-mode t)
+    (highlight-indentation-current-column-mode t)
     (yalinum-mode t)
     ))
 
@@ -190,6 +194,12 @@
    (concat "cd \"" (file-name-directory (buffer-file-name))
            "\" && runhaskell aclient") "*AClient*" nil))
 
+(defun my-launch-gtest ()
+  (interactive)
+  (sf:async-shell-command
+   (concat "cd \"" (file-name-directory (buffer-file-name))
+           "\" && runhaskell GTestGame") "*GTest*" nil))
+
 (defun my-launch-server ()
   (interactive)
   (sf:async-shell-command
@@ -203,6 +213,39 @@
            " && runhaskell " (file-name-nondirectory (buffer-file-name)))
    (concat "*RunHaskell "(file-name-nondirectory (buffer-file-name)) "*") nil))
 
+(defun my-launch-gclients-and-server ()
+  (interactive)
+  (my-launch-server)
+  (sf:async-shell-command
+   (concat "cd \"" (file-name-directory (buffer-file-name))
+           "\" && runhaskell gclient test1 test1") "*GClient Test1*" nil)
+  (sf:async-shell-command
+   (concat "cd \"" (file-name-directory (buffer-file-name))
+           "\" && runhaskell gclient test2 test2") "*GClient Test2*" nil)
+  (sf:async-shell-command
+   (concat "cd \"" (file-name-directory (buffer-file-name))
+           "\" && runhaskell gclient test3 test3") "*GClient Test3*" nil))
+
+(defun my-launch-aclients-and-server ()
+  (interactive)
+  (my-launch-server)
+  (sf:async-shell-command
+   (concat "cd \"" (file-name-directory (buffer-file-name))
+           "\" && runhaskell aclient test1 test1") "*AClient Test1*" nil)
+  (sf:async-shell-command
+   (concat "cd \"" (file-name-directory (buffer-file-name))
+           "\" && runhaskell aclient test2 test2") "*AClient Test2*" nil))
+
+(defun my-kill-gclients-and-server ()
+  (interactive)
+  (my-launch-server)
+  (kill-buffer "*Server*")
+  (kill-buffer "*GClient Test1*")
+  (kill-buffer "*GClient Test2*")
+  (kill-buffer "*GClient Test3*")
+  )
+
+
 (define-key haskell-mode-map (kbd "C-c C-5") 'my-run-haskell-buffer-file)
 (define-key haskell-mode-map (kbd "C-c C-o") 'ghc-complete)
 (define-key haskell-mode-map (kbd "C-c C-i") 'ghc-show-info)
@@ -215,6 +258,11 @@
 (define-key haskell-mode-map (kbd "C-c C-d") 'anything-ghc-browse-document)
 (define-key haskell-mode-map (kbd "C-c C-t") 'ghc-show-type)
 (define-key haskell-mode-map (kbd "C-c C-s") 'ghc-save-buffer)
+(define-key haskell-mode-map (kbd "C-c C-g") 'my-launch-gclients-and-server)
+(define-key haskell-mode-map (kbd "C-c C-k") 'my-kill-gclients-and-server)
+(define-key haskell-mode-map (kbd "C-c C-y") 'my-launch-aclients-and-server)
+(define-key haskell-mode-map (kbd "C-c C-b") 'my-launch-gtest)
+(define-key haskell-mode-map (kbd "C-m") 'my-backward-word)
 
 (define-key haskell-mode-map (kbd "C-c C-a") '(lambda () (interactive) (insert " <*> ")))
 (define-key haskell-mode-map (kbd "C-c C-f") '(lambda () (interactive) (insert " <$> ")))
@@ -276,13 +324,13 @@
 
 (define-key inferior-haskell-mode-map (kbd "C-m") my-backward-word-command)
 (define-key inferior-haskell-mode-map (kbd "C-j") 'comint-send-input)
-(define-key inferior-haskell-mode-map (kbd "C-c C-h") 'haskell-hoogle)
+(define-key inferior-haskell-mode-map (kbd "C-c C-h") 'sf:hoogle)
 
 (define-key haskell-mode-map (kbd "C-c C-e") 'my-launch-client)
 (define-key haskell-mode-map (kbd "C-c C-s") 'my-launch-server)
 (define-key haskell-mode-map (kbd "C-c C-SPC") 'my-haskell-wall)
 
 (define-key haskell-mode-map (kbd "C-m") my-backward-word-command)
-(define-key haskell-mode-map (kbd "C-c C-h") 'haskell-hoogle)
+(define-key haskell-mode-map (kbd "C-c C-h") 'sf:hoogle)
 
 (provide 'init-haskell)

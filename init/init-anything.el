@@ -265,7 +265,7 @@
 ;; 同じ look-for設定で別のプロジェクトを登録するとバグるので一つのプロジェクトにまとめておく。
 (ap:add-project
  :name 'c++-scala-haskell
- :look-for '("GTAGS" "TAGS" ".*\\.sln") ; or
+ :look-for '("GTAGS" "TAGS" "tags" ".*\\.sln") ; or
  :include-regexp '("\\.scala$" "\\.h$" "\\.sln$" "\\.cpp$" "\\.c$" "\\.h$" "\\.inl$" "\\.fx$" "\\.ini$" "\\.txt$" "\\.uc$" "\\.usf$" "\\.hs$" "\\.hls$" "\\.cs$" "\\.hamlet" "\\models" "\\routes" "\\.julius" "\\.cassius") ;or
  )
 
@@ -290,12 +290,12 @@
  :include-regexp '("\\.el$") ;or
  )
 
-;; RAKEFILE 登録
-(ap:add-project
- :name 'ruby-haskell
- :look-for '("RAKEFILE" ".rake") ; or
- :include-regexp '("\\.rb$") ;or
- )
+;; ;; RAKEFILE 登録
+;; (ap:add-project
+;;  :name 'ruby-haskell
+;;  :look-for '("RAKEFILE" ".rake") ; or
+;;  :include-regexp '("\\.rb$") ;or
+;;  )
 
 ;;;-------------------------------
 ;;; split-setting 
