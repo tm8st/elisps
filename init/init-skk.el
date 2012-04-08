@@ -193,6 +193,10 @@
 ;;;-------------------------------
 ;;; 辞書に関する設定
 ;;;-------------------------------
+
+(setq skk-jisyo (concat my-dropbox-directory "/emacs/.skk-jisyo"))
+(setq skk-backup-jisyo (concat my-dropbox-directory "/emacs/.skk-jisyo.BAK"))
+
 ;; 辞書サーバを使うための設定
 (setq skk-server-host "localhost")
 (setq skk-server-portnum 1178)

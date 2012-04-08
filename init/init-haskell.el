@@ -213,18 +213,19 @@
            " && runhaskell " (file-name-nondirectory (buffer-file-name)))
    (concat "*RunHaskell "(file-name-nondirectory (buffer-file-name)) "*") nil))
 
+(defun my-launch-gclient (name)
+  (sf:async-shell-command
+   (concat "cd \"" (file-name-directory (buffer-file-name))
+           "\" && runhaskell gclient " name " " name) (concat "*GClient " name "*") nil))
+
 (defun my-launch-gclients-and-server ()
   (interactive)
   (my-launch-server)
-  (sf:async-shell-command
-   (concat "cd \"" (file-name-directory (buffer-file-name))
-           "\" && runhaskell gclient test1 test1") "*GClient Test1*" nil)
-  (sf:async-shell-command
-   (concat "cd \"" (file-name-directory (buffer-file-name))
-           "\" && runhaskell gclient test2 test2") "*GClient Test2*" nil)
-  (sf:async-shell-command
-   (concat "cd \"" (file-name-directory (buffer-file-name))
-           "\" && runhaskell gclient test3 test3") "*GClient Test3*" nil))
+  (my-launch-gclient "Test1")
+  (my-launch-gclient "Test2")
+  (my-launch-gclient "Test3")
+  (my-launch-gclient "Test4")
+  )
 
 (defun my-launch-aclients-and-server ()
   (interactive)
@@ -238,11 +239,11 @@
 
 (defun my-kill-gclients-and-server ()
   (interactive)
-  (my-launch-server)
   (kill-buffer "*Server*")
   (kill-buffer "*GClient Test1*")
   (kill-buffer "*GClient Test2*")
   (kill-buffer "*GClient Test3*")
+  (kill-buffer "*GClient Test4*")
   )
 
 
