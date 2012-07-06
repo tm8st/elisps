@@ -8,9 +8,8 @@
 ;;; Commentary:
 
 ;; (my-require 'hs)
-;; (add-to-list 'auto-mode-alist '("\\.hs$" . hs-mode))
-;; (add-to-list 'auto-mode-alist '("\\.hsc$" . hs-mode))
 
+(my-require 'init-compile-env)
 (my-require 'yalinum)
 (my-require 'haskell-mode)
 (my-require 'haskell-indentation)
@@ -20,7 +19,13 @@
 (my-require 'auto-complete)
 (my-require 'sub-frame)
 (my-require 'sub-frame-config)
+(my-require 'hamlet-mode)
+(my-require 'ghc)
+(my-require 'hs-lint) ; Hackage hlint
 
+;;;-------------------------------
+;;; auto mode alist settings.
+;;;-------------------------------
 (add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
 (add-to-list 'auto-mode-alist '("\\.lhs$" . haskell-mode))
 (add-to-list 'auto-mode-alist '("\\.hsc$" . haskell-mode))
@@ -34,57 +39,49 @@
 
 (my-require 'popwin)
 (setq display-buffer-function 'popwin:display-buffer)
-(add-to-list 'popwin:special-display-config '("*GHC Errors*" :height 0.3))
-;; (add-to-list 'popwin:special-display-config '("*haskell*" :height 0.2 :noselect))  ;; 勝手に閉じてしまう. popwin.el 0.2
-;; (add-to-list 'popwin:special-display-config '("*hs-lint*")) ;; 勝手に閉じてしまう. popwin.el 0.2
+;; 勝手に閉じてしまうので、設定しない
+;; (add-to-list 'popwin:special-display-config '("*GHC Errors*" :height 0.3))
+;; (add-to-list 'popwin:special-display-config '("*haskell*" :height 0.2 :noselect))
+;; (add-to-list 'popwin:special-display-config '("*hs-lint*"))
 ;; (setq popwin:special-display-config '(("*haskell*" :height 0.4 :noselect)))
-
-(my-require 'ghc)
-
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-(add-hook 'haskell-mode-hook 'font-lock-mode)
-(add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
-
-(my-require 'hs-lint) ; Hackage hlint
-
-;; (my-require 'scion)   ; Emacs wiki "scion"
-;; (local-set-key "\C-c\C-x." 'scion-goto-definition)
-;; (my-require 'hs-scan) ; google it 'Haskell style scanner'
 
 ;;
 (defun my-haskell-mode-hook ()
   (progn
     (auto-complete-mode t)
-    ;; (scion-mode t)
-    ;; (scion-flycheck-on-save nil) ; conflict with auto-buffer-save
-    ;; (setq scion-completing-read-function 'ido-completing-read)
+    (when (my-is-windows)
+      (setq ghc-module-command "ghc-mod"))
+    (setq ghc-flymake-command nil)
+
     (ghc-init)
+    (flymake-mode)
     (setq tab-width 2)
     (setq indent-tabs-mode nil)
+    (turn-on-haskell-indent)
+    (turn-on-haskell-doc-mode)
+    (font-lock-mode)
+    (imenu-add-menubar-index)
+
     (highlight-indentation-mode t)
     (highlight-indentation-current-column-mode t)
     (yalinum-mode t)
+
+    ;; override ghc-mod key bindings.
+    (define-key haskell-mode-map (kbd "C-x C-s") 'my-hs-save-buffer)
+    (define-key haskell-mode-map (kbd "C-c C-c") 'my-iferior-haskell-load-file)
     ))
 
-(defun my-haskell-cabal-mode ()
+(defun my-haskell-cabal-mode-hook ()
   (progn
     (setq tab-width 2 indent-tabs-mode nil)
     ))
 
 (add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
-(add-hook 'haskell-cabal-mode-hook 'my-haskell-cabal-mode)
+(add-hook 'haskell-cabal-mode-hook 'my-haskell-cabal-mode-hook)
 
 (my-require 'haskell-move-nested)
-(define-key haskell-mode-map (kbd "C-S-B")
-  (lambda ()
-    (interactive)
-    (haskell-move-nested -1)))
-
-(define-key haskell-mode-map (kbd "C-S-F")
-  (lambda ()
-    (interactive)
-    (haskell-move-nested 1)))
+(define-key haskell-mode-map (kbd "C-S-B") (lambda () (interactive) (haskell-move-nested -1)))
+(define-key haskell-mode-map (kbd "C-S-F") (lambda () (interactive) (haskell-move-nested 1)))
 
 (defadvice haskell-indent-indentation-info (after haskell-indent-reverse-indentation-info)
   (when (>= (length ad-return-value) 2)
@@ -125,6 +122,12 @@
   (interactive)
   (anything anything-c-source-ghc-mod))
 
+(ac-define-source ghc-mod
+ '((depends ghc)
+   (candidates . (ghc-select-completion-symbol))
+   (symbol . "g")
+   (cache)))
+
 (prefix-arg-commands-defun prefix-arg-commands-insert-haskell-right-arrow
                            (list
                             '(lambda () (interactive) (insert " -> "))
@@ -149,93 +152,83 @@
     (unless (eq funcName nil)
       (insert funcName))))
 
-(ac-define-source ghc-mod
- '((depends ghc)
-   (candidates . (ghc-select-completion-symbol))
-   (symbol . "g")
-   (cache)))
-
 (defun my-ac-haskell-mode ()
-  ;; (push 'ac-source-ghc-mod ac-sources)
   (setq ac-sources '(ac-source-ghc-mod
                      ac-source-words-in-same-mode-buffers
                      )))
 
 (add-hook 'haskell-mode-hook 'my-ac-haskell-mode)
 
-(define-key haskell-mode-map (kbd "C-S-F")
-  (lambda ()
-    (interactive)
-    (haskell-move-nested 1)))
-
-(defadvice haskell-indent-indentation-info (after haskell-indent-reverse-indentation-info)
-  (when (>= (length ad-return-value) 2)
-    (let ((second (nth 1 ad-return-value)))
-      (setq ad-return-value (cons second (delete second ad-return-value))))))
-
-(ad-activate 'haskell-indent-indentation-info)
-
 (my-require 'anything)
 (my-require 'anything-hasktags)
-;; make tags command.
-;; alias hasktags-r="find . -type f -name \*.\*hs -print0 | xargs -0 hasktags -c"
 
-(define-key haskell-mode-map (kbd "C-q C-j") 'anything-hasktags-select)
+(define-key haskell-mode-map (kbd "C-q C-j") 'anything-hasktags-select-from-here)
+(define-key haskell-mode-map (kbd "C-q C-e") 'my-update-haskell-tags)
 
 (defun my-update-haskell-tags ()
   (interactive)
   (sf:async-shell-command
-   (concat "cd \"" (file-name-directory (buffer-file-name))
+   (concat "cd \""
+           (file-name-directory (buffer-file-name))
            "\" && find . -type f -name \*.\*hs -print0 | xargs -0 hasktags -c") "*Update Hasktags*" nil))
-
-(defun my-launch-client ()
-  (interactive)
-  (sf:async-shell-command
-   (concat "cd \"" (file-name-directory (buffer-file-name))
-           "\" && runhaskell aclient") "*AClient*" nil))
-
-(defun my-launch-gtest ()
-  (interactive)
-  (sf:async-shell-command
-   (concat "cd \"" (file-name-directory (buffer-file-name))
-           "\" && runhaskell GTestGame") "*GTest*" nil))
-
-(defun my-launch-server ()
-  (interactive)
-  (sf:async-shell-command
-   (concat "cd " (file-name-directory (buffer-file-name))
-           " && runhaskell server.hs") "*Server*" nil))
 
 (defun my-run-haskell-buffer-file ()
   (interactive)
+  (save-buffer)
   (sf:async-shell-command
    (concat "cd " (file-name-directory (buffer-file-name))
            " && runhaskell " (file-name-nondirectory (buffer-file-name)))
    (concat "*RunHaskell "(file-name-nondirectory (buffer-file-name)) "*") nil))
 
-(defun my-launch-gclient (name)
+(defun my-doctest-buffer-file ()
+  (interactive)
+  (sf:async-shell-command
+   (concat "cd " (file-name-directory (buffer-file-name))
+           " && doctest " (file-name-nondirectory (buffer-file-name)))
+   (concat "*doctest "(file-name-nondirectory (buffer-file-name)) "*") nil))
+
+;;;-------------------------------
+;;; haskell online game debug launcher
+;;;-------------------------------
+(defun my-runhaskell-same-buffer-file (name)
+  (interactive)
   (sf:async-shell-command
    (concat "cd \"" (file-name-directory (buffer-file-name))
-           "\" && runhaskell gclient " name " " name) (concat "*GClient " name "*") nil))
+           "\" && runhaskell " name) (concat "* " name  " *") nil))
+
+(defun my-launch-client (name)
+  (interactive)
+  (sf:async-shell-command
+   (concat "cd \"" (file-name-directory (buffer-file-name))
+           "\" && runhaskell AClient.hs " name " " name) (concat "*AClient " name "*") nil))
+
+(defun my-launch-server ()
+  (interactive)
+  (my-runhaskell-same-buffer-file "Server"))
+
+(defun my-launch-gtest ()
+  (interactive)
+  (my-runhaskell-same-buffer-file "GTestGame"))
+
+(defun my-launch-gclient (name)
+  (interactive)
+  (sf:async-shell-command
+   (concat "cd \"" (file-name-directory (buffer-file-name))
+           "\" && runhaskell gclient.hs " name " " name) (concat "*GClient " name "*") nil))
 
 (defun my-launch-gclients-and-server ()
   (interactive)
   (my-launch-server)
-  (my-launch-gclient "Test1")
-  (my-launch-gclient "Test2")
-  (my-launch-gclient "Test3")
-  (my-launch-gclient "Test4")
+  (my-launch-gclient "GTest1")
+  (my-launch-gclient "GTest2")
   )
 
 (defun my-launch-aclients-and-server ()
   (interactive)
   (my-launch-server)
-  (sf:async-shell-command
-   (concat "cd \"" (file-name-directory (buffer-file-name))
-           "\" && runhaskell aclient test1 test1") "*AClient Test1*" nil)
-  (sf:async-shell-command
-   (concat "cd \"" (file-name-directory (buffer-file-name))
-           "\" && runhaskell aclient test2 test2") "*AClient Test2*" nil))
+  (my-launch-client "Test1")
+  (my-launch-client "Test2")
+  )
 
 (defun my-kill-gclients-and-server ()
   (interactive)
@@ -246,13 +239,31 @@
   (kill-buffer "*GClient Test4*")
   )
 
+(defun my-atcoder-test ()
+  "atcoder test run."
+  (interactive)
+  (let ((filename (my-get-file-name-non-extension (buffer-file-name)))
+        (testdataId (read-string "Test Data Id: "))
+        )
+    (sf:async-shell-command
+     (concat "cd \"" (file-name-directory (buffer-file-name))
+             "\" && runhaskell " filename ".hs < " (concat filename testdataId) ".txt")
+     (concat "*AtCoder Test " filename " *") nil)))
 
-(define-key haskell-mode-map (kbd "C-c C-5") 'my-run-haskell-buffer-file)
-(define-key haskell-mode-map (kbd "C-c C-o") 'ghc-complete)
+(defun my-hoogle ()
+  (interactive)
+  (browse-url (concat "http://www.haskell.org/hoogle/?hoogle=" (read-string "find:"))))
+
+(define-key haskell-mode-map (kbd "C-c C-7") 'my-doctest-buffer-file)
+(define-key haskell-mode-map (kbd "C-c C-8") 'my-run-haskell-buffer-file)
 (define-key haskell-mode-map (kbd "C-c C-i") 'ghc-show-info)
 (define-key haskell-mode-map (kbd "C-c C-d") 'ghc-browse-document)
 (define-key haskell-mode-map (kbd "C-c C-t") 'ghc-show-type)
 (define-key haskell-mode-map (kbd "C-c C-s") 'ghc-save-buffer)
+(define-key haskell-mode-map (kbd "C-x C-d") 'dired)
+
+(define-key haskell-mode-map (kbd "C-c C-^") 'my-atcoder-test)
+(define-key haskell-mode-map (kbd "C-c C-0") 'my-hoogle)
 
 (define-key haskell-mode-map (kbd "C-c C-o") 'ghc-complete)
 (define-key haskell-mode-map (kbd "C-c C-i") 'ghc-show-info)
@@ -263,10 +274,14 @@
 (define-key haskell-mode-map (kbd "C-c C-k") 'my-kill-gclients-and-server)
 (define-key haskell-mode-map (kbd "C-c C-y") 'my-launch-aclients-and-server)
 (define-key haskell-mode-map (kbd "C-c C-b") 'my-launch-gtest)
-(define-key haskell-mode-map (kbd "C-m") 'my-backward-word)
+(define-key haskell-mode-map (kbd "C-m")     'my-backward-word)
+(define-key haskell-mode-map (kbd "C-c C-n") 'flymake-goto-next-error)
+(define-key haskell-mode-map (kbd "C-c C-p") 'flymake-goto-prev-error)
+(define-key haskell-mode-map (kbd "C-c C-u") 'ghc-flymake-display-errors)
 
 (define-key haskell-mode-map (kbd "C-c C-a") '(lambda () (interactive) (insert " <*> ")))
 (define-key haskell-mode-map (kbd "C-c C-f") '(lambda () (interactive) (insert " <$> ")))
+(define-key haskell-mode-map (kbd "C-c C-;") '(lambda () (interactive) (insert " = ")))
 (define-key haskell-mode-map (kbd "C-c C-l") '(lambda () (interactive) (insert " <- ")))
 (define-key haskell-mode-map (kbd "C-c C-6") '(lambda () (interactive) (insert " .&. ")))
 (define-key haskell-mode-map (kbd "C-c C-\\") '(lambda () (interactive) (insert " .|. ")))
@@ -292,9 +307,11 @@
 (defun my-iferior-haskell-load-file ()
   "load hs and hlint."
   (interactive)
+
   (sf:async-shell-command
    (my-shell-command-on-current-directory
     (concat "hlint " (buffer-file-name))) "*hs-lint*")
+
   (inferior-haskell-load-file)
   )
 
@@ -308,17 +325,16 @@
 (defun my-hs-save-buffer ()
   "wall build"
   (interactive)
-  (save-buffer)
+  (delete-trailing-whitespace)
+  (haskell-mode-save-buffer)
   (sf:async-shell-command
    (my-shell-command-on-current-directory
     (concat "ghc -Wall " (buffer-file-name))) "*hs-wall*"))
 
-(define-key haskell-mode-map (kbd "C-c C-c") 'my-iferior-haskell-load-file)
 (define-key haskell-mode-map (kbd "C-c C-e") 'inferior-haskell-load-and-run)
 (define-key haskell-mode-map (kbd "C-c l") 'hs-lint)
 (define-key haskell-mode-map (kbd "C-c s") 'hs-scan)
 (define-key haskell-mode-map (kbd "C-o") 'auto-complete)
-(define-key haskell-mode-map (kbd "C-x C-s") 'my-hs-save-buffer)
 
 (define-key haskell-indentation-mode-map (kbd "C-j") 'haskell-newline-and-indent)
 (define-key haskell-indentation-mode-map (kbd "C-m") my-backward-word-command)
@@ -333,5 +349,10 @@
 
 (define-key haskell-mode-map (kbd "C-m") my-backward-word-command)
 (define-key haskell-mode-map (kbd "C-c C-h") 'sf:hoogle)
+
+;; ;; Customization
+;; (custom-set-variables
+;;  '(haskell-tags-on-save nil)
+;;  '(haskell-stylish-on-save nil))
 
 (provide 'init-haskell)

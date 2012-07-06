@@ -183,8 +183,6 @@
 
 (define-key global-map (kbd "C-l C-o C-a") 'org-agenda)
 
-;; (define-key global-map (kbd "C-l C-o C-l") 'org-agenda-list)
-
 (my-require 'popwin)
 (setq display-buffer-function 'popwin:display-buffer)
 (add-to-list 'popwin:special-display-config '("*Org Agenda*" :height 0.5))
@@ -286,5 +284,27 @@
 
 (my-require 'anything-org-mode)
 (global-set-key (kbd "C-l C-o C-j") 'anything-org-agenda)
+
+;; (my-require 'org-tree-slide)
+;; (setq org-tree-slide-heading-emphasis t)
+;; (define-key org-mode-map (kbd "<f8>") 'org-tree-slide-mode)
+;; (define-key org-mode-map (kbd "S-<f8>") 'org-tree-slide-simple-profile)
+;; (define-key org-mode-map (kbd "C-<f8>") 'org-tree-slide-presentation-profile)
+;; (define-key org-tree-slide-mode-map (kbd "<left>") 'org-tree-slide-move-previous-tree)
+;; (define-key org-tree-slide-mode-map (kbd "<right>") 'org-tree-slide-move-next-tree)
+
+;; (add-hook 'org-tree-slide-mode-hook
+;; 	  (lambda () 
+;; 	    (setq line-spacing 8)))
+
+(defface my-face-org-tree-slide-heading '((t (:foregound "Pink"))) nil :group 'my)
+
+(setq org-tree-slide-heading-level-2 '((t (:foregound "Pink" :height 1.1))))
+(setq org-tree-slide-heading-level-3 '((t (:foregound "Pink" :height 1.1))))
+;; (setq org-tree-slide-heading-level-2-init '((t (:foregound "Pink" :height 1.1))))
+;; (setq org-tree-slide-heading-level-3-init '((t (:foregound "Pink" :height 1.1))))
+
+(my-require 'org-html5presentation)
+(define-key org-mode-map (kbd "<f8>") 'org-export-as-html5presentation-and-open)
 
 (provide 'init-org)

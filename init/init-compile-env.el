@@ -63,7 +63,6 @@
 (unless my-initialized
   (add-to-list 'load-path my-elisp-path)
   (add-to-list 'load-path (concat my-elisp-path "/init"))
-  (add-to-list 'load-path "~/emacswiki.org" t)
   )
 
 (defvar init-load-elisp-list nil)
@@ -72,5 +71,8 @@
 (my-require 'private) ;; 値の設定(非公開ファイル)
 
 (add-to-list 'load-path (concat my-dropbox-directory "Elisp"))
+(unless my-initialized
+  (add-to-list 'load-path (concat my-dropbox-directory "Emacs/emacswiki.org") t)
+  )
 
 (provide 'init-compile-env)

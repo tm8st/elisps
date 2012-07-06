@@ -389,6 +389,16 @@
 
 (global-set-key (kbd "C-q C-a C-m") 'my-anything-bm-global)
 
+(defun my-insert-zenkakuspace-rectangle ()
+  (interactive)
+  (when mark-active
+    (string-rectangle
+     (min (point) (mark))
+     (max (point) (mark))
+     "　")))
+
+(define-key global-map (kbd "C-l C-j C-t") 'my-insert-zenkakuspace-rectangle)
+
 (defun my-insert-space-rectangle ()
   (interactive)
   (when mark-active
@@ -400,6 +410,11 @@
 (define-key global-map (kbd "C-l C-j C-r") 'my-insert-space-rectangle)
 
 (my-require 'sub-frame)
+(setq sf:frame-left -1920)
+(setq sf:frame-top 20)
+(setq sf:frame-width 60)
+(setq sf:frame-height 30)
+
 (global-set-key (kbd "C-l C-s C-[") 'sf:jump-to-buffer-top)
 (global-set-key (kbd "C-l C-s C-]") 'sf:jump-to-buffer-bottom)
 (global-set-key (kbd "C-l C-s C-;") 'sf:scroll-down)
@@ -408,5 +423,15 @@
 (global-set-key (kbd "C-l C-s C-h") 'sf:toggle-hidden)
 (global-set-key (kbd "C-l C-s C-r") 'sf:set-frame-parameters)
 (global-set-key (kbd "C-l C-s C-:") 'sf:async-shell-command)
+
+(defun toggle-truncate-lines ()
+  "折り返し表示をトグル動作します."
+  (interactive)
+  (if truncate-lines
+      (setq truncate-lines nil)
+    (setq truncate-lines t))
+  (recenter))
+
+(global-set-key (kbd "C-q C-l C-l") 'toggle-truncate-lines)
 
 (provide 'init-keybindings)

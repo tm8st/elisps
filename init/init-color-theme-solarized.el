@@ -11,8 +11,7 @@
   ;;; URL: http://ethanschoonover.com/solarized
   ;;; This file is not (YET) part of GNU Emacs.
 
-(eval-when-compile
-  (my-require 'color-theme))
+(my-require 'color-theme)
 
 ;; 
 (defvar default-font-color "#344050")

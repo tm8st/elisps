@@ -89,7 +89,7 @@
     (if (member (expand-file-name d) my-default-load-path) nil
       (my-byte-recompile-directory d))))
 
-(add-to-list 'load-path "~/emacswiki.org" t)
+(add-to-list 'load-path (concat my-dropbox-directory "Emacs/emacswiki.org") t)
 
 ;;----------------------------------------
 ;; unset key bindings for key-binding-prefix.
@@ -132,6 +132,7 @@
 
 				 "init-complete.el"
 				 "init-yasnippet.el"
+				 "init-package.el"
 
 				 "init-shell.el"
 

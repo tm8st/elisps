@@ -492,8 +492,8 @@
 (defun my-ap:pre-cache-project ()
   (interactive)
   (mapcar '(lambda (f)
-             (find-file f)
-             (ap:get-project-files))
+    (find-file f)
+    (ap:get-project-files))
           my-ap:pre-cache-project-root-files))
 
 (add-hook 'emacs-startup-hook 'my-ap:pre-cache-project)

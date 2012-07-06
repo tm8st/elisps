@@ -305,7 +305,7 @@
 ;;; Rakefile.
 ;;;-------------------------------
 (my-require 'sub-frame)
-(defvar rake-task-list '(("run") ("build") ("debug") ("clean") ("clobber") ("test") ("profile") ("aprofile") ("agprofile") ("hpc") ("tags") ("lint") ("wc")))(setq rake-task-list '(("run") ("build") ("debug") ("clean") ("clobber") ("test") ("profile") ("aprofile") ("agprofile") ("hpc") ("tags") ("lint") ("wc")))
+(defvar rake-task-list '(("run") ("build") ("debug") ("clean") ("clobber") ("test") ("profile") ("aprofile") ("agprofile") ("hpc") ("tags") ("lint") ("wc")))(setq rake-task-list '(("run") ("build") ("shipping") ("debug") ("clean") ("clobber") ("test") ("profile") ("aprofile") ("agprofile") ("hpc") ("tags") ("haddock") ("lint") ("wc")))
 (defun my-get-buffer-directory ()
   (let* ((dir (buffer-file-name))
          (dir (and dir (file-name-directory dir)))

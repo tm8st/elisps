@@ -24,7 +24,7 @@
 
 ;; 今日変更したファイル表示
 (when use-gui-setting
-  (defface my-face-dired-tody-change '((t (:foregound "Orarnge"))) nil :group 'my)
+  (defface my-face-dired-tody-change '((t (:foregound "Orange"))) nil :group 'my)
 
   (defvar my-face-dired-tody-change 'my-face-dired-tody-change)
   (defun my-dired-today-search (arg)
