@@ -546,7 +546,7 @@ default name is filename:current line string."
 
 ;; from http://github.com/meteor1113/dotemacs
 (defun my-match-paren (arg)
-  "Go to the matching  if on (){}[], similar to vi style of % "
+  "Go to the matching  if on (){}[], similar to vi style of %"
   (interactive "p")
   ;; first, check for "outside of bracket" positions expected by forward-sexp, etc.
   (cond ((looking-at "[\[\(\{\]") (forward-sexp))
