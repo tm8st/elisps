@@ -232,7 +232,7 @@
 ;;;-------------------------------
 ;;; delete, mark, kill some ranges.
 ;;;-------------------------------
-(my-require 'generic-range-opt)
+(my-load-elisp "generic-range-opt")
 
 (defun my-delete-char (arg)
   (interactive "P")
@@ -412,5 +412,19 @@
   (recenter))
 
 (global-set-key (kbd "C-q C-l C-l") 'toggle-truncate-lines)
+
+
+(define-key global-map (kbd "C-l C-w C-r") 'ispell-region)
+
+;;; Default key bindinmapgs:
+(my-require 'iedit)
+(define-key global-map (kbd "C-l C-w C-i") 'iedit-mode)
+(define-key global-map (kbd "C-l C-w C-r") 'iedit-rectangle-mode)
+;; (define-key global-map (kbd "C-;") 'iedit-mode)
+;; (define-key isearch-mode-map (kbd "C-;") 'iedit-mode)
+;; (define-key esc-map (kbd "C-;") 'iedit-execute-last-modification)
+;; (define-key help-map (kbd "C-;") 'iedit-mode-on-function)
+;; (define-key global-map [C-return] 'iedit-rectangle-mode)
+
 
 (provide 'init-keybindings)

@@ -207,6 +207,9 @@
   (setq ring-bell-function '(lambda ()))
   (setq visible-bell t)
 
+  (url-handler-mode t)
+  (mouse-avoidance-mode 'animate)         ; Move the mouse away
+
   ;; マック用設定
   (when (my-is-mac)
     ;; Swap Command-Key, Option-Key

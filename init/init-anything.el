@@ -276,19 +276,19 @@
  :include-regexp '("\\.el$") ;or
  )
 
+;; unity 登録
+(ap:add-project
+ :name 'unity
+ :look-for '("*.unityproj")
+ :include-regexp '("\\.js$" "\\.cs$")
+ )
+
 ;; scala 登録
 ;; (ap:add-project
 ;;  :name 'scala
 ;;  :look-for '("GTAGS") ; or
 ;;  :include-regexp '("\\.scala$") ;or
 ;;  )
-
-;; elisp 登録
-(ap:add-project
- :name 'elisp
- :look-for '("subdirs\\.el") ; or
- :include-regexp '("\\.el$") ;or
- )
 
 ;; ;; RAKEFILE 登録
 ;; (ap:add-project
@@ -491,7 +491,7 @@
 (defvar my-ap:pre-cache-project-files nil)
 (defun my-ap:pre-cache-project ()
   (interactive)
-  (mapcar '(lambda (f)
+  (mapcar #'(lambda (f)
     (find-file f)
     (ap:get-project-files))
           my-ap:pre-cache-project-root-files))

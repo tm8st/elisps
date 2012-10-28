@@ -10,6 +10,7 @@
 ;;; Code:
 
 (my-require 'cc-mode)
+;; (my-require 'cc-mode+)
 
 ;;c-mode key-binding
 ;; C-c C-a			c-toggle-auto-newline
@@ -148,6 +149,9 @@
   ;; (c-set-offset 'c-comment-only-line-offset c-basic-offset)
   ;; (c-set-offset 'innamespace c-basic-offset)
 
+  (rainbow-mode t)
+  (rainbow-delimiters-mode t)
+
   (when (string-match "\.uc$" (buffer-file-name))
     (easy-imenu-index-generator-set-for-current-buffer easy-imenu-index-generator-unreal)
     )
@@ -236,10 +240,118 @@
   (interactive)
   (async-shell-command "run.sh" "*C++ Build and Run*"))
 
+(defun my-msdn ()
+  (interactive)
+  (browse-url (concat "http://social.msdn.microsoft.com/search/ja-jp?query=" (read-string "find:"))))
+
 ;; c++ run.
 (define-key c++-mode-map (kbd "C-c C-v") `my-build-and-run-c++)
+(define-key c++-mode-map (kbd "C-c C-h") `my-msdn)
 
 (my-require 'lua-mode)
 
-(provide 'init-c-mode)
+(my-require 'rc-vstudio)
 
+(setq vstudio-remote-exe-name "c:/Users/tm8st/Dropbox/Emacs/visual_studio_hidemaru.exe")
+
+(setq my-cc-imenu-c++-generic-expression
+  `(
+    ;; Try to match ::operator definitions first. Otherwise `X::operator new ()'
+    ;; will be incorrectly recognized as function `new ()' because the regexps
+    ;; work by backtracking from the end of the definition.
+    (nil
+     ,(concat
+       "^\\<.*"
+       "[^" c-alnum "_:<>~]"                  ; match any non-identifier char
+                                              ; (note: this can be `\n')
+       "\\("
+       "\\([" c-alnum "_:<>~]*::\\)?"      ; match an operator
+          "operator\\>[ \t]*"
+          "\\(()\\|[^(]*\\)"                  ; special case for `()' operator
+       "\\)"
+
+       "[ \t]*([^)]*)[ \t]*[^ \t;]"           ; followed by ws, arg list,
+                                              ; require something other than
+                                              ; a `;' after the (...) to
+                                              ; avoid prototypes.  Can't
+                                              ; catch cases with () inside
+                                              ; the parentheses surrounding
+                                              ; the parameters.  e.g.:
+                                              ; `int foo(int a=bar()) {...}'
+       ) 1)
+
+    ;; Special case to match a line like `main() {}'
+    ;; e.g. no return type, not even on the previous line.
+    (nil
+     ,(concat
+       "^"
+       "\\([" c-alpha "_][" c-alnum "_:<>~]*\\)" ; match function name
+       "[ \t]*("			      ; see above, BUT
+       "[ \t]*\\([^ \t(*][^)]*\\)?)"          ; the arg list must not start
+       "[ \t]*[^ \t;(]"                       ; with an asterisk or parentheses
+       ) 1)
+
+    ;; General function name regexp
+    ("Func"
+     ,(concat
+       "[\t ]?"                                  ; beginning of line is required, allow spaces.
+       "\\<"                                     ; line MUST start with word char
+       ;; \n added to prevent overflow in regexp matcher.
+       ;; http://lists.gnu.org/archive/html/emacs-pretest-bug/2007-02/msg00021.html
+       "[^()\n]*"                                ; no parentheses before
+       "\\(template[ \t]*<[^>]+>[ \t]*\\)?"      ; there may be a `template <...>'
+       "[" c-alnum "_::][::]? "                 ; match return type
+       "\\([" c-alpha "_][" c-alnum "_:<>~]*\\)" ; match function name
+       "\\([ \t\n]\\|\\\\\n\\)*("                ; see above, BUT the arg list
+       "\\([ \t\n]\\|\\\\\n\\)*"                 ; must not start
+       "\\([^ \t\n(*]"                           ; with an asterisk or parentheses
+       "[^()]*\\(([^()]*)[^()]*\\)*"             ; Maybe function pointer arguments
+       "\\)?)"
+       "\\([ \t\n]\\|\\\\\n\\)*[^ \t\n           ;(]"
+       ) 2)
+
+    ;; Special case for definitions using phony prototype macros like:
+    ;; `int main _PROTO( (int argc,char *argv[]) )'.
+    ;; This case is only included if cc-imenu-c-prototype-macro-regexp is set.
+    ;; Only supported in c-code, so no `:<>~' chars in function name!
+    ,@(if cc-imenu-c-prototype-macro-regexp
+            `((nil
+                 ,(concat
+                   "^\\<.*"                   ; line MUST start with word char
+                   "[^" c-alnum "_]"          ; match any non-identifier char
+                   "\\([" c-alpha "_][" c-alnum "_]*\\)" ; match function name
+                   "[ \t]*"                   ; whitespace before macro name
+                   cc-imenu-c-prototype-macro-regexp
+                   "[ \t]*("                  ; ws followed by first paren.
+                   "[ \t]*([^)]*)[ \t]*)[ \t]*[^ \t;]" ; see above
+                   ) 1)))
+
+    ;; Class definitions
+    ("Class"
+     ,(concat
+       "[\t ]?"                              ; beginning of line is required, allow spaces.
+       "\\(template[ \t]*<[^>]+>[ \t]*\\)?" ; there may be a `template <...>'
+       "\\(class\\|struct\\)[ \t]+"
+       "\\("                                ; the string we want to get
+       "[" c-alnum "_]+"                    ; class name
+       "\\(<[^>]+>\\)?"                     ; possibly explicitly specialized
+       "\\)"
+       "\\([ \t\n]\\|\\\\\n\\)*[:{]"
+       ) 3)
+
+    ;; enum definitions
+    ("Enum"
+     ,(concat
+       "[\t ]?"                              ; beginning of line is required, allow spaces.
+       "enum[ \t]+"
+       "\\("                                ; the string we want to get
+       "[" c-alnum "_]+"                    ; class name
+       "\\(<[^>]+>\\)?"                     ; possibly explicitly specialized
+       "\\)"
+       "\\([ \t\n]\\|\\\\\n\\)*[:{]"
+       ) 1)
+    ))
+
+(setq cc-imenu-c-generic-expression my-cc-imenu-c++-generic-expression)
+
+(provide 'init-c-mode)

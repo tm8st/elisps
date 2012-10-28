@@ -111,6 +111,8 @@
   ;;----------------------------------------
   (setq init-load-elisp-list
 				(list
+				 "init-package.el"
+
 				 "init-keybindings.el"
 
 				 "init-basic.el"
@@ -132,7 +134,6 @@
 
 				 "init-complete.el"
 				 "init-yasnippet.el"
-				 "init-package.el"
 
 				 "init-shell.el"
 

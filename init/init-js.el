@@ -33,7 +33,10 @@
 	  (lambda () 
 	    (my-require 'flymake-jsl)
 	    (setq flymake-check-was-interrupted t)
-      (yalinum-mode 1)))
+      (yalinum-mode 1)
+      (setq js2-cleanup-whitespace t)
+      (setq js2-auto-indent-p t)
+      (setq indent-tabs-mode nil)
+      ))
 
 (provide 'init-js)
-

@@ -19,13 +19,14 @@
   (defvar my-font-size-base 100)
 
   (cond
-   ((my-is-windows) (setq my-font-size-base 250))
+   ((my-is-windows) (setq my-font-size-base 220))
    ((my-is-mac) (setq my-font-size-base 280)))
 
   (when use-font-setting
     (when (my-is-windows)
       (set-face-attribute 'default nil
-                          :family "Ricty"
+                          :family "SourceCodePro-Regular"
+                          ; :family "Ricty"
                           :height my-font-size-base))
 
     (when (my-is-mac)

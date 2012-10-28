@@ -66,9 +66,10 @@
     (highlight-indentation-current-column-mode t)
     (yalinum-mode t)
 
-    ;; override ghc-mod key bindings.
+    ;; override ghc-mod key binding.
     (define-key haskell-mode-map (kbd "C-x C-s") 'my-hs-save-buffer)
-    (define-key haskell-mode-map (kbd "C-c C-c") 'my-iferior-haskell-load-file)
+
+    (define-key haskell-mode-map (kbd "C-c C-c") 'my-inferior-haskell-load-file)
     ))
 
 (defun my-haskell-cabal-mode-hook ()
@@ -180,6 +181,14 @@
            " && runhaskell " (file-name-nondirectory (buffer-file-name)))
    (concat "*RunHaskell "(file-name-nondirectory (buffer-file-name)) "*") nil))
 
+(defun my-run-haskell-buffer-file-with-args ()
+  (interactive)
+  (save-buffer)
+  (sf:async-shell-command
+   (concat "cd " (file-name-directory (buffer-file-name))
+           " && runhaskell " (file-name-nondirectory (buffer-file-name)) " " (read-string "args: "))
+   (concat "*RunHaskell "(file-name-nondirectory (buffer-file-name)) "*") nil))
+
 (defun my-doctest-buffer-file ()
   (interactive)
   (sf:async-shell-command
@@ -256,6 +265,7 @@
 
 (define-key haskell-mode-map (kbd "C-c C-7") 'my-doctest-buffer-file)
 (define-key haskell-mode-map (kbd "C-c C-8") 'my-run-haskell-buffer-file)
+(define-key haskell-mode-map (kbd "C-c C-9") 'my-run-haskell-buffer-file-with-args)
 (define-key haskell-mode-map (kbd "C-c C-i") 'ghc-show-info)
 (define-key haskell-mode-map (kbd "C-c C-d") 'ghc-browse-document)
 (define-key haskell-mode-map (kbd "C-c C-t") 'ghc-show-type)
@@ -268,7 +278,7 @@
 (define-key haskell-mode-map (kbd "C-c C-o") 'ghc-complete)
 (define-key haskell-mode-map (kbd "C-c C-i") 'ghc-show-info)
 (define-key haskell-mode-map (kbd "C-c C-d") 'anything-ghc-browse-document)
-(define-key haskell-mode-map (kbd "C-c C-t") 'ghc-show-type)
+(define-key haskell-mode-map (kbd "C-c C-t") 'ghc-insert-template)
 (define-key haskell-mode-map (kbd "C-c C-s") 'ghc-save-buffer)
 (define-key haskell-mode-map (kbd "C-c C-g") 'my-launch-gclients-and-server)
 (define-key haskell-mode-map (kbd "C-c C-k") 'my-kill-gclients-and-server)
@@ -298,13 +308,14 @@
 (define-key inferior-haskell-mode-map (kbd "C-c C-@") '(lambda () (interactive) (insert " `` ") (backward-char 2)))
 (define-key inferior-haskell-mode-map (kbd "C-c C-1") '(lambda () (interactive) (insert " !! ") (backward-char 2)))
 (define-key inferior-haskell-mode-map (kbd "C-c C--") '(lambda () (interactive) (insert " = ")))
+(define-key inferior-haskell-mode-map (kbd "C-x C-k") 'my-inferior-haskell-kill-buffer)
 
 (defun my-shell-command-on-current-directory (cmd)
   ""
   (concat "cd \"" (my-get-buffer-directory)
           "\" && " cmd))
 
-(defun my-iferior-haskell-load-file ()
+(defun my-inferior-haskell-load-file ()
   "load hs and hlint."
   (interactive)
 
@@ -314,6 +325,14 @@
 
   (inferior-haskell-load-file)
   )
+
+(defun my-inferior-haskell-kill-buffer ()
+  "kill buffer with delete ghc process."
+  (interactive)
+  (comint-send-eof)
+  (kill-buffer (current-buffer))
+  )
+
 
 (defun my-haskell-wall ()
   "wall build"
@@ -325,6 +344,7 @@
 (defun my-hs-save-buffer ()
   "wall build"
   (interactive)
+  (set-buffer-file-coding-system 'utf-8-unix t)
   (delete-trailing-whitespace)
   (haskell-mode-save-buffer)
   (sf:async-shell-command
@@ -349,6 +369,9 @@
 
 (define-key haskell-mode-map (kbd "C-m") my-backward-word-command)
 (define-key haskell-mode-map (kbd "C-c C-h") 'sf:hoogle)
+
+(my-require 'bm)
+(define-key haskell-mode-map (kbd "M-C-m") 'bm-toggle)
 
 ;; ;; Customization
 ;; (custom-set-variables
